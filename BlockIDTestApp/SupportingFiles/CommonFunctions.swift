@@ -30,4 +30,15 @@ class CommonFunctions {
         return hexBundleVersion
     }
 
+    static func jsonStringToObject<T>(json: String) -> T? where T : Decodable {
+        do {
+            let data = json.data(using: .utf8)!
+            let decoder = JSONDecoder()
+            let ret = try decoder.decode(T.self, from: data)
+            return ret
+        } catch {
+        }
+        
+        return nil
+    }
 }

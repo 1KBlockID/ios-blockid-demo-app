@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE330E264413C2003FDB78 /* AppDelegate.swift */; };
 		3CEE3311264413C2003FDB78 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3310264413C2003FDB78 /* SceneDelegate.swift */; };
-		3CEE3313264413C2003FDB78 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3312264413C2003FDB78 /* ViewController.swift */; };
 		3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3314264413C2003FDB78 /* Main.storyboard */; };
 		3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3317264413C2003FDB78 /* Assets.xcassets */; };
 		3CEE331B264413C2003FDB78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3319264413C2003FDB78 /* LaunchScreen.storyboard */; };
@@ -29,6 +28,20 @@
 		3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE334E264414E7003FDB78 /* EnrollmentTableViewCell.swift */; };
 		3CEE335F2644154F003FDB78 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */; };
 		3CEE33602644154F003FDB78 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338326443199003FDB78 /* PinCodeTextFieldDelegate.swift */; };
+		3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338426443199003FDB78 /* PinCodeTextField.swift */; };
+		3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338626443199003FDB78 /* TextHelper.swift */; };
+		3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338826443199003FDB78 /* IntExtension.swift */; };
+		3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338926443199003FDB78 /* StringExtension.swift */; };
+		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
+		3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */; };
+		3CEE339A264434BD003FDB78 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */; };
+		3CEE339B264434BD003FDB78 /* TextHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3395264434BD003FDB78 /* TextHelper.swift */; };
+		3CEE339C264434BD003FDB78 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3397264434BD003FDB78 /* IntExtension.swift */; };
+		3CEE339D264434BD003FDB78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3398264434BD003FDB78 /* StringExtension.swift */; };
+		3CEE33A126443E93003FDB78 /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE339F26443E93003FDB78 /* AccessoryView.xib */; };
+		3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A026443E93003FDB78 /* AccessoryView.swift */; };
+		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +63,6 @@
 		3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockIDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CEE330E264413C2003FDB78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CEE3310264413C2003FDB78 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		3CEE3312264413C2003FDB78 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3CEE3315264413C2003FDB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3CEE3317264413C2003FDB78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3CEE331A264413C2003FDB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -71,6 +83,20 @@
 		3CEE334D264414E7003FDB78 /* EnrollmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrollmentTableViewCell.xib; sourceTree = "<group>"; };
 		3CEE334E264414E7003FDB78 /* EnrollmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollmentTableViewCell.swift; sourceTree = "<group>"; };
 		3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
+		3CEE338326443199003FDB78 /* PinCodeTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextFieldDelegate.swift; sourceTree = "<group>"; };
+		3CEE338426443199003FDB78 /* PinCodeTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
+		3CEE338626443199003FDB78 /* TextHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHelper.swift; sourceTree = "<group>"; };
+		3CEE338826443199003FDB78 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
+		3CEE338926443199003FDB78 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
+		3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextFieldDelegate.swift; sourceTree = "<group>"; };
+		3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
+		3CEE3395264434BD003FDB78 /* TextHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHelper.swift; sourceTree = "<group>"; };
+		3CEE3397264434BD003FDB78 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
+		3CEE3398264434BD003FDB78 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		3CEE339F26443E93003FDB78 /* AccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
+		3CEE33A026443E93003FDB78 /* AccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
+		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,7 +151,6 @@
 				3CEE334B264414E7003FDB78 /* View */,
 				3CEE330E264413C2003FDB78 /* AppDelegate.swift */,
 				3CEE3310264413C2003FDB78 /* SceneDelegate.swift */,
-				3CEE3312264413C2003FDB78 /* ViewController.swift */,
 				3CEE3314264413C2003FDB78 /* Main.storyboard */,
 				3CEE3317264413C2003FDB78 /* Assets.xcassets */,
 				3CEE3319264413C2003FDB78 /* LaunchScreen.storyboard */,
@@ -158,16 +183,11 @@
 		3CEE333D264414E7003FDB78 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3CEE333E264414E7003FDB78 /* ToolTipManager */,
+				3CEE339E26443E93003FDB78 /* Keyboard Accessory View */,
+				3CEE3391264434BD003FDB78 /* PinCodeTextField */,
+				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		3CEE333E264414E7003FDB78 /* ToolTipManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ToolTipManager;
 			sourceTree = "<group>";
 		};
 		3CEE3343264414E7003FDB78 /* Controller */ = {
@@ -180,6 +200,8 @@
 				3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */,
 				3CEE3349264414E7003FDB78 /* NFCDisabledViewController.swift */,
 				3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */,
+				3CEE338F26443347003FDB78 /* PinViewController.swift */,
+				3CEE33A326454600003FDB78 /* QRScanViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -199,6 +221,71 @@
 				3CEE334E264414E7003FDB78 /* EnrollmentTableViewCell.swift */,
 			);
 			path = EnrollmentCell;
+			sourceTree = "<group>";
+		};
+		3CEE338226443199003FDB78 /* PinCodeTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE338326443199003FDB78 /* PinCodeTextFieldDelegate.swift */,
+				3CEE338426443199003FDB78 /* PinCodeTextField.swift */,
+				3CEE338526443199003FDB78 /* TextHelper */,
+				3CEE338726443199003FDB78 /* Extensions */,
+			);
+			path = PinCodeTextField;
+			sourceTree = "<group>";
+		};
+		3CEE338526443199003FDB78 /* TextHelper */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE338626443199003FDB78 /* TextHelper.swift */,
+			);
+			path = TextHelper;
+			sourceTree = "<group>";
+		};
+		3CEE338726443199003FDB78 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE338826443199003FDB78 /* IntExtension.swift */,
+				3CEE338926443199003FDB78 /* StringExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3CEE3391264434BD003FDB78 /* PinCodeTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */,
+				3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */,
+				3CEE3394264434BD003FDB78 /* TextHelper */,
+				3CEE3396264434BD003FDB78 /* Extensions */,
+			);
+			path = PinCodeTextField;
+			sourceTree = "<group>";
+		};
+		3CEE3394264434BD003FDB78 /* TextHelper */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE3395264434BD003FDB78 /* TextHelper.swift */,
+			);
+			path = TextHelper;
+			sourceTree = "<group>";
+		};
+		3CEE3396264434BD003FDB78 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE3397264434BD003FDB78 /* IntExtension.swift */,
+				3CEE3398264434BD003FDB78 /* StringExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3CEE339E26443E93003FDB78 /* Keyboard Accessory View */ = {
+			isa = PBXGroup;
+			children = (
+				3CEE339F26443E93003FDB78 /* AccessoryView.xib */,
+				3CEE33A026443E93003FDB78 /* AccessoryView.swift */,
+			);
+			path = "Keyboard Accessory View";
 			sourceTree = "<group>";
 		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
@@ -274,6 +361,7 @@
 				3CEE331B264413C2003FDB78 /* LaunchScreen.storyboard in Resources */,
 				3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */,
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
+				3CEE33A126443E93003FDB78 /* AccessoryView.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -346,20 +434,32 @@
 			files = (
 				3CEE3359264414E7003FDB78 /* NFCDisabledViewController.swift in Sources */,
 				3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */,
+				3CEE339026443347003FDB78 /* PinViewController.swift in Sources */,
+				3CEE339C264434BD003FDB78 /* IntExtension.swift in Sources */,
 				3CEE3351264414E7003FDB78 /* CommonFunctions.swift in Sources */,
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
+				3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */,
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
-				3CEE3313264413C2003FDB78 /* ViewController.swift in Sources */,
 				3CEE3350264414E7003FDB78 /* UserDefualt+Ext.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
+				3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
+				3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */,
+				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
+				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,
 				3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */,
+				3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */,
+				3CEE339B264434BD003FDB78 /* TextHelper.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3311264413C2003FDB78 /* SceneDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
+				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
+				3CEE339A264434BD003FDB78 /* PinCodeTextField.swift in Sources */,
+				3CEE339D264434BD003FDB78 /* StringExtension.swift in Sources */,
+				3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

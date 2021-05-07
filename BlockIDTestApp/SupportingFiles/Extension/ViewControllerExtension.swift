@@ -51,8 +51,15 @@ extension UIViewController {
     }
     func showLiveIDView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let liveID = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as! LiveIDViewController
-        self.navigationController?.pushViewController(liveID, animated: true)
+        let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as! LiveIDViewController
+        self.navigationController?.pushViewController(liveIDVC, animated: true)
+    }
+    
+    func showPinView(pinActivity : PinActivity) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let pinVC = storyBoard.instantiateViewController(withIdentifier: "PinViewController") as! PinViewController
+        pinVC.pinActivity = pinActivity
+        self.navigationController?.pushViewController(pinVC, animated: true)
     }
     
     func showHomeView() {
@@ -61,6 +68,12 @@ extension UIViewController {
     
     public func showAppLogin() {
         self.showHomeView()
+    }
+    
+    public func showQROptions() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let qrScanVC = storyBoard.instantiateViewController(withIdentifier: "QRScanViewController") as! QRScanViewController
+        self.navigationController?.pushViewController(qrScanVC, animated: true)
     }
     
     public func loginWithDeviceAuth() {

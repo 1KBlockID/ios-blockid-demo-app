@@ -68,6 +68,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             enrollLiveID()
+        case Enrollments.LoginWithQR.rawValue:
+            scanQRCode()
         case Enrollments.resetApp.rawValue:
             resetApp()
         default:
@@ -141,37 +143,40 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollPin() {
-        
-    }
-}
-
-extension EnrollMentViewController {
-    private func enrollDeviceAuth() {
-        if BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel TouchID / FaceID?", preferredStyle: .alert)
+        if BlockIDSDK.sharedInstance.isPinRegistered() {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unEnrollDeviceAuth()
+                self.showPinView(pinActivity: .isRemoving)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
             self.present(alert, animated: true)
             return
         }
-        BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
-            if success {
-                self.tableEnrollments.reloadData()
-                self.view.makeToast("TouchID / FaceID is now enabled", duration: 3.0, position: .center)
-                
-            } else {
-                if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
-                   self.showAppLogin()
-                }
-                if let messageUW = message {
-                    if (error as? BiometricError) == .NoID {
-                        self.openSettings(title: "Error", message: messageUW)
-                    } else {
-                        self.showAlertView(title: "", message: messageUW)
+        showPinView(pinActivity: .isEnrolling)
+    }
+}
+
+extension EnrollMentViewController {
+    private func enrollDeviceAuth() {
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+           
+            BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
+                if success {
+                    self.tableEnrollments.reloadData()
+                    self.view.makeToast("TouchID / FaceID is now enabled", duration: 3.0, position: .center)
+                    
+                } else {
+                    if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
+                       self.showAppLogin()
+                    }
+                    if let messageUW = message {
+                        if (error as? BiometricError) == .NoID {
+                            self.openSettings(title: "Error", message: messageUW)
+                        } else {
+                            self.showAlertView(title: "", message: messageUW)
+                        }
                     }
                 }
             }
@@ -192,6 +197,12 @@ extension EnrollMentViewController {
                 }
             }
         })
+    }
+}
+
+extension EnrollMentViewController {
+    private func scanQRCode() {
+        self.showQROptions()
     }
 }
 
