@@ -22,6 +22,7 @@ class QRScanViewController: UIViewController {
     @IBOutlet weak var btnQr2: UIButton!
     @IBOutlet weak var _viewQRScan: BIDScannerView!
     
+    @IBOutlet weak var _qrView: UIView!
     @IBOutlet weak var _viewBtn: UIView!
     private var qrScannerHelper: QRScannerHelper?
     // MARK: - selectedMode Scanning Mode
@@ -35,7 +36,7 @@ class QRScanViewController: UIViewController {
     }
     
     private func scanQRCode() {
-        _viewQRScan.isHidden = false
+        _qrView.isHidden = false
         _viewBtn.isHidden = true
         qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode, bidScannerView: _viewQRScan, kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
@@ -59,7 +60,7 @@ extension QRScanViewController: QRScanResponseDelegate {
             return
         }
         qrScannerHelper?.stopQRScanning()
-        _viewQRScan.isHidden = true
+        _qrView.isHidden = true
         self.processQRData(qrCodeData ?? "")
     }
     
@@ -83,18 +84,19 @@ extension QRScanViewController: QRScanResponseDelegate {
     
     private func inValidQRCode() {
         self._viewBtn.isHidden = false
-        self._viewQRScan.isHidden = true
+        self._qrView.isHidden = true
         self.showAlertView(title: "Invalid Code", message: "Unsupported QR code detected.")
     }
     
     private func presentConsentViewWithData(qrdata: AuthQRModel) {
         self._viewBtn.isHidden = false
-        self._viewQRScan.isHidden = true
+        self._qrView.isHidden = true
+        self.navigationController?.popViewController(animated: true)
         self.showAuthenticationViewController(qrModel: qrdata, qrOption: qrOption,  delegate: self)
     }
     
     @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the QR Login?", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             self.goBack()

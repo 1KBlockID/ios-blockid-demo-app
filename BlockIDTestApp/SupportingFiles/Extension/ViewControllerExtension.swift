@@ -56,7 +56,7 @@ extension UIViewController {
         authVc.qrModel =  qrModel
         authVc.delegate = delegate
         authVc.qrOption = qrOption
-        self.navigationController?.pushViewController(authVc, animated: true)
+        self.navigationController?.pushViewController(authVc, animated: false)
     }
     
     func showRFIDViewController(delegate: EPassportChipScanViewControllerDelegate) {

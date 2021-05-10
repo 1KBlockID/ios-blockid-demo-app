@@ -817,9 +817,36 @@
                                     <constraint firstItem="6dC-lj-gUY" firstAttribute="top" secondItem="9Zn-dY-e4g" secondAttribute="top" constant="10" id="rYJ-7k-586"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockIDSDK">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kbm-d6-dzu">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Scan QR Code" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VlT-Zv-Bit">
+                                        <rect key="frame" x="109" y="69" width="196" height="33.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                        <rect key="frame" x="41.5" y="122.5" width="331" height="573"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qrScanner" translatesAutoresizingMaskIntoConstraints="NO" id="yAL-wG-rTx">
+                                        <rect key="frame" x="41.5" y="122.5" width="331" height="573"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Hvn-bd-RBc" firstAttribute="height" secondItem="kbm-d6-dzu" secondAttribute="height" multiplier="0.7" id="0rr-2r-psg"/>
+                                    <constraint firstItem="Hvn-bd-RBc" firstAttribute="top" secondItem="VlT-Zv-Bit" secondAttribute="bottom" constant="20" id="Fiy-5f-EkY"/>
+                                    <constraint firstItem="Hvn-bd-RBc" firstAttribute="centerX" secondItem="kbm-d6-dzu" secondAttribute="centerX" id="IBj-ES-7PH"/>
+                                    <constraint firstItem="yAL-wG-rTx" firstAttribute="centerX" secondItem="kbm-d6-dzu" secondAttribute="centerX" id="Sy9-3X-LCd"/>
+                                    <constraint firstItem="VlT-Zv-Bit" firstAttribute="centerX" secondItem="kbm-d6-dzu" secondAttribute="centerX" id="fZw-wV-y9u"/>
+                                    <constraint firstItem="Hvn-bd-RBc" firstAttribute="width" secondItem="kbm-d6-dzu" secondAttribute="width" multiplier="0.8" id="g9N-cv-g5q"/>
+                                    <constraint firstItem="yAL-wG-rTx" firstAttribute="centerY" secondItem="kbm-d6-dzu" secondAttribute="centerY" id="jpz-Qk-wRo"/>
+                                    <constraint firstItem="yAL-wG-rTx" firstAttribute="height" secondItem="Hvn-bd-RBc" secondAttribute="height" id="l8w-cc-mjH"/>
+                                    <constraint firstItem="yAL-wG-rTx" firstAttribute="width" secondItem="Hvn-bd-RBc" secondAttribute="width" id="liy-X1-gj9"/>
+                                    <constraint firstItem="Hvn-bd-RBc" firstAttribute="centerY" secondItem="kbm-d6-dzu" secondAttribute="centerY" id="rqV-qV-fyw"/>
+                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWy-Dq-dqb">
                                 <rect key="frame" x="62" y="799" width="290" height="48"/>
@@ -839,23 +866,22 @@
                         <viewLayoutGuide key="safeArea" id="7Hg-VE-fFH"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zWy-Dq-dqb" firstAttribute="width" secondItem="kbm-d6-dzu" secondAttribute="width" multiplier="0.7" id="27J-qi-IFm"/>
+                            <constraint firstItem="kbm-d6-dzu" firstAttribute="leading" secondItem="7Hg-VE-fFH" secondAttribute="leading" id="4n6-Jd-rcp"/>
                             <constraint firstItem="zWy-Dq-dqb" firstAttribute="centerX" secondItem="prw-Au-YZQ" secondAttribute="centerX" id="7RB-Ef-bE2"/>
-                            <constraint firstItem="7Hg-VE-fFH" firstAttribute="trailing" secondItem="Hvn-bd-RBc" secondAttribute="trailing" id="7f6-OP-CjC"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="bottom" secondItem="7Hg-VE-fFH" secondAttribute="bottom" id="9J4-p6-OQn"/>
+                            <constraint firstItem="kbm-d6-dzu" firstAttribute="bottom" secondItem="7Hg-VE-fFH" secondAttribute="bottom" id="AFL-nW-0OW"/>
                             <constraint firstItem="7Hg-VE-fFH" firstAttribute="bottom" secondItem="zWy-Dq-dqb" secondAttribute="bottom" constant="15" id="JZG-sg-Vkf"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="leading" secondItem="7Hg-VE-fFH" secondAttribute="leading" id="Lu0-vB-JpX"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="leading" secondItem="prw-Au-YZQ" secondAttribute="leading" id="N1i-YL-JOb"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" id="Sk2-7I-2ae"/>
-                            <constraint firstItem="7Hg-VE-fFH" firstAttribute="bottom" secondItem="Hvn-bd-RBc" secondAttribute="bottom" id="UoO-XA-bCN"/>
+                            <constraint firstItem="7Hg-VE-fFH" firstAttribute="trailing" secondItem="kbm-d6-dzu" secondAttribute="trailing" id="QgU-7p-WUi"/>
+                            <constraint firstItem="kbm-d6-dzu" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" id="XYn-IS-7ck"/>
+                            <constraint firstItem="kbm-d6-dzu" firstAttribute="trailing" secondItem="7Hg-VE-fFH" secondAttribute="trailing" id="XpW-eZ-md0"/>
+                            <constraint firstItem="kbm-d6-dzu" firstAttribute="leading" secondItem="7Hg-VE-fFH" secondAttribute="leading" id="cma-d6-iee"/>
                             <constraint firstItem="9Zn-dY-e4g" firstAttribute="leading" secondItem="7Hg-VE-fFH" secondAttribute="leading" id="qI4-JK-CHM"/>
                             <constraint firstItem="9Zn-dY-e4g" firstAttribute="trailing" secondItem="7Hg-VE-fFH" secondAttribute="trailing" id="s1F-zH-MwQ"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" id="wDr-4h-fpN"/>
                             <constraint firstItem="9Zn-dY-e4g" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" constant="45" id="wIT-Xk-F3i"/>
-                            <constraint firstItem="Hvn-bd-RBc" firstAttribute="trailing" secondItem="7Hg-VE-fFH" secondAttribute="trailing" id="xSo-KK-WIf"/>
-                            <constraint firstItem="zWy-Dq-dqb" firstAttribute="width" secondItem="Hvn-bd-RBc" secondAttribute="width" multiplier="0.7" id="ylD-dZ-1wM"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="_qrView" destination="kbm-d6-dzu" id="Jmv-am-BET"/>
                         <outlet property="_viewBtn" destination="9Zn-dY-e4g" id="XPe-12-0CM"/>
                         <outlet property="_viewQRScan" destination="Hvn-bd-RBc" id="mpF-MR-end"/>
                         <outlet property="btnQr1" destination="6dC-lj-gUY" id="qs3-2m-Yen"/>
@@ -1113,6 +1139,7 @@
         <image name="iconPassChip" width="34" height="20"/>
         <image name="iconWarning" width="20" height="20"/>
         <image name="qrErrorBg" width="347" height="40"/>
+        <image name="qrScanner" width="346" height="378"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
