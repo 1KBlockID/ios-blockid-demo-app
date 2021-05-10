@@ -77,7 +77,6 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: BIDDriverLicense, token: String) {
-        //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerDocument(obj: dl, docType: .dl, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {

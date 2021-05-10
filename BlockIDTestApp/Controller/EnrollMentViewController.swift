@@ -108,7 +108,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollPassport() {
-        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+        if BlockIDSDK.sharedInstance.isPassportEnrolled() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
@@ -214,8 +214,17 @@ extension EnrollMentViewController {
     }
     
     private func resetApp() {
-        resetAppNSDK()
-        self.showHomeView()
+        let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            self.resetAppNSDK()
+            self.showHomeView()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+        self.present(alert, animated: true)
+        return
+       
     }
 }
 

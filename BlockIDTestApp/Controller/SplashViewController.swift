@@ -15,8 +15,10 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var loginView: UIView!
     
     private var isDefaultTenantRegistration = true
+    @IBOutlet weak var btnRegisterDeviceAuth: UIButton!
     private var bidTenant: BIDTenant!
     
+    @IBOutlet weak var registerView: UIView!
     @IBOutlet weak var btnAppPin: UIButton!
     
     override func viewDidLoad() {
@@ -75,7 +77,8 @@ class SplashViewController: UIViewController {
             self?.view.hideToastActivity()
             if status {
                 //On Success
-                self?.enrollDeviceAuth()
+                self?.btnRegister.isHidden = true
+                self?.registerView.isHidden = false
                
             } else {
                 if error?.code == NSURLErrorNotConnectedToInternet {
@@ -88,6 +91,10 @@ class SplashViewController: UIViewController {
         }
     }
     
+    
+    @IBAction func btnRegisterDeviceAuth(_ sender: UIButton) {
+        self.enrollDeviceAuth()
+    }
     private func enrollDeviceAuth() {
         BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
             if success {

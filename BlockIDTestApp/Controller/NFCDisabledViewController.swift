@@ -8,11 +8,12 @@
 import Foundation
 import UIKit
 
-
+protocol NFCDisabledViewControllerDelegate {
+    func cancelRFID()
+}
 class NFCDisabledViewController: UIViewController {
-    
-    var onCallback: ((_ sender : UIViewController, _ status: Bool) -> Void)?
 
+    public var delegate : NFCDisabledViewControllerDelegate?
     // MARK:-
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,10 @@ class NFCDisabledViewController: UIViewController {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to cancel RFID Scan?", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-            //self.setDriverLicense(withDLData: dl, token: token)
+            
+            self.navigationController?.popViewController(animated: true)
+            self.delegate?.cancelRFID()
+            
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 

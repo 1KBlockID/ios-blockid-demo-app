@@ -49,6 +49,31 @@ extension UIViewController {
         let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as! NationalIDViewController
         self.navigationController?.pushViewController(nidVC, animated: true)
     }
+    
+    func showAuthenticationViewController(qrModel: AuthQRModel, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as! AuthenticateViewController
+        authVc.qrModel =  qrModel
+        authVc.delegate = delegate
+        authVc.qrOption = qrOption
+        self.navigationController?.pushViewController(authVc, animated: true)
+    }
+    
+    func showRFIDViewController(delegate: EPassportChipScanViewControllerDelegate) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let eRFIDVC = storyBoard.instantiateViewController(withIdentifier: "EPassportChipScanViewController") as! EPassportChipScanViewController
+        eRFIDVC.delegate = delegate
+        self.navigationController?.pushViewController(eRFIDVC, animated: true)
+    }
+    
+    func showNFCDisableViewController(delegate: NFCDisabledViewControllerDelegate) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let disableRFIDVC = storyBoard.instantiateViewController(withIdentifier: "NFCDisabledViewController") as! NFCDisabledViewController
+        disableRFIDVC.delegate = delegate
+        self.navigationController?.pushViewController(disableRFIDVC, animated: true)
+    }
+    
+    
     func showLiveIDView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as! LiveIDViewController

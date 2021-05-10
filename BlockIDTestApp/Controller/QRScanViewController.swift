@@ -14,9 +14,9 @@ public enum QROptions {
     case withScopeData
     case withPresetData
 }
-  
+
 class QRScanViewController: UIViewController {
-    private var qrOptions = QROptions.withScopeData
+    private var qrOption = QROptions.withScopeData
     @IBOutlet weak var btnQr1: UIButton!
     
     @IBOutlet weak var btnQr2: UIButton!
@@ -29,17 +29,21 @@ class QRScanViewController: UIViewController {
     
     
     @IBAction func qrOptionButtonClicked(_ sender: UIButton) {
-        qrOptions = (sender.tag == 0) ? QROptions.withScopeData : QROptions.withPresetData
+        qrOption = (sender.tag == 0) ? QROptions.withScopeData : QROptions.withPresetData
         
         self.scanQRCode()
     }
     
     private func scanQRCode() {
         _viewQRScan.isHidden = false
+        _viewBtn.isHidden = true
         qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode, bidScannerView: _viewQRScan, kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
     
+    private func goBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 extension QRScanViewController: QRScanResponseDelegate {
     func onQRScanResult(qrCodeData: String?) {
@@ -84,9 +88,10 @@ extension QRScanViewController: QRScanResponseDelegate {
     }
     
     private func presentConsentViewWithData(qrdata: AuthQRModel) {
-        
+        self._viewBtn.isHidden = false
+        self._viewQRScan.isHidden = true
+        self.showAuthenticationViewController(qrModel: qrdata, qrOption: qrOption,  delegate: self)
     }
-    
 }
 public class AuthQRModel: NSObject, Codable {
     public var authtype: String? = ""
@@ -116,4 +121,25 @@ public class AuthQRModel: NSObject, Codable {
         
         return bidOrigin
     }
+}
+public struct AuthRequestModel {
+    var lat: Double = 0.0
+    var lon: Double = 0.0
+    var session: String = ""
+    var creds: String = ""
+    var scopes: String = ""
+    var origin: BIDOrigin!
+    var isConsentGiven: Bool = false
+    var userId: String?
+}
+extension QRScanViewController: AuthenticateViewControllerDelegate {
+    func onAuthenticate(status: Bool) {
+        self.goBack()
+    }
+    
+    func unauthorisedUser() {
+        self.showAppLogin()
+    }
+    
+    
 }

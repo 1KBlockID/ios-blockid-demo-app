@@ -17,17 +17,20 @@ class PassportViewController: UIViewController {
     private let selectedMode: ScanningMode = .SCAN_LIVE
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
+    private var _token = ""
+    private var pp: BIDPassport?
+    private var isWithNFC = false
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
- 
+    @IBOutlet weak var _viewEPassportScan: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self._viewEPassportScan.isHidden = true
         startPassportScanning()
     }
     
@@ -76,7 +79,6 @@ class PassportViewController: UIViewController {
     }
     
     private func setPassport(withPPDat pp: BIDPassport, token: String, isWithNFC: Bool) {
-        //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerDocument(obj: pp, docType: .passport, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
@@ -89,7 +91,11 @@ class PassportViewController: UIViewController {
                 // SUCCESS
                 //self.view.makeToast("Driver License is now enabled", duration: 3.0, position: .center)
                 self.ppScannerHelper?.stopPassportScanning()
-                self.view.makeToast("Passport is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                var nfcTxt = ""
+                if !isWithNFC {
+                    nfcTxt = "RFID not scanned"
+                }
+                self.view.makeToast("Passport is now enrolled. \(nfcTxt)", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }
@@ -114,7 +120,8 @@ class PassportViewController: UIViewController {
     }
     
     private func startRFIDScanWorkflow(withPPDat pp: BIDPassport, token: String) {
-        
+        self._token = token
+        self.pp = pp
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
             //NOT NFC COMPATIBLE
             if !isNFCCompatible {
@@ -122,42 +129,13 @@ class PassportViewController: UIViewController {
                 self.setPassport(withPPDat: pp, token: token, isWithNFC: false)
                 return
             }
+           
             
-            //START NFC SCAN WORKFLOW
-           /* let ePPVC: EPassportChipScanViewController = EPassportChipScanViewController.loadFromNib()
-            ePPVC.onScan = { [weak self] (sender, status) -> Void in
-                sender.view.removeFromSuperview()
-                sender.removeFromParent()
-                //START SCANNING
-                //Present the scanning view, start RFID scanning
-                self?._viewEPassportScan.isHidden = false
-                self?.ppScannerHelper?.startRFIDScanning()
-
-            }
-            ePPVC.onSkip = { [weak self] (sender, status) -> Void in
-                sender.view.removeFromSuperview()
-                sender.removeFromParent()
-                //SKIP RFID SCAN, complete processing with bio-data of PP
-                if status {
-                    self?.setPassport(withPPDat: pp, token: token, isWithNFC: false)
-                }
-            }
-            self.addChild(ePPVC)
-            self.view.addDock(ePPVC.view) */
+            self.showRFIDViewController(delegate: self)
             return
         }
-        
-       /* //NFC is DISABLED
-        let nfcDisabledVC: NFCDisabledViewController = NFCDisabledViewController.loadFromNib()
-        nfcDisabledVC.onCallback = { [weak self] (sender, status) -> Void in
-            sender.view.removeFromSuperview()
-            sender.removeFromParent()
-            if status {
-                self?.setPassport(withPPDat: pp, token: token, isWithNFC: false)
-            }
-        }
-        self.addChild(nfcDisabledVC)
-        self.view.addDock(nfcDisabledVC.view) */
+        //NFC is Disabled
+        self.showNFCDisableViewController(delegate: self)
     }
     
     private func handleScanErrorResponse(error: ErrorResponse) {
@@ -170,6 +148,7 @@ class PassportViewController: UIViewController {
             let alert = UIAlertController(title: "Warning!", message: "Do you want to cancel RFID Scan?", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self._viewEPassportScan.isHidden = false
                 self.ppScannerHelper?.startRFIDScanning()
             }))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -180,6 +159,7 @@ class PassportViewController: UIViewController {
             
         case CustomErrors.kPPRFIDTimeout.code:
             self.view.makeToast("Scan Again", duration: 3.0, position: .center, title: "Timeout", completion: {_ in
+                self._viewEPassportScan.isHidden = false
                 self.ppScannerHelper?.startRFIDScanning()
             })
             return
@@ -271,4 +251,19 @@ extension PassportViewController: PassportResponseDelegate {
       }
     }
     
+}
+extension PassportViewController: EPassportChipScanViewControllerDelegate {
+    func onScan() {
+        self._viewEPassportScan.isHidden = false
+        self.ppScannerHelper?.startRFIDScanning()
+    }
+    
+    func onSkip() {
+        self.setPassport(withPPDat: pp!, token: self._token, isWithNFC: false)
+    }
+}
+extension PassportViewController: NFCDisabledViewControllerDelegate {
+    func cancelRFID() {
+        self.setPassport(withPPDat: pp!, token: self._token, isWithNFC: false)
+    }
 }

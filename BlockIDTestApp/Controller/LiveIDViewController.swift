@@ -78,9 +78,11 @@ class LiveIDViewController: UIViewController {
                 _lblInformation.text = DetectionMsg.smile
         }
     }
+    
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
+    
     @IBAction func cancelTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
