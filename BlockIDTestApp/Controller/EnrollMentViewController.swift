@@ -17,7 +17,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
-    case LoginWithQR  = "Login With QA"
+    case LoginWithQR  = "Login With QR"
     case resetApp  = "Reset App"
 }
 

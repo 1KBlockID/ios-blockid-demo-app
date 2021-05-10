@@ -416,9 +416,6 @@
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
-                                        <connections>
-                                            <action selector="cancelClicked:" destination="Y9j-4n-5BQ" eventType="touchUpInside" id="UXy-2k-7Zq"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -779,33 +776,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockIDSDK">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Zn-dY-e4g">
                                 <rect key="frame" x="0.0" y="89" width="414" height="200"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="characterWrap" translatesAutoresizingMaskIntoConstraints="NO" id="6dC-lj-gUY">
-                                        <rect key="frame" x="41.5" y="10" width="331" height="80"/>
+                                        <rect key="frame" x="41.5" y="10" width="331" height="60"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="udg-E0-aRH"/>
+                                            <constraint firstAttribute="height" constant="60" id="udg-E0-aRH"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="                       QR Session 1 (Scan Qr, authenticate with scope data)"/>
                                         <connections>
-                                            <action selector="cancelTapped:" destination="93L-e2-IkO" eventType="touchUpInside" id="r53-s5-0uV"/>
-                                            <action selector="onRegisterClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GYE-JX-iT1"/>
                                             <action selector="qrOptionButtonClicked:" destination="Fmc-At-Q2F" eventType="touchUpInside" id="p5m-Gv-T7W"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="Roe-xW-yQp">
-                                        <rect key="frame" x="41.5" y="130" width="331" height="50"/>
+                                        <rect key="frame" x="41.5" y="100" width="331" height="60"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="Wcc-vZ-tNW"/>
+                                            <constraint firstAttribute="height" constant="60" id="Wcc-vZ-tNW"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -822,16 +813,36 @@
                                     <constraint firstItem="6dC-lj-gUY" firstAttribute="centerX" secondItem="9Zn-dY-e4g" secondAttribute="centerX" id="Eba-T2-1h1"/>
                                     <constraint firstAttribute="height" constant="200" id="NXc-OU-rH2"/>
                                     <constraint firstItem="Roe-xW-yQp" firstAttribute="width" secondItem="9Zn-dY-e4g" secondAttribute="width" multiplier="0.8" id="QJ6-NK-Uhr"/>
-                                    <constraint firstItem="Roe-xW-yQp" firstAttribute="top" secondItem="6dC-lj-gUY" secondAttribute="bottom" constant="40" id="Uga-bS-mAM"/>
+                                    <constraint firstItem="Roe-xW-yQp" firstAttribute="top" secondItem="6dC-lj-gUY" secondAttribute="bottom" constant="30" id="XJL-IR-9CC"/>
                                     <constraint firstItem="6dC-lj-gUY" firstAttribute="top" secondItem="9Zn-dY-e4g" secondAttribute="top" constant="10" id="rYJ-7k-586"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zWy-Dq-dqb">
+                                <rect key="frame" x="62" y="799" width="290" height="48"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="1s8-89-C6l"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelClicked:" destination="Fmc-At-Q2F" eventType="touchUpInside" id="lPs-oG-bvG"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7Hg-VE-fFH"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="zWy-Dq-dqb" firstAttribute="centerX" secondItem="prw-Au-YZQ" secondAttribute="centerX" id="7RB-Ef-bE2"/>
                             <constraint firstItem="7Hg-VE-fFH" firstAttribute="trailing" secondItem="Hvn-bd-RBc" secondAttribute="trailing" id="7f6-OP-CjC"/>
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="bottom" secondItem="7Hg-VE-fFH" secondAttribute="bottom" id="9J4-p6-OQn"/>
+                            <constraint firstItem="7Hg-VE-fFH" firstAttribute="bottom" secondItem="zWy-Dq-dqb" secondAttribute="bottom" constant="15" id="JZG-sg-Vkf"/>
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="leading" secondItem="7Hg-VE-fFH" secondAttribute="leading" id="Lu0-vB-JpX"/>
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="leading" secondItem="prw-Au-YZQ" secondAttribute="leading" id="N1i-YL-JOb"/>
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" id="Sk2-7I-2ae"/>
@@ -841,6 +852,7 @@
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" id="wDr-4h-fpN"/>
                             <constraint firstItem="9Zn-dY-e4g" firstAttribute="top" secondItem="7Hg-VE-fFH" secondAttribute="top" constant="45" id="wIT-Xk-F3i"/>
                             <constraint firstItem="Hvn-bd-RBc" firstAttribute="trailing" secondItem="7Hg-VE-fFH" secondAttribute="trailing" id="xSo-KK-WIf"/>
+                            <constraint firstItem="zWy-Dq-dqb" firstAttribute="width" secondItem="Hvn-bd-RBc" secondAttribute="width" multiplier="0.7" id="ylD-dZ-1wM"/>
                         </constraints>
                     </view>
                     <connections>

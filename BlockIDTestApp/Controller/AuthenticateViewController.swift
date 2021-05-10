@@ -30,15 +30,15 @@ class AuthenticateViewController: UIViewController {
     var ConsentScreenCellIdentifier = "ConsentScreenCell"
     
     private var scopesDisplayNameDic = [
-                                        "did":"Did :",
+                                        "did":"DID :",
                                         "Name":"Name",
                                         "userid":"User ID :",
                                        
                                         "ppt":"Passport #:",
-                                        "dl":"Drivers License #:",
+                                        "dl":"Drivers License # :",
                                         "creds":"Creds :",
                                         "scep_creds":"SCEP :",
-                                        "nationalid":"National ID #:"
+                                        "nationalid":"National ID # :"
                                         ]
     
     @IBOutlet weak var _txtPresetData: UITextField!
