@@ -10,7 +10,7 @@ import Foundation
 import BlockIDSDK
 
 public class Tenant : NSObject {
-    static let licenseKey = "afeb1c93-2265-43e1-a7b1-5049bb4f3c8b"
+    static let licenseKey = "5809b7b7-886f-4c88-9061-59a2baf485be"
     static let defaultTenant = BIDTenant.makeTenant(tag: "1kosmos", community: "default", dns: "https://1k-dev.1kosmos.net")
 }
 
