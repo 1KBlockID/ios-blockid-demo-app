@@ -1,8 +1,8 @@
 //
 //  DocumentHolder.swift
-//  BlockIDTestApp
 //
-//  Created by vaidehi hindlekar on 11/05/21.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
