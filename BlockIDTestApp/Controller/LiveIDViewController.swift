@@ -109,7 +109,7 @@ class LiveIDViewController: UIViewController {
             }
             // SUCCESS
             self.stopLiveIDScanning()
-            self.view.makeToast("LiveID is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                 self.goBack()
             })
 
@@ -136,7 +136,7 @@ class LiveIDViewController: UIViewController {
                 return
             }
            
-            self.view.makeToast("LiveID is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+            self.view.makeToast("Document enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                 self.goBack()
             })
 
