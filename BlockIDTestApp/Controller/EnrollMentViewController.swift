@@ -1,0 +1,230 @@
+//
+//  EnrollMentViewController.swift
+//  BlockIDTestApp
+//
+//  Created by vaidehi hindlekar on 04/05/21.
+//
+
+import Foundation
+import BlockIDSDK
+import Toast_Swift
+
+
+public enum Enrollments: String {
+    case DriverLicense = "Driver License"
+    case Passport  = "Passport"
+    case NationalID  = "National ID"
+    case Pin  = "App Pin"
+    case DeviceAuth  = "Device Auth"
+    case LiveID  = "LiveID"
+    case LoginWithQR  = "Login With QR"
+    case resetApp  = "Reset App"
+}
+
+class EnrollMentViewController: UIViewController {
+    
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
+    
+    @IBOutlet weak var tableEnrollments: UITableView!
+    var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
+        tableEnrollments.reloadData()
+    }
+    
+}
+extension EnrollMentViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return enrollmentArray.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: enrollTableViewReuseIdentifier, for: indexPath) as! EnrollmentTableViewCell
+        cell.setupCell(enrollment: enrollmentArray[indexPath.row])
+        return cell
+    }
+    
+    
+}
+extension EnrollMentViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? EnrollmentTableViewCell
+        switch cell?.lblEnrollment.text {
+        case Enrollments.DriverLicense.rawValue:
+            enrollDL()
+        case Enrollments.Passport.rawValue:
+            enrollPassport()
+        case Enrollments.NationalID.rawValue:
+            enrollNationalID()
+        case Enrollments.Pin.rawValue:
+            enrollPin()
+        case Enrollments.DeviceAuth.rawValue:
+            enrollDeviceAuth()
+        case Enrollments.LiveID.rawValue:
+            enrollLiveID()
+        case Enrollments.LoginWithQR.rawValue:
+            scanQRCode()
+        case Enrollments.resetApp.rawValue:
+            resetApp()
+        default:
+            return
+        }
+    }
+    
+}
+
+extension EnrollMentViewController {
+    
+    private func enrollDL() {
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                self.unenrollDocument(.dl)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        showDLView()
+    }
+    
+    private func unenrollDocument(_ type: BIDDocumentType) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.unregisterDocument(docType: type) {
+            status, error in
+            self.view.hideToastActivity()
+            self.tableEnrollments.reloadData()
+        }
+    }
+}
+
+extension EnrollMentViewController {
+    private func enrollPassport() {
+        if BlockIDSDK.sharedInstance.isPassportEnrolled() {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                self.unenrollDocument(.passport)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        showPassportView()
+    }
+}
+
+extension EnrollMentViewController {
+    private func enrollNationalID() {
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                self.unenrollDocument(.nationalId)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        showNationalIDView()
+    }
+    
+}
+
+extension EnrollMentViewController {
+    private func enrollPin() {
+        if BlockIDSDK.sharedInstance.isPinRegistered() {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                self.showPinView(pinActivity: .isRemoving)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+            self.present(alert, animated: true)
+            return
+        }
+        showPinView(pinActivity: .isEnrolling)
+    }
+}
+
+extension EnrollMentViewController {
+    private func enrollDeviceAuth() {
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+           
+            BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
+                if success {
+                    self.tableEnrollments.reloadData()
+                    self.view.makeToast("TouchID / FaceID is now enabled", duration: 3.0, position: .center)
+                    
+                } else {
+                    if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
+                       self.showAppLogin()
+                    }
+                    if let messageUW = message {
+                        if (error as? BiometricError) == .NoID {
+                            self.openSettings(title: "Error", message: messageUW)
+                        } else {
+                            self.showAlertView(title: "", message: messageUW)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func unEnrollDeviceAuth() {
+        BIDAuthProvider.shared.unenrollDeviceAuth(completion: { (success, error, message) in
+            if success {
+                self.view.makeToast("TouchID / FaceID is now unenrolled from App", duration: 3.0, position: .center)
+                self.tableEnrollments.reloadData()
+            } else {
+                if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
+                    self.showAppLogin()
+                }
+                if let messageUW = message {
+                    self.showAlertView(title: "", message: messageUW)
+                }
+            }
+        })
+    }
+}
+
+extension EnrollMentViewController {
+    private func scanQRCode() {
+        self.showQROptions()
+    }
+}
+
+extension EnrollMentViewController {
+    private func enrollLiveID() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            showLiveIDView()
+        }
+    }
+    
+    private func resetApp() {
+        let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            self.resetAppNSDK()
+            self.showHomeView()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+        self.present(alert, animated: true)
+        return
+       
+    }
+}
+
