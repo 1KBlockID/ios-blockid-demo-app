@@ -2,7 +2,8 @@
 //  PassportViewController.swift
 //  BlockIDTestApp
 //
-//  Created by vaidehi hindlekar on 04/05/21.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
@@ -96,7 +97,6 @@ class PassportViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                //self.view.makeToast("Driver License is now enabled", duration: 3.0, position: .center)
                 self.ppScannerHelper?.stopPassportScanning()
                 var nfcTxt = ""
                 if !isWithNFC {

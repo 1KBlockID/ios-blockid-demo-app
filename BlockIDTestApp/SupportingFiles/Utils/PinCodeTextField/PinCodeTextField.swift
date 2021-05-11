@@ -2,8 +2,8 @@
 //  PinCodeTextField.swift
 //  PinCodeTextField
 //
-//  Created by Alexander Tkachenko on 3/15/17.
-//  Copyright © 2017 organization. All rights reserved.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
