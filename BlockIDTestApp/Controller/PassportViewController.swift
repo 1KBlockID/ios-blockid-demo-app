@@ -84,6 +84,13 @@ class PassportViewController: UIViewController {
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
+                    
+                    if error?.code == CustomErrors.kLiveIDMandatory.code {
+                        DocumentStore.sharedInstance.setData(docType: .passport, documentData: pp, token: token)
+                        self.goBack()
+                        self.showLiveIDView()
+                        return
+                    }
                     // FAILED
                     self.view.makeToast(error?.message, duration: 3.0, position: .center)
                     return

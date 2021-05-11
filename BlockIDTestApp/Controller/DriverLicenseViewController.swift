@@ -83,6 +83,13 @@ class DriverLicenseViewController: UIViewController {
                 self.view.hideToastActivity()
                 if !status {
                     // FAILED
+                    if error?.code == CustomErrors.kLiveIDMandatory.code {
+                        DocumentStore.sharedInstance.setData(docType: .dl, documentData: dl, token: token)
+                        self.goBack()
+                        self.showLiveIDView()
+                        return
+                    }
+                    
                     self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
                         self.goBack()
                     })
@@ -116,6 +123,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         }
         
         scanCompleteUIUpdates()
+        
         guard let dl = bidDriveLicense, let token = signToken else {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
@@ -127,7 +135,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             self.setDriverLicense(withDLData: dl, token: token)
             return
         }
-
+        
         //About to Expire, Show Alert
         let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
 
