@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xuA-Ga-UAK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -416,6 +417,9 @@
                                         <state key="normal" title="Cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="cancelClicked:" destination="Y9j-4n-5BQ" eventType="touchUpInside" id="EjD-NF-yQa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -691,7 +695,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8V-FT-aGE" customClass="PinCodeTextField" customModule="BlockIDTestApp">
-                                <rect key="frame" x="64" y="430.5" width="286" height="35"/>
+                                <rect key="frame" x="64" y="206.5" width="286" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="0na-Ib-jMn"/>
                                     <constraint firstAttribute="width" constant="286" id="MlD-pu-miK"/>
@@ -725,13 +729,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Incorrect Pin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nlI-v2-LDq">
-                                <rect key="frame" x="158.5" y="509" width="97" height="21"/>
+                                <rect key="frame" x="158.5" y="285" width="97" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J14-LW-cEo">
-                                <rect key="frame" x="62" y="782" width="290" height="50"/>
+                                <rect key="frame" x="62" y="336" width="290" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7Tv-39-VDm"/>
@@ -749,13 +753,13 @@
                         <constraints>
                             <constraint firstItem="nlI-v2-LDq" firstAttribute="top" secondItem="t8V-FT-aGE" secondAttribute="bottom" constant="43.5" id="8cJ-pe-so4"/>
                             <constraint firstItem="M4t-Fg-2Mb" firstAttribute="top" secondItem="gej-AO-TIf" secondAttribute="top" constant="45" id="Bpt-7t-6Eh"/>
-                            <constraint firstItem="SK5-7V-2WJ" firstAttribute="bottom" secondItem="J14-LW-cEo" secondAttribute="bottom" constant="30" id="FDl-be-DNz"/>
                             <constraint firstItem="J14-LW-cEo" firstAttribute="width" secondItem="gej-AO-TIf" secondAttribute="width" multiplier="0.7" id="JKJ-Ap-gVh"/>
+                            <constraint firstItem="J14-LW-cEo" firstAttribute="top" secondItem="nlI-v2-LDq" secondAttribute="bottom" constant="30" id="TAO-e8-LhR"/>
                             <constraint firstItem="t8V-FT-aGE" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="iyk-va-gO9"/>
                             <constraint firstItem="nlI-v2-LDq" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="mCf-U0-IiD"/>
                             <constraint firstItem="J14-LW-cEo" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="rYu-Xd-yiw"/>
                             <constraint firstItem="M4t-Fg-2Mb" firstAttribute="leading" secondItem="gej-AO-TIf" secondAttribute="leading" constant="15" id="wIj-g8-WW2"/>
-                            <constraint firstItem="t8V-FT-aGE" firstAttribute="centerY" secondItem="gej-AO-TIf" secondAttribute="centerY" id="zrP-UV-CFn"/>
+                            <constraint firstItem="t8V-FT-aGE" firstAttribute="centerY" secondItem="gej-AO-TIf" secondAttribute="centerY" multiplier="0.5" id="zrP-UV-CFn"/>
                         </constraints>
                     </view>
                     <connections>
