@@ -87,7 +87,6 @@ class AuthenticateViewController: UIViewController {
         for scopeItem in scopesSequence {
             var label = scopesDisplayNameDic[scopeItem]
             var value = ""
-            print(scopeItem)
             if scopeItem == "name"  {
                 label = "Name :"
                 if let firstName = self.scopeAttributesDic?["firstname"]  as? String {
@@ -129,10 +128,53 @@ class AuthenticateViewController: UIViewController {
         guard let data = qrModel else { return }
         let datamodel = AuthRequestModel(lat: location.0, lon: location.1, session: data.session ?? "", creds: data.creds ?? "", scopes: data.scopes ?? "", origin: data.getBidOrigin(), isConsentGiven: true, userId: userId)
         
-        self.authenticateUser(datamodel: datamodel)
+        switch qrOption {
+        case .withScopeData:
+            self.authenticateUserWithScopes(datamodel: datamodel)
+        case .withPresetData:
+            self.authenticateUserWithPreset(datamodel: datamodel)
+        default:
+            break
+        }
+        
+       
     }
     
-    private func authenticateUser(datamodel: AuthRequestModel) {
+    private func authenticateUserWithPreset(datamodel: AuthRequestModel) {
+        self.view.makeToastActivity(.center)
+        var dictScopes = ["data" : _txtPresetData.text]
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: datamodel.session, creds: datamodel.creds, dictScopes: dictScopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, error) in
+            self?.view.hideToastActivity()
+            if status {
+                //if success
+                self?.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
+                    self?.goBack()
+                    self?.delegate?.onAuthenticate(status: true)
+                    return
+                })
+
+            } else {
+                if error?.code == NSURLErrorNotConnectedToInternet {
+                    self?.view.makeToast(ErrorConfig.noInternet.message, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
+                        
+                    })
+                } else if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
+                    self?.view.makeToast(error!.message, duration: 3.0, position: .center, title: "", completion: {_ in
+                        self?.goBack()
+                        self?.delegate?.unauthorisedUser()
+                    })
+                } else {
+                    self?.view.makeToast(error!.message, duration: 3.0, position: .center, title: "", completion: {_ in
+                        self?.goBack()
+                        self?.delegate?.onAuthenticate(status: false)
+                    })
+                }
+            }
+        }
+    }
+   
+    
+    private func authenticateUserWithScopes(datamodel: AuthRequestModel) {
         self.view.makeToastActivity(.center)
 
         BlockIDSDK.sharedInstance.authenticateUser(sessionId: datamodel.session, creds: datamodel.creds, scopes: datamodel.scopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, error) in
