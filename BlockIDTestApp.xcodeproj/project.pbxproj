@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
 		3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */; };
 		3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */; };
@@ -45,8 +46,8 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
-		AD8C5C3F264A947B00E81F34 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */; };
-		AD8C5C40264A947B00E81F34 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AD8C5C4B264ABF2D00E81F34 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */; };
+		AD8C5C4C264ABF2D00E81F34 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,7 +57,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AD8C5C40264A947B00E81F34 /* BlockIDSDK.framework in Embed Frameworks */,
+				AD8C5C4C264ABF2D00E81F34 /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3C78FA07264AA1D8001576DF /* DocumentHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHolder.swift; sourceTree = "<group>"; };
 		3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentScreenCell.swift; sourceTree = "<group>"; };
 		3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsentScreenCell.xib; sourceTree = "<group>"; };
 		3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EPassportChipScanViewController.swift; sourceTree = "<group>"; };
@@ -105,7 +107,7 @@
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
+		AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8C5C3F264A947B00E81F34 /* BlockIDSDK.framework in Frameworks */,
+				AD8C5C4B264ABF2D00E81F34 /* BlockIDSDK.framework in Frameworks */,
 				45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,10 +128,18 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */,
+				AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */,
 				B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3C78FA06264AA1C9001576DF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3C78FA07264AA1D8001576DF /* DocumentHolder.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		3CD35A0E26458C03009D38B0 /* ConsentScreenCell */ = {
@@ -162,6 +172,7 @@
 		3CEE330D264413C2003FDB78 /* BlockIDTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				3C78FA06264AA1C9001576DF /* Model */,
 				3CEE3342264414E7003FDB78 /* BlockIDTestApp.entitlements */,
 				3CEE3343264414E7003FDB78 /* Controller */,
 				3CEE3339264414E7003FDB78 /* SupportingFiles */,
@@ -465,6 +476,7 @@
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
 				3CEE3350264414E7003FDB78 /* UserDefualt+Ext.swift in Sources */,
+				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
 				3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
@@ -631,6 +643,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlockIDTestApp/BlockIDTestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WUS4823E84;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -657,6 +670,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BlockIDTestApp/BlockIDTestApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WUS4823E84;
 				FRAMEWORK_SEARCH_PATHS = (

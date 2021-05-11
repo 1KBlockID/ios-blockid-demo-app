@@ -418,7 +418,9 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-                                            <action selector="cancelClicked:" destination="Y9j-4n-5BQ" eventType="touchUpInside" id="wg1-D3-mGY"/>
+
+                                            <action selector="cancelClicked:" destination="Y9j-4n-5BQ" eventType="touchUpInside" id="EjD-NF-yQa"/>
+
                                         </connections>
                                     </button>
                                 </subviews>
@@ -754,6 +756,7 @@
                             <constraint firstItem="nlI-v2-LDq" firstAttribute="top" secondItem="t8V-FT-aGE" secondAttribute="bottom" constant="43.5" id="8cJ-pe-so4"/>
                             <constraint firstItem="M4t-Fg-2Mb" firstAttribute="top" secondItem="gej-AO-TIf" secondAttribute="top" constant="45" id="Bpt-7t-6Eh"/>
                             <constraint firstItem="J14-LW-cEo" firstAttribute="width" secondItem="gej-AO-TIf" secondAttribute="width" multiplier="0.7" id="JKJ-Ap-gVh"/>
+                            <constraint firstItem="J14-LW-cEo" firstAttribute="top" secondItem="nlI-v2-LDq" secondAttribute="bottom" constant="30" id="TAO-e8-LhR"/>
                             <constraint firstItem="t8V-FT-aGE" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="iyk-va-gO9"/>
                             <constraint firstItem="nlI-v2-LDq" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="mCf-U0-IiD"/>
                             <constraint firstItem="J14-LW-cEo" firstAttribute="centerX" secondItem="gej-AO-TIf" secondAttribute="centerX" id="rYu-Xd-yiw"/>
