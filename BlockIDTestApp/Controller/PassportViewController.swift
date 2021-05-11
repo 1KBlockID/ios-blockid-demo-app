@@ -102,7 +102,7 @@ class PassportViewController: UIViewController {
                 if !isWithNFC {
                     nfcTxt = "RFID not scanned"
                 }
-                self.view.makeToast("Passport is now enrolled. \(nfcTxt)", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Passport enrolled successfully. \(nfcTxt)", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }

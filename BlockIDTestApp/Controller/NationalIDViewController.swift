@@ -98,7 +98,7 @@ class NationalIDViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("National ID is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("National ID enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }

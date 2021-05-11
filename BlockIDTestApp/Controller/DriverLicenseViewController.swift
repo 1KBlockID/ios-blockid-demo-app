@@ -98,7 +98,7 @@ class DriverLicenseViewController: UIViewController {
                 // SUCCESS
                 //self.view.makeToast("Driver License is now enabled", duration: 3.0, position: .center)
                 //self.dlScannerHelper?.stopDLScanning()
-                self.view.makeToast("Driver License is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Driver License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }

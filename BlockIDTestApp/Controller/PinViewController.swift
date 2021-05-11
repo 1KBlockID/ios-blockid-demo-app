@@ -90,7 +90,7 @@ class PinViewController: UIViewController {
         BlockIDSDK.sharedInstance.removePin(pin: pin) { [weak self] status, error in
             self?.view.hideToastActivity()
             if status {
-                self?.view.makeToast("Pin is now unenrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self?.view.makeToast("Pin enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self?.goBack()
                 })
                 return
