@@ -140,7 +140,7 @@ class PinViewController: UIViewController {
                 return
             }
             if self.pinActivity == .isEnrolling {
-                self.view.makeToast("Pin is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Pin enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
                 return
