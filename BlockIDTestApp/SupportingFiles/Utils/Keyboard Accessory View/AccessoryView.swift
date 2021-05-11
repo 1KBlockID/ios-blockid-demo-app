@@ -2,8 +2,8 @@
 //  AccessoryView.swift
 //  ios-kernel
 //
-//  Created by Kuldeep on 10/06/20.
-//  Copyright © 2020 1Kosmos. All rights reserved.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
