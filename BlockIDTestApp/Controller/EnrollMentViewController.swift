@@ -125,7 +125,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollNationalID() {
-        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+        if BlockIDSDK.sharedInstance.isNationalIdEnrolled() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
