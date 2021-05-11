@@ -97,7 +97,6 @@ class PassportViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                //self.view.makeToast("Driver License is now enabled", duration: 3.0, position: .center)
                 self.ppScannerHelper?.stopPassportScanning()
                 var nfcTxt = ""
                 if !isWithNFC {

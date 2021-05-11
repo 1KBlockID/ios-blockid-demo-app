@@ -36,11 +36,6 @@
 		3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338826443199003FDB78 /* IntExtension.swift */; };
 		3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338926443199003FDB78 /* StringExtension.swift */; };
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
-		3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */; };
-		3CEE339A264434BD003FDB78 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */; };
-		3CEE339B264434BD003FDB78 /* TextHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3395264434BD003FDB78 /* TextHelper.swift */; };
-		3CEE339C264434BD003FDB78 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3397264434BD003FDB78 /* IntExtension.swift */; };
-		3CEE339D264434BD003FDB78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3398264434BD003FDB78 /* StringExtension.swift */; };
 		3CEE33A126443E93003FDB78 /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE339F26443E93003FDB78 /* AccessoryView.xib */; };
 		3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A026443E93003FDB78 /* AccessoryView.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
@@ -97,11 +92,6 @@
 		3CEE338826443199003FDB78 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		3CEE338926443199003FDB78 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
-		3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextFieldDelegate.swift; sourceTree = "<group>"; };
-		3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
-		3CEE3395264434BD003FDB78 /* TextHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHelper.swift; sourceTree = "<group>"; };
-		3CEE3397264434BD003FDB78 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
-		3CEE3398264434BD003FDB78 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		3CEE339F26443E93003FDB78 /* AccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
 		3CEE33A026443E93003FDB78 /* AccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
@@ -212,7 +202,6 @@
 			isa = PBXGroup;
 			children = (
 				3CEE339E26443E93003FDB78 /* Keyboard Accessory View */,
-				3CEE3391264434BD003FDB78 /* PinCodeTextField */,
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
 			path = Utils;
@@ -278,34 +267,6 @@
 			children = (
 				3CEE338826443199003FDB78 /* IntExtension.swift */,
 				3CEE338926443199003FDB78 /* StringExtension.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		3CEE3391264434BD003FDB78 /* PinCodeTextField */ = {
-			isa = PBXGroup;
-			children = (
-				3CEE3392264434BD003FDB78 /* PinCodeTextFieldDelegate.swift */,
-				3CEE3393264434BD003FDB78 /* PinCodeTextField.swift */,
-				3CEE3394264434BD003FDB78 /* TextHelper */,
-				3CEE3396264434BD003FDB78 /* Extensions */,
-			);
-			path = PinCodeTextField;
-			sourceTree = "<group>";
-		};
-		3CEE3394264434BD003FDB78 /* TextHelper */ = {
-			isa = PBXGroup;
-			children = (
-				3CEE3395264434BD003FDB78 /* TextHelper.swift */,
-			);
-			path = TextHelper;
-			sourceTree = "<group>";
-		};
-		3CEE3396264434BD003FDB78 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				3CEE3397264434BD003FDB78 /* IntExtension.swift */,
-				3CEE3398264434BD003FDB78 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -468,7 +429,6 @@
 				3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */,
 				3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */,
 				3CEE339026443347003FDB78 /* PinViewController.swift in Sources */,
-				3CEE339C264434BD003FDB78 /* IntExtension.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
 				3CEE3351264414E7003FDB78 /* CommonFunctions.swift in Sources */,
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
@@ -479,7 +439,6 @@
 				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
-				3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
 				3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */,
 				3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */,
 				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
@@ -487,14 +446,11 @@
 				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,
 				3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */,
 				3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */,
-				3CEE339B264434BD003FDB78 /* TextHelper.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3311264413C2003FDB78 /* SceneDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
 				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
-				3CEE339A264434BD003FDB78 /* PinCodeTextField.swift in Sources */,
-				3CEE339D264434BD003FDB78 /* StringExtension.swift in Sources */,
 				3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

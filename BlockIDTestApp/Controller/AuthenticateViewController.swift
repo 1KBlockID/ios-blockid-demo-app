@@ -55,7 +55,7 @@ class AuthenticateViewController: UIViewController {
                                                                          userId: userId)
         self.userId = scopeAttributesDic?["userid"] as? String
         let clientName = (qrModel?.name != nil && qrModel?.name != "") ? qrModel.name : qrModel?.tag
-      //  lblAuthText.text  = lblAuthText.text?.replace(target: "%brandName%", with: clientName ?? "")
+
         _tblScope.register(UINib(nibName: "ConsentScreenCell", bundle: nil), forCellReuseIdentifier: "ConsentScreenCell")
         switch qrOption {
         case .withScopeData:
