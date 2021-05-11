@@ -36,8 +36,6 @@
 		3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338826443199003FDB78 /* IntExtension.swift */; };
 		3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338926443199003FDB78 /* StringExtension.swift */; };
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
-		3CEE33A126443E93003FDB78 /* AccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE339F26443E93003FDB78 /* AccessoryView.xib */; };
-		3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A026443E93003FDB78 /* AccessoryView.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
@@ -92,8 +90,6 @@
 		3CEE338826443199003FDB78 /* IntExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 		3CEE338926443199003FDB78 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
-		3CEE339F26443E93003FDB78 /* AccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AccessoryView.xib; sourceTree = "<group>"; };
-		3CEE33A026443E93003FDB78 /* AccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryView.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -201,7 +197,6 @@
 		3CEE333D264414E7003FDB78 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				3CEE339E26443E93003FDB78 /* Keyboard Accessory View */,
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
 			path = Utils;
@@ -269,15 +264,6 @@
 				3CEE338926443199003FDB78 /* StringExtension.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		3CEE339E26443E93003FDB78 /* Keyboard Accessory View */ = {
-			isa = PBXGroup;
-			children = (
-				3CEE339F26443E93003FDB78 /* AccessoryView.xib */,
-				3CEE33A026443E93003FDB78 /* AccessoryView.swift */,
-			);
-			path = "Keyboard Accessory View";
 			sourceTree = "<group>";
 		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
@@ -353,7 +339,6 @@
 				3CEE331B264413C2003FDB78 /* LaunchScreen.storyboard in Resources */,
 				3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */,
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
-				3CEE33A126443E93003FDB78 /* AccessoryView.xib in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 			);
@@ -440,7 +425,6 @@
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
 				3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */,
-				3CEE33A226443E93003FDB78 /* AccessoryView.swift in Sources */,
 				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
 				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,

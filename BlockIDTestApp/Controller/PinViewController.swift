@@ -22,7 +22,6 @@ class PinViewController: UIViewController {
     @IBOutlet weak var lblIncorrectPin: UILabel!
     @IBOutlet weak var _enterPinTitle: UILabel!
     
-    private let customBar: AccessoryView = AccessoryView()
     private var isIncorrectPin = false
     public var pinActivity = PinActivity.isEnrolling
     private var _firstPin: String!
@@ -52,11 +51,6 @@ class PinViewController: UIViewController {
         }
         _viewPin.keyboardType = .numberPad
         _viewPin.fontSize = 20
-        customBar.onNextCallback = {(sender) -> Void in
-            self.onNext()
-        }
-        customBar.setBtnTitle("Next")
-        _viewPin.inputAccessoryView = customBar.addBar(CGRect(x:0, y:0, width:100, height:40))
         _viewPin.delegate = self
     }
 
@@ -88,7 +82,6 @@ class PinViewController: UIViewController {
         if _firstPin == nil {
             
             //------------------------First Pin Entered---------------
-            customBar.setBtnTitle("Done")
             _firstPin = _viewPin.text!
             _viewPin.text = ""
             if pinActivity == .isEnrolling {
