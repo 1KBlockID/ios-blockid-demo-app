@@ -61,7 +61,9 @@ extension QRScanViewController: QRScanResponseDelegate {
         }
         qrScannerHelper?.stopQRScanning()
         _qrView.isHidden = true
+        
         self.processQRData(qrCodeData ?? "")
+
     }
     
     private func processQRData(_ data: String) {
