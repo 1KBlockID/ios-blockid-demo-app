@@ -539,6 +539,7 @@ public typealias AccessCodeValidationAPICallback = ((Swift.Bool, BlockIDSDK.Erro
   public func setLiveID(image: UIKit.UIImage, sigToken: Swift.String, completion: @escaping BlockIDSDK.LiveIDCallback)
   public func verifyLiveID(image: UIKit.UIImage, sigToken: Swift.String, completion: @escaping BlockIDSDK.LiveIDCallback)
   public func registerDocument(obj: BlockIDSDK.BIDDocumentData, docType: BlockIDSDK.BIDDocumentType, sigToken: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
+  public func registerDocument(obj: BlockIDSDK.BIDDocumentData, docType: BlockIDSDK.BIDDocumentType, docSignToken: Swift.String, faceImage: UIKit.UIImage, liveIDSignToken: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
   public func unregisterDocument(docType: BlockIDSDK.BIDDocumentType, completion: @escaping BlockIDSDK.UserAPICallback)
   public func isPinRegistered() -> Swift.Bool
   public func isDeviceAuthRegisterd() -> Swift.Bool
@@ -1192,6 +1193,7 @@ public struct CustomErrors {
   public static var kNoMigrationNeeded: (code: Swift.Int, msg: Swift.String)
   public static var kPassportNationalIDNotMatch: (code: Swift.Int, msg: Swift.String)
   public static var kNationalIdDLNotMatch: (code: Swift.Int, msg: Swift.String)
+  public static var kLiveIDMandatory: (code: Swift.Int, msg: Swift.String)
   public static var kPPAboutToExpire: (code: Swift.Int, msg: Swift.String)
   public static var kPPExpired: (code: Swift.Int, msg: Swift.String)
   public static var kInvalidPP: (code: Swift.Int, msg: Swift.String)
