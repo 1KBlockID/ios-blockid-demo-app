@@ -29,8 +29,6 @@
 		3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */; };
 		3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE334D264414E7003FDB78 /* EnrollmentTableViewCell.xib */; };
 		3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE334E264414E7003FDB78 /* EnrollmentTableViewCell.swift */; };
-		3CEE335F2644154F003FDB78 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */; };
-		3CEE33602644154F003FDB78 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338326443199003FDB78 /* PinCodeTextFieldDelegate.swift */; };
 		3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338426443199003FDB78 /* PinCodeTextField.swift */; };
 		3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338626443199003FDB78 /* TextHelper.swift */; };
@@ -47,6 +45,8 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
+		AD8C5C3F264A947B00E81F34 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */; };
+		AD8C5C40264A947B00E81F34 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,7 +56,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3CEE33602644154F003FDB78 /* BlockIDSDK.framework in Embed Frameworks */,
+				AD8C5C40264A947B00E81F34 /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -89,7 +89,6 @@
 		3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NationalIDViewController.swift; sourceTree = "<group>"; };
 		3CEE334D264414E7003FDB78 /* EnrollmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrollmentTableViewCell.xib; sourceTree = "<group>"; };
 		3CEE334E264414E7003FDB78 /* EnrollmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnrollmentTableViewCell.swift; sourceTree = "<group>"; };
-		3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		3CEE338326443199003FDB78 /* PinCodeTextFieldDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextFieldDelegate.swift; sourceTree = "<group>"; };
 		3CEE338426443199003FDB78 /* PinCodeTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinCodeTextField.swift; sourceTree = "<group>"; };
 		3CEE338626443199003FDB78 /* TextHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextHelper.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CEE335F2644154F003FDB78 /* BlockIDSDK.framework in Frameworks */,
+				AD8C5C3F264A947B00E81F34 /* BlockIDSDK.framework in Frameworks */,
 				45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,7 +126,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3CEE335E2644154F003FDB78 /* BlockIDSDK.framework */,
+				AD8C5C3D264A947800E81F34 /* BlockIDSDK.framework */,
 				B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
@@ -638,6 +638,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BlockIDTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -663,6 +664,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BlockIDTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

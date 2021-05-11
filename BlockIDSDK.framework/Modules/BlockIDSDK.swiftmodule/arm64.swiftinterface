@@ -575,6 +575,7 @@ public typealias AccessCodeValidationAPICallback = ((Swift.Bool, BlockIDSDK.Erro
   public func getCurrentUserAccount() -> (currentUser: BlockIDSDK.BIDLinkedAccount?, error: BlockIDSDK.ErrorResponse?)
   public func getScopesAttributesDic(scopes: Swift.String, creds: Swift.String, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil) -> (scopesAttributesDict: [Swift.String : Any]?, error: BlockIDSDK.ErrorResponse?)
   public func getEventData(publicKey: Swift.String, lon: Swift.Double, lat: Swift.Double) -> Swift.String
+  public func authenticateUser(sessionId: Swift.String, creds: Swift.String, dictScopes: [Swift.String : Any], lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
   public func authenticateUser(sessionId: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
   public func getOfflineAuthPayload(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount) -> Swift.String?
   public func getLicense() -> (license: BlockIDSDK.BIDLicense?, error: BlockIDSDK.ErrorResponse?)
@@ -1209,8 +1210,8 @@ public struct CustomErrors {
   public var code: Swift.Int
   public var message: Swift.String
   public init(code: Swift.Int, msg: Swift.String)
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 @available(iOS 13, OSX 10.15, *)
 public func AESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
@@ -1432,6 +1433,7 @@ public class BACHandler {
   public var id: Swift.String?
   public var type: Swift.String?
   public var photo: Swift.String?
+  public var verifiedScan: Swift.Bool?
   @objc deinit
   required public init(from decoder: Swift.Decoder) throws
   public func encode(to encoder: Swift.Encoder) throws
