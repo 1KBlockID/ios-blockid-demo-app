@@ -116,6 +116,64 @@ class LiveIDViewController: UIViewController {
         }
     }
     
+    private func registerLiveIDWithDocument(withPhoto photo: UIImage, token: String) {
+        self.view.makeToastActivity(.center)
+        let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
+        let obj = DocumentStore.sharedInstance.documentData!
+        let docType = DocumentStore.sharedInstance.docType!
+        let docSignToken = DocumentStore.sharedInstance.token ?? ""
+        
+        BlockIDSDK.sharedInstance.registerDocument(obj: obj, docType: docType, docSignToken: docSignToken, faceImage: photo, liveIDSignToken: token) { [self] (status, error) in
+            self.view.hideToastActivity()
+            DocumentStore.sharedInstance.clearData()
+            if !status {
+                // FAILED
+                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                    self.goBack()
+                })
+                return
+            }
+            // SUCCESS
+            self.stopLiveIDScanning()
+            self.view.makeToast("LiveID is now enrolled", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.goBack()
+            })
+
+        }
+    }
+    
+    /*
+     private void registerLiveIDWithDocument(Bitmap bitmap) {
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.show();
+            BIDDocumentData documentData = DocumentHolder.getData();
+            BIDDocumentProvider.BIDDocumentType type = DocumentHolder.getType();
+            BlockIDSDK.getInstance().registerDocument(this, documentData, bitmap, type, "", "", (status, error) -> {
+                progressDialog.dismiss();
+                DocumentHolder.clearData();
+                if (status) {
+                    Toast.makeText(this, getString(R.string.label_document_enrolled_successfully), Toast.LENGTH_LONG).show();
+                    finish();
+                    return;
+                }
+
+                if (error == null)
+                    error = new ErrorManager.ErrorResponse(K_SOMETHING_WENT_WRONG.getCode(), K_SOMETHING_WENT_WRONG.getMessage());
+
+                ErrorDialog errorDialog = new ErrorDialog(this);
+                DialogInterface.OnDismissListener onDismissListener = dialogInterface -> {
+                    errorDialog.dismiss();
+                    finish();
+                };
+                if (error.getCode() == ErrorManager.CustomErrors.K_CONNECTION_ERROR.getCode()) {
+                    errorDialog.showNoInternetDialog(onDismissListener);
+                    return;
+                }
+                errorDialog.show(null, getString(R.string.label_error), error.getMessage(), onDismissListener);
+            });
+        }
+     */
+    
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo, sigToken: token) { (status, error) in
@@ -213,6 +271,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             self.verifyLiveID(withPhoto: photo, token: signToken)
         } else {
             // Set LiveID
+            if DocumentStore.sharedInstance.hasData() {
+                self.registerLiveIDWithDocument(withPhoto: photo, token: signToken)
+                return
+            }
             self.setLiveID(withPhoto: photo, token: signToken)
         }
     }
