@@ -29,6 +29,7 @@ class SplashViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Do any additional setup after loading the view.
+        self.registerView.isHidden = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         BlockIDSDK.sharedInstance.setLicenseKey(key: Tenant.licenseKey)
         setRegisterButtonTitle()
