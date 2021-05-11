@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
 		3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */; };
 		3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3C78FA07264AA1D8001576DF /* DocumentHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHolder.swift; sourceTree = "<group>"; };
 		3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentScreenCell.swift; sourceTree = "<group>"; };
 		3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsentScreenCell.xib; sourceTree = "<group>"; };
 		3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EPassportChipScanViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +134,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3C78FA06264AA1C9001576DF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3C78FA07264AA1D8001576DF /* DocumentHolder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		3CD35A0E26458C03009D38B0 /* ConsentScreenCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +172,7 @@
 		3CEE330D264413C2003FDB78 /* BlockIDTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				3C78FA06264AA1C9001576DF /* Model */,
 				3CEE3342264414E7003FDB78 /* BlockIDTestApp.entitlements */,
 				3CEE3343264414E7003FDB78 /* Controller */,
 				3CEE3339264414E7003FDB78 /* SupportingFiles */,
@@ -465,6 +476,7 @@
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
 				3CEE3350264414E7003FDB78 /* UserDefualt+Ext.swift in Sources */,
+				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
 				3CEE3399264434BD003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
