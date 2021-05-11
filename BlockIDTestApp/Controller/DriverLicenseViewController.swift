@@ -2,7 +2,8 @@
 //  DriverLicenseViewController.swift
 //  BlockIDTestApp
 //
-//  Created by vaidehi hindlekar on 04/05/21.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
@@ -96,8 +97,6 @@ class DriverLicenseViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                //self.view.makeToast("Driver License is now enabled", duration: 3.0, position: .center)
-                //self.dlScannerHelper?.stopDLScanning()
                 self.view.makeToast("Driver License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })

@@ -2,7 +2,8 @@
 //  PinViewController.swift
 //  BlockIDTestApp
 //
-//  Created by vaidehi hindlekar on 06/05/21.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
@@ -21,7 +22,6 @@ class PinViewController: UIViewController {
     @IBOutlet weak var lblIncorrectPin: UILabel!
     @IBOutlet weak var _enterPinTitle: UILabel!
     
-    private let customBar: AccessoryView = AccessoryView()
     private var isIncorrectPin = false
     public var pinActivity = PinActivity.isEnrolling
     private var _firstPin: String!
@@ -43,13 +43,14 @@ class PinViewController: UIViewController {
     }
     
     private func pinViewUpdates() {
+        if pinActivity == .isEnrolling {
+            _enterPinTitle.text = "Enter new PIN"
+        }
+        else {
+            _enterPinTitle.text = "Confirm PIN"
+        }
         _viewPin.keyboardType = .numberPad
         _viewPin.fontSize = 20
-        customBar.onNextCallback = {(sender) -> Void in
-            self.onNext()
-        }
-        customBar.setBtnTitle("Next")
-        _viewPin.inputAccessoryView = customBar.addBar(CGRect(x:0, y:0, width:100, height:40))
         _viewPin.delegate = self
     }
 
@@ -58,28 +59,43 @@ class PinViewController: UIViewController {
             return // no-op
         }
         
+        //on second screen
+        if pinActivity == .isLogin || pinActivity == .isRemoving {
+             if BlockIDSDK.sharedInstance.verifyPin(pin:_viewPin.text ?? "") {
+                if pinActivity == .isLogin {
+                    self.showEnrollmentView()
+                }
+                else if  pinActivity == .isRemoving {
+                    removePin(pin:_viewPin.text ?? "")
+                }
+                return
+             }
+             else {
+                self.view.makeToast("Pin mismatched", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                   
+                })
+                return
+             }
+        }
+    
+        
         if _firstPin == nil {
             
             //------------------------First Pin Entered---------------
-            customBar.setBtnTitle("Done")
             _firstPin = _viewPin.text!
             _viewPin.text = ""
-            _enterPinTitle.text = "Confirm new PIN"
+            if pinActivity == .isEnrolling {
+                _enterPinTitle.text = "Confirm new PIN"
+            }
+            else {
+                _enterPinTitle.text = "Confirm PIN"
+            }
             return
         }
         
         //on second screen
         if _viewPin.text == _firstPin {
-            if pinActivity == .isRemoving {
-                removePin(pin: _firstPin)
-            }
-            else if pinActivity == .isEnrolling {
-                onSuccess()
-            }
-            else if pinActivity == .isLogin {
-                showEnrollmentView()
-            }
-            
+            onSuccess()
         } else {
             onPinMismatch()
         }
@@ -90,7 +106,7 @@ class PinViewController: UIViewController {
         BlockIDSDK.sharedInstance.removePin(pin: pin) { [weak self] status, error in
             self?.view.hideToastActivity()
             if status {
-                self?.view.makeToast("Pin enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self?.view.makeToast("Pin unenrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self?.goBack()
                 })
                 return
