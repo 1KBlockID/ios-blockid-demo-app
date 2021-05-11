@@ -1,0 +1,6 @@
+framework module Pods_BlockIDTestApp {
+  umbrella header "Pods-BlockIDTestApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
