@@ -152,7 +152,7 @@ class PassportViewController: UIViewController {
                 self.ppScannerHelper?.startRFIDScanning()
             }))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.goBack()
+                self.setPassport(withPPDat: self.pp!, token: self._token, isWithNFC: false)
             }))
             self.present(alert, animated: true)
             return
