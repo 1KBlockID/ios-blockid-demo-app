@@ -400,9 +400,9 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ook-fW-Sy9" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ook-fW-Sy9">
                                         <rect key="frame" x="15" y="123" width="384" height="645"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="documentOverlay" translatesAutoresizingMaskIntoConstraints="NO" id="TJQ-06-wWu">
                                         <rect key="frame" x="23" y="330.5" width="368" height="230"/>
@@ -418,9 +418,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
-
                                             <action selector="cancelClicked:" destination="Y9j-4n-5BQ" eventType="touchUpInside" id="EjD-NF-yQa"/>
-
                                         </connections>
                                     </button>
                                 </subviews>
@@ -462,7 +460,7 @@
                         <outlet property="_lblScanInfoTxt" destination="7MQ-fG-st2" id="Zae-PO-STz"/>
                         <outlet property="_viewBG" destination="ttc-IO-uKr" id="0hz-60-8hl"/>
                         <outlet property="_viewEPassportScan" destination="zy0-pD-Sy2" id="HVL-TL-BEe"/>
-                        <outlet property="_viewLiveIDScan" destination="Ook-fW-Sy9" id="PYA-vX-Uy3"/>
+                        <outlet property="_viewScanner" destination="Ook-fW-Sy9" id="3cG-mo-2VL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bn8-y8-Rzn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
