@@ -797,10 +797,10 @@ extension PassiveAuthenticationError : Foundation.LocalizedError {
     get
   }
 }
-@objc public class BIDScannerView : UIKit.UIView {
+@objc @_inheritsConvenienceInitializers public class BIDScannerView : UIKit.UIView {
   @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override required dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
-  @objc override dynamic public init(frame: CoreGraphics.CGRect)
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup11 : BlockIDSDK.DataGroup {
@@ -1212,8 +1212,8 @@ public struct CustomErrors {
   public var code: Swift.Int
   public var message: Swift.String
   public init(code: Swift.Int, msg: Swift.String)
-  @objc deinit
   @objc override dynamic public init()
+  @objc deinit
 }
 @available(iOS 13, OSX 10.15, *)
 public func AESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
