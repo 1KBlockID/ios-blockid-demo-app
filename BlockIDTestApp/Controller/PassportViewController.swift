@@ -21,18 +21,24 @@ class PassportViewController: UIViewController {
     private var _token = ""
     private var pp: BIDPassport?
     private var isWithNFC = false
+    private var _viewLiveIDScan  =  BIDScannerView()
     
     @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     @IBOutlet weak var _viewEPassportScan: UIView!
     
+    @IBOutlet weak var _viewScanner: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self._viewEPassportScan.isHidden = true
+        _viewLiveIDScan.isHidden = true
+        _viewLiveIDScan.frame = CGRect(x: 0, y: 0, width: self._viewScanner.frame.width, height: 500)
+        self._viewScanner.addSubview(_viewLiveIDScan)
+        
         startPassportScanning()
+        _viewLiveIDScan.isHidden = false
     }
     
     private func startPassportScanning() {
