@@ -56,4 +56,17 @@ class CommonFunctions {
         return ret!
     }
     
+    static func convertJSONStringToJSONObject(_ jsonString: String) -> Any? {
+        var object : Any?
+        let data = Data(jsonString.utf8)
+        do {
+            object = try JSONSerialization.jsonObject(with: data)
+        } catch {
+            debugPrint("some exception when converting JSON to object")
+            debugPrint(error)
+        }
+
+        return object
+    }
+    
 }

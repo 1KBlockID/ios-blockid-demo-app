@@ -28,7 +28,9 @@ class DocumentMapUtil {
         dlMap["type"] = documentData.type
         dlMap["category"] = documentCategory
         dlMap["proofedBy"] = K_PROOFEDBY_BLOCK_ID
-        dlMap["uuid"] = CommonFunctions.objectToJSONString(documentData)
+        let jsonString = CommonFunctions.objectToJSONString(documentData)
+//        let jsonObj = CommonFunctions.convertJSONStringToJSONObject(_:jsonString)
+        dlMap["uuid"] = jsonString
         return dlMap
     }
 }
