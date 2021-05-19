@@ -13,7 +13,8 @@ import Toast_Swift
 
 public enum Enrollments: String {
     case DriverLicense = "Driver License"
-    case Passport  = "Passport"
+    case Passport1  = "Passport 1"
+    case Passport2  = "Passport 2"
     case NationalID  = "National ID"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
@@ -24,7 +25,7 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -59,8 +60,10 @@ extension EnrollMentViewController: UITableViewDelegate {
         switch cell?.lblEnrollment.text {
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
-        case Enrollments.Passport.rawValue:
-            enrollPassport()
+        case Enrollments.Passport1.rawValue:
+            enrollPassport(doc: 1)
+        case Enrollments.Passport2.rawValue:
+            enrollPassport(doc: 2)
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.Pin.rawValue:
@@ -108,7 +111,7 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollPassport() {
+    private func enrollPassport(doc: Int) {
         if BlockIDSDK.sharedInstance.isPassportEnrolled() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 

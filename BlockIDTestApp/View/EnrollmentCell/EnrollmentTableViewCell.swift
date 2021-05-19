@@ -22,7 +22,9 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
         case .DriverLicense:
             self.accessoryType = BlockIDSDK.sharedInstance.isDLEnrolled() ? .checkmark : .none
-        case .Passport:
+        case .Passport1:
+            self.accessoryType = BlockIDSDK.sharedInstance.isPassportEnrolled() ? .checkmark : .none
+        case .Passport2:
             self.accessoryType = BlockIDSDK.sharedInstance.isPassportEnrolled() ? .checkmark : .none
         case .NationalID:
             self.accessoryType = BlockIDSDK.sharedInstance.isNationalIdEnrolled() ? .checkmark : .none

@@ -42,4 +42,18 @@ class CommonFunctions {
         
         return nil
     }
+    
+    static func objectToJSONString<T>(_ value: T) -> String where T : Encodable {
+        var ret : String?
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(value)
+            ret = String(data: data, encoding: String.Encoding.utf8)
+            
+        } catch {
+            debugPrint("some exception when converting object to JSON")
+        }
+        return ret!
+    }
+    
 }
