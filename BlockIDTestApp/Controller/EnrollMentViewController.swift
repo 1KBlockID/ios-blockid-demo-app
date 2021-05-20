@@ -34,6 +34,14 @@ class EnrollMentViewController: UIViewController {
         super.viewWillAppear(animated)
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
+        
+        let arrDocs = BIDDocumentProvider.shared.getDocument(id: nil, type: nil, category: "identity_document")
+        print(arrDocs as Any,arrDocs?.count as Any,">>> identity_document")
+        
+        let arrDocs_misc = BIDDocumentProvider.shared.getDocument(id: nil, type: nil, category: "misc_document")
+        print(arrDocs_misc as Any,arrDocs_misc?.count as Any,">>> misc_document")
+
+
     }
     
 }
@@ -102,10 +110,12 @@ extension EnrollMentViewController {
     
     private func unenrollDocument(_ type: BIDDocumentType) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.unregisterDocument(docType: type) {
-            status, error in
-            self.view.hideToastActivity()
-            self.tableEnrollments.reloadData()
+        if let dictDoc = BIDDocumentProvider.shared.getDocument(id: nil, type: type.rawValue, category: nil)?[0] as? [String: Any] {
+            BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
+                status, error in
+                self.view.hideToastActivity()
+                self.tableEnrollments.reloadData()
+            }
         }
     }
 }
