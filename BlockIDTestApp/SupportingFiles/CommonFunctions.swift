@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 class CommonFunctions {
     
     static func getAppBundleVersion() -> (String, String) {
@@ -68,5 +69,26 @@ class CommonFunctions {
 
         return object
     }
+    
+    static func convertToJSONString(_ object: AnyObject) -> String {
+        var jsonString : String?
+        do {
+           let jsonData = try JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions()) as NSData
+            jsonString = NSString(data: jsonData as Data, encoding: String.Encoding.utf8.rawValue) as String?
+        } catch {
+            debugPrint("some exception when converting object to JSON")
+        }
+        return jsonString!
+    }
+    
+    
+    static func convertImageFromBase64String(str: String) -> UIImage {
+        let dataDecoded : Data = Data(base64Encoded: str, options: .ignoreUnknownCharacters)!
+        guard let decodedimage = UIImage(data: dataDecoded) else {
+            return UIImage()
+        }
+        return decodedimage
+    }
+    
     
 }

@@ -8,9 +8,9 @@
 import Foundation
 import BlockIDSDK
 
-public enum DocumentCategory {
-    case identity_document
-    case misc_document
+public enum DocumentCategory: String {
+    case identity_document = "identity_document"
+    case misc_document =  "misc_document"
 }
 class DocumentMapUtil {
     private static let id = "id"
@@ -26,11 +26,11 @@ class DocumentMapUtil {
         var dlMap = [String: Any]()
         dlMap["id"] = documentData.id
         dlMap["type"] = documentData.type
-        dlMap["category"] = documentCategory
+        dlMap["category"] = documentCategory.rawValue
         dlMap["proofedBy"] = K_PROOFEDBY_BLOCK_ID
         let jsonString = CommonFunctions.objectToJSONString(documentData)
-//        let jsonObj = CommonFunctions.convertJSONStringToJSONObject(_:jsonString)
-        dlMap["uuid"] = jsonString
+        let jsonObj = CommonFunctions.convertJSONStringToJSONObject(_:jsonString)
+        dlMap["uuid"] = jsonObj
         return dlMap
     }
 }

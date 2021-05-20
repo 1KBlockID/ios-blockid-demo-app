@@ -99,22 +99,22 @@ class LiveIDViewController: UIViewController {
     
     private func setLiveID(withPhoto photo: UIImage, token: String) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.setLiveID(image: photo, sigToken: token) { [self] (status, error) in
-            self.view.hideToastActivity()
-            if !status {
-                // FAILED
-                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
-                    self.goBack()
-                })
-                return
-            }
-            // SUCCESS
-            self.stopLiveIDScanning()
-            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-                self.goBack()
-            })
-
-        }
+//        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: photo, sigToken: token) { [self] (status, error) in
+//            self.view.hideToastActivity()
+//            if !status {
+//                // FAILED
+//                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+//                    self.goBack()
+//                })
+//                return
+//            }
+//            // SUCCESS
+//            self.stopLiveIDScanning()
+//            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+//                self.goBack()
+//            })
+//
+//        }
     }
     
     private func registerLiveIDWithDocument(withPhoto photo: UIImage, token: String) {
@@ -124,24 +124,24 @@ class LiveIDViewController: UIViewController {
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
         let docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, faceImage: photo, liveIDSignToken: token) { [self] (status, error) in
-            self.view.hideToastActivity()
-            DocumentStore.sharedInstance.clearData()
-            // SUCCESS
-            self.stopLiveIDScanning()
-            if !status {
-                // FAILED
-                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
-                    self.goBack()
-                })
-                return
-            }
-           
-            self.view.makeToast("Document enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-                self.goBack()
-            })
-
-        }
+//        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, dictFaceImage: photo, liveIDSignToken: token) { [self] (status, error) in
+//            self.view.hideToastActivity()
+//            DocumentStore.sharedInstance.clearData()
+//            // SUCCESS
+//            self.stopLiveIDScanning()
+//            if !status {
+//                // FAILED
+//                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+//                    self.goBack()
+//                })
+//                return
+//            }
+//
+//            self.view.makeToast("Document enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+//                self.goBack()
+//            })
+//
+//        }
     }
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
@@ -211,7 +211,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         updateUIWithLivenessFactor(expression)
     }
         
-    func liveIdDetectionCompleted(_ photo: UIImage?, signatureToken: String?, error: ErrorResponse?) {
+    func liveIdDetectionCompleted(_ liveIdData: BIDDocumentData?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
         if error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
@@ -224,7 +224,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         
         
         
-        guard let photo = photo, let signToken = signatureToken else {
+        guard let photo = liveIdData?.face, let signToken = signatureToken else {
             self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
                 if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
                     self.showAppLogin()
@@ -236,16 +236,19 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
 
         }
+        let imgFace = CommonFunctions.convertImageFromBase64String(str: liveIdData?.face ?? "")
+
         if isForVerification {
             // Verify LiveID
-            self.verifyLiveID(withPhoto: photo, token: signToken)
+            self.verifyLiveID(withPhoto: imgFace, token: signToken)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
-                self.registerLiveIDWithDocument(withPhoto: photo, token: signToken)
+                self.registerLiveIDWithDocument(withPhoto: imgFace, token: signToken)
                 return
             }
-            self.setLiveID(withPhoto: photo, token: signToken)
+            self.setLiveID(withPhoto: imgFace, token: signToken)
+
         }
     }
     
