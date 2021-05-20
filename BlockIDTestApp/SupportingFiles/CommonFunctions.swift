@@ -90,5 +90,7 @@ class CommonFunctions {
         return decodedimage
     }
     
-    
+    static func convertImageToBase64String(img: UIImage) -> String {
+        return img.pngData()?.base64EncodedString() ?? ""
+    }
 }

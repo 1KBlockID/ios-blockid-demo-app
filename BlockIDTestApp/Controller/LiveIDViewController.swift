@@ -97,51 +97,62 @@ class LiveIDViewController: UIViewController {
         return
     }
     
-    private func setLiveID(withPhoto photo: UIImage, token: String) {
+    private func setLiveID(withPhoto photo: String, token: String, documentObj: BIDDocumentData) {
         self.view.makeToastActivity(.center)
-//        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: photo, sigToken: token) { [self] (status, error) in
-//            self.view.hideToastActivity()
-//            if !status {
-//                // FAILED
-//                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
-//                    self.goBack()
-//                })
-//                return
-//            }
-//            // SUCCESS
-//            self.stopLiveIDScanning()
-//            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-//                self.goBack()
-//            })
-//
-//        }
+//        var docObject = DocumentMapUtil.getDocumentMap(documentData: documentObj, documentCategory: .identity_document)
+        var dlMap = [String: Any]()
+        dlMap["id"] = documentObj.id
+        dlMap["type"] = documentObj.type
+        dlMap["category"] = "identity_document"
+        dlMap["proofedBy"] = "blockid"
+        dlMap["face"] = photo //CommonFunctions.convertImageToBase64String(img: photo)
+        print(dlMap)
+        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dlMap, sigToken: token) { [self] (status, error) in
+            self.view.hideToastActivity()
+            if !status {
+                // FAILED
+                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                    self.goBack()
+                })
+                return
+            }
+            // SUCCESS
+            self.stopLiveIDScanning()
+            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.goBack()
+            })
+
+        }
     }
     
-    private func registerLiveIDWithDocument(withPhoto photo: UIImage, token: String) {
+    private func registerLiveIDWithDocument(withPhoto photo: String, token: String,docObj:BIDDocumentData) {
         self.view.makeToastActivity(.center)
-        let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
-        let obj = DocumentStore.sharedInstance.documentData!
+//        let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
+        let obj = docObj //DocumentStore.sharedInstance.documentData!
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
-//        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, dictFaceImage: photo, liveIDSignToken: token) { [self] (status, error) in
-//            self.view.hideToastActivity()
-//            DocumentStore.sharedInstance.clearData()
-//            // SUCCESS
-//            self.stopLiveIDScanning()
-//            if !status {
-//                // FAILED
-//                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
-//                    self.goBack()
-//                })
-//                return
-//            }
-//
-//            self.view.makeToast("Document enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-//                self.goBack()
-//            })
-//
-//        }
+        var docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
+        var dictFaceImage: [String: Any] = [String: Any]()
+        dictFaceImage["face"] = photo //CommonFunctions.convertImageToBase64String(img: photo)
+        docObject["face"] = photo
+        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, dictFaceImage: dictFaceImage, liveIDSignToken: token) { [self] (status, error) in
+            self.view.hideToastActivity()
+            DocumentStore.sharedInstance.clearData()
+            // SUCCESS
+            self.stopLiveIDScanning()
+            if !status {
+                // FAILED
+                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                    self.goBack()
+                })
+                return
+            }
+
+            self.view.makeToast("Document enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.goBack()
+            })
+
+        }
     }
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
@@ -236,18 +247,18 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
 
         }
-        let imgFace = CommonFunctions.convertImageFromBase64String(str: liveIdData?.face ?? "")
 
         if isForVerification {
+            let imgFace = CommonFunctions.convertImageFromBase64String(str: photo)
             // Verify LiveID
             self.verifyLiveID(withPhoto: imgFace, token: signToken)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
-                self.registerLiveIDWithDocument(withPhoto: imgFace, token: signToken)
+                self.registerLiveIDWithDocument(withPhoto: photo, token: signToken, docObj: liveIdData!)
                 return
             }
-            self.setLiveID(withPhoto: imgFace, token: signToken)
+            self.setLiveID(withPhoto: photo, token: signToken, documentObj: liveIdData!)
 
         }
     }
