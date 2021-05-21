@@ -34,14 +34,6 @@ class EnrollMentViewController: UIViewController {
         super.viewWillAppear(animated)
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
-        
-        let arrDocs = BIDDocumentProvider.shared.getDocument(id: nil, type: nil, category: "identity_document")
-        print(arrDocs as Any,arrDocs?.count as Any,">>> identity_document")
-        
-        let arrDocs_misc = BIDDocumentProvider.shared.getDocument(id: nil, type: nil, category: "misc_document")
-        print(arrDocs_misc as Any,arrDocs_misc?.count as Any,">>> misc_document")
-
-
     }
     
 }
@@ -52,6 +44,7 @@ extension EnrollMentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: enrollTableViewReuseIdentifier, for: indexPath) as! EnrollmentTableViewCell
+        cell.controllerObj = self
         cell.setupCell(enrollment: enrollmentArray[indexPath.row])
         return cell
     }
@@ -69,9 +62,9 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
-            enrollPassport(doc: 1)
+            enrollPassport(index: 1)
         case Enrollments.Passport2.rawValue:
-            enrollPassport(doc: 2)
+            enrollPassport(index: 2)
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.Pin.rawValue:
@@ -124,8 +117,9 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollPassport(doc: Int) {
-        if BlockIDSDK.sharedInstance.isPassportEnrolled() {
+    
+    private func enrollPassport(index: Int) {
+        if (getDocumentDictionary(docIndex: index ,type: .PPT ,category: .Identity_Document) != nil) {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in

@@ -10,6 +10,17 @@ import UIKit
 import BlockIDSDK
 
 extension UIViewController {
+    public func getDocumentDictionary(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> [String : Any]? {
+        let arrDocuments = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: type.rawValue,
+                                                                  category: category.rawValue)
+        let index = (docIndex-1)
+        if arrDocuments?.count ?? 0 > index{
+            return arrDocuments?[index] as? [String : Any]
+        }
+        
+        return nil
+    }
     
     public func showAlertView(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
