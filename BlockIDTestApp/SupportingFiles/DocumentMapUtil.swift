@@ -13,14 +13,14 @@ public enum DocumentCategory: String {
     case misc_document =  "misc_document"
 }
 class DocumentMapUtil {
-    private static let id = "id"
-    private static let type = "type"
-    private static let category = "category"
-    private static let proofedBy = "proofedBy"
-    private static let uuid = "uuid"
+    public static let id = "id"
+    public static let type = "type"
+    public static let category = "category"
+    public static let proofedBy = "proofedBy"
+    public static let uuid = "uuid"
 
     
-    private static let K_PROOFEDBY_BLOCK_ID = "blockid";
+    public static let K_PROOFEDBY_BLOCK_ID = "blockid";
     
     public static func getDocumentMap(documentData: BIDDocumentData, documentCategory: DocumentCategory)-> [String: Any] {
         var dlMap = [String: Any]()

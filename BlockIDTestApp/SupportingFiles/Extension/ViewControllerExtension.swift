@@ -10,13 +10,14 @@ import UIKit
 import BlockIDSDK
 
 extension UIViewController {
-    public func getDocumentDictionary(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> [String : Any]? {
+    public func getDocumentID(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> String? {
         let arrDocuments = BIDDocumentProvider.shared.getDocument(id: nil,
                                                                   type: type.rawValue,
                                                                   category: category.rawValue)
         let index = (docIndex-1)
         if arrDocuments?.count ?? 0 > index{
-            return arrDocuments?[index] as? [String : Any]
+            let dictDoc = arrDocuments?[index] as? [String : Any]
+            return dictDoc?[DocumentMapUtil.id] as? String
         }
         
         return nil

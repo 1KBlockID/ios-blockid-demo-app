@@ -57,8 +57,8 @@ extension EnrollMentViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? EnrollmentTableViewCell
-        switch cell?.lblEnrollment.text {
+        let enrolmentObj = enrollmentArray[indexPath.row].rawValue
+        switch enrolmentObj {
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
@@ -87,7 +87,7 @@ extension EnrollMentViewController: UITableViewDelegate {
 extension EnrollMentViewController {
     
     private func enrollDL() {
-        if (getDocumentDictionary(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
+        if (getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
@@ -119,7 +119,7 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     
     private func enrollPassport(index: Int) {
-        if (getDocumentDictionary(docIndex: index ,type: .PPT ,category: .Identity_Document) != nil) {
+        if (getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) != nil) {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
@@ -136,7 +136,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollNationalID() {
-        if (getDocumentDictionary(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
+        if (getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
