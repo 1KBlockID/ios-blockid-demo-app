@@ -14,6 +14,7 @@ extension UIViewController {
         let arrDocuments = BIDDocumentProvider.shared.getDocument(id: nil,
                                                                   type: type.rawValue,
                                                                   category: category.rawValue)
+//        print(arrDocuments as Any,type.rawValue)
         let index = (docIndex-1)
         if arrDocuments?.count ?? 0 > index{
             let dictDoc = arrDocuments?[index] as? [String : Any]

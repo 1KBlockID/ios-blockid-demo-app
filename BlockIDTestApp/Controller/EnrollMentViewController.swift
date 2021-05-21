@@ -136,7 +136,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollNationalID() {
-        if (getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
+        if (getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) != nil) {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
