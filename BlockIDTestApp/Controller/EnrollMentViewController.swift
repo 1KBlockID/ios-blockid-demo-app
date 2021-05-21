@@ -91,7 +91,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.dl)
+                self.unenrollDocument(.dl, registerDocType: .DL)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -101,8 +101,8 @@ extension EnrollMentViewController {
         showDLView()
     }
     
-    private func unenrollDocument(_ type: BIDDocumentType) {
-        let arrDoc = BIDDocumentProvider.shared.getDocument(id: nil, type: "DL", category: nil)
+    private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType) {
+        let arrDoc = BIDDocumentProvider.shared.getDocument(id: nil, type: registerDocType.rawValue, category: nil)
 //        print(arrDoc?.count as Any,"fetched array")
 //        print(arrDoc?.first as Any,"first array data")
         if let dictDoc = arrDoc?.first as? [String: Any] {
@@ -123,7 +123,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.passport)
+                self.unenrollDocument(.passport, registerDocType: .PPT)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -140,7 +140,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.nationalId)
+                self.unenrollDocument(.nationalId, registerDocType: .NATIONAL_ID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
