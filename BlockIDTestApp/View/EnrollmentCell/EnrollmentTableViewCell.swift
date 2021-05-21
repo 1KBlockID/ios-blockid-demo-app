@@ -22,13 +22,13 @@ class EnrollmentTableViewCell: UITableViewCell {
         case .DeviceAuth:
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
         case .DriverLicense:
-            self.accessoryType = BlockIDSDK.sharedInstance.isDLEnrolled() ? .checkmark : .none
+            self.accessoryType = (controllerObj?.getDocumentDictionary(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) ? .checkmark : .none
         case .Passport1:
             self.accessoryType = (controllerObj?.getDocumentDictionary(docIndex: 1 ,type: .PPT ,category: .Identity_Document) != nil) ? .checkmark : .none
         case .Passport2:
             self.accessoryType = (controllerObj?.getDocumentDictionary(docIndex: 2 ,type: .PPT ,category: .Identity_Document) != nil) ? .checkmark : .none
         case .NationalID:
-            self.accessoryType = BlockIDSDK.sharedInstance.isNationalIdEnrolled() ? .checkmark : .none
+            self.accessoryType = (controllerObj?.getDocumentDictionary(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) != nil) ? .checkmark : .none
         case .LiveID:
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
         case .Pin:
