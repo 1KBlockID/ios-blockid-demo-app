@@ -87,11 +87,12 @@ extension EnrollMentViewController: UITableViewDelegate {
 extension EnrollMentViewController {
     
     private func enrollDL() {
-        if (getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) != nil) {
+        let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.dl, registerDocType: .DL)
+                self.unenrollDocument(.dl, registerDocType: .DL, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -101,8 +102,8 @@ extension EnrollMentViewController {
         showDLView()
     }
     
-    private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType) {
-        let arrDoc = BIDDocumentProvider.shared.getDocument(id: nil, type: registerDocType.rawValue, category: nil)
+    private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType, id: String) {
+        let arrDoc = BIDDocumentProvider.shared.getDocument(id: id, type: registerDocType.rawValue, category: nil)
         if let dictDoc = arrDoc?.first as? [String: Any] {
             self.view.makeToastActivity(.center)
             BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
@@ -117,11 +118,12 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     
     private func enrollPassport(index: Int) {
-        if (getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) != nil) {
+        let docID = getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.passport, registerDocType: .PPT)
+                self.unenrollDocument(.passport, registerDocType: .PPT, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -133,12 +135,14 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
+    
     private func enrollNationalID() {
-        if (getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) != nil) {
+        let docID = getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.nationalId, registerDocType: .NATIONAL_ID)
+                self.unenrollDocument(.nationalId, registerDocType: .NATIONAL_ID, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
