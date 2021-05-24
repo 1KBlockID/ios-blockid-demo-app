@@ -11,26 +11,41 @@ import UIKit
 import BlockIDSDK
 
 class EnrollmentTableViewCell: UITableViewCell {
-
+    weak var controllerObj:EnrollMentViewController?
+    
     @IBOutlet weak var lblEnrollment: UILabel!
     
     public func setupCell(enrollment: Enrollments) {
         
-        self.lblEnrollment.text = enrollment.rawValue
         switch enrollment {
         case .DeviceAuth:
+            self.lblEnrollment.text = enrollment.rawValue
+
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
         case .DriverLicense:
-            self.accessoryType = BlockIDSDK.sharedInstance.isDLEnrolled() ? .checkmark : .none
-        case .Passport:
-            self.accessoryType = BlockIDSDK.sharedInstance.isPassportEnrolled() ? .checkmark : .none
+            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
+            self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.accessoryType = (docId != nil) ? .checkmark : .none
+        case .Passport1:
+            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .PPT ,category: .Identity_Document)
+            self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.accessoryType = (docId != nil) ? .checkmark : .none
+        case .Passport2:
+            let docId = controllerObj?.getDocumentID(docIndex: 2 ,type: .PPT ,category: .Identity_Document)
+            self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.accessoryType = (docId != nil) ? .checkmark : .none
         case .NationalID:
-            self.accessoryType = BlockIDSDK.sharedInstance.isNationalIdEnrolled() ? .checkmark : .none
+            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document)
+            self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.accessoryType = (docId != nil) ? .checkmark : .none
         case .LiveID:
+            self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
         case .Pin:
+            self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isPinRegistered() ? .checkmark : .none
         default:
+            self.lblEnrollment.text = enrollment.rawValue
             break
         }
         
