@@ -87,7 +87,9 @@ class PassportViewController: UIViewController {
     
     private func setPassport(withPPDat pp: BIDPassport, token: String, isWithNFC: Bool) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.registerDocument(obj: pp, docType: .passport, sigToken: token) { [self] (status, error) in
+        let docObject = DocumentMapUtil.getDocumentMap(documentData: pp, documentCategory: .identity_document)
+
+        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .passport, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {

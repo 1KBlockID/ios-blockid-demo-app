@@ -12,9 +12,10 @@ import Toast_Swift
 
 
 public enum Enrollments: String {
-    case DriverLicense = "Driver License"
-    case Passport  = "Passport"
-    case NationalID  = "National ID"
+    case DriverLicense = "Driver License 1"
+    case Passport1  = "Passport 1"
+    case Passport2  = "Passport 2"
+    case NationalID  = "National ID 1"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
@@ -24,7 +25,7 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -43,6 +44,7 @@ extension EnrollMentViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: enrollTableViewReuseIdentifier, for: indexPath) as! EnrollmentTableViewCell
+        cell.controllerObj = self
         cell.setupCell(enrollment: enrollmentArray[indexPath.row])
         return cell
     }
@@ -55,12 +57,14 @@ extension EnrollMentViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? EnrollmentTableViewCell
-        switch cell?.lblEnrollment.text {
+        let enrolmentObj = enrollmentArray[indexPath.row].rawValue
+        switch enrolmentObj {
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
-        case Enrollments.Passport.rawValue:
-            enrollPassport()
+        case Enrollments.Passport1.rawValue:
+            enrollPassport(index: 1)
+        case Enrollments.Passport2.rawValue:
+            enrollPassport(index: 2)
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.Pin.rawValue:
@@ -83,11 +87,12 @@ extension EnrollMentViewController: UITableViewDelegate {
 extension EnrollMentViewController {
     
     private func enrollDL() {
-        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+        let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.dl)
+                self.unenrollDocument(.dl, registerDocType: .DL, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -97,23 +102,28 @@ extension EnrollMentViewController {
         showDLView()
     }
     
-    private func unenrollDocument(_ type: BIDDocumentType) {
-        self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.unregisterDocument(docType: type) {
-            status, error in
-            self.view.hideToastActivity()
-            self.tableEnrollments.reloadData()
+    private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType, id: String) {
+        let arrDoc = BIDDocumentProvider.shared.getDocument(id: id, type: registerDocType.rawValue, category: nil)
+        if let dictDoc = arrDoc?.first as? [String: Any] {
+            self.view.makeToastActivity(.center)
+            BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
+                status, error in
+                self.view.hideToastActivity()
+                self.tableEnrollments.reloadData()
+            }
         }
     }
 }
 
 extension EnrollMentViewController {
-    private func enrollPassport() {
-        if BlockIDSDK.sharedInstance.isPassportEnrolled() {
+    
+    private func enrollPassport(index: Int) {
+        let docID = getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.passport)
+                self.unenrollDocument(.passport, registerDocType: .PPT, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -125,12 +135,14 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
+    
     private func enrollNationalID() {
-        if BlockIDSDK.sharedInstance.isNationalIdEnrolled() {
+        let docID = getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) ?? ""
+        if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.nationalId)
+                self.unenrollDocument(.nationalId, registerDocType: .NATIONAL_ID, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 

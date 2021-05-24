@@ -81,7 +81,8 @@ class NationalIDViewController: UIViewController {
     private func setNationaID(withNIDData nid: BIDNationalId, token: String) {
         //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.registerDocument(obj: nid, docType: .nationalId, sigToken: token) { [self] (status, error) in
+        let docObject = DocumentMapUtil.getDocumentMap(documentData: nid, documentCategory: .identity_document)
+        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .nationalId, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
