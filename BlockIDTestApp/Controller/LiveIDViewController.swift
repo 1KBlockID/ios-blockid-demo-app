@@ -127,14 +127,20 @@ class LiveIDViewController: UIViewController {
     
     private func registerLiveIDWithDocument(withPhoto photo: String, token: String,docObj:BIDDocumentData) {
         self.view.makeToastActivity(.center)
-//        let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
-        let obj = docObj //DocumentStore.sharedInstance.documentData!
+        let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
+        guard let obj = documentData.documentData else { return  }
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
-        var docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
+        let docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
+
+        //Live id data
         var dictFaceImage: [String: Any] = [String: Any]()
-        dictFaceImage["face"] = photo //CommonFunctions.convertImageToBase64String(img: photo)
-        docObject["face"] = photo
+        dictFaceImage["face"] = photo
+        dictFaceImage["id"] = BIDAuthProvider.shared.liveIdDocID
+        dictFaceImage["type"] = RegisterDocType.LIVE_ID.rawValue
+        dictFaceImage["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dictFaceImage["proofedBy"] = DocumentMapUtil.K_PROOFEDBY_BLOCK_ID
+        
         BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, dictFaceImage: dictFaceImage, liveIDSignToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()

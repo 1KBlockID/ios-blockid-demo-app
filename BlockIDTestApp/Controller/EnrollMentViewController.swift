@@ -12,10 +12,10 @@ import Toast_Swift
 
 
 public enum Enrollments: String {
-    case DriverLicense = "Driver License"
+    case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
-    case NationalID  = "National ID"
+    case NationalID  = "National ID 1"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
