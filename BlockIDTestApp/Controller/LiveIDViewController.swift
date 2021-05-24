@@ -99,15 +99,14 @@ class LiveIDViewController: UIViewController {
     
     private func setLiveID(withPhoto photo: String, token: String, documentObj: BIDDocumentData) {
         self.view.makeToastActivity(.center)
-//        var docObject = DocumentMapUtil.getDocumentMap(documentData: documentObj, documentCategory: .identity_document)
-        var dlMap = [String: Any]()
-        dlMap["id"] = documentObj.id
-        dlMap["type"] = documentObj.type
-        dlMap["category"] = "identity_document"
-        dlMap["proofedBy"] = "blockid"
-        dlMap["face"] = photo //CommonFunctions.convertImageToBase64String(img: photo)
-        print(dlMap)
-        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dlMap, sigToken: token) { [self] (status, error) in
+        var dictLiveId = [String: Any]()
+        dictLiveId["id"] = documentObj.id
+        dictLiveId["type"] = documentObj.type
+        dictLiveId["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dictLiveId["proofedBy"] = DocumentMapUtil.K_PROOFEDBY_BLOCK_ID
+        dictLiveId["face"] = photo
+
+        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dictLiveId, sigToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED

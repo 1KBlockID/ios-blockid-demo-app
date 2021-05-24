@@ -23,15 +23,15 @@ class DocumentMapUtil {
     public static let K_PROOFEDBY_BLOCK_ID = "blockid";
     
     public static func getDocumentMap(documentData: BIDDocumentData, documentCategory: DocumentCategory)-> [String: Any] {
-        var dlMap = [String: Any]()
-        dlMap["id"] = documentData.id
-        dlMap["type"] = documentData.type
-        dlMap["category"] = documentCategory.rawValue
-        dlMap["proofedBy"] = K_PROOFEDBY_BLOCK_ID
+        var docMap = [String: Any]()
+        docMap["id"] = documentData.id
+        docMap["type"] = documentData.type
+        docMap["category"] = documentCategory.rawValue
+        docMap["proofedBy"] = K_PROOFEDBY_BLOCK_ID
         let jsonString = CommonFunctions.objectToJSONString(documentData)
         let jsonObj = CommonFunctions.convertJSONStringToJSONObject(_:jsonString)
-        dlMap["uuid"] = jsonObj
-        return dlMap
+        docMap["uuid"] = jsonObj
+        return docMap
     }
 }
 

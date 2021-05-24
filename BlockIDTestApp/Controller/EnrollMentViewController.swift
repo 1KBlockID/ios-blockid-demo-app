@@ -103,8 +103,6 @@ extension EnrollMentViewController {
     
     private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType) {
         let arrDoc = BIDDocumentProvider.shared.getDocument(id: nil, type: registerDocType.rawValue, category: nil)
-//        print(arrDoc?.count as Any,"fetched array")
-//        print(arrDoc?.first as Any,"first array data")
         if let dictDoc = arrDoc?.first as? [String: Any] {
             self.view.makeToastActivity(.center)
             BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
