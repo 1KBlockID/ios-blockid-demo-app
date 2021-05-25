@@ -93,4 +93,16 @@ class CommonFunctions {
     static func convertImageToBase64String(img: UIImage) -> String {
         return img.pngData()?.base64EncodedString() ?? ""
     }
+    
+    /**
+     **JSON Serialized Object**
+     *Converts json encoded string to dictionary to be used for requests*
+     - Parameter json: json encoded string for request
+     - Returns: Dictionary
+     */
+    static func jsonStringToDic(from json: String) -> [String: Any]? {
+        guard let data = json.data(using: .utf8) else { return nil }
+        let anyResult = try? JSONSerialization.jsonObject(with: data, options: [])
+        return anyResult as? [String: Any]
+    }
 }

@@ -99,14 +99,14 @@ class LiveIDViewController: UIViewController {
     
     private func setLiveID(withPhoto photo: String, token: String, documentObj: BIDDocumentData) {
         self.view.makeToastActivity(.center)
-        var dictLiveId = [String: Any]()
-        dictLiveId["id"] = documentObj.id
-        dictLiveId["type"] = documentObj.type
-        dictLiveId["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dictLiveId["proofedBy"] = DocumentMapUtil.K_PROOFEDBY_BLOCK_ID
-        dictLiveId["face"] = photo
+        //Live id data
+        let faceJsonStr = CommonFunctions.objectToJSONString(documentObj)
+        var dictFaceImage = CommonFunctions.jsonStringToDic(from: faceJsonStr)
+        dictFaceImage?["id"] = BIDAuthProvider.shared.liveIdDocID
+        dictFaceImage?["type"] = RegisterDocType.LIVE_ID.rawValue
+        dictFaceImage?["category"] = RegisterDocCategory.Identity_Document.rawValue
 
-        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dictLiveId, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dictFaceImage ?? [:], sigToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -124,23 +124,26 @@ class LiveIDViewController: UIViewController {
         }
     }
     
-    private func registerLiveIDWithDocument(withPhoto photo: String, token: String,docObj:BIDDocumentData) {
+    private func registerLiveIDWithDocument(withPhoto photo: String, token: String, docObj:BIDDocumentData) {
         self.view.makeToastActivity(.center)
         let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
         guard let obj = documentData.documentData else { return  }
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: obj, documentCategory: .identity_document)
-
-        //Live id data
-        var dictFaceImage: [String: Any] = [String: Any]()
-        dictFaceImage["face"] = photo
-        dictFaceImage["id"] = BIDAuthProvider.shared.liveIdDocID
-        dictFaceImage["type"] = RegisterDocType.LIVE_ID.rawValue
-        dictFaceImage["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dictFaceImage["proofedBy"] = DocumentMapUtil.K_PROOFEDBY_BLOCK_ID
+        let jsonStr = CommonFunctions.objectToJSONString(obj)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["type"] = docType
+        dic?["id"] = obj.id
         
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: docType, docSignToken: docSignToken, dictFaceImage: dictFaceImage, liveIDSignToken: token) { [self] (status, error) in
+        //Live id data
+        let faceJsonStr = CommonFunctions.objectToJSONString(docObj)
+        var dictFaceImage = CommonFunctions.jsonStringToDic(from: faceJsonStr)
+        dictFaceImage?["id"] = BIDAuthProvider.shared.liveIdDocID
+        dictFaceImage?["type"] = RegisterDocType.LIVE_ID.rawValue
+        dictFaceImage?["category"] = RegisterDocCategory.Identity_Document.rawValue
+        
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: docType, docSignToken: docSignToken, dictFaceImage: dictFaceImage ?? [:], liveIDSignToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
