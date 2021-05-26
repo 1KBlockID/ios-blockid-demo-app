@@ -12,6 +12,7 @@ class DocumentStore : NSObject {
     var docType : BIDDocumentType?
     var documentData: BIDDocumentData?
     var token : String?
+    var type: String?
     
     public static let sharedInstance = DocumentStore()
     
@@ -23,12 +24,14 @@ class DocumentStore : NSObject {
         self.docType = docType
         self.documentData = documentData
         self.token = token
+        self.type = documentData.type
     }
     
     public func clearData() {
         self.docType = nil
         self.documentData = nil
         self.token = nil
+        self.type = nil
     }
     
     public func getDocumentStoreData() -> DocumentStore {

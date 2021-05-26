@@ -17,7 +17,7 @@ extension UIViewController {
         let index = (docIndex-1)
         if arrDocuments?.count ?? 0 > index{
             let dictDoc = arrDocuments?[index] as? [String : Any]
-            return dictDoc?[DocumentMapUtil.id] as? String
+            return dictDoc?["id"] as? String
         }
         
         return nil

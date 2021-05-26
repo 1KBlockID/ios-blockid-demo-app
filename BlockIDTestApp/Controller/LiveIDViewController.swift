@@ -130,10 +130,11 @@ class LiveIDViewController: UIViewController {
         guard let obj = documentData.documentData else { return  }
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
+        let type = DocumentStore.sharedInstance.type ?? ""
         let jsonStr = CommonFunctions.objectToJSONString(obj)
         var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
         dic?["category"] = DocumentCategory.identity_document.rawValue
-        dic?["type"] = docType
+        dic?["type"] = type
         dic?["id"] = obj.id
         
         //Live id data
