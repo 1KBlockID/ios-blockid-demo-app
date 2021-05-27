@@ -55,7 +55,7 @@ class PassportViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize PassportScannerHelper
                     if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, ppResponseDelegate: self, cutoutView: self._imgOverlay, expiryGracePeriod: self.expiryDays)
+                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.ppScannerHelper?.startPassportScanning()
