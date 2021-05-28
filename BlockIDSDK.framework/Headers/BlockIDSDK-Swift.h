@@ -353,12 +353,6 @@ SWIFT_CLASS("_TtC10BlockIDSDK9TOTPUtils")
 @end
 
 
-
-SWIFT_CLASS("_TtC10BlockIDSDK16TenantInfoHelper")
-@interface TenantInfoHelper : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
 #if __has_attribute(external_source_symbol)
 # pragma clang attribute pop
 #endif
