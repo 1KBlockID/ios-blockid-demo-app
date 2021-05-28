@@ -75,14 +75,16 @@ class NationalIDViewController: UIViewController {
         }
         
     }
-    
-    
-    
+
     private func setNationaID(withNIDData nid: BIDNationalId, token: String) {
         //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: nid, documentCategory: .identity_document)
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .nationalId, sigToken: token) { [self] (status, error) in
+        let jsonStr = CommonFunctions.objectToJSONString(nid)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["type"] = RegisterDocType.NATIONAL_ID.rawValue
+        dic?["id"] = nid.id
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .nationalId, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {

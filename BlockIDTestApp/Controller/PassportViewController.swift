@@ -87,9 +87,14 @@ class PassportViewController: UIViewController {
     
     private func setPassport(withPPDat pp: BIDPassport, token: String, isWithNFC: Bool) {
         self.view.makeToastActivity(.center)
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: pp, documentCategory: .identity_document)
-
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .passport, sigToken: token) { [self] (status, error) in
+        
+        let jsonStr = CommonFunctions.objectToJSONString(pp)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["type"] = RegisterDocType.PPT.rawValue
+        dic?["id"] = pp.id
+        
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .passport, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
