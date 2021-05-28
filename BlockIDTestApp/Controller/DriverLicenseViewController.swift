@@ -81,7 +81,7 @@ class DriverLicenseViewController: UIViewController {
         self.view.makeToastActivity(.center)
         let jsonStr = CommonFunctions.objectToJSONString(dl)
         var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl.id
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .dl, sigToken: token) { [self] (status, error) in

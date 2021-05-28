@@ -90,7 +90,7 @@ class PassportViewController: UIViewController {
         
         let jsonStr = CommonFunctions.objectToJSONString(pp)
         var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.PPT.rawValue
         dic?["id"] = pp.id
         

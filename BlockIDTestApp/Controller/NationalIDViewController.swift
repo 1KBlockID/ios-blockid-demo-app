@@ -81,7 +81,7 @@ class NationalIDViewController: UIViewController {
         self.view.makeToastActivity(.center)
         let jsonStr = CommonFunctions.objectToJSONString(nid)
         var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic?["id"] = nid.id
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .nationalId, sigToken: token) { [self] (status, error) in
