@@ -63,7 +63,7 @@ class NationalIDViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.nidScannerHelper == nil {
-                        self.nidScannerHelper = NationalIDScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, nidScanResponseDelegate: self, cutoutView:  self._imgOverlay, expiryGracePeriod: self.expiryDays)
+                        self.nidScannerHelper = NationalIDScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, nidScanResponseDelegate: self, cutoutView:  self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self._lblScanInfoTxt.text = NIDScanningSide.NATIONAL_ID_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
@@ -75,14 +75,16 @@ class NationalIDViewController: UIViewController {
         }
         
     }
-    
-    
-    
+
     private func setNationaID(withNIDData nid: BIDNationalId, token: String) {
         //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: nid, documentCategory: .identity_document)
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .nationalId, sigToken: token) { [self] (status, error) in
+        let jsonStr = CommonFunctions.objectToJSONString(nid)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic?["type"] = RegisterDocType.NATIONAL_ID.rawValue
+        dic?["id"] = nid.id
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .nationalId, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {

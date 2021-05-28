@@ -63,7 +63,7 @@ class DriverLicenseViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay, expiryGracePeriod: self.expiryDays)
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
@@ -79,8 +79,12 @@ class DriverLicenseViewController: UIViewController {
   
     private func setDriverLicense(withDLData dl: BIDDriverLicense, token: String) {
         self.view.makeToastActivity(.center)
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: dl, documentCategory: .identity_document)
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .dl, sigToken: token) { [self] (status, error) in
+        let jsonStr = CommonFunctions.objectToJSONString(dl)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic?["type"] = RegisterDocType.DL.rawValue
+        dic?["id"] = dl.id
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .dl, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {

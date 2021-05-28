@@ -55,7 +55,7 @@ class PassportViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize PassportScannerHelper
                     if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, ppResponseDelegate: self, cutoutView: self._imgOverlay, expiryGracePeriod: self.expiryDays)
+                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.ppScannerHelper?.startPassportScanning()
@@ -87,9 +87,14 @@ class PassportViewController: UIViewController {
     
     private func setPassport(withPPDat pp: BIDPassport, token: String, isWithNFC: Bool) {
         self.view.makeToastActivity(.center)
-        let docObject = DocumentMapUtil.getDocumentMap(documentData: pp, documentCategory: .identity_document)
-
-        BlockIDSDK.sharedInstance.registerDocument(obj: docObject, docType: .passport, sigToken: token) { [self] (status, error) in
+        
+        let jsonStr = CommonFunctions.objectToJSONString(pp)
+        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic?["type"] = RegisterDocType.PPT.rawValue
+        dic?["id"] = pp.id
+        
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .passport, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {

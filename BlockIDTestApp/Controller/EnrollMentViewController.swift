@@ -103,8 +103,11 @@ extension EnrollMentViewController {
     }
     
     private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType, id: String) {
-        let arrDoc = BIDDocumentProvider.shared.getDocument(id: id, type: registerDocType.rawValue, category: nil)
-        if let dictDoc = arrDoc?.first as? [String: Any] {
+        let strDoc = BIDDocumentProvider.shared.getUserDocument(id: id, type: registerDocType.rawValue, category: nil) ?? ""
+        guard let arrDoc = CommonFunctions.convertJSONStringToJSONObject(strDoc) as? [[String : Any]] else {
+            return
+        }
+        if let dictDoc = arrDoc.first {
             self.view.makeToastActivity(.center)
             BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
                 status, error in

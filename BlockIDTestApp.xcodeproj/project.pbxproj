@@ -40,8 +40,8 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
-		AD8C5C4B264ABF2D00E81F34 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */; };
-		AD8C5C4C264ABF2D00E81F34 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ADEA1EA22661228900141DAB /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADEA1EA02661228700141DAB /* BlockIDSDK.framework */; };
+		ADEA1EA32661228900141DAB /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ADEA1EA02661228700141DAB /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,7 +51,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AD8C5C4C264ABF2D00E81F34 /* BlockIDSDK.framework in Embed Frameworks */,
+				ADEA1EA32661228900141DAB /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,7 +95,7 @@
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
+		ADEA1EA02661228700141DAB /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD8C5C4B264ABF2D00E81F34 /* BlockIDSDK.framework in Frameworks */,
+				ADEA1EA22661228900141DAB /* BlockIDSDK.framework in Frameworks */,
 				45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -116,7 +116,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				AD8C5C49264ABF2A00E81F34 /* BlockIDSDK.framework */,
+				ADEA1EA02661228700141DAB /* BlockIDSDK.framework */,
 				B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;

@@ -127,7 +127,7 @@ class PinViewController: UIViewController {
         //-----------------Registration successful---------
         self.view.makeToastActivity(.center)
         _viewPin.resignFirstResponder()
-        BlockIDSDK.sharedInstance.setPin(pin: _viewPin.text!, proofedBy: DocumentMapUtil.K_PROOFEDBY_BLOCK_ID) {
+        BlockIDSDK.sharedInstance.setPin(pin: _viewPin.text!, proofedBy: "blockid") {
             (status, error) in
             self.view.hideToastActivity()
             if !status {
