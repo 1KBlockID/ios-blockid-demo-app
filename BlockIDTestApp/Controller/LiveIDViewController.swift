@@ -97,16 +97,9 @@ class LiveIDViewController: UIViewController {
         return
     }
     
-    private func setLiveID(withPhoto photo: String, token: String, documentObj: BIDDocumentData) {
+    private func setLiveID(withPhoto face: UIImage, token: String) {
         self.view.makeToastActivity(.center)
-        //Live id data
-        let faceJsonStr = CommonFunctions.objectToJSONString(documentObj)
-        var dictFaceImage = CommonFunctions.jsonStringToDic(from: faceJsonStr)
-        dictFaceImage?["id"] = BIDAuthProvider.shared.liveIdDocID
-        dictFaceImage?["type"] = RegisterDocType.LIVE_ID.rawValue
-        dictFaceImage?["category"] = RegisterDocCategory.Identity_Document.rawValue
-
-        BlockIDSDK.sharedInstance.setLiveID(dictLiveID: dictFaceImage ?? [:], sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face, liveIdProofedBy: "", sigToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -124,7 +117,7 @@ class LiveIDViewController: UIViewController {
         }
     }
     
-    private func registerLiveIDWithDocument(withPhoto photo: String, token: String, docObj:BIDDocumentData) {
+    private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String) {
         self.view.makeToastActivity(.center)
         let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
         guard let obj = documentData.documentData else { return  }
@@ -133,18 +126,11 @@ class LiveIDViewController: UIViewController {
         let type = DocumentStore.sharedInstance.type ?? ""
         let jsonStr = CommonFunctions.objectToJSONString(obj)
         var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = DocumentCategory.identity_document.rawValue
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = type
         dic?["id"] = obj.id
         
-        //Live id data
-        let faceJsonStr = CommonFunctions.objectToJSONString(docObj)
-        var dictFaceImage = CommonFunctions.jsonStringToDic(from: faceJsonStr)
-        dictFaceImage?["id"] = BIDAuthProvider.shared.liveIdDocID
-        dictFaceImage?["type"] = RegisterDocType.LIVE_ID.rawValue
-        dictFaceImage?["category"] = RegisterDocCategory.Identity_Document.rawValue
-        
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: docType, docSignToken: docSignToken, dictFaceImage: dictFaceImage ?? [:], liveIDSignToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: docType, liveIdProofedBy: "", docSignToken: docSignToken, faceImage: face, liveIDSignToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
@@ -231,7 +217,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         updateUIWithLivenessFactor(expression)
     }
         
-    func liveIdDetectionCompleted(_ liveIdData: BIDDocumentData?, signatureToken: String?, error: ErrorResponse?) {
+    func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
         if error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
@@ -244,7 +230,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         
         
         
-        guard let photo = liveIdData?.face, let signToken = signatureToken else {
+        guard let face = liveIdImage, let signToken = signatureToken else {
             self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
                 if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
                     self.showAppLogin()
@@ -258,16 +244,15 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
 
         if isForVerification {
-            let imgFace = CommonFunctions.convertImageFromBase64String(str: photo)
             // Verify LiveID
-            self.verifyLiveID(withPhoto: imgFace, token: signToken)
+            self.verifyLiveID(withPhoto: face, token: signToken)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
-                self.registerLiveIDWithDocument(withPhoto: photo, token: signToken, docObj: liveIdData!)
+                self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
                 return
             }
-            self.setLiveID(withPhoto: photo, token: signToken, documentObj: liveIdData!)
+            self.setLiveID(withPhoto: face, token: signToken)
 
         }
     }
