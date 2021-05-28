@@ -11,13 +11,15 @@ import BlockIDSDK
 
 extension UIViewController {
     public func getDocumentID(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> String? {
-        let arrDocuments = BIDDocumentProvider.shared.getDocument(id: nil,
-                                                                  type: type.rawValue,
-                                                                  category: category.rawValue)
+        guard let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
+                                                                            type: type.rawValue,
+                                                                            category: category.rawValue) else { return nil }
+        let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as! [[String : Any]]
+
         let index = (docIndex-1)
-        if arrDocuments?.count ?? 0 > index{
-            let dictDoc = arrDocuments?[index] as? [String : Any]
-            return dictDoc?[DocumentMapUtil.id] as? String
+        if arrDocuments.count > index{
+            let dictDoc = arrDocuments[index] as [String : Any]
+            return dictDoc[DocumentMapUtil.id] as? String
         }
         
         return nil

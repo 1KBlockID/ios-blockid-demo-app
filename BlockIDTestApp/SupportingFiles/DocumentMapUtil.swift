@@ -2,7 +2,8 @@
 //  DocumentMapUtil.swift
 //  BlockIDTestApp
 //
-//  Created by vaidehi hindlekar on 19/05/21.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2021 1Kosmos. All rights reserved.
 //
 
 import Foundation
@@ -23,14 +24,13 @@ class DocumentMapUtil {
     public static let K_PROOFEDBY_BLOCK_ID = "blockid";
     
     public static func getDocumentMap(documentData: BIDDocumentData, documentCategory: DocumentCategory)-> [String: Any] {
-        var docMap = [String: Any]()
+        let jsonString = CommonFunctions.objectToJSONString(documentData)
+        var docMap = CommonFunctions.convertJSONStringToJSONObject(_:jsonString) as! [String : Any]
         docMap["id"] = documentData.id
         docMap["type"] = documentData.type
         docMap["category"] = documentCategory.rawValue
         docMap["proofedBy"] = K_PROOFEDBY_BLOCK_ID
-        let jsonString = CommonFunctions.objectToJSONString(documentData)
-        let jsonObj = CommonFunctions.convertJSONStringToJSONObject(_:jsonString)
-        docMap["uuid"] = jsonObj
+       
         return docMap
     }
 }
