@@ -123,14 +123,8 @@ class LiveIDViewController: UIViewController {
         guard let obj = documentData.documentData else { return  }
         let docType = DocumentStore.sharedInstance.docType!
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
-        let type = DocumentStore.sharedInstance.type ?? ""
-        let jsonStr = CommonFunctions.objectToJSONString(obj)
-        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dic?["type"] = type
-        dic?["id"] = obj.id
         
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: docType, liveIdProofedBy: "", docSignToken: docSignToken, faceImage: face, liveIDSignToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: obj , docType: docType, liveIdProofedBy: "", docSignToken: docSignToken, faceImage: face, liveIDSignToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS

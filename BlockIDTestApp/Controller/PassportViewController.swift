@@ -19,7 +19,7 @@ class PassportViewController: UIViewController {
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var _token = ""
-    private var pp: BIDPassport?
+    private var pp: [String : Any]?
     private var isWithNFC = false
     private var _viewLiveIDScan  =  BIDScannerView()
     
@@ -85,16 +85,15 @@ class PassportViewController: UIViewController {
         return
     }
     
-    private func setPassport(withPPDat pp: BIDPassport, token: String, isWithNFC: Bool) {
+    private func setPassport(withPPDat pp: [String : Any], token: String, isWithNFC: Bool) {
         self.view.makeToastActivity(.center)
         
-        let jsonStr = CommonFunctions.objectToJSONString(pp)
-        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dic?["type"] = RegisterDocType.PPT.rawValue
-        dic?["id"] = pp.id
+        var dic = pp
+        dic["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic["type"] = RegisterDocType.PPT.rawValue
+        dic["id"] = pp["id"]
         
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .passport, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic, docType: .passport, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
@@ -139,7 +138,7 @@ class PassportViewController: UIViewController {
         }
     }
     
-    private func startRFIDScanWorkflow(withPPDat pp: BIDPassport, token: String) {
+    private func startRFIDScanWorkflow(withPPDat pp: [String : Any], token: String) {
         self._token = token
         self.pp = pp
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
@@ -200,7 +199,7 @@ class PassportViewController: UIViewController {
 }
 extension PassportViewController: PassportResponseDelegate {
     
-    func passportScanCompleted(withBidPassport obj: BIDPassport?, error: ErrorResponse?, signatureToken signToken: String?, isWithRFID: Bool?) {
+    func passportScanCompleted(withPassport obj: [String : Any]?, error: ErrorResponse?, signatureToken signToken: String?, isWithRFID: Bool?) {
         assert(Thread.isMainThread, "call me on main thread")
         
         //Check for errors
