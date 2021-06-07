@@ -9,7 +9,6 @@ import Foundation
 import BlockIDSDK
 
 class DocumentStore : NSObject {
-    var docType : BIDDocumentType?
     var documentData: [String : Any]?
     var token : String?
     var type: String?
@@ -20,15 +19,13 @@ class DocumentStore : NSObject {
         return (documentData != nil) ? true : false
     }
     
-    public func setData(docType: BIDDocumentType, documentData: [String : Any]?, token: String) {
-        self.docType = docType
+    public func setData(documentData: [String : Any]?, token: String) {
         self.documentData = documentData
         self.token = token
         self.type = documentData?["type"] as? String ?? ""
     }
     
     public func clearData() {
-        self.docType = nil
         self.documentData = nil
         self.token = nil
         self.type = nil
