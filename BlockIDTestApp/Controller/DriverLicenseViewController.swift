@@ -77,20 +77,19 @@ class DriverLicenseViewController: UIViewController {
         
     }
   
-    private func setDriverLicense(withDLData dl: BIDDriverLicense, token: String) {
+    private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
         self.view.makeToastActivity(.center)
-        let jsonStr = CommonFunctions.objectToJSONString(dl)
-        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
+        var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
-        dic?["id"] = dl.id
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .dl, sigToken: token) { [self] (status, error) in
+        dic?["id"] = dl?["id"]
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(docType: .dl, documentData: dl, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
@@ -116,9 +115,9 @@ class DriverLicenseViewController: UIViewController {
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
-      func dlScanCompleted(dlScanSide: DLScanningSide, bidDriveLicense: BIDDriverLicense?, signatureToken signToken: String?, error: ErrorResponse?) {
+    func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
-           self.showAppLogin()
+            self.showAppLogin()
         }
         //Check If Expired, licenene key not enabled
         if error?.code == CustomErrors.kDocumentExpired.code || error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
@@ -128,10 +127,10 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         scanCompleteUIUpdates()
         
-        guard let dl = bidDriveLicense, let token = signToken else {
+        guard let dl = dictDriveLicense, let token = signToken else {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
-
+            
         }
         
         //Check if Not to Expiring Soon
@@ -142,15 +141,15 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         //About to Expire, Show Alert
         let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
-
+        
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-
+        
         self.present(alert, animated: true)
-      }
-      
+    }
+    
     func scanFrontSide() {
         DispatchQueue.main.async {
             self._lblScanInfoTxt.text = "Scan Front"

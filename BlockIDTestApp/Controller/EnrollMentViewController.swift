@@ -92,7 +92,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.dl, registerDocType: .DL, id: docID)
+                self.unenrollDocument(registerDocType: .DL, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -102,14 +102,14 @@ extension EnrollMentViewController {
         showDLView()
     }
     
-    private func unenrollDocument(_ type: BIDDocumentType, registerDocType: RegisterDocType, id: String) {
+    private func unenrollDocument(registerDocType: RegisterDocType, id: String) {
         let strDoc = BIDDocumentProvider.shared.getUserDocument(id: id, type: registerDocType.rawValue, category: nil) ?? ""
         guard let arrDoc = CommonFunctions.convertJSONStringToJSONObject(strDoc) as? [[String : Any]] else {
             return
         }
         if let dictDoc = arrDoc.first {
             self.view.makeToastActivity(.center)
-            BlockIDSDK.sharedInstance.unregisterDocument(docType: type, dictDoc: dictDoc) {
+            BlockIDSDK.sharedInstance.unregisterDocument(dictDoc: dictDoc) {
                 status, error in
                 self.view.hideToastActivity()
                 self.tableEnrollments.reloadData()
@@ -126,7 +126,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.passport, registerDocType: .PPT, id: docID)
+                self.unenrollDocument(registerDocType: .PPT, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
@@ -145,7 +145,7 @@ extension EnrollMentViewController {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.unenrollDocument(.nationalId, registerDocType: .NATIONAL_ID, id: docID)
+                self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 

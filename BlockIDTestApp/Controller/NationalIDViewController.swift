@@ -76,21 +76,20 @@ class NationalIDViewController: UIViewController {
         
     }
 
-    private func setNationaID(withNIDData nid: BIDNationalId, token: String) {
+    private func setNationaID(withNIDData nid: [String : Any], token: String) {
         //self._viewBG.isHidden = true
         self.view.makeToastActivity(.center)
-        let jsonStr = CommonFunctions.objectToJSONString(nid)
-        var dic = CommonFunctions.jsonStringToDic(from: jsonStr)
-        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dic?["type"] = RegisterDocType.NATIONAL_ID.rawValue
-        dic?["id"] = nid.id
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], docType: .nationalId, sigToken: token) { [self] (status, error) in
+        var dic = nid
+        dic["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
+        dic["id"] = nid["id"] as! String
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(docType: .nationalId, documentData: nid, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
@@ -116,8 +115,7 @@ class NationalIDViewController: UIViewController {
 }
 
 extension NationalIDViewController: NationalIDResponseDelegate {
-
-    func nidScanCompleted(nidScanSide: NIDScanningSide, bidNationalID: BIDNationalId?, signatureToken signToken: String?, error: ErrorResponse?) {
+    func nidScanCompleted(nidScanSide: NIDScanningSide, dictNationalID: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
            self.showAppLogin()
         }
@@ -128,7 +126,7 @@ extension NationalIDViewController: NationalIDResponseDelegate {
         }
         
         scanCompleteUIUpdates()
-        guard let nid = bidNationalID, let token = signToken else {
+        guard let nid = dictNationalID, let token = signToken else {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
 
@@ -150,6 +148,8 @@ extension NationalIDViewController: NationalIDResponseDelegate {
 
         self.present(alert, animated: true)
       }
+    
+
       
     func scanFrontSide() {
         DispatchQueue.main.async {
