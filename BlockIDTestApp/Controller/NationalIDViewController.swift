@@ -83,13 +83,13 @@ class NationalIDViewController: UIViewController {
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic, docType: .nationalId, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(docType: .nationalId, documentData: nid, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return

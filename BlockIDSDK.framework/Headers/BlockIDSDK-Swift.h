@@ -324,13 +324,6 @@ SWIFT_CLASS("_TtC10BlockIDSDK18PassportScanHelper")
 
 
 
-SWIFT_CLASS("_TtC10BlockIDSDK19ProfileImageManager")
-@interface ProfileImageManager : NSObject
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
-@end
-
-
 SWIFT_CLASS("_TtC10BlockIDSDK11QRGenerator")
 @interface QRGenerator : UIView
 - (nullable instancetype)initWithCoder:(NSCoder * _Nonnull)aDecoder SWIFT_UNAVAILABLE;

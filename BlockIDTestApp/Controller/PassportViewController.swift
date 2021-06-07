@@ -93,13 +93,13 @@ class PassportViewController: UIViewController {
         dic["type"] = RegisterDocType.PPT.rawValue
         dic["id"] = pp["id"]
         
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic, docType: .passport, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
                     
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(docType: .passport, documentData: pp, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
