@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
@@ -44,6 +45,16 @@
 		5D94AB50267B7C4600976E81 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D94AB4D267B7C4300976E81 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CEE3303264413C2003FDB78 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
+			remoteInfo = BlockIDTestApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		3CEE33612644154F003FDB78 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -59,6 +70,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
+		1FA0938C268472A6008AAAA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C2C96C526551EC100323172 /* DocumentMapUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMapUtil.swift; sourceTree = "<group>"; };
 		3C78FA07264AA1D8001576DF /* DocumentHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHolder.swift; sourceTree = "<group>"; };
 		3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentScreenCell.swift; sourceTree = "<group>"; };
@@ -101,6 +115,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1FA09385268472A6008AAAA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3CEE3308264413C2003FDB78 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -120,6 +141,15 @@
 				B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */,
+				1FA0938C268472A6008AAAA1 /* Info.plist */,
+			);
+			path = BlockIDTestAppUITests;
 			sourceTree = "<group>";
 		};
 		3C78FA06264AA1C9001576DF /* Model */ = {
@@ -143,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEE330D264413C2003FDB78 /* BlockIDTestApp */,
+				1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */,
 				3CEE330C264413C2003FDB78 /* Products */,
 				DDD6B82D3B6A87C961C81415 /* Pods */,
 				1534371962C417F7F920BB63 /* Frameworks */,
@@ -153,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */,
+				1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -281,6 +313,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1FA09387268472A6008AAAA1 /* BlockIDTestAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "BlockIDTestAppUITests" */;
+			buildPhases = (
+				1FA09384268472A6008AAAA1 /* Sources */,
+				1FA09385268472A6008AAAA1 /* Frameworks */,
+				1FA09386268472A6008AAAA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1FA0938E268472A6008AAAA1 /* PBXTargetDependency */,
+			);
+			name = BlockIDTestAppUITests;
+			productName = BlockIDTestAppUITests;
+			productReference = 1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		3CEE330A264413C2003FDB78 /* BlockIDTestApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
@@ -308,9 +358,13 @@
 		3CEE3303264413C2003FDB78 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
+					1FA09387268472A6008AAAA1 = {
+						CreatedOnToolsVersion = 12.5;
+						TestTargetID = 3CEE330A264413C2003FDB78;
+					};
 					3CEE330A264413C2003FDB78 = {
 						CreatedOnToolsVersion = 12.4;
 					};
@@ -330,11 +384,19 @@
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* BlockIDTestApp */,
+				1FA09387268472A6008AAAA1 /* BlockIDTestAppUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1FA09386268472A6008AAAA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3CEE3309264413C2003FDB78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -409,6 +471,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1FA09384268472A6008AAAA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		3CEE3307264413C2003FDB78 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -445,6 +515,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		1FA0938E268472A6008AAAA1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CEE330A264413C2003FDB78 /* BlockIDTestApp */;
+			targetProxy = 1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		3CEE3314264413C2003FDB78 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -465,6 +543,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1FA0938F268472A6008AAAA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlockIDTestAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.BlockIDTestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlockIDTestApp;
+			};
+			name = Debug;
+		};
+		1FA09390268472A6008AAAA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = BlockIDTestAppUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.BlockIDTestAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BlockIDTestApp;
+			};
+			name = Release;
+		};
 		3CEE331D264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -516,7 +632,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -571,7 +687,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -638,6 +754,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "BlockIDTestAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1FA0938F268472A6008AAAA1 /* Debug */,
+				1FA09390268472A6008AAAA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		3CEE3306264413C2003FDB78 /* Build configuration list for PBXProject "BlockIDTestApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
