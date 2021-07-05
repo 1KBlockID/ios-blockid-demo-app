@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '11.0'
+ platform :ios, '12.0'
 
 target 'BlockIDTestApp' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -8,12 +8,9 @@ target 'BlockIDTestApp' do
   # Pods for BlockIDTestApp
   pod 'TrustWalletCore', '~> 0.12.31'
   pod 'Alamofire','~> 4.9.1'
-  pod 'RijndaelSwift', '~> 0.2.0'
   pod 'CryptoSwift', '~> 1.3.0'
   pod 'BigInt', '~> 4.0'
   pod 'SwiftyTesseract', '~> 2.2.3'
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Crashlytics'
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Toast-Swift', '~> 5.0.1'
 
