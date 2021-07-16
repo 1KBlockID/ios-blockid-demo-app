@@ -13,5 +13,6 @@ target 'BlockIDTestApp' do
   pod 'SwiftyTesseract', '~> 2.2.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Toast-Swift', '~> 5.0.1'
+  pod 'Firebase/Analytics'
 
 end
