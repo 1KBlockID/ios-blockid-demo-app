@@ -15,11 +15,30 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NFCReaderUsageDescription</key>
+	<string>Allow permission in order to scan your passport</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Enable camera access to enable Live id and document scanning</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Face ID is needed to log in</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your current location will be required.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your current location will be required.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Enable photo libarary to save screenshots</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -62,28 +81,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>NFCReaderUsageDescription</key>
-        <string>Allow permission in order to scan your passport</string>
-        <key>NSAppTransportSecurity</key>
-        <dict>
-            <key>NSAllowsArbitraryLoads</key>
-            <true/>
-            <key>NSAllowsArbitraryLoadsInWebContent</key>
-            <true/>
-        </dict>
-        <key>NSCameraUsageDescription</key>
-        <string>Enable camera access to enable Live id and document scanning</string>
-        <key>NSFaceIDUsageDescription</key>
-        <string>Face ID is needed to log in</string>
-        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-        <string>Your current location will be required.</string>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>Your current location will be required.</string>
-        <key>NSPhotoLibraryUsageDescription</key>
-        <string>Enable photo libarary to save screenshots</string>
-        <key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
-        <array>
-            <string>A0000002471001</string>
-        </array>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>A0000002471001</string>
+	</array>
 </dict>
 </plist>

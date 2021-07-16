@@ -43,6 +43,7 @@
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
 		B6710458268F0A12008A5E36 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6710456268F0A0B008A5E36 /* BlockIDSDK.framework */; };
 		B6710459268F0A12008A5E36 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6710456268F0A0B008A5E36 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E6D8B71026A19794006FECBD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6D8B70F26A19794006FECBD /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,6 +113,7 @@
 		B6710456268F0A0B008A5E36 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		E6D8B70F26A19794006FECBD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				3CEE334B264414E7003FDB78 /* View */,
 				3CEE330E264413C2003FDB78 /* AppDelegate.swift */,
 				3CEE3310264413C2003FDB78 /* SceneDelegate.swift */,
+				E6D8B70F26A19794006FECBD /* GoogleService-Info.plist */,
 				3CEE3314264413C2003FDB78 /* Main.storyboard */,
 				3CEE3317264413C2003FDB78 /* Assets.xcassets */,
 				3CEE3319264413C2003FDB78 /* LaunchScreen.storyboard */,
@@ -406,6 +409,7 @@
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
+				E6D8B71026A19794006FECBD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -717,6 +721,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.4.z.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.BlockIDTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -745,6 +750,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.4.z.4;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.BlockIDTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
