@@ -22,7 +22,7 @@ class LiveIDViewController: UIViewController {
     private var attemptCounts = 0
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
+    private let selectedMode: ScanningMode = .SCAN_DEMO
 
 
     @IBOutlet private weak var _viewBG: UIView!
@@ -34,6 +34,7 @@ class LiveIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         _viewBG.isHidden = true
+        _imgOverlay.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -68,16 +69,6 @@ class LiveIDViewController: UIViewController {
             }
         }
         
-    }
-    
-    private func updateUIWithLivenessFactor(_ factor: LivenessFactorType) {
-
-        switch factor {
-            case .BLINK:
-                _lblInformation.text = DetectionMsg.blink
-            case .SMILE:
-                _lblInformation.text = DetectionMsg.smile
-        }
     }
     
     private func goBack() {
@@ -192,23 +183,23 @@ class LiveIDViewController: UIViewController {
     }
     
     private func stopLiveIDScanning() {
-        guard let running = liveIdScannerHelper?.isRunning() else { return }
-        if running {
+//        guard let running = liveIdScannerHelper?.isRunning() else { return }
+//        if running {
             self.liveIdScannerHelper?.stopLiveIDScanning()
-        }
+//        }
     }
 }
 
 extension LiveIDViewController: LiveIDResponseDelegate {
     
-    func focusOnFaceChanged(isFocused: Bool?) {
-        _lblInformation.isHidden = !(isFocused)!
-        _imgOverlay.tintColor = isFocused! ? UIColor.green :  UIColor.red
-    }
+//    func focusOnFaceChanged(isFocused: Bool?) {
+//        _lblInformation.isHidden = !(isFocused)!
+//        _imgOverlay.tintColor = isFocused! ? UIColor.green :  UIColor.red
+//    }
     
-    func readyForExpression(_ expression: LivenessFactorType) {
-        updateUIWithLivenessFactor(expression)
-    }
+//    func readyForExpression(_ expression: LivenessFactors) {
+//        updateUIWithLivenessFactor(expression)
+//    }
         
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
