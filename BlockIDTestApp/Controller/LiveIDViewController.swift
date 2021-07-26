@@ -22,7 +22,7 @@ class LiveIDViewController: UIViewController {
     private var attemptCounts = 0
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private let selectedMode: ScanningMode = .SCAN_DEMO
+    private let selectedMode: ScanningMode = .SCAN_LIVE
 
 
     @IBOutlet private weak var _viewBG: UIView!
@@ -183,24 +183,12 @@ class LiveIDViewController: UIViewController {
     }
     
     private func stopLiveIDScanning() {
-//        guard let running = liveIdScannerHelper?.isRunning() else { return }
-//        if running {
-            self.liveIdScannerHelper?.stopLiveIDScanning()
-//        }
+        self.liveIdScannerHelper?.stopLiveIDScanning()
     }
 }
 
 extension LiveIDViewController: LiveIDResponseDelegate {
-    
-//    func focusOnFaceChanged(isFocused: Bool?) {
-//        _lblInformation.isHidden = !(isFocused)!
-//        _imgOverlay.tintColor = isFocused! ? UIColor.green :  UIColor.red
-//    }
-    
-//    func readyForExpression(_ expression: LivenessFactors) {
-//        updateUIWithLivenessFactor(expression)
-//    }
-        
+
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
