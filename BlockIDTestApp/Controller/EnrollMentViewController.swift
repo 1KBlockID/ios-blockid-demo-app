@@ -20,12 +20,13 @@ public enum Enrollments: String {
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
     case LoginWithQR  = "Login With QR"
+    case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
 }
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
