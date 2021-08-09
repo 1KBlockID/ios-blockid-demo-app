@@ -16,7 +16,6 @@
 			dependencies = (
 			);
 			name = "OpenSSL-Universal";
-			productName = "OpenSSL-Universal";
 		};
 /* End PBXAggregateTarget section */
 
@@ -735,7 +734,7 @@
 		07BB7668DD60F63878CC1A9537EAFC48 /* AeternitySigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AeternitySigner.swift; path = swift/Sources/Generated/AeternitySigner.swift; sourceTree = "<group>"; };
 		07BF24FB6E6F2BCDD59C00589C21E2AD /* WavesSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WavesSigner.swift; path = swift/Sources/Generated/WavesSigner.swift; sourceTree = "<group>"; };
 		07CB3A08AB5C859DAB8451FE0CA704D5 /* HDWallet+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HDWallet+Extension.swift"; path = "swift/Sources/Extensions/HDWallet+Extension.swift"; sourceTree = "<group>"; };
-		07D99C281C22C1B297E88353955B5602 /* OpenSSL.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; name = OpenSSL.xcframework; path = Frameworks/OpenSSL.xcframework; sourceTree = "<group>"; };
+		07D99C281C22C1B297E88353955B5602 /* OpenSSL.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = OpenSSL.xcframework; path = Frameworks/OpenSSL.xcframework; sourceTree = "<group>"; };
 		07F1E126A2C279A05D81B9216699C94B /* Rabbit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Rabbit.swift; path = Sources/CryptoSwift/Rabbit.swift; sourceTree = "<group>"; };
 		081986A35C7A031E57B1F2194A88D311 /* BigInt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = BigInt.debug.xcconfig; sourceTree = "<group>"; };
 		087EDB219C36056AD0CF62ED477B6B03 /* GCM.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GCM.swift; path = Sources/CryptoSwift/BlockMode/GCM.swift; sourceTree = "<group>"; };
@@ -947,7 +946,7 @@
 		5D0AD78B1B319F5FA736CF6F5064ADA1 /* liblept.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = liblept.a; path = SwiftyTesseract/SwiftyTesseract/dependencies/lib/liblept.a; sourceTree = "<group>"; };
 		5D38E10BF30D5A6B66219D7ACAC8C4D4 /* renderer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = renderer.h; path = SwiftyTesseract/SwiftyTesseract/dependencies/include/tesseract/renderer.h; sourceTree = "<group>"; };
 		5D725F20B22DF19F58AEE375809D9948 /* gplot.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = gplot.h; path = SwiftyTesseract/SwiftyTesseract/dependencies/include/leptonica/gplot.h; sourceTree = "<group>"; };
-		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D7C3FFF24B89F81A84F44705177A7E7 /* JSONDecoder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = JSONDecoder.swift; path = Sources/SwiftProtobuf/JSONDecoder.swift; sourceTree = "<group>"; };
 		5DC251280B993FFB8CE67A122CC7CFF9 /* ProtoNameProviding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProtoNameProviding.swift; path = Sources/SwiftProtobuf/ProtoNameProviding.swift; sourceTree = "<group>"; };
 		5DFA564E290A71703300BA49C4CA2A9F /* PBKDF1.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PBKDF1.swift; path = Sources/CryptoSwift/PKCS/PBKDF1.swift; sourceTree = "<group>"; };
@@ -1038,7 +1037,7 @@
 		81EA18F618FCAD6526751A01AF6F1BEE /* PublicKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PublicKey.swift; path = swift/Sources/Generated/PublicKey.swift; sourceTree = "<group>"; };
 		827B9BEE6E80B1482F35B51A5B3A8CEE /* Pods-BlockIDTestApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-BlockIDTestApp-umbrella.h"; sourceTree = "<group>"; };
 		82856DF887EC2F061EFDD90D89C2BE59 /* BinaryEncodingSizeVisitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BinaryEncodingSizeVisitor.swift; path = Sources/SwiftProtobuf/BinaryEncodingSizeVisitor.swift; sourceTree = "<group>"; };
-		82925F1E57A1CF879D5385D107B5439F /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		82925F1E57A1CF879D5385D107B5439F /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_BlockIDTestApp.framework; path = "Pods-BlockIDTestApp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		82D1844569FAD2493DD5939905A84E34 /* SwiftProtobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftProtobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		82DF99D850A1B156ECB2DDF45A4174AF /* Multiplication.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Multiplication.swift; path = Sources/Multiplication.swift; sourceTree = "<group>"; };
 		834BD0271935394F59D7C6E7A834E3A0 /* Rabbit+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Rabbit+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/Rabbit+Foundation.swift"; sourceTree = "<group>"; };
@@ -1078,7 +1077,7 @@
 		90C72A87A40978C36DB03C73BEA60FBE /* BlockModeOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlockModeOptions.swift; path = Sources/CryptoSwift/BlockMode/BlockModeOptions.swift; sourceTree = "<group>"; };
 		90D70232EAD6EF24CBA9B9487EA34EA7 /* TWWavesAddress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWWavesAddress.h; path = include/TrustWalletCore/TWWavesAddress.h; sourceTree = "<group>"; };
 		918DD080C4B94D8AF354A05FED26A4BC /* NEARAddress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NEARAddress.swift; path = swift/Sources/Generated/NEARAddress.swift; sourceTree = "<group>"; };
-		91BB24BA472AF523E913108C9AA301F2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91BB24BA472AF523E913108C9AA301F2 /* BigInt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = BigInt.framework; path = BigInt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		91DAD82FED7EA969ED0375CDC9C3C708 /* HDVersion+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "HDVersion+Extension.swift"; path = "swift/Sources/Generated/HDVersion+Extension.swift"; sourceTree = "<group>"; };
 		91DB418D3125258EBF794072963FC1C5 /* Ripple+Proto.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Ripple+Proto.swift"; path = "swift/Sources/Generated/Protobuf/Ripple+Proto.swift"; sourceTree = "<group>"; };
 		920BE3CD19B9FBD45B3F460FA65B997C /* TWNanoProto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWNanoProto.h; path = include/TrustWalletCore/TWNanoProto.h; sourceTree = "<group>"; };
@@ -1088,11 +1087,11 @@
 		9304EB2D6C87CE3C181F7F0372671BDA /* BravoAddress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BravoAddress.swift; path = swift/Sources/Generated/BravoAddress.swift; sourceTree = "<group>"; };
 		940E0CA1B03849EE0C3E756C2DF973F9 /* TWAionSigner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWAionSigner.h; path = include/TrustWalletCore/TWAionSigner.h; sourceTree = "<group>"; };
 		94178B838769EBB20EAA544F5A612978 /* Any+Proto.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Any+Proto.swift"; path = "swift/Sources/Generated/Protobuf/Any+Proto.swift"; sourceTree = "<group>"; };
-		943D347E61A2E181A4FA2CA894307B6E /* SwiftProtobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftProtobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		943D347E61A2E181A4FA2CA894307B6E /* SwiftProtobuf.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftProtobuf.framework; path = SwiftProtobuf.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9484F6F7C11FE945423305A6A1AE8D44 /* Polkadot.pb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Polkadot.pb.swift; path = swift/Sources/Generated/Protobuf/Polkadot.pb.swift; sourceTree = "<group>"; };
 		9505E31AB229A0C0C7FDA70012C64E67 /* HKDF.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HKDF.swift; path = Sources/CryptoSwift/HKDF.swift; sourceTree = "<group>"; };
 		95775E661A06B4C6FFEF8E3C1DFF1A31 /* StoredKey.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StoredKey.swift; path = swift/Sources/Generated/StoredKey.swift; sourceTree = "<group>"; };
-		95BB2094DC34A58512EE96D97F1C789A /* TrustWalletCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TrustWalletCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		95BB2094DC34A58512EE96D97F1C789A /* TrustWalletCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = TrustWalletCore.framework; path = TrustWalletCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		95CD91D41FEA16FA284E90AB89663206 /* VeChainSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VeChainSigner.swift; path = swift/Sources/Generated/VeChainSigner.swift; sourceTree = "<group>"; };
 		95E0BCC41844671FC2D092689A9A00C0 /* TONAddress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TONAddress.swift; path = swift/Sources/Generated/TONAddress.swift; sourceTree = "<group>"; };
 		95FDC591C7852575756F0B1F5BDAF15C /* WanchainSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WanchainSigner.swift; path = swift/Sources/Generated/WanchainSigner.swift; sourceTree = "<group>"; };
@@ -1120,7 +1119,7 @@
 		9CC980A8F270BFAA4712BF53690B45F4 /* pix.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = pix.h; path = SwiftyTesseract/SwiftyTesseract/dependencies/include/leptonica/pix.h; sourceTree = "<group>"; };
 		9D48ABFF73823C01CA455230F1A10767 /* NimiqSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimiqSigner.swift; path = swift/Sources/Generated/NimiqSigner.swift; sourceTree = "<group>"; };
 		9D7AFBE8325AA77F372C1E5A5A047B32 /* TWGroestlcoinTransactionSigner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWGroestlcoinTransactionSigner.h; path = include/TrustWalletCore/TWGroestlcoinTransactionSigner.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9D982CC7B06A205101C395CC44BF71F7 /* ZeroPadding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZeroPadding.swift; path = Sources/CryptoSwift/ZeroPadding.swift; sourceTree = "<group>"; };
 		9E3596BB0347D2185B94E29EFBFEB8A9 /* Data.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Data.swift; path = swift/Sources/Extensions/Data.swift; sourceTree = "<group>"; };
 		9E79F05482E75952EE520E7FC598A196 /* Array+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Array+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/Array+Foundation.swift"; sourceTree = "<group>"; };
@@ -1269,7 +1268,7 @@
 		D4F62544A1EDA5EC434122E3174F425C /* descriptor.pb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = descriptor.pb.swift; path = Sources/SwiftProtobuf/descriptor.pb.swift; sourceTree = "<group>"; };
 		D525F4877421B177B0B561491C09335D /* SolanaSigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SolanaSigner.swift; path = swift/Sources/Generated/SolanaSigner.swift; sourceTree = "<group>"; };
 		D5E13B56A6C007795DF02A6E28DE12B7 /* libtesseract.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libtesseract.a; path = SwiftyTesseract/SwiftyTesseract/dependencies/lib/libtesseract.a; sourceTree = "<group>"; };
-		D6043471C96F93DC41F7DD1E0D7D8B35 /* Toast_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Toast_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6043471C96F93DC41F7DD1E0D7D8B35 /* Toast_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Toast_Swift.framework; path = "Toast-Swift.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D66DC5D1F6970F360C1CE33923B9A343 /* TWTezosAddress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWTezosAddress.h; path = include/TrustWalletCore/TWTezosAddress.h; sourceTree = "<group>"; };
 		D67E48B5661D8120B1C0DA2C1E769C4E /* HarmonySigner.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HarmonySigner.swift; path = swift/Sources/Generated/HarmonySigner.swift; sourceTree = "<group>"; };
 		D6B68305905B9B88D1E4504DA659D281 /* TWAionProto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWAionProto.h; path = include/TrustWalletCore/TWAionProto.h; sourceTree = "<group>"; };
@@ -1353,12 +1352,12 @@
 		F66B0BFE74DAF4D93B6BF338CD5E4FF3 /* TWStellarSigner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWStellarSigner.h; path = include/TrustWalletCore/TWStellarSigner.h; sourceTree = "<group>"; };
 		F69A57ABFB07C7ADC87166B1EA58A2AF /* StreamEncryptor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StreamEncryptor.swift; path = Sources/CryptoSwift/StreamEncryptor.swift; sourceTree = "<group>"; };
 		F6A88C344571AFFE5AC4CD148837128E /* Tron.pb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Tron.pb.swift; path = swift/Sources/Generated/Protobuf/Tron.pb.swift; sourceTree = "<group>"; };
-		F6E3B8BC238866073523ED9347EED4C6 /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6E3B8BC238866073523ED9347EED4C6 /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyTesseract.framework; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F75BDE148BB8A0687D1732CD9233F1B1 /* ExtensionFields.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExtensionFields.swift; path = Sources/SwiftProtobuf/ExtensionFields.swift; sourceTree = "<group>"; };
 		F771AFD4A194581DA465982C8433CA7C /* EOS.pb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EOS.pb.swift; path = swift/Sources/Generated/Protobuf/EOS.pb.swift; sourceTree = "<group>"; };
 		F776AAFCC844229DB2B6808387105BD7 /* TWThetaProto.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TWThetaProto.h; path = include/TrustWalletCore/TWThetaProto.h; sourceTree = "<group>"; };
 		F7FE01049A96778FA46129E1A2165D1F /* EOSAddress.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = EOSAddress.swift; path = swift/Sources/Generated/EOSAddress.swift; sourceTree = "<group>"; };
-		F81274EDB681F11E7CB05F7DCA2BB33C /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F81274EDB681F11E7CB05F7DCA2BB33C /* CryptoSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = CryptoSwift.framework; path = CryptoSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F81D325D8E04DDDF7BAC5579607D3C63 /* AnyUnpackError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AnyUnpackError.swift; path = Sources/SwiftProtobuf/AnyUnpackError.swift; sourceTree = "<group>"; };
 		F86AD2FFF8D43843BC168E0A71677503 /* Solana.pb.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Solana.pb.swift; path = swift/Sources/Generated/Protobuf/Solana.pb.swift; sourceTree = "<group>"; };
 		F8E02FAF917BA9168098AEC6944CE2EB /* HashVisitor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HashVisitor.swift; path = Sources/SwiftProtobuf/HashVisitor.swift; sourceTree = "<group>"; };
@@ -1548,6 +1547,7 @@
 				51F64451EBB40EBCB31C4D364B9AE167 /* Frameworks */,
 				5EA6B96E763AA287535C0B078DD84803 /* Support Files */,
 			);
+			name = SwiftyTesseract;
 			path = SwiftyTesseract;
 			sourceTree = "<group>";
 		};
@@ -1854,6 +1854,7 @@
 				9A9E98553620A8297C89608496EB2F1F /* Support Files */,
 				65A3EEF4713FCC0BC015ABD1C657D426 /* Types */,
 			);
+			name = TrustWalletCore;
 			path = TrustWalletCore;
 			sourceTree = "<group>";
 		};
@@ -2114,6 +2115,7 @@
 				9D982CC7B06A205101C395CC44BF71F7 /* ZeroPadding.swift */,
 				F90A091CED2BC1439F8A1519BE143121 /* Support Files */,
 			);
+			name = CryptoSwift;
 			path = CryptoSwift;
 			sourceTree = "<group>";
 		};
@@ -2206,6 +2208,7 @@
 				49F44B98A20B34D12D68E10825723A8D /* ZigZag.swift */,
 				48BCE7D936ECD74522AD110243B62991 /* Support Files */,
 			);
+			name = SwiftProtobuf;
 			path = SwiftProtobuf;
 			sourceTree = "<group>";
 		};
@@ -2264,6 +2267,7 @@
 				DEC0D7B057EE293DB57FF19185AD9711 /* Validation.swift */,
 				4228558BA170F7D25A4F93EFFD73A2B3 /* Support Files */,
 			);
+			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -2302,6 +2306,7 @@
 				A11312F9C21E5C7E4049290F5B0FDF2E /* Words and Bits.swift */,
 				3A266AEDFD10D668D737C2C518A961FC /* Support Files */,
 			);
+			name = BigInt;
 			path = BigInt;
 			sourceTree = "<group>";
 		};
@@ -2341,6 +2346,7 @@
 				16EC41C9A25C1FCE588E8ED1E32A16B4 /* Frameworks */,
 				08FE47F83ABE11FA6E47A8C8AC2DBE98 /* Support Files */,
 			);
+			name = "OpenSSL-Universal";
 			path = "OpenSSL-Universal";
 			sourceTree = "<group>";
 		};
@@ -2350,6 +2356,7 @@
 				8071D97684FF42844014E2AEBC99DBFC /* Toast.swift */,
 				50D563338FF259685FFD0947FD630115 /* Support Files */,
 			);
+			name = "Toast-Swift";
 			path = "Toast-Swift";
 			sourceTree = "<group>";
 		};
@@ -2801,11 +2808,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1100;
-				TargetAttributes = {
-					5FDA8701204211983085669C4E12E6FE = {
-						LastSwiftMigration = 1250;
-					};
-				};
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -3432,6 +3434,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 275C1922A3E1C202CA41D3CA1026EF7C /* Toast-Swift.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3468,6 +3471,7 @@
 			baseConfigurationReference = 1F71026EC84916B90EB7C8433C2BD814 /* Pods-BlockIDTestApp.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3504,6 +3508,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 206A71109B2D37F613F4E63689EEE715 /* CryptoSwift.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3539,6 +3544,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 56BB42D1C003B89B710692F4E6C1C616 /* BigInt.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3574,6 +3580,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FBD4D79B2C1C3D2288237869A2C83390 /* SwiftProtobuf.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3609,6 +3616,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 64F76E758D6CCC79C66C16807CE2296B /* TrustWalletCore.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3647,6 +3655,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3662,6 +3671,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 081986A35C7A031E57B1F2194A88D311 /* BigInt.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3696,6 +3706,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C08D2B0832CFEC64959AC780FE81C6B0 /* SwiftyTesseract.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3719,7 +3730,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -3730,6 +3740,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 789129E56A0CE17567AE71F608725EE1 /* TrustWalletCore.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3765,6 +3776,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2A0E4C82C138AFB63786F020B88F07E8 /* Alamofire.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -3801,6 +3813,7 @@
 			baseConfigurationReference = 00EC5140060DD1A991693BAB35003465 /* Pods-BlockIDTestApp.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -3900,6 +3913,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 42C866E67284CFE87BEF7DDD752A8B26 /* Alamofire.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -4000,6 +4014,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B4F5CC4D5316536B50DFE4546E280DC1 /* SwiftProtobuf.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -4034,6 +4049,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1BEFEE11763BF2F26DE78BDA2ABD62F5 /* CryptoSwift.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -4068,6 +4084,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A41E069E0BE6174B6D6B68E7F61A0A25 /* Toast-Swift.debug.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -4102,6 +4119,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8A253C5931D4F5E6D9F2B1F561C1B58A /* SwiftyTesseract.release.xcconfig */;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
@@ -4125,7 +4143,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -4139,6 +4156,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
