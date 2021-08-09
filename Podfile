@@ -6,13 +6,6 @@ target 'BlockIDTestApp' do
   use_frameworks!
 
   # Pods for BlockIDTestApp
-#  pod 'TrustWalletCore', '~> 0.12.31'#2.5.6'
-#  pod 'Alamofire', '~> 4.9.1'#5.4.3
-#  pod 'CryptoSwift', '~> 1.4.1'
-#  pod 'BigInt', '~> 5.2.0'
-#  pod 'SwiftyTesseract', '~> 3.1.3'
-#  pod 'OpenSSL-Universal', '~> 1.1.180'
-#  pod 'Toast-Swift', '~> 5.0.1'
   pod 'TrustWalletCore', '~> 0.12.31'
   pod 'Alamofire','~> 4.9.1'
   pod 'CryptoSwift', '~> 1.3.0'
@@ -29,7 +22,6 @@ post_install do |installer|
       
       # set iOS Deployment Target to 11.0
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
-      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
     end
   end
 end
