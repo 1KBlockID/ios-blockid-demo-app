@@ -1,0 +1,9 @@
+${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework
+${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework
+${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework
+${BUILT_PRODUCTS_DIR}/SwiftyTesseract/SwiftyTesseract.framework
+${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework
+${BUILT_PRODUCTS_DIR}/TrustWalletCore/TrustWalletCore.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL

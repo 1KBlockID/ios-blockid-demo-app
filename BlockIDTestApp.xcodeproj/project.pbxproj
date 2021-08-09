@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1F8CB71E26C11DDF0060A823 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71C26C11DDD0060A823 /* BlockIDSDK.framework */; };
+		1F8CB71F26C11DDF0060A823 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71C26C11DDD0060A823 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
@@ -41,8 +44,6 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */; };
-		5DC27CD726AEDE690088F92C /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DC27CD526AEDE5D0088F92C /* BlockIDSDK.framework */; };
-		5DC27CD826AEDE690088F92C /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5DC27CD526AEDE5D0088F92C /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5DC27CD826AEDE690088F92C /* BlockIDSDK.framework in Embed Frameworks */,
+				1F8CB71F26C11DDF0060A823 /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -70,6 +71,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
+		1F8CB71C26C11DDD0060A823 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
 		1FA0938C268472A6008AAAA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -109,7 +112,6 @@
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4F69FE3D58E7322270232A27 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		5DC27CD526AEDE5D0088F92C /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3BEC952DB428560A166E257 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -126,7 +128,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DC27CD726AEDE690088F92C /* BlockIDSDK.framework in Frameworks */,
+				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
+				1F8CB71E26C11DDF0060A823 /* BlockIDSDK.framework in Frameworks */,
 				45E2292BDBCE7D63C99855F0 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +140,8 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DC27CD526AEDE5D0088F92C /* BlockIDSDK.framework */,
+				1F8CB71C26C11DDD0060A823 /* BlockIDSDK.framework */,
+				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				B81505F2CF26F8238A493E05 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
@@ -632,7 +636,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -687,9 +691,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -712,14 +717,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BlockIDTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
 				MARKETING_VERSION = 1.4.z.5.1;
-
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -743,14 +746,12 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = BlockIDTestApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-
 				MARKETING_VERSION = 1.4.z.5.1;
-
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
