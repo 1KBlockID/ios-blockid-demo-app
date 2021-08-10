@@ -21,7 +21,7 @@ post_install do |installer|
     target.build_configurations.each do |config|
       
       # build active architecture only
-            config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
       
       # set iOS Deployment Target to 11.0
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
