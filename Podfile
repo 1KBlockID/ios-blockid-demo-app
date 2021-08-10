@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '12.0'
+ platform :ios, '11.0'
 
 target 'BlockIDTestApp' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -15,3 +15,17 @@ target 'BlockIDTestApp' do
   pod 'Toast-Swift', '~> 5.0.1'
 
 end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      
+      # build active architecture only
+      config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+      
+      # set iOS Deployment Target to 11.0
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+    end
+  end
+end
+
