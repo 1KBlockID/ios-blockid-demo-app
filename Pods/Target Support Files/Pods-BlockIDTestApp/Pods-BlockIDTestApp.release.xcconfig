@@ -1,0 +1,16 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire" "${PODS_CONFIGURATION_BUILD_DIR}/BigInt" "${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyTesseract" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift" "${PODS_CONFIGURATION_BUILD_DIR}/TrustWalletCore" "${PODS_ROOT}/OpenSSL-Universal/Frameworks" "${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/BigInt/BigInt.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/CryptoSwift/CryptoSwift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftProtobuf/SwiftProtobuf.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyTesseract/SwiftyTesseract.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift/Toast_Swift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustWalletCore/TrustWalletCore.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/dependencies/lib" "${PODS_ROOT}/TrustWalletCore/build/ios"
+OTHER_LDFLAGS = $(inherited) -ObjC -fprofile-instr-generate -l"c++" -framework "Alamofire" -framework "BigInt" -framework "CryptoSwift" -framework "OpenSSL" -framework "QuartzCore" -framework "SwiftProtobuf" -framework "SwiftyTesseract" -framework "Toast_Swift" -framework "TrustWalletCore" -framework "UIKit"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
+SYSTEM_HEADER_SEARCH_PATHS = $(inherited) ${PODS_ROOT}/TrustWalletCore/include
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES
