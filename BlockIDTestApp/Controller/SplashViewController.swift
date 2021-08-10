@@ -18,6 +18,7 @@ class SplashViewController: UIViewController {
     private var isDefaultTenantRegistration = true
     @IBOutlet weak var btnRegisterDeviceAuth: UIButton!
     private var bidTenant: BIDTenant!
+    @IBOutlet weak var btnRestoreAccount: UIButton!
     
     @IBOutlet weak var registerView: UIView!
     @IBOutlet weak var btnAppPin: UIButton!
@@ -81,7 +82,7 @@ class SplashViewController: UIViewController {
                 //On Success
                 self?.btnRegister.isHidden = true
                 self?.registerView.isHidden = false
-               
+                self?.btnRestoreAccount.isHidden = true
             } else {
                 if error?.code == NSURLErrorNotConnectedToInternet {
                     self?.showAlertView(title: "", message: error!.message)
@@ -118,6 +119,7 @@ class SplashViewController: UIViewController {
     private func setRegisterButtonTitle() {
         if (BlockIDSDK.sharedInstance.isReady()) {
             self.btnRegister.isHidden = true
+            self.btnRestoreAccount.isHidden = true
             self.loginView.isHidden = false
             if BlockIDSDK.sharedInstance.isPinRegistered() {
                 self.btnAppPin.isUserInteractionEnabled = true
@@ -126,6 +128,7 @@ class SplashViewController: UIViewController {
         }
         else {
             self.btnRegister.isHidden = false
+            self.btnRestoreAccount.isHidden = false
             self.loginView.isHidden = true
         }
     }

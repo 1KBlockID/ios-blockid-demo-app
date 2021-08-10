@@ -76,6 +76,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollLiveID()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
+        case Enrollments.RecoverMnemonics.rawValue:
+            recoverMnemonic()
         case Enrollments.resetApp.rawValue:
             resetApp()
         default:
@@ -220,6 +222,13 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     private func scanQRCode() {
         self.showQROptions()
+    }
+}
+
+extension EnrollMentViewController {
+    private func recoverMnemonic() {
+        let recoverMnemonicVC = self.storyboard?.instantiateViewController(withIdentifier: "RecoverMnemonicsViewController") as! RecoverMnemonicsViewController
+        self.navigationController?.pushViewController(recoverMnemonicVC, animated: true)
     }
 }
 
