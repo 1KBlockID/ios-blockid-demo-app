@@ -23,7 +23,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9MA-XF-A7t">
             <objects>
-                <navigationController id="xuA-Ga-UAK" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navSplash" id="xuA-Ga-UAK" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JE8-dt-1Hm">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1502,6 +1502,9 @@
                                 <state key="highlighted">
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="copyToClipboardAction:" destination="xqM-Kf-7zq" eventType="touchUpInside" id="vH6-Cg-8U7"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="b1L-KY-lkA"/>

@@ -6,13 +6,25 @@
 //
 
 import UIKit
+import BlockIDSDK
 
 class RecoverMnemonicsViewController: UIViewController {
 
+    var strMnemonic = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if let str = BlockIDSDK.sharedInstance.getMnemonicPhrases() {
+            self.strMnemonic = str
+            let arrMnemonics = str.components(separatedBy: " ")
+            var index = 1
+            for mnemonic in arrMnemonics {
+                if let txtField = self.view.viewWithTag(index) as? UITextField {
+                    txtField.text = mnemonic
+                }
+                index = index+1
+            }
+        }
     }
     
 
@@ -28,6 +40,12 @@ class RecoverMnemonicsViewController: UIViewController {
 
     @IBAction func moveBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func copyToClipboardAction(_ sender: UIButton){
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = self.strMnemonic
+        self.showAlertView(title: "Success", message: "Mnemonic phrase has been copied")
     }
     
 }

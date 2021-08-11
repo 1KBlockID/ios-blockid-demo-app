@@ -35,6 +35,8 @@ class EnrollMentViewController: UIViewController {
         super.viewWillAppear(animated)
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
+        
+        print(">>>>>>>>>>>>>>>> ",BIDDocumentProvider.shared.getUserDocument(id: nil, type: nil, category: nil))
     }
     
 }
