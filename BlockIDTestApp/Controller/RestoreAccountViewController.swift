@@ -24,6 +24,7 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     fileprivate func processRestoreAccount(_ mnemonic: String) {
         if BlockIDSDK.sharedInstance.generateWalletForRestore(mnemonics: mnemonic) {
             BlockIDSDK.sharedInstance.setRestoreMode()
+            self.view.makeToastActivity(.center)
             //Normal Registration flow
             //step-1 : Initiate TEMP WALLET
             BlockIDSDK.sharedInstance.initiateTempWallet() { [weak self] (status, error) in
@@ -37,9 +38,13 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                 else {
                     //Show Toast for user to TRY AGAIN!!!
                     self?.view.makeToast(CustomErrors.kSomethingWentWrong.msg, duration: 3.0, position: .bottom)
+                    self?.view.hideToastActivity()
                 }
+                
+//                self?.view.hideToastActivity()
             }
         } else {
+            self.view.hideToastActivity()
             self.view.makeToast("Security phrase error. Try again.", duration: 3.0, position: .bottom)
         }
     }
@@ -49,7 +54,7 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
         for index in 1..<13 {
             let txtField = self.view.viewWithTag(index) as! UITextField
             if txtField.text?.count ?? 0 == 0 {
-                self.view.makeToast("Please recheck the mnemonics you entered.", duration: 3.0, position: .bottom)
+                self.view.makeToast("Please enter all 12 mnemonic phrase.", duration: 3.0, position: .bottom)
                 return
             } else {
                 if strMnemonics.count != 0 {
@@ -78,10 +83,9 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     
     private func beginRegistration(bidTenant: BIDTenant) {
         assert(Thread.isMainThread, "call me on main thread")
-        self.view.makeToastActivity(.center)
+//        self.view.makeToastActivity(.center)
         
         BlockIDSDK.sharedInstance.registerTenant(tenant: bidTenant) { [weak self] (status, error, tenant) in
-            self?.view.hideToastActivity()
             if status {
                 //On Success, process restore
                 BlockIDSDK.sharedInstance.restoreUserDataFromWallet { isSuccess, error in
@@ -90,20 +94,23 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                         //navigate auth screen
                         let alert = UIAlertController(title: "Success", message: "Your account successfully restored!", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                            let navSplashControllerObj = self?.storyboard?.instantiateViewController(withIdentifier: "navSplash")
-                            UIApplication.shared.windows.first?.rootViewController = navSplashControllerObj
-                            UIApplication.shared.windows.first?.makeKeyAndVisible()
+                           
+                            let viewController = self?.navigationController?.viewControllers.first as! SplashViewController
+                            viewController.isRestoredModeEnabled = true
+                            self?.navigationController?.popViewController(animated: true)
+                            
                         }))
                         self?.present(alert, animated: true, completion: nil)
-                        
-                        
+                       
+                        print("isRestored >>>> ",BlockIDSDK.sharedInstance.isReady())
+
                     } else {
                         BlockIDSDK.sharedInstance.resetRestorationData()
                         self?.showAlertView(title: "Error", message: "Account restoration failed.")
 
                     }
+                    self?.view.hideToastActivity()
                 }
-               
             } else {
                 if error?.code == NSURLErrorNotConnectedToInternet {
                     self?.showAlertView(title: "", message: error!.message)
@@ -111,6 +118,7 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                 else {
                     self?.showAlertView(title: "", message: error!.message)
                 }
+                self?.view.hideToastActivity()
             }
         }
     }

@@ -16,6 +16,7 @@ class SplashViewController: UIViewController {
     @IBOutlet weak var loginView: UIView!
     
     private var isDefaultTenantRegistration = true
+    var isRestoredModeEnabled = false
     @IBOutlet weak var btnRegisterDeviceAuth: UIButton!
     private var bidTenant: BIDTenant!
     @IBOutlet weak var btnRestoreAccount: UIButton!
@@ -101,7 +102,9 @@ class SplashViewController: UIViewController {
     private func enrollDeviceAuth() {
         BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
             if success {
-                BlockIDSDK.sharedInstance.commitApplicationWallet()
+                if !self.isRestoredModeEnabled {
+                    BlockIDSDK.sharedInstance.commitApplicationWallet()
+                }
                 self.showEnrollmentView()
                 
             }
@@ -118,12 +121,19 @@ class SplashViewController: UIViewController {
     }
     private func setRegisterButtonTitle() {
         if (BlockIDSDK.sharedInstance.isReady()) {
-            self.btnRegister.isHidden = true
-            self.btnRestoreAccount.isHidden = true
-            self.loginView.isHidden = false
-            if BlockIDSDK.sharedInstance.isPinRegistered() {
-                self.btnAppPin.isUserInteractionEnabled = true
-                self.btnAppPin.backgroundColor = UIColor.black
+            if isRestoredModeEnabled {
+                //On Success
+                self.btnRegister.isHidden = true
+                self.registerView.isHidden = false
+                self.btnRestoreAccount.isHidden = true
+            } else {
+                self.btnRegister.isHidden = true
+                self.btnRestoreAccount.isHidden = true
+                self.loginView.isHidden = false
+                if BlockIDSDK.sharedInstance.isPinRegistered() {
+                    self.btnAppPin.isUserInteractionEnabled = true
+                    self.btnAppPin.backgroundColor = UIColor.black
+                }
             }
         }
         else {
