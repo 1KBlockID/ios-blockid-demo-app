@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.4.2 (swiftlang-1205.0.28.2 clang-1205.0.19.57)
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
 // swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
 import ARKit
 import AVFoundation
@@ -70,14 +70,14 @@ open class KeychainWrapper {
   open class func wipeKeychain()
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public struct DataGroupHash {
   public var id: Swift.String
   public var sodHash: Swift.String
   public var computedHash: Swift.String
   public var match: Swift.Bool
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class ChipAuthenticationPublicKeyInfo : BlockIDSDK.SecurityInfo {
   override public func getObjectIdentifier() -> Swift.String
   override public func getProtocolOIDString() -> Swift.String
@@ -100,12 +100,12 @@ public enum KeychainItemAccessibility {
   @available(iOS 4, *)
   case whenUnlockedThisDeviceOnly
   public static func == (a: BlockIDSDK.KeychainItemAccessibility, b: BlockIDSDK.KeychainItemAccessibility) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup2 : BlockIDSDK.DataGroup {
   public var nrImages: Swift.Int {
     get
@@ -178,7 +178,7 @@ public class DataGroup2 : BlockIDSDK.DataGroup {
 @_hasMissingDesignatedInitializers public class BIDDocumentKeys {
   @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup7 : BlockIDSDK.DataGroup {
   public var imageData: [Swift.UInt8] {
     get
@@ -191,8 +191,8 @@ public class DataGroup7 : BlockIDSDK.DataGroup {
   public static let kAuthMethodScep: Swift.String
   public static func isNativeAuth(authPage: Swift.String!) -> Swift.Bool
   public static func isPwdResetAvailable(authPage: Swift.String!) -> Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 public class BIDOrigin : Swift.Codable, Swift.Equatable {
   public var api: Swift.String?
@@ -206,17 +206,17 @@ public class BIDOrigin : Swift.Codable, Swift.Equatable {
   public func getAuthMethod() -> Swift.String?
   public static func == (lhs: BlockIDSDK.BIDOrigin, rhs: BlockIDSDK.BIDOrigin) -> Swift.Bool
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 public enum ScanningMode {
   case SCAN_DEMO
   case SCAN_LIVE
   public static func == (a: BlockIDSDK.ScanningMode, b: BlockIDSDK.ScanningMode) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 @_hasMissingDesignatedInitializers @available(iOS 13, *)
 public class TagReader {
@@ -237,8 +237,8 @@ public protocol QRScanResponseDelegate : AnyObject {
   public func startQRScanning()
   public func stopQRScanning()
   public func isRunning() -> Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 public struct DTHStruct {
   public static func method01() -> Swift.Bool
@@ -294,8 +294,8 @@ public struct DTHStruct {
   final public let LiveIDEnabled: Swift.Bool
   final public let PinEnabled: Swift.Bool
   final public let BiometricEnabled: Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 @objc @_inheritsConvenienceInitializers public class DigitalAssets : ObjectiveC.NSObject {
   final public let DLEnabled: Swift.Bool
@@ -305,20 +305,20 @@ public struct DTHStruct {
   final public let ImmunityCertEnabled: Swift.Bool
   final public let IdentityEnabled: Swift.Bool
   final public let MiscEnabled: Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 public enum PassportAuthenticationStatus {
   case notDone
   case success
   case failed
   public static func == (a: BlockIDSDK.PassportAuthenticationStatus, b: BlockIDSDK.PassportAuthenticationStatus) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public class NFCPassportModel {
   public var documentType: Swift.String {
     get
@@ -444,12 +444,12 @@ public class NFCPassportModel {
   public func verifyActiveAuthentication(challenge: [Swift.UInt8], signature: [Swift.UInt8])
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class OpenSSLUtils {
   public static func getOpenSSLError() -> Swift.String
-  @available(iOS 13, macOS 10.15, *)
+  @available(iOS 13, OSX 10.15, *)
   public static func getPublicKeyData(from key: Swift.OpaquePointer) -> [Swift.UInt8]?
-  @available(iOS 13, macOS 10.15, *)
+  @available(iOS 13, OSX 10.15, *)
   public static func decodePublicKeyFromBytes(pubKeyData: [Swift.UInt8], params: Swift.OpaquePointer) -> Swift.OpaquePointer?
   public static func computeSharedSecret(privateKeyPair: Swift.OpaquePointer, publicKey: Swift.OpaquePointer) -> [Swift.UInt8]
   @objc deinit
@@ -463,8 +463,8 @@ public struct ResponseAPDU {
 }
 @_hasMissingDesignatedInitializers public class BIDFaceCompareScore : Swift.Codable {
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 public enum BiometricError {
   case NoID
@@ -474,27 +474,27 @@ public enum BiometricError {
   case notEnrolled
   case password
   public static func == (a: BlockIDSDK.BiometricError, b: BlockIDSDK.BiometricError) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 public enum BiometricType {
   case none
   case touchID
   case faceID
   public static func == (a: BlockIDSDK.BiometricType, b: BlockIDSDK.BiometricType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 @objc @_inheritsConvenienceInitializers public class DeviceAuth : ObjectiveC.NSObject {
   public var isEnabled: Swift.Bool?
   public var authType: BlockIDSDK.BiometricType?
   public var biometricTypeString: Swift.String?
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 public enum LogLevel : Swift.Int, Swift.CaseIterable {
   case verbose
@@ -502,13 +502,13 @@ public enum LogLevel : Swift.Int, Swift.CaseIterable {
   case info
   case warning
   case error
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [BlockIDSDK.LogLevel]
   public typealias RawValue = Swift.Int
-  public static var allCases: [BlockIDSDK.LogLevel] {
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
     get
   }
-  public var rawValue: Swift.Int {
+  public typealias AllCases = [BlockIDSDK.LogLevel]
+  public static var allCases: [BlockIDSDK.LogLevel] {
     get
   }
 }
@@ -607,25 +607,25 @@ public typealias AuthenticateUserCallback = ((Swift.Bool, Swift.String?, BlockID
     case sha1
     case sha256
     case sha512
-    public func hash(into hasher: inout Swift.Hasher)
-    public static func == (a: BlockIDSDK.TOTPUtils.Algorithm, b: BlockIDSDK.TOTPUtils.Algorithm) -> Swift.Bool
     public var hashValue: Swift.Int {
       get
     }
+    public func hash(into hasher: inout Swift.Hasher)
+    public static func == (a: BlockIDSDK.TOTPUtils.Algorithm, b: BlockIDSDK.TOTPUtils.Algorithm) -> Swift.Bool
   }
   public enum Error : Swift.Error {
     case invalidTime
     case invalidPeriod
     case invalidDigits
     public static func == (a: BlockIDSDK.TOTPUtils.Error, b: BlockIDSDK.TOTPUtils.Error) -> Swift.Bool
-    public func hash(into hasher: inout Swift.Hasher)
     public var hashValue: Swift.Int {
       get
     }
+    public func hash(into hasher: inout Swift.Hasher)
   }
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class ChipAuthenticationInfo : BlockIDSDK.SecurityInfo {
   override public func getObjectIdentifier() -> Swift.String
   override public func getProtocolOIDString() -> Swift.String
@@ -635,7 +635,7 @@ public class ChipAuthenticationInfo : BlockIDSDK.SecurityInfo {
   public static func toKeyLength(oid: Swift.String) throws -> Swift.Int
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public class ASN1Item : Swift.CustomDebugStringConvertible {
   public init(line: Swift.String)
   public func getChild(_ child: Swift.Int) -> BlockIDSDK.ASN1Item?
@@ -645,7 +645,7 @@ public class ASN1Item : Swift.CustomDebugStringConvertible {
   }
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public class SimpleASN1DumpParser {
   public init()
   public func parse(data: Foundation.Data) throws -> BlockIDSDK.ASN1Item
@@ -654,8 +654,8 @@ public class SimpleASN1DumpParser {
 }
 @_hasMissingDesignatedInitializers public class TOTP : Swift.Codable {
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 extension TOTP {
   public func setRemainingSecond(remainingSecond: Swift.Int)
@@ -670,10 +670,10 @@ public enum ScannerType {
   case SCAN_PASSPORT
   case SCAN_NATIONAL_ID
   public static func == (a: BlockIDSDK.ScannerType, b: BlockIDSDK.ScannerType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 public typealias VerifyLiveIDCallback = ((Swift.Bool, BlockIDSDK.ErrorResponse?) -> Swift.Void)
 public enum AuthAssetType : Swift.String {
@@ -681,8 +681,8 @@ public enum AuthAssetType : Swift.String {
   case voiceID
   case device
   case liveID
-  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
   public var rawValue: Swift.String {
     get
   }
@@ -728,8 +728,8 @@ public protocol PassportResponseDelegate : AnyObject {
   public func isRunning() -> Swift.Bool
   public func startRFIDScanning()
   public func stopRFIDScanning()
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension PassportScanHelper : BlockIDSDK.PassportResponseDelegate {
   public func passportScanCompleted(withPassport docDic: [Swift.String : Any]?, error: BlockIDSDK.ErrorResponse?, signatureToken signToken: Swift.String?, isWithRFID: Swift.Bool? = false)
@@ -744,17 +744,17 @@ public enum SecureMessagingSupportedAlgorithms {
   case DES
   case AES
   public static func == (a: BlockIDSDK.SecureMessagingSupportedAlgorithms, b: BlockIDSDK.SecureMessagingSupportedAlgorithms) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 @available(iOS 13, *)
 public class SecureMessaging {
   public init(encryptionAlgorithm: BlockIDSDK.SecureMessagingSupportedAlgorithms = .DES, ksenc: [Swift.UInt8], ksmac: [Swift.UInt8], ssc: [Swift.UInt8])
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum NFCPassportReaderError : Swift.Error {
   case ResponseError(Swift.String, Swift.UInt8, Swift.UInt8)
   case InvalidResponse
@@ -782,13 +782,13 @@ public enum NFCPassportReaderError : Swift.Error {
   case InvalidDataPassed(Swift.String)
   case NotYetSupported(Swift.String)
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension NFCPassportReaderError : Foundation.LocalizedError {
   public var errorDescription: Swift.String? {
     get
   }
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum OpenSSLError : Swift.Error {
   case UnableToGetX509CertificateFromPKCS7(Swift.String)
   case UnableToVerifyX509CertificateForSOD(Swift.String)
@@ -799,7 +799,7 @@ public enum OpenSSLError : Swift.Error {
   case UnableToParseASN1(Swift.String)
   case UnableToDecryptRSASignature(Swift.String)
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension OpenSSLError : Foundation.LocalizedError {
   public var errorDescription: Swift.String? {
     get
@@ -820,7 +820,7 @@ extension PassiveAuthenticationError : Foundation.LocalizedError {
   @objc required override dynamic public init(frame: CoreGraphics.CGRect)
   @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup11 : BlockIDSDK.DataGroup {
   public var fullName: Swift.String? {
     get
@@ -864,10 +864,10 @@ public enum NIDScanningSide {
   case NATIONAL_ID_FRONT
   case NATIONAL_ID_BACK
   public static func == (a: BlockIDSDK.NIDScanningSide, b: BlockIDSDK.NIDScanningSide) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 public protocol NationalIDResponseDelegate : AnyObject {
   func nidScanCompleted(nidScanSide: BlockIDSDK.NIDScanningSide, dictNationalID: [Swift.String : Any]?, signatureToken signToken: Swift.String?, error: BlockIDSDK.ErrorResponse?)
@@ -880,8 +880,8 @@ public protocol NationalIDResponseDelegate : AnyObject {
   public func startNationalIDScanning(scanningSide: BlockIDSDK.NIDScanningSide)
   public func stopNationalIDScanning()
   public func isRunning() -> Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegate {
   public func readyForDetection()
@@ -892,39 +892,39 @@ extension NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegate {
 @_hasMissingDesignatedInitializers public class BIDLicense : Swift.Codable {
   public var modules: BlockIDSDK.LicenseModules!
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class LicenseModules : Swift.Codable {
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class RegisterUserData : Swift.Codable {
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class AccessCodeResponse : Swift.Codable {
   public func getPublicKey() -> Swift.String
   public func accessCodeValidationData() -> BlockIDSDK.AccessCodeValidationResponseDecryptedData?
   public func accessCodeRedeemData() -> BlockIDSDK.BIDOnboardedUserAccount?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class AccessCodeValidationResponseDecryptedData : Swift.Codable {
   public var accesscodepayload: BlockIDSDK.AccessCodeResponseDataPayload!
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class AccessCodeResponseDataPayload : Swift.Codable {
   public var userid: Swift.String!
   public var authType: Swift.String!
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class BIDOnboardedUserAccount : Swift.Codable {
   public var userId: Swift.String?
@@ -933,8 +933,8 @@ extension NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegate {
   public var isLinked: Swift.Bool?
   public var origin: BlockIDSDK.BIDOrigin!
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class EventData : Swift.Codable {
   public var license_hash: Swift.String?
@@ -953,20 +953,20 @@ extension NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegate {
   public var network_info: Swift.String?
   public var device_name: Swift.String?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum CertificateType {
   case documentSigningCertificate
   case issuerSigningCertificate
   public static func == (a: BlockIDSDK.CertificateType, b: BlockIDSDK.CertificateType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum CertificateItem : Swift.String {
   case fingerprint
   case issuerName
@@ -976,13 +976,13 @@ public enum CertificateItem : Swift.String {
   case publicKeyAlgorithm
   case notBefore
   case notAfter
-  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
   public var rawValue: Swift.String {
     get
   }
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public class X509Wrapper {
   final public let cert: Swift.OpaquePointer
   public init?(with cert: Swift.OpaquePointer?)
@@ -998,7 +998,7 @@ public class X509Wrapper {
   public func getSubjectName() -> Swift.String?
   @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class COM : BlockIDSDK.DataGroup {
   public var version: Swift.String {
     get
@@ -1011,7 +1011,7 @@ public class COM : BlockIDSDK.DataGroup {
   }
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class SecurityInfo {
   public func getObjectIdentifier() -> Swift.String
   public func getProtocolOIDString() -> Swift.String
@@ -1031,8 +1031,8 @@ public struct MRZDocumentData : Swift.Codable {
   public var gender: Swift.String?
   public var doe: Swift.String?
   public var personalNumber: Swift.String?
-  public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class MRZHelper {
   public var documentImage: UIKit.UIImage?
@@ -1053,31 +1053,31 @@ public protocol LiveIDResponseDelegate : AnyObject {
   public init(scanningMode: BlockIDSDK.ScanningMode, bidScannerView: BlockIDSDK.BIDScannerView, liveIdResponseDelegate: BlockIDSDK.LiveIDResponseDelegate)
   public func startLiveIDScanning()
   public func stopLiveIDScanning()
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension LiveIDScannerHelper : BlockIDSDK.LiveIDResponseDelegate {
   public func liveIdDetectionCompleted(_ liveIdImage: UIKit.UIImage?, signatureToken: Swift.String?, error: BlockIDSDK.ErrorResponse?)
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum DocTypeEnum : Swift.String {
   case TD1
   case TD2
   case OTHER
-  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
   public var rawValue: Swift.String {
     get
   }
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup1 : BlockIDSDK.DataGroup {
   public var elements: [Swift.String : Swift.String] {
     get
   }
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup {
   public var datagroupType: BlockIDSDK.DataGroupId
   public var body: [Swift.UInt8] {
@@ -1108,17 +1108,17 @@ public class DataGroup {
   public var communityId: Swift.String?
   public class func makeTenant(tag: Swift.String, community: Swift.String, dns: Swift.String) -> BlockIDSDK.BIDTenant
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 public enum DLScanningSide {
   case DL_FRONT
   case DL_BACK
   public static func == (a: BlockIDSDK.DLScanningSide, b: BlockIDSDK.DLScanningSide) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 public protocol DriverLicenseResponseDelegate : AnyObject {
   func dlScanCompleted(dlScanSide: BlockIDSDK.DLScanningSide, dictDriveLicense: [Swift.String : Any]?, signatureToken signToken: Swift.String?, error: BlockIDSDK.ErrorResponse?)
@@ -1131,8 +1131,8 @@ public protocol DriverLicenseResponseDelegate : AnyObject {
   public func startDLScanning(scanningSide: BlockIDSDK.DLScanningSide)
   public func stopDLScanning()
   public func isRunning() -> Swift.Bool
-  @objc override dynamic public init()
   @objc deinit
+  @objc override dynamic public init()
 }
 extension DriverLicenseScanHelper : BlockIDSDK.DriverLicenseResponseDelegate {
   public func readyForDetection()
@@ -1146,14 +1146,14 @@ extension DriverLicenseScanHelper : BlockIDSDK.DriverLicenseResponseDelegate {
   required public init(from decoder: Swift.Decoder) throws
   @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup14 : BlockIDSDK.DataGroup {
   public var securityInfos: [BlockIDSDK.SecurityInfo] {
     get
   }
   @objc deinit
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup15 : BlockIDSDK.DataGroup {
   public var rsaPublicKey: Swift.OpaquePointer? {
     get
@@ -1205,21 +1205,21 @@ public struct CustomErrors {
   @objc override dynamic public init()
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func AESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func AESDecrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func AESECBEncrypt(key: [Swift.UInt8], message: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func tripleDESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func tripleDESDecrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func DESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8], options: Swift.UInt32 = 0) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func DESDecrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8], options: Swift.UInt32 = 0) -> [Swift.UInt8]
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class DataGroup12 : BlockIDSDK.DataGroup {
   public var issuingAuthority: Swift.String? {
     get
@@ -1250,7 +1250,7 @@ public class DataGroup12 : BlockIDSDK.DataGroup {
   }
   @objc deinit
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum NFCViewDisplayMessage {
   case requestPresentPassport
   case authenticatingWithPassport(Swift.Int)
@@ -1258,13 +1258,13 @@ public enum NFCViewDisplayMessage {
   case error(BlockIDSDK.NFCPassportReaderError)
   case successfulRead
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension NFCViewDisplayMessage {
   public var description: Swift.String {
     get
   }
 }
-@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class NotImplementedDG : BlockIDSDK.DataGroup {
   @objc deinit
 }
@@ -1274,20 +1274,20 @@ public enum RegisterDocType : Swift.String {
   case NATIONAL_ID
   case PIN
   case LIVE_ID
-  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
+  public init?(rawValue: Swift.String)
 }
 public enum RegisterDocCategory : Swift.String {
   case Misc_Document
   case Identity_Document
-  public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
     get
   }
+  public init?(rawValue: Swift.String)
 }
 public typealias DocumentEnrollmentCallback = ((Swift.Bool, BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @_hasMissingDesignatedInitializers public class BIDDocumentProvider {
@@ -1315,48 +1315,48 @@ public func xor(_ kifd: [Swift.UInt8], _ response_kicc: [Swift.UInt8]) -> [Swift
 public func generateRandomUInt8Array(_ size: Swift.Int) -> [Swift.UInt8]
 public func pad(_ toPad: [Swift.UInt8], blockSize: Swift.Int) -> [Swift.UInt8]
 public func unpad(_ tounpad: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func mac(algoName: BlockIDSDK.SecureMessagingSupportedAlgorithms, key: [Swift.UInt8], msg: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func desMAC(key: [Swift.UInt8], msg: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func aesMAC(key: [Swift.UInt8], msg: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func wrapDO(b: Swift.UInt8, arr: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func unwrapDO(tag: Swift.UInt8, wrappedData: [Swift.UInt8]) throws -> [Swift.UInt8]
 public func intToBytes(val: Swift.Int, removePadding: Swift.Bool) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func oidToBytes(oid: Swift.String, replaceTag: Swift.Bool) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func asn1Length(_ data: Swift.ArraySlice<Swift.UInt8>) throws -> (Swift.Int, Swift.Int)
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func asn1Length(_ data: [Swift.UInt8]) throws -> (Swift.Int, Swift.Int)
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func toAsn1Length(_ data: Swift.Int) throws -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcHash(data: [Swift.UInt8], hashAlgorithm: Swift.String) throws -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcSHA1Hash(_ data: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcSHA224Hash(_ data: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcSHA256Hash(_ data: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcSHA512Hash(_ data: [Swift.UInt8]) -> [Swift.UInt8]
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public func calcSHA384Hash(_ data: [Swift.UInt8]) -> [Swift.UInt8]
 public enum PACEMappingType {
   case GM
   case IM
   case CAM
   public static func == (a: BlockIDSDK.PACEMappingType, b: BlockIDSDK.PACEMappingType) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class PACEInfo : BlockIDSDK.SecurityInfo {
   public static let PARAM_ID_GFP_1024_160: Swift.Int
   public static let PARAM_ID_GFP_2048_224: Swift.Int
@@ -1392,9 +1392,9 @@ public class PACEInfo : BlockIDSDK.SecurityInfo {
   @objc deinit
 }
 @_hasMissingDesignatedInitializers public class AuthUserResponse : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 public struct MRZParserData : Swift.Equatable {
   public let documentType: Swift.String
@@ -1422,9 +1422,9 @@ public class WorkstationAuthOrigin : Swift.Codable {
   public var publicKey: Swift.String?
   public var scopes: Swift.String?
   public init(api: Swift.String, tag: Swift.String, community: Swift.String, publicKey: Swift.String, scopes: Swift.String)
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 @available(iOS 13, *)
 public class BACHandler {
@@ -1443,18 +1443,18 @@ public class BACHandler {
   public var face: Swift.String?
   public var category: Swift.String?
   public var proofedBy: Swift.String
-  @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
 }
 @_hasMissingDesignatedInitializers public class BIDLinkedAccount : Swift.Codable, Swift.Equatable {
   public var origin: BlockIDSDK.BIDOrigin!
   public var userId: Swift.String?
   public static func == (lhs: BlockIDSDK.BIDLinkedAccount, rhs: BlockIDSDK.BIDLinkedAccount) -> Swift.Bool
   public func isOfflineAuthSupported() -> Swift.Bool
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 public enum SwiftyJSONError : Swift.Int, Swift.Error {
   case unsupportedType
@@ -1463,8 +1463,8 @@ public enum SwiftyJSONError : Swift.Int, Swift.Error {
   case wrongType
   case notExist
   case invalidJSON
-  public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
     get
   }
@@ -1488,8 +1488,8 @@ public enum Type : Swift.Int {
   case dictionary
   case null
   case unknown
-  public init?(rawValue: Swift.Int)
   public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
   public var rawValue: Swift.Int {
     get
   }
@@ -1540,9 +1540,9 @@ extension JSON : Swift.Collection {
     get
   }
   public typealias Element = (Swift.String, BlockIDSDK.JSON)
-  public typealias Indices = Swift.DefaultIndices<BlockIDSDK.JSON>
   public typealias Iterator = Swift.IndexingIterator<BlockIDSDK.JSON>
   public typealias SubSequence = Swift.Slice<BlockIDSDK.JSON>
+  public typealias Indices = Swift.DefaultIndices<BlockIDSDK.JSON>
 }
 public enum JSONKey {
   case index(Swift.Int)
@@ -1575,8 +1575,8 @@ extension JSON : Swift.ExpressibleByStringLiteral {
   public init(stringLiteral value: Swift.StringLiteralType)
   public init(extendedGraphemeClusterLiteral value: Swift.StringLiteralType)
   public init(unicodeScalarLiteral value: Swift.StringLiteralType)
-  public typealias ExtendedGraphemeClusterLiteralType = Swift.StringLiteralType
   public typealias StringLiteralType = Swift.StringLiteralType
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.StringLiteralType
   public typealias UnicodeScalarLiteralType = Swift.StringLiteralType
 }
 extension JSON : Swift.ExpressibleByIntegerLiteral {
@@ -1796,16 +1796,16 @@ public enum writingOptionsKeys {
   case maxObjextDepth
   case encoding
   public static func == (a: BlockIDSDK.writingOptionsKeys, b: BlockIDSDK.writingOptionsKeys) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
   public var hashValue: Swift.Int {
     get
   }
+  public func hash(into hasher: inout Swift.Hasher)
 }
 extension JSON : Swift.Codable {
   public init(from decoder: Swift.Decoder) throws
   public func encode(to encoder: Swift.Encoder) throws
 }
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 public enum DataGroupId : Swift.Int, Swift.CaseIterable {
   case COM
   case DG1
@@ -1828,13 +1828,13 @@ public enum DataGroupId : Swift.Int, Swift.CaseIterable {
   case Unknown
   public func getName() -> Swift.String
   public static func getIDFromName(name: Swift.String) -> BlockIDSDK.DataGroupId
-  public init?(rawValue: Swift.Int)
-  public typealias AllCases = [BlockIDSDK.DataGroupId]
   public typealias RawValue = Swift.Int
-  public static var allCases: [BlockIDSDK.DataGroupId] {
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
     get
   }
-  public var rawValue: Swift.Int {
+  public typealias AllCases = [BlockIDSDK.DataGroupId]
+  public static var allCases: [BlockIDSDK.DataGroupId] {
     get
   }
 }
@@ -1852,8 +1852,8 @@ public typealias APIResponseCallback<T> = (status: Swift.Bool, message: Swift.St
   public class func getTotalPackage(data: Swift.String, packageSize: Swift.Int) -> Swift.Int
   public class func split(offlinePayload: Swift.String, length: Swift.Int) -> [Swift.String]
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 public class OfflineAuthAccountDetail : Swift.Codable {
   public var user: Swift.String?
@@ -1861,34 +1861,34 @@ public class OfflineAuthAccountDetail : Swift.Codable {
   public var hash: Swift.String?
   public var token: Swift.String?
   public init(user: Swift.String, did: Swift.String, hash: Swift.String, token: Swift.String)
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 @_hasMissingDesignatedInitializers public class BIDWallet : Swift.Codable {
+  required public init(from decoder: Swift.Decoder) throws
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
 }
 @_hasMissingDesignatedInitializers public class TenantCommunityResponse : Swift.Codable {
   public var tenant: BlockIDSDK.BIDTenantInfo?
   public var community: BlockIDSDK.BIDCommunityInfo?
   public var message: Swift.String?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class BIDTenantInfo : Swift.Codable {
   public var id: Swift.String?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class BIDCommunityInfo : Swift.Codable {
   public var id: Swift.String?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 public struct BIDDL {
 }
@@ -1936,15 +1936,15 @@ public struct DriverLicenseData : Swift.Codable {
   public var akaGivenName: Swift.String?
   public var akaFamilyName: Swift.String?
   public var akaSuffix: Swift.String?
-  public func encode(to encoder: Swift.Encoder) throws
   public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @_hasMissingDesignatedInitializers public class PDF417Helper {
   public var dataString: Swift.String?
   public func getPDF417dataObj() -> (BlockIDSDK.DriverLicenseData?, Swift.Bool)
   @objc deinit
 }
-@_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
+@_hasMissingDesignatedInitializers @available(iOS 13, OSX 10.15, *)
 public class CardAccess {
   public var securityInfos: [BlockIDSDK.SecurityInfo] {
     get
@@ -1995,8 +1995,8 @@ extension PassportReader : CoreNFC.NFCTagReaderSessionDelegate {
 @_hasMissingDesignatedInitializers public class ServerPublicKeyResponse : Swift.Codable {
   public var publicKey: Swift.String?
   @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class QRGenerator : UIKit.UIView {
   public func generateCode(_ string: Swift.String, foregroundColor: UIKit.UIColor = .black, backgroundColor: UIKit.UIColor = .white)
@@ -2027,21 +2027,21 @@ extension BlockIDSDK.SecureMessagingSupportedAlgorithms : Swift.Equatable {}
 extension BlockIDSDK.SecureMessagingSupportedAlgorithms : Swift.Hashable {}
 extension BlockIDSDK.NIDScanningSide : Swift.Equatable {}
 extension BlockIDSDK.NIDScanningSide : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.CertificateType : Swift.Equatable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.CertificateType : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.CertificateItem : Swift.Equatable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.CertificateItem : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.CertificateItem : Swift.RawRepresentable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DocTypeEnum : Swift.Equatable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DocTypeEnum : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DocTypeEnum : Swift.RawRepresentable {}
 extension BlockIDSDK.DLScanningSide : Swift.Equatable {}
 extension BlockIDSDK.DLScanningSide : Swift.Hashable {}
@@ -2061,9 +2061,9 @@ extension BlockIDSDK.`Type` : Swift.Hashable {}
 extension BlockIDSDK.`Type` : Swift.RawRepresentable {}
 extension BlockIDSDK.writingOptionsKeys : Swift.Equatable {}
 extension BlockIDSDK.writingOptionsKeys : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DataGroupId : Swift.Equatable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DataGroupId : Swift.Hashable {}
-@available(iOS 13, macOS 10.15, *)
+@available(iOS 13, OSX 10.15, *)
 extension BlockIDSDK.DataGroupId : Swift.RawRepresentable {}
