@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "scale" : "1x",
+      "idiom" : "universal",
+      "filename" : "iconBackarrow.png"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "iconBackarrow@2x.png",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "iconBackarrow@3x.png",
+      "scale" : "3x",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}

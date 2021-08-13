@@ -10,13 +10,36 @@ import BlockIDSDK
 class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     private var isDefaultTenantRegistration = true
     private var bidTenant: BIDTenant!
-
+    var pasteBoardText = ""
     override func viewDidLoad() {
         super.viewDidLoad()
+        pasteBoardText = UIPasteboard.general.string ?? ""
+       
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(appMovedToForeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
 
-        // Do any additional setup after loading the view.
     }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if string.contains(pasteBoardText) {
+            let arrMnemonics = string.components(separatedBy: " ")
+            for index in 1..<13 {
+                let txtField = self.view.viewWithTag(index) as! UITextField
+                if arrMnemonics[index-1].count != 0 {
+                    txtField.text = arrMnemonics[index-1]
+                }
+            }
+                return false
+        }
+        return true
+    }
+    
+    @objc func appMovedToForeground() {
+        self.pasteBoardText = UIPasteboard.general.string ?? ""
+    }
+   
     @IBAction func moveBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }

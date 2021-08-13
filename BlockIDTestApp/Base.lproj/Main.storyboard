@@ -257,8 +257,8 @@
                                     <constraint firstAttribute="height" constant="19" id="8Cy-bz-1Zn"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Btr-n6-lm4"/>
                                 </constraints>
-                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="   Back" image="arrowshape.turn.up.backward.fill" catalog="system"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="   Back" image="iconBackarrow"/>
                                 <connections>
                                     <action selector="moveBack:" destination="Iz7-zQ-Fuv" eventType="touchUpInside" id="N9a-aZ-3SM"/>
                                 </connections>
@@ -915,8 +915,8 @@
                                     <constraint firstAttribute="height" constant="19" id="Dal-vF-RHU"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="sWB-6L-zNa"/>
                                 </constraints>
-                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="   Back" image="arrowshape.turn.up.backward.fill" catalog="system"/>
+                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="   Back" image="iconBackarrow"/>
                                 <connections>
                                     <action selector="moveBack:" destination="xqM-Kf-7zq" eventType="touchUpInside" id="WPY-NN-dlS"/>
                                 </connections>
@@ -2470,12 +2470,12 @@
         </scene>
     </scenes>
     <resources>
-        <image name="arrowshape.turn.up.backward.fill" catalog="system" width="128" height="106"/>
         <image name="brandLogo" width="214" height="47"/>
         <image name="buttonPrimarySolid" width="285" height="48"/>
         <image name="documentOverlay" width="329" height="230"/>
         <image name="eChipScanbg" width="182" height="257"/>
         <image name="group3Copy" width="452" height="452"/>
+        <image name="iconBackarrow" width="16" height="16"/>
         <image name="iconMicsRfidNfc" width="40" height="40"/>
         <image name="iconPassChip" width="34" height="20"/>
         <image name="iconWarning" width="20" height="20"/>
