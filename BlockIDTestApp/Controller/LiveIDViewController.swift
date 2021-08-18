@@ -13,6 +13,8 @@ import BlockIDSDK
 struct DetectionMsg {
     static let blink = "Please blink your eyes"
     static let smile = "Please smile"
+    static let left = "Please turn left"
+    static let right = "Please turn right"
 }
 
 class LiveIDViewController: UIViewController {
@@ -35,6 +37,7 @@ class LiveIDViewController: UIViewController {
         super.viewDidLoad()
         _viewBG.isHidden = true
         _imgOverlay.isHidden = true
+        _lblInformation.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,7 +60,6 @@ class LiveIDViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self._viewBG.isHidden = false
-                    self._lblInformation.isHidden = true
 
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
@@ -226,6 +228,39 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             }
             self.setLiveID(withPhoto: face, token: signToken)
 
+        }
+    }
+    
+    func readyForExpression(_ livenessFactor: LivenessFactorType) {
+        DispatchQueue.main.async {
+            self._lblInformation.isHidden = false
+
+            switch livenessFactor {
+            case .BLINK:
+                self._lblInformation.text = DetectionMsg.blink
+            case .SMILE:
+                self._lblInformation.text = DetectionMsg.smile
+            case .MOVE_LEFT:
+                self._lblInformation.text = DetectionMsg.left
+            case .MOVE_RIGHT:
+                self._lblInformation.text = DetectionMsg.right
+            case .NONE:
+                return
+            @unknown default:
+                return
+            }
+        }
+
+    }
+    
+    func focusOnFaceChanged(isFocused: Bool?) {
+        guard let inFocus = isFocused else {
+            return
+        }
+        if !inFocus {
+            DispatchQueue.main.async {
+                self._lblInformation.text = "Please try again"
+            }
         }
     }
     
