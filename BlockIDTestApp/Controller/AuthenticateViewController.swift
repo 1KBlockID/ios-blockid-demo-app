@@ -178,7 +178,7 @@ class AuthenticateViewController: UIViewController {
     private func authenticateUserWithScopes(datamodel: AuthRequestModel) {
         self.view.makeToastActivity(.center)
 
-        BlockIDSDK.sharedInstance.authenticateUser(sessionId: nil/*datamodel.session*/, creds: datamodel.creds, scopes: datamodel.scopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, sessionid, error) in
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: datamodel.session, creds: datamodel.creds, scopes: datamodel.scopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, sessionid, error) in
             self?.view.hideToastActivity()
             if status {
                 //if success
