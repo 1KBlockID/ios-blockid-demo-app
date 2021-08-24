@@ -130,18 +130,6 @@ class DriverLicenseViewController: UIViewController {
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
-
-    func multipleFacesDetected(_ isDetected: Bool) {
-        if isDetected {
-            DispatchQueue.main.async {
-                self._lblScanInfoTxt.text = "Many faces"
-            }
-        } else {
-            DispatchQueue.main.async {
-                self._lblScanInfoTxt.text = "Scan Front"
-            }
-        }
-    }
     
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
