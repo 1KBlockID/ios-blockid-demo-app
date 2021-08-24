@@ -23,15 +23,30 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
- 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         startDLScanning()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
+    }
+
+    @objc func numberOfFacesNotification(_ notification: Notification) {
+        guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
+        print ("Number of faces found: \(faceCount)")
+        DispatchQueue.main.async {
+            if faceCount > 0 {
+                self._lblScanInfoTxt.text = "Faces found : \(faceCount)"
+            } else {
+                self._lblScanInfoTxt.text = "Scan Front"
+            }
+        }
+    }
+
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -115,6 +130,7 @@ class DriverLicenseViewController: UIViewController {
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+    
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
