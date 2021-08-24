@@ -27,8 +27,26 @@ class DriverLicenseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
     }
-    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "number of faces found"), object: nil)
+    }
+
+    @objc func numberOfFacesNotification(_ notification: Notification) {
+        guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
+        print ("Number of faces found: \(faceCount)")
+        DispatchQueue.main.async {
+            if faceCount > 0 {
+                self._lblScanInfoTxt.text = "Faces found : \(faceCount)"
+            } else {
+                self._lblScanInfoTxt.text = "Scan Front"
+            }
+        }
+    }
+
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
