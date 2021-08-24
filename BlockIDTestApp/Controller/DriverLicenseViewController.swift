@@ -23,12 +23,9 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
- 
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         startDLScanning()
     }
     
@@ -115,6 +112,19 @@ class DriverLicenseViewController: UIViewController {
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+
+    func multipleFacesDetected(_ isDetected: Bool) {
+        if isDetected {
+            DispatchQueue.main.async {
+                self._lblScanInfoTxt.text = "Many faces"
+            }
+        } else {
+            DispatchQueue.main.async {
+                self._lblScanInfoTxt.text = "Scan Front"
+            }
+        }
+    }
+    
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
