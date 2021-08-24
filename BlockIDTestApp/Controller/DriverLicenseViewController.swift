@@ -32,7 +32,7 @@ class DriverLicenseViewController: UIViewController {
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "number of faces found"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
     }
 
     @objc func numberOfFacesNotification(_ notification: Notification) {
