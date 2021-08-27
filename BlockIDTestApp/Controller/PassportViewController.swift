@@ -21,24 +21,19 @@ class PassportViewController: UIViewController {
     private var _token = ""
     private var pp: [String : Any]?
     private var isWithNFC = false
-    private var _viewLiveIDScan  =  BIDScannerView()
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     @IBOutlet weak var _viewEPassportScan: UIView!
     
-    @IBOutlet weak var _viewScanner: UIView!
+    @IBOutlet weak var _viewScanner: BIDScannerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self._viewEPassportScan.isHidden = true
-        _viewLiveIDScan.isHidden = true
-        _viewLiveIDScan.frame = CGRect(x: 0, y: 0, width: self._viewScanner.frame.width, height: 500)
-        self._viewScanner.addSubview(_viewLiveIDScan)
-        
+        self._viewScanner.isHidden = true
         startPassportScanning()
-        _viewLiveIDScan.isHidden = false
     }
     
     private func startPassportScanning() {
@@ -52,10 +47,10 @@ class PassportViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self._viewBG.isHidden = false
-                    self._viewLiveIDScan.isHidden = false
+                    self._viewScanner.isHidden = false
                     //3. Initialize PassportScannerHelper
                     if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
+                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewScanner, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.ppScannerHelper?.startPassportScanning()
