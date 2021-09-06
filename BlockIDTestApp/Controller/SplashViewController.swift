@@ -80,6 +80,7 @@ class SplashViewController: UIViewController {
         BlockIDSDK.sharedInstance.registerTenant(tenant: bidTenant) { [weak self] (status, error, tenant) in
             self?.view.hideToastActivity()
             if status {
+                BlockIDSDK.sharedInstance.commitApplicationWallet()
                 //On Success
                 self?.btnRegister.isHidden = true
                 self?.registerView.isHidden = false
@@ -99,14 +100,18 @@ class SplashViewController: UIViewController {
     @IBAction func btnRegisterDeviceAuth(_ sender: UIButton) {
         self.enrollDeviceAuth()
     }
+    
     private func enrollDeviceAuth() {
+        #if targetEnvironment(simulator)
+        BlockIDSDK.sharedInstance.setPin(pin: "12345678", proofedBy: "blockid") { (success, error) in
+            if success {
+                self.showEnrollmentView()
+            }
+        }
+        #endif
         BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
             if success {
-                if !self.isRestoredModeEnabled {
-                    BlockIDSDK.sharedInstance.commitApplicationWallet()
-                }
                 self.showEnrollmentView()
-                
             }
         }
     }
