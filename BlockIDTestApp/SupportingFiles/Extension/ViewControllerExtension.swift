@@ -49,9 +49,10 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
     
-    func showDLView() {
+    func showDLView(debug: Bool = false) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
+            dlVC.debug = debug
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }

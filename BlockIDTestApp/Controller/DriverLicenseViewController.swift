@@ -15,20 +15,29 @@ class DriverLicenseViewController: UIViewController {
 
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
-    private let firstScanningDocSide: DLScanningSide = .DL_BACK
+    private let firstScanningDocSide: DLScanningSide = .DL_FRONT
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
-    
+    var debug: Bool = false
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
-    
+    @IBOutlet weak var _scannedDocument: UITableView!
+    var ocr: String = ""
+    var face: String = ""
+    var doc_image: String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
+        _scannedDocument.register(ImageViewCell.self, forCellReuseIdentifier: "imageViewCell")
+        _scannedDocument.reloadData()
+//        _scannedDocument.delegate = self
+        _scannedDocument.dataSource = self
+
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -130,7 +139,6 @@ class DriverLicenseViewController: UIViewController {
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
-    
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
@@ -140,15 +148,35 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
         }
-        
-        scanCompleteUIUpdates()
-        
-        guard let dl = dictDriveLicense, let token = signToken else {
+        guard let dl = dictDriveLicense else {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
-            
+        }
+        if (debug) {
+            for (key, value) in dl {
+                if (key == "ocr") {
+//                    print("\(key) -> \(value)")
+                    ocr = value as! String
+                } else if (key == "image") {
+                    doc_image = value as! String
+                } else if (key == "face") {
+                    face = value as! String
+                }
+            }
+            _scannedDocument.isHidden = false
+            _scannedDocument.reloadData()
+            return
+        } else {
+            if (dlScanSide == firstScanningDocSide) {
+                scanBackSide()
+            }
         }
         
+        scanCompleteUIUpdates()
+        guard let token = signToken else {
+            self.view.makeToast(error?.message, duration: 3.0, position: .center)
+            return
+        }
         //Check if Not to Expiring Soon
         if error?.code != CustomErrors.kDocumentAboutToExpire.code {
             self.setDriverLicense(withDLData: dl, token: token)
@@ -179,14 +207,71 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             self.dlScannerHelper?.startDLScanning(scanningSide: .DL_BACK)
         }
     }
-      
-      func readyForDetection() {
-            DispatchQueue.main.async {
-                //Check if there are any existing animations
-                if !(self._scanLine.animationKeys()?.count ?? 0 > 0) {
-                    self.animateScanLine(_scanLine: self._scanLine, height:  self._imgOverlay.frame.height)
-                   
+
+    func readyForDetection() {
+        DispatchQueue.main.async {
+            //Check if there are any existing animations
+            if !(self._scanLine.animationKeys()?.count ?? 0 > 0) {
+                self.animateScanLine(_scanLine: self._scanLine, height:  self._imgOverlay.frame.height)
             }
-          }
-      }
+        }
+    }
+}
+
+extension DriverLicenseViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath.row == 0 || indexPath.row == 1) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "imageViewCell", for: indexPath) as! ImageViewCell
+            if (indexPath.row == 1) {
+                cell.mainImageView.image = CommonFunctions.convertImageFromBase64String(str: face)
+            } else {
+                cell.mainImageView.image = CommonFunctions.convertImageFromBase64String(str: doc_image)
+            }
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            cell.textLabel?.numberOfLines = 0;
+            cell.textLabel?.lineBreakMode = .byWordWrapping;
+            cell.textLabel?.text = ocr
+            return cell
+        }
+    }
+}
+
+extension DriverLicenseViewController: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+
+}
+
+class ImageViewCell: UITableViewCell {
+    var mainImageView : UIImageView  = {
+        var imageView = UIImageView(frame: CGRect.init(x: 0, y: 0, width: 0, height: 0))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    var imageViewHeight = NSLayoutConstraint()
+    var imageRatioWidth = CGFloat()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.addSubview(mainImageView)
+        mainImageView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
+        mainImageView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
+        mainImageView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        mainImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }

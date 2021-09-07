@@ -12,6 +12,7 @@ import Toast_Swift
 
 
 public enum Enrollments: String {
+    case DLTest = "DL Test OCR"
     case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -22,11 +23,25 @@ public enum Enrollments: String {
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
+    
+    static var all: [Enrollments] = [
+        .DLTest,
+        .DriverLicense,
+        .Passport1,
+        .Passport2,
+        .NationalID,
+        .Pin,
+        .DeviceAuth,
+        .LiveID,
+        .LoginWithQR,
+        .RecoverMnemonics,
+        .resetApp
+    ]
 }
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
+    var enrollmentArray = Enrollments.all
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -60,6 +75,8 @@ extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enrolmentObj = enrollmentArray[indexPath.row].rawValue
         switch enrolmentObj {
+        case Enrollments.DLTest.rawValue:
+            showDLView(debug: true)
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
