@@ -70,11 +70,11 @@ class PassportViewController: UIViewController {
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.ppScannerHelper?.stopPassportScanning()
             self.goBack()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
         self.present(alert, animated: true)
         return
@@ -161,12 +161,12 @@ class PassportViewController: UIViewController {
             //About to Expire, Show Alert
             let alert = UIAlertController(title: "Warning!", message: "Do you want to cancel RFID Scan?", preferredStyle: .alert)
 
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.setPassport(withPPDat: self.pp!, token: self._token, isWithNFC: false)
+            }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
                 self.ppScannerHelper?.startRFIDScanning()
-            }))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPDat: self.pp!, token: self._token, isWithNFC: false)
             }))
             self.present(alert, animated: true)
             return
@@ -230,17 +230,17 @@ extension PassportViewController: PassportResponseDelegate {
             //About to Expire, Show Alert
             let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                self.ppScannerHelper?.stopPassportScanning()
-                self.goBack()
-            }))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                
                 if let isWithRFID = isWithRFID, !isWithRFID {
                     self.startRFIDScanWorkflow(withPPDat: pp, token: token)
                     return
                 }
                 self.setPassport(withPPDat: pp, token: token, isWithNFC: false)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                
+                self.ppScannerHelper?.stopPassportScanning()
+                self.goBack()
             }))
             self.present(alert, animated: true)
             return
