@@ -11,6 +11,7 @@
 		<key>Headers/BlockIDSDK-Swift.h</key>
 		<data>
 		3kU8ikV9Vddv1w+LBReNkJLeJpM=
+
 		</data>
 		<key>Headers/BlockIDSDK.h</key>
 		<data>
@@ -43,7 +44,7 @@
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
 		YdKE2fLxvYzjGeTyIBgM55YXkq4=
-		</data>
+        </data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
 		2wzFf0xJVcNxptyK0cJPG/00qGk=

@@ -331,6 +331,24 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
+    func wrongExpressionDetected(_ livenessFactor: LivenessFactorType) {
+        var factor = ""
+        switch livenessFactor {
+        case .BLINK:
+            factor = "Blink"
+        case .SMILE:
+            factor = "Smile"
+        case .MOVE_LEFT:
+            factor = "Moved Left"
+        case .MOVE_RIGHT:
+            factor = "Moved Right"
+        case .NONE:
+            return
+        }
+        
+        self._lblInformation.text = "Wrong Expression: \(factor)"
+    }
+    
 }
 
 extension LiveIDViewController: LiveIDV0ResponseDelegate {
