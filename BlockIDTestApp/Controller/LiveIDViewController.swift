@@ -96,15 +96,11 @@ class LiveIDViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self._viewBG.isHidden = false
-                    
-                    let bidView = BIDScannerView()
-                    bidView.frame = self._viewLiveIDScan.frame
-                    self.view.addSubview(bidView)
-                    self._viewLiveIDScan.isHidden = true
+                    self._viewLiveIDScan.isHidden = false
                     
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIDV0ScanHelper == nil {
-                        self.liveIDV0ScanHelper = LiveIDV0ScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, liveIdResponseDelegate: self)
+                        self.liveIDV0ScanHelper = LiveIDV0ScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.liveIDV0ScanHelper?.startLiveIDScanning()
