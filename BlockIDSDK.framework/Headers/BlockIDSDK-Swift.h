@@ -297,6 +297,14 @@ SWIFT_CLASS("_TtC10BlockIDSDK19LiveIDScannerHelper")
 
 
 
+SWIFT_CLASS("_TtC10BlockIDSDK21LiveIDV0ScannerHelper")
+@interface LiveIDV0ScannerHelper : NSObject
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+
+
 
 
 SWIFT_CLASS("_TtC10BlockIDSDK20NationalIDScanHelper")

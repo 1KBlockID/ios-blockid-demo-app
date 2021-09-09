@@ -12,6 +12,7 @@ import BlockIDSDK
 
 class EnrollmentTableViewCell: UITableViewCell {
     weak var controllerObj:EnrollMentViewController?
+    var liveID = Enrollments.LiveID
     
     @IBOutlet weak var lblEnrollment: UILabel!
     
@@ -39,6 +40,9 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .LiveID:
+            self.lblEnrollment.text = enrollment.rawValue
+            self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
+        case .LiveIDV0:
             self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
         case .Pin:

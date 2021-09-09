@@ -19,6 +19,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
+    case LiveIDV0 = "LiveID Version0"
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
@@ -26,7 +27,7 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LiveIDV0, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -74,6 +75,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             enrollLiveID()
+        case Enrollments.LiveIDV0.rawValue:
+            enrollLiveIDV0()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.RecoverMnemonics.rawValue:
@@ -236,6 +239,12 @@ extension EnrollMentViewController {
     private func enrollLiveID() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             showLiveIDView()
+        }
+    }
+    
+    private func enrollLiveIDV0() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            showLiveIDV0View()
         }
     }
     
