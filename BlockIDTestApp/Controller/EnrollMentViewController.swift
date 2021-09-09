@@ -19,6 +19,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
+    case LiveIDV0 = "LiveID Version0"
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
@@ -26,7 +27,7 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LiveIDV0, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -74,6 +75,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             enrollLiveID()
+        case Enrollments.LiveIDV0.rawValue:
+            enrollLiveIDV0()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.RecoverMnemonics.rawValue:
@@ -94,10 +97,10 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .DL, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
             self.present(alert, animated: true)
             return
@@ -128,10 +131,10 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .PPT, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
             self.present(alert, animated: true)
             return
@@ -147,10 +150,10 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
             self.present(alert, animated: true)
             return
@@ -165,10 +168,10 @@ extension EnrollMentViewController {
         if BlockIDSDK.sharedInstance.isPinRegistered() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.showPinView(pinActivity: .isRemoving)
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
             self.present(alert, animated: true)
             return
@@ -239,14 +242,20 @@ extension EnrollMentViewController {
         }
     }
     
+    private func enrollLiveIDV0() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            showLiveIDV0View()
+        }
+    }
+    
     private func resetApp() {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.resetAppNSDK()
             self.showHomeView()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
 
         self.present(alert, animated: true)
         return
