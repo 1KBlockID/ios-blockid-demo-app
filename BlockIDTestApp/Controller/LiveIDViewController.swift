@@ -263,18 +263,15 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
         
         if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Error",
-                                              message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
-                                              preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error",
+                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
+                                          preferredStyle: .alert)
 
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                    self.goBack()
-                }))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                self.goBack()
+            }))
 
-                self.navigationController?.topViewController?.present(alert, animated: true)
-            }
-            
+            self.navigationController?.topViewController?.present(alert, animated: true)
             return
         }
         
