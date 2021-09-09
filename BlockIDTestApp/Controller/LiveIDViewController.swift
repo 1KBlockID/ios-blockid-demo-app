@@ -35,7 +35,8 @@ class LiveIDViewController: UIViewController {
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblInformation: UILabel!
     @IBOutlet private weak var _lblPageTitle: UILabel!
-            
+
+    // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         _viewBG.isHidden = true
@@ -56,6 +57,7 @@ class LiveIDViewController: UIViewController {
         startLiveIDScanning()
     }
     
+    // MARK: - LiveID Scanning -
     private func startLiveIDScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
@@ -246,6 +248,7 @@ class LiveIDViewController: UIViewController {
     }
 }
 
+// MARK: - LiveIDResponseDelegate -
 extension LiveIDViewController: LiveIDResponseDelegate {
 
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
@@ -268,7 +271,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self.goBack()
             }))
 
-            self.present(alert, animated: true)
+            self.navigationController?.topViewController?.present(alert, animated: true)
             return
         }
         
@@ -314,8 +317,6 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
-            @unknown default:
-                return
             }
         }
 
@@ -352,21 +353,21 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     
 }
 
-extension LiveIDViewController: LiveIDV0ResponseDelegate {
-    
-    func readyForExpression(_ livenessFactor: LivenessFactorTypeV0) {
-        DispatchQueue.main.async {
-            self._lblInformation.isHidden = false
-
-            switch livenessFactor {
-            case .BLINK:
-                self._lblInformation.text = DetectionMsg.blink
-            case .SMILE:
-                self._lblInformation.text = DetectionMsg.smile
-            }
-        }
-    }
-    
-    
-    
-}
+//extension LiveIDViewController: LiveIDV0ResponseDelegate {
+//    
+//    func readyForExpression(_ livenessFactor: LivenessFactorTypeV0) {
+//        DispatchQueue.main.async {
+//            self._lblInformation.isHidden = false
+//
+//            switch livenessFactor {
+//            case .BLINK:
+//                self._lblInformation.text = DetectionMsg.blink
+//            case .SMILE:
+//                self._lblInformation.text = DetectionMsg.smile
+//            }
+//        }
+//    }
+//    
+//    
+//    
+//}
