@@ -42,9 +42,6 @@ class EnrollmentTableViewCell: UITableViewCell {
         case .LiveID:
             self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
-        case .LiveIDV0:
-            self.lblEnrollment.text = enrollment.rawValue
-            self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
         case .Pin:
             self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isPinRegistered() ? .checkmark : .none
