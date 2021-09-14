@@ -97,13 +97,12 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-            self.present(alert, animated: true)
-            return
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .DL, id: docID)
         }
         showDLView()
     }
@@ -131,13 +130,13 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .PPT, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .PPT, id: docID)
 
-            self.present(alert, animated: true)
-            return
         }
         showPassportView()
     }
@@ -150,13 +149,13 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
 
-            self.present(alert, animated: true)
-            return
         }
         showNationalIDView()
     }
@@ -168,13 +167,12 @@ extension EnrollMentViewController {
         if BlockIDSDK.sharedInstance.isPinRegistered() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.showPinView(pinActivity: .isRemoving)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-            self.present(alert, animated: true)
-            return
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.showPinView(pinActivity: .isRemoving)
         }
         showPinView(pinActivity: .isEnrolling)
     }
