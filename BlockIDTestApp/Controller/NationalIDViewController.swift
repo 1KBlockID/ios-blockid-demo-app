@@ -39,14 +39,14 @@ class NationalIDViewController: UIViewController {
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.nidScannerHelper?.stopNationalIDScanning()
-            self.goBack()
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+            self.present(alert, animated: true)
+            return
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
-        return
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        self.nidScannerHelper?.stopNationalIDScanning()
+        self.goBack()
+        
     }
     
     private func startNationalIDScanning() {

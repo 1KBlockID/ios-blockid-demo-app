@@ -19,12 +19,14 @@ struct DetectionMsg {
 
 class LiveIDViewController: UIViewController {
     
+    var isLiveIDV0: Bool = false
     var isForVerification: Bool = false
     var isForConsent: Bool = false
     
     private var attemptCounts = 0
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
+  //  private var liveIDV0ScanHelper: LiveIDV0ScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
 
 
@@ -48,7 +50,10 @@ class LiveIDViewController: UIViewController {
             //For LiveID Verification
             _lblPageTitle.text = "LiveID Authentication"
         }
-        
+        if isLiveIDV0 {
+            startLiveIDV0Scanning()
+            return
+        }
         startLiveIDScanning()
     }
     
@@ -82,6 +87,31 @@ class LiveIDViewController: UIViewController {
         
     }
     
+    private func startLiveIDV0Scanning() {
+        //1. Check for Camera Permission
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if !response {
+                //2. Show Alert
+                DispatchQueue.main.async {
+                    self.alertForCameraAccess()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self._viewBG.isHidden = false
+                    self._viewLiveIDScan.isHidden = false
+                    
+                    //3. Initialize LiveIDScannerHelper
+                   // if self.liveIDV0ScanHelper == nil {
+                      //  self.liveIDV0ScanHelper = LiveIDV0ScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, liveIdResponseDelegate: self)
+                    //}
+                    //4. Start Scanning
+                  //  self.liveIDV0ScanHelper?.startLiveIDScanning()
+                }
+            }
+        }
+        
+    }
+    
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -89,14 +119,17 @@ class LiveIDViewController: UIViewController {
     @IBAction func cancelTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: {_ in
-            self.stopLiveIDScanning()
-            self.goBack()
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+            self.present(alert, animated: true)
+            return
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
-        return
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        if self.isLiveIDV0 {
+            self.stopLiveIDV0Scanning()
+        } else {
+            self.stopLiveIDScanning()
+        }
+        self.goBack()
     }
     
     private func setLiveID(withPhoto face: UIImage, token: String) {
@@ -111,7 +144,11 @@ class LiveIDViewController: UIViewController {
                 return
             }
             // SUCCESS
-            self.stopLiveIDScanning()
+            if self.isLiveIDV0 {
+                self.stopLiveIDV0Scanning()
+            } else {
+                self.stopLiveIDScanning()
+            }
             self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                 self.goBack()
             })
@@ -129,7 +166,11 @@ class LiveIDViewController: UIViewController {
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
-            self.stopLiveIDScanning()
+            if self.isLiveIDV0 {
+                self.stopLiveIDV0Scanning()
+            } else {
+                self.stopLiveIDScanning()
+            }
             if !status {
                 // FAILED
                 self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
@@ -158,7 +199,11 @@ class LiveIDViewController: UIViewController {
                         self.attemptCounts = 0
                         //Failed 3 attempts
                         //Finish Process with false status
-                        self.stopLiveIDScanning()
+                        if self.isLiveIDV0 {
+                            self.stopLiveIDV0Scanning()
+                        } else {
+                            self.stopLiveIDScanning()
+                        }
                         self.goBack()
                         return
                     }
@@ -196,6 +241,10 @@ class LiveIDViewController: UIViewController {
     private func stopLiveIDScanning() {
         self.liveIdScannerHelper?.stopLiveIDScanning()
     }
+    
+    private func stopLiveIDV0Scanning() {
+       // self.liveIDV0ScanHelper?.stopLiveIDScanning()
+    }
 }
 
 // MARK: - LiveIDResponseDelegate -
@@ -212,18 +261,18 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-        if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
-            let alert = UIAlertController(title: "Error",
-                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
-                                          preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.goBack()
-            }))
-
-            self.navigationController?.topViewController?.present(alert, animated: true)
-            return
-        }
+//        if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
+//            let alert = UIAlertController(title: "Error",
+//                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
+//                                          preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+//                self.goBack()
+//            }))
+//
+//            self.navigationController?.topViewController?.present(alert, animated: true)
+//            return
+//        }
         
         guard let face = liveIdImage, let signToken = signatureToken else {
             self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
@@ -302,3 +351,22 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     }
     
 }
+
+//extension LiveIDViewController: LiveIDV0ResponseDelegate {
+//    
+//    func readyForExpression(_ livenessFactor: LivenessFactorTypeV0) {
+//        DispatchQueue.main.async {
+//            self._lblInformation.isHidden = false
+//
+//            switch livenessFactor {
+//            case .BLINK:
+//                self._lblInformation.text = DetectionMsg.blink
+//            case .SMILE:
+//                self._lblInformation.text = DetectionMsg.smile
+//            }
+//        }
+//    }
+//    
+//    
+//    
+//}
