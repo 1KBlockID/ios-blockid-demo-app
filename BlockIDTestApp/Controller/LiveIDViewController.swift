@@ -199,7 +199,15 @@ class LiveIDViewController: UIViewController {
 
 // MARK: - LiveIDResponseDelegate -
 extension LiveIDViewController: LiveIDResponseDelegate {
-
+  
+    func liveIDDidDetectErrorInScanning(error: ErrorResponse?) {
+            //Check If licenene key not enabled
+            if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
+                self.view.makeToast("Camera sensor blocked. Please try again.", duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
+                })
+            }
+        }
+    
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
