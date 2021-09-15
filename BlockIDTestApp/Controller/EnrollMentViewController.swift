@@ -104,13 +104,13 @@ extension EnrollMentViewController {
         let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                self.present(alert, animated: true)
-                return
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .DL, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            self.unenrollDocument(registerDocType: .DL, id: docID)
+            self.present(alert, animated: true)
+            return
         }
         showDLView()
     }
@@ -137,14 +137,13 @@ extension EnrollMentViewController {
         let docID = getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) ?? ""
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                self.present(alert, animated: true)
-                return
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .PPT, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            self.unenrollDocument(registerDocType: .PPT, id: docID)
-
+            self.present(alert, animated: true)
+            return
         }
         showPassportView()
     }
@@ -157,13 +156,12 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                self.present(alert, animated: true)
-                return
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
             }))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
-
+            self.present(alert, animated: true)
+            return
         }
         showNationalIDView()
     }
@@ -175,12 +173,13 @@ extension EnrollMentViewController {
         if BlockIDSDK.sharedInstance.isPinRegistered() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                self.present(alert, animated: true)
-                return
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.showPinView(pinActivity: .isRemoving)
             }))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-            self.showPinView(pinActivity: .isRemoving)
+            self.present(alert, animated: true)
+            return
+            
         }
         showPinView(pinActivity: .isEnrolling)
     }
@@ -251,12 +250,11 @@ extension EnrollMentViewController {
     private func resetApp() {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application", preferredStyle: .alert)
 
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.resetAppNSDK()
             self.showHomeView()
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
         self.present(alert, animated: true)
         return
        

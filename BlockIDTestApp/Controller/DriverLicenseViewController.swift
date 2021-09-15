@@ -37,7 +37,7 @@ class DriverLicenseViewController: UIViewController {
 
     @objc func numberOfFacesNotification(_ notification: Notification) {
         guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
-        print ("Number of faces found: \(faceCount)")
+       // print ("Number of faces found: \(faceCount)")
         DispatchQueue.main.async {
             if faceCount > 0 {
                 self._lblScanInfoTxt.text = "Faces found : \(faceCount)"
@@ -54,13 +54,14 @@ class DriverLicenseViewController: UIViewController {
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-            self.present(alert, animated: true)
-            return
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            self.dlScannerHelper?.stopDLScanning()
+            self.goBack()
         }))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-        self.dlScannerHelper?.stopDLScanning()
-        self.goBack()
+        self.present(alert, animated: true)
+        return
+        
     }
     
     private func startDLScanning() {

@@ -119,17 +119,17 @@ class LiveIDViewController: UIViewController {
     @IBAction func cancelTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-            self.present(alert, animated: true)
-            return
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            if self.isLiveIDV0 {
+                self.stopLiveIDV0Scanning()
+            } else {
+                self.stopLiveIDScanning()
+            }
+            self.goBack()
         }))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-        if self.isLiveIDV0 {
-            self.stopLiveIDV0Scanning()
-        } else {
-            self.stopLiveIDScanning()
-        }
-        self.goBack()
+        self.present(alert, animated: true)
+        return
     }
     
     private func setLiveID(withPhoto face: UIImage, token: String) {

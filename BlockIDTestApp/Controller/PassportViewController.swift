@@ -70,13 +70,13 @@ class PassportViewController: UIViewController {
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-            self.present(alert, animated: true)
-            return
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            self.ppScannerHelper?.stopPassportScanning()
+            self.goBack()
         }))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
-        self.ppScannerHelper?.stopPassportScanning()
-        self.goBack()
+        self.present(alert, animated: true)
+        return
     }
     
     private func setPassport(withPPDat pp: [String : Any], token: String, isWithNFC: Bool) {
