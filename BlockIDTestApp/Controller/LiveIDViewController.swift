@@ -17,6 +17,56 @@ struct DetectionMsg {
     static let right = "Please turn right"
 }
 
+/*
+ 
+ Adding Feedback Generator
+ 
+ */
+enum Vibration {
+        case error
+        case success
+        case warning
+        case light
+        case medium
+        case heavy
+        @available(iOS 13.0, *)
+        case soft
+        @available(iOS 13.0, *)
+        case rigid
+        case selection
+        case oldSchool
+
+        public func vibrate() {
+            switch self {
+            case .error:
+                UINotificationFeedbackGenerator().notificationOccurred(.error)
+            case .success:
+                UINotificationFeedbackGenerator().notificationOccurred(.success)
+            case .warning:
+                UINotificationFeedbackGenerator().notificationOccurred(.warning)
+            case .light:
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            case .medium:
+                UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+            case .heavy:
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            case .soft:
+                if #available(iOS 13.0, *) {
+                    UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+                }
+            case .rigid:
+                if #available(iOS 13.0, *) {
+                    UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+                }
+            case .selection:
+                UISelectionFeedbackGenerator().selectionChanged()
+            case .oldSchool:
+                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+            }
+        }
+    }
+
+
 class LiveIDViewController: UIViewController {
     
     var isForVerification: Bool = false
@@ -219,19 +269,6 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-//        if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
-//            let alert = UIAlertController(title: "Error",
-//                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
-//                                          preferredStyle: .alert)
-//
-//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-//                self.goBack()
-//            }))
-//
-//            self.navigationController?.topViewController?.present(alert, animated: true)
-//            return
-//        }
-        
         guard let face = liveIdImage, let signToken = signatureToken else {
             self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
                 if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
@@ -257,12 +294,14 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             self.setLiveID(withPhoto: face, token: signToken)
 
         }
+        
+        Vibration.heavy.vibrate()
     }
     
     func readyForExpression(_ livenessFactor: LivenessFactorType) {
         DispatchQueue.main.async {
             self._lblInformation.isHidden = false
-
+            Vibration.success.vibrate()
             switch livenessFactor {
             case .BLINK:
                 self._lblInformation.text = DetectionMsg.blink
@@ -283,9 +322,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         guard let inFocus = isFocused else {
             return
         }
+        
         if !inFocus {
             DispatchQueue.main.async {
                 self._lblInformation.text = "Please try again"
+                Vibration.oldSchool.vibrate()
             }
         }
     }
@@ -306,25 +347,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
         
         self._lblInformation.text = "Wrong Expression: \(factor)"
+        Vibration.oldSchool.vibrate()
     }
     
 }
-
-//extension LiveIDViewController: LiveIDV0ResponseDelegate {
-//    
-//    func readyForExpression(_ livenessFactor: LivenessFactorTypeV0) {
-//        DispatchQueue.main.async {
-//            self._lblInformation.isHidden = false
-//
-//            switch livenessFactor {
-//            case .BLINK:
-//                self._lblInformation.text = DetectionMsg.blink
-//            case .SMILE:
-//                self._lblInformation.text = DetectionMsg.smile
-//            }
-//        }
-//    }
-//    
-//    
-//    
-//}
