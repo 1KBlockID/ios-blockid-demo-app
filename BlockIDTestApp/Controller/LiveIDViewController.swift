@@ -26,7 +26,7 @@ class LiveIDViewController: UIViewController {
     private var attemptCounts = 0
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private var liveIDV0ScanHelper: LiveIDV0ScannerHelper?
+  //  private var liveIDV0ScanHelper: LiveIDV0ScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
 
 
@@ -101,11 +101,11 @@ class LiveIDViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     
                     //3. Initialize LiveIDScannerHelper
-                    if self.liveIDV0ScanHelper == nil {
-                        self.liveIDV0ScanHelper = LiveIDV0ScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, liveIdResponseDelegate: self)
-                    }
+                   // if self.liveIDV0ScanHelper == nil {
+                      //  self.liveIDV0ScanHelper = LiveIDV0ScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, liveIdResponseDelegate: self)
+                    //}
                     //4. Start Scanning
-                    self.liveIDV0ScanHelper?.startLiveIDScanning()
+                  //  self.liveIDV0ScanHelper?.startLiveIDScanning()
                 }
             }
         }
@@ -119,18 +119,17 @@ class LiveIDViewController: UIViewController {
     @IBAction func cancelTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "YES", style: .default, handler: {_ in
-            if self.isLiveIDV0 {
-                self.stopLiveIDV0Scanning()
-            } else {
-                self.stopLiveIDScanning()
-            }
-            self.goBack()
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+            self.present(alert, animated: true)
+            return
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
-        return
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+        if self.isLiveIDV0 {
+            self.stopLiveIDV0Scanning()
+        } else {
+            self.stopLiveIDScanning()
+        }
+        self.goBack()
     }
     
     private func setLiveID(withPhoto face: UIImage, token: String) {
@@ -244,7 +243,7 @@ class LiveIDViewController: UIViewController {
     }
     
     private func stopLiveIDV0Scanning() {
-        self.liveIDV0ScanHelper?.stopLiveIDScanning()
+       // self.liveIDV0ScanHelper?.stopLiveIDScanning()
     }
 }
 
@@ -262,18 +261,18 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-        if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
-            let alert = UIAlertController(title: "Error",
-                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
-                                          preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-                self.goBack()
-            }))
-
-            self.navigationController?.topViewController?.present(alert, animated: true)
-            return
-        }
+//        if error?.code == CustomErrors.kLiveIDWithARNotSupported.code {
+//            let alert = UIAlertController(title: "Error",
+//                                          message: "The LiveID scan is not supported on this device. (Error Code: \(error?.code ?? 000)",
+//                                          preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+//                self.goBack()
+//            }))
+//
+//            self.navigationController?.topViewController?.present(alert, animated: true)
+//            return
+//        }
         
         guard let face = liveIdImage, let signToken = signatureToken else {
             self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in

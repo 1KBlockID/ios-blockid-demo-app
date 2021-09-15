@@ -19,7 +19,6 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
-    case LiveIDV0 = "LiveID Version0"
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
@@ -27,7 +26,16 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense, Enrollments.Passport1, Enrollments.Passport2, Enrollments.NationalID, Enrollments.Pin, Enrollments.DeviceAuth, Enrollments.LiveID, Enrollments.LiveIDV0, Enrollments.LoginWithQR, Enrollments.RecoverMnemonics, Enrollments.resetApp]
+    var enrollmentArray = [Enrollments.DriverLicense,
+                           Enrollments.Passport1,
+                           Enrollments.Passport2,
+                           Enrollments.NationalID,
+                           Enrollments.Pin,
+                           Enrollments.DeviceAuth,
+                           Enrollments.LiveID,
+                           Enrollments.LoginWithQR,
+                           Enrollments.RecoverMnemonics,
+                           Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
@@ -39,6 +47,7 @@ class EnrollMentViewController: UIViewController {
     }
     
 }
+
 extension EnrollMentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return enrollmentArray.count
@@ -53,6 +62,7 @@ extension EnrollMentViewController: UITableViewDataSource {
     
     
 }
+
 extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
@@ -75,8 +85,6 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             enrollLiveID()
-        case Enrollments.LiveIDV0.rawValue:
-            enrollLiveIDV0()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.RecoverMnemonics.rawValue:
@@ -97,13 +105,12 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-            self.present(alert, animated: true)
-            return
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .DL, id: docID)
         }
         showDLView()
     }
@@ -131,13 +138,13 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .PPT, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .PPT, id: docID)
 
-            self.present(alert, animated: true)
-            return
         }
         showPassportView()
     }
@@ -150,13 +157,13 @@ extension EnrollMentViewController {
         if (docID != "") {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
 
-            self.present(alert, animated: true)
-            return
         }
         showNationalIDView()
     }
@@ -168,13 +175,12 @@ extension EnrollMentViewController {
         if BlockIDSDK.sharedInstance.isPinRegistered() {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.showPinView(pinActivity: .isRemoving)
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                self.present(alert, animated: true)
+                return
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-
-            self.present(alert, animated: true)
-            return
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: nil))
+            self.showPinView(pinActivity: .isRemoving)
         }
         showPinView(pinActivity: .isEnrolling)
     }
@@ -239,12 +245,6 @@ extension EnrollMentViewController {
     private func enrollLiveID() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             showLiveIDView()
-        }
-    }
-    
-    private func enrollLiveIDV0() {
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            showLiveIDV0View()
         }
     }
     
