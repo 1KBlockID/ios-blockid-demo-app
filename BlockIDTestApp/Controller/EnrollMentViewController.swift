@@ -102,7 +102,7 @@ extension EnrollMentViewController {
     
     private func enrollDL() {
         let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
-        if (docID != "") {
+        if  !docID.isEmpty {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))

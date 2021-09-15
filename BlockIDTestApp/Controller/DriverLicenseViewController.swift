@@ -37,7 +37,7 @@ class DriverLicenseViewController: UIViewController {
 
     @objc func numberOfFacesNotification(_ notification: Notification) {
         guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
-       // print ("Number of faces found: \(faceCount)")
+        print ("Number of faces found: \(faceCount)")
         DispatchQueue.main.async {
             if faceCount > 0 {
                 self._lblScanInfoTxt.text = "Faces found : \(faceCount)"
