@@ -15,6 +15,8 @@ struct DetectionMsg {
     static let smile = "Please smile"
     static let left = "Please turn left"
     static let right = "Please turn right"
+    static let up = "Move your head up"
+    static let down = "Move your head down"
 }
 
 /*
@@ -313,6 +315,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
+            case .MOVE_UP:
+                self._lblInformation.text = DetectionMsg.up
+            case .MOVE_DOWN:
+                self._lblInformation.text = DetectionMsg.down
             }
         }
 
@@ -343,7 +349,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         case .MOVE_RIGHT:
             factor = "Moved Right"
         case .NONE:
-            return
+            factor = "Unknown"
+        case .MOVE_UP:
+            factor = "Moved Up"
+        case .MOVE_DOWN:
+            factor = "Moved Down"
         }
         
         self._lblInformation.text = "Wrong Expression: \(factor)"
