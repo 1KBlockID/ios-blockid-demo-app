@@ -252,7 +252,7 @@ class LiveIDViewController: UIViewController {
 // MARK: - LiveIDResponseDelegate -
 extension LiveIDViewController: LiveIDResponseDelegate {
   
-    func liveIDDidDetectErrorInScanning(error: ErrorResponse?) {
+    func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
         //Check If licenene key not enabled
         if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
             self._lblInformation.text = "Camera sensor is blocked. Unblock sensor and continue..."
