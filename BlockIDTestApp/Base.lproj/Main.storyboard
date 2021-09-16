@@ -1305,8 +1305,8 @@
                                             <action selector="cancelTapped:" destination="HpV-zr-RXq" eventType="touchUpInside" id="3dc-OV-BhF"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please blink your eyes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qL6-3i-TsY">
-                                        <rect key="frame" x="88.5" y="106.5" width="143" height="35"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please blink your eyes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="qL6-3i-TsY">
+                                        <rect key="frame" x="0.0" y="106.5" width="320" height="35"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="flP-6G-BYy"/>
@@ -1333,6 +1333,7 @@
                                     <constraint firstAttribute="trailing" secondItem="roA-wd-maU" secondAttribute="trailing" constant="15" id="MKN-Bt-1S1"/>
                                     <constraint firstItem="rg0-Qk-de0" firstAttribute="top" secondItem="wCh-rr-VwC" secondAttribute="bottom" constant="33" id="ORc-Lo-5l7"/>
                                     <constraint firstItem="roA-wd-maU" firstAttribute="leading" secondItem="5SW-2R-m0t" secondAttribute="leading" constant="15" id="QQT-mD-1YJ"/>
+                                    <constraint firstItem="qL6-3i-TsY" firstAttribute="width" secondItem="5SW-2R-m0t" secondAttribute="width" id="bhF-u6-x0l"/>
                                     <constraint firstItem="Y1k-KI-92A" firstAttribute="top" secondItem="5SW-2R-m0t" secondAttribute="top" constant="45" id="fWA-PS-vUz"/>
                                     <constraint firstItem="dqk-o8-UCV" firstAttribute="height" secondItem="wCh-rr-VwC" secondAttribute="height" id="gcb-Ci-OFh"/>
                                     <constraint firstItem="dqk-o8-UCV" firstAttribute="width" secondItem="wCh-rr-VwC" secondAttribute="width" id="kcw-N3-glu"/>
