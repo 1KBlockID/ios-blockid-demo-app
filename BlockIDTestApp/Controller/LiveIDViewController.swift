@@ -15,6 +15,8 @@ struct DetectionMsg {
     static let smile = "Please smile"
     static let left = "Please turn left"
     static let right = "Please turn right"
+    static let up = "Move your head up"
+    static let down = "Move your head down"
 }
 
 /*
@@ -250,13 +252,13 @@ class LiveIDViewController: UIViewController {
 // MARK: - LiveIDResponseDelegate -
 extension LiveIDViewController: LiveIDResponseDelegate {
   
-    func liveIDDidDetectErrorInScanning(error: ErrorResponse?) {
-            //Check If licenene key not enabled
-            if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
-                self.view.makeToast("Camera sensor blocked. Please try again.", duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
-                })
-            }
+    func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
+        //Check If licenene key not enabled
+        if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
+            self._lblInformation.text = "Camera sensor is blocked. Unblock sensor and continue..."
+            Vibration.error.vibrate()
         }
+    }
     
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
@@ -313,6 +315,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
+            case .MOVE_UP:
+                self._lblInformation.text = DetectionMsg.up
+            case .MOVE_DOWN:
+                self._lblInformation.text = DetectionMsg.down
             }
         }
 
@@ -343,7 +349,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         case .MOVE_RIGHT:
             factor = "Moved Right"
         case .NONE:
-            return
+            factor = "Unknown"
+        case .MOVE_UP:
+            factor = "Moved Up"
+        case .MOVE_DOWN:
+            factor = "Moved Down"
         }
         
         self._lblInformation.text = "Wrong Expression: \(factor)"
