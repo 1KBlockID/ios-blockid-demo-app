@@ -7,3 +7,20 @@ os: osx
 xcode_workspace: BlockIDTestApp.xcworkspace
 xcode_scheme: BlockIDTestApp
 xcode_destination: platform=iOS Simulator,OS=11.4,name=iPhone X
+
+before_deploy: echo 'initiating deployment process'
+deploy:
+  skip_cleanup: true
+  provider: firebase
+  token:
+    secure: KG2GIv4gJNP6SH6e0H39EUNP7b5TNs1uqw541WyYa0ABuz0oCdTZK0SIvxsEaNkcpybEq9i37ZSP9SZD3EDsOZk+dT2L617ffbJMMuckZgdnLRNicWP9z5GR1Iv8poyRgZGSHD7xlS6pj3mD755AWN9AA5OSZdJsNIGriGXCGAgQsfEiF4IWuWK6ujVqww6rZcrzH15IV1N6J/ovTBpVlo1SJOz3SUK43/al//Mf9iYreAnYV1x7pwwQ4GdtyeKIR7XNJY1+TQ2cFBDC6+Gu88QU4wa1Y8q9rNvQw5+pVUS99ZM4tbAeXNeOn3qX8YeJ3r7TIPkIxr6Fi5ZFKaF/SxVNyz/d/v22mDlkju0I+IvUA0ZLnY51IZaDTrgXS+8cQKWxr++aE5r7HFGX/0kWdzqyR2yI7/ebUXEUWmjcosUopfgCzc7Zkk5ekHqbNeLTDmrCpYjKeLWq039DxKFnt7cNqEOEdgCbr6pl6Kv5MwqQO8heqHtJ6lVYbf740cHZjT1zA78fdQ9HG6wlHmv35kf/c5BBZAf+xdpea13JALY15+fWTBUV54jYto7gp/9KrfDpIGmMpJLACy97w0SQdODPJ9fsmAINyr5FRs8HdeMQmv5oI7y+B7vZe9N89SfpW4xZhoqWZ5ZiRKOaxuLhcF/+WnkBRhozzWCwvihS5w0=
+  message: build $TRAVIS_BUILD_NUMBER $TRAVIS_BRANCH/$COMMIT_HASH
+  on:
+    branch: master
+after_deploy: echo 'completing deployment process'
+notifications:
+  email:
+  - sushil.tiwari@1kosmos.com
+env:
+  global:
+    secure: QQr3X9BCAa2fUVQ0owSEg8xZ8Aj/Rku73+W/HkwoU5LEzqFFFsi10qZZiyk+KqQRyqqB37lmNfk7hwIHrEr1ngTwIzE/aiicqMsLKz18Fr+WmFgGyI3/KCHmU0kkiAHoKfoeSHglxZKaM3WYBmG/rhW5ESRei1KD7OF4EbiMvs2p0or+wuDIrwL8GzEFF3khaacB8TMxcGz5nTF5WzM40/HqIG9bowVD1Iz7YPnr1Kca3lO+7I+mOwZ92a/YnbFQ1dJFG4XIg/lS/GsO+mk+CMutDLBKdtNwYO2jVTwhIHCEolQITHLih/9h+Kyc4CmP2ubPGbtb+57SXRdAB14I5Qsz6apC0YlNA61f+wk5BdNf70CPs5r69Rz5nshoKpqTM8V0279DX4l4AkdAsjMETdxinb6Ei6Y5qUNyf429SQeO3wwnA+QO6XgL15PbLGfEw64y+GvBR3o8UBXuA8+xWE78w/IS8kGiUjaA3ijH/Ij5ojLu2n4ReudofyvKcxi9TXlfNEX61FwIxvw0ZabfULsGpWf4g2vOtkMfECqHYtKnyI4K6smQ+juBK8AHHtVO6WNPopqLVO2XjfSiwWlaZwuelBRDMj4H0sqnQwQL+kQSRBwvhizsFAsWa5xJ5x6BWSxHtO46iTvXSLVWKnsE3kT6Fqmx9LGLnGPTQpey/fU=
