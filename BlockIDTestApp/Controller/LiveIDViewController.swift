@@ -309,9 +309,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.blink
             case .SMILE:
                 self._lblInformation.text = DetectionMsg.smile
-            case .MOVE_LEFT:
+            case .TURN_LEFT:
                 self._lblInformation.text = DetectionMsg.left
-            case .MOVE_RIGHT:
+            case .TURN_RIGHT:
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
@@ -344,9 +344,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             factor = "Blink"
         case .SMILE:
             factor = "Smile"
-        case .MOVE_LEFT:
+        case .TURN_LEFT:
             factor = "Moved Left"
-        case .MOVE_RIGHT:
+        case .TURN_RIGHT:
             factor = "Moved Right"
         case .NONE:
             factor = "Unknown"
