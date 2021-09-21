@@ -316,9 +316,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             case .NONE:
                 return
             case .MOVE_UP:
-                self._lblInformation.text = DetectionMsg.up
+                return //self._lblInformation.text = DetectionMsg.up
             case .MOVE_DOWN:
-                self._lblInformation.text = DetectionMsg.down
+                return //self._lblInformation.text = DetectionMsg.down
             }
         }
 
