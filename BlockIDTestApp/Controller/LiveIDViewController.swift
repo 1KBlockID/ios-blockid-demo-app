@@ -309,16 +309,16 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.blink
             case .SMILE:
                 self._lblInformation.text = DetectionMsg.smile
-            case .MOVE_LEFT:
+            case .TURN_LEFT:
                 self._lblInformation.text = DetectionMsg.left
-            case .MOVE_RIGHT:
+            case .TURN_RIGHT:
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
-            case .MOVE_UP:
+            /*case .MOVE_UP:
                 self._lblInformation.text = DetectionMsg.up
             case .MOVE_DOWN:
-                self._lblInformation.text = DetectionMsg.down
+                self._lblInformation.text = DetectionMsg.down*/
             }
         }
 
@@ -344,16 +344,16 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             factor = "Blink"
         case .SMILE:
             factor = "Smile"
-        case .MOVE_LEFT:
-            factor = "Moved Left"
-        case .MOVE_RIGHT:
-            factor = "Moved Right"
+        case .TURN_LEFT:
+            factor = "Turned Left"
+        case .TURN_RIGHT:
+            factor = "Turned Right"
         case .NONE:
             factor = "Unknown"
-        case .MOVE_UP:
+       /* case .MOVE_UP:
             factor = "Moved Up"
         case .MOVE_DOWN:
-            factor = "Moved Down"
+            factor = "Moved Down"*/
         }
         
         self._lblInformation.text = "Wrong Expression: \(factor)"
