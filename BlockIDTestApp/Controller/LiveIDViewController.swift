@@ -345,9 +345,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         case .SMILE:
             factor = "Smile"
         case .TURN_LEFT:
-            factor = "Moved Left"
+            factor = "Turned Left"
         case .TURN_RIGHT:
-            factor = "Moved Right"
+            factor = "Turned Right"
         case .NONE:
             factor = "Unknown"
        /* case .MOVE_UP:
