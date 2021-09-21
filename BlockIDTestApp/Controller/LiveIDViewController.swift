@@ -315,10 +315,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.right
             case .NONE:
                 return
-            case .MOVE_UP:
-                return //self._lblInformation.text = DetectionMsg.up
+            /*case .MOVE_UP:
+                self._lblInformation.text = DetectionMsg.up
             case .MOVE_DOWN:
-                return //self._lblInformation.text = DetectionMsg.down
+                self._lblInformation.text = DetectionMsg.down*/
             }
         }
 
@@ -350,10 +350,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             factor = "Moved Right"
         case .NONE:
             factor = "Unknown"
-        case .MOVE_UP:
+       /* case .MOVE_UP:
             factor = "Moved Up"
         case .MOVE_DOWN:
-            factor = "Moved Down"
+            factor = "Moved Down"*/
         }
         
         self._lblInformation.text = "Wrong Expression: \(factor)"
