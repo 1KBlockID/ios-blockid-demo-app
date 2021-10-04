@@ -6,7 +6,7 @@ target 'BlockIDTestApp' do
   use_frameworks!
 
   # Pods for BlockIDTestApp
-  pod 'TrustWalletCore', '~> 0.12.31'
+  pod 'TrustWalletCore', '~> 2.5.6'
   pod 'Alamofire','~> 4.9.1'
   pod 'CryptoSwift', '~> 1.3.0'
   pod 'BigInt', '~> 4.0'
