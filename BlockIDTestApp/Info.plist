@@ -19,11 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1631900758</string>
+	<string>1634118321</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
 	<string>Allow permission in order to scan your passport</string>
+	<key>NFCUserMessageDuringRFIDScan</key>
+	<string>Hold your iPhone near an NFC enabled passport.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
