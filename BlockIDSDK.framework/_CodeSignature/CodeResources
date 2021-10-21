@@ -6,7 +6,7 @@
 	<dict>
 		<key>BIDScannerView.nib</key>
 		<data>
-		VzZilvUZHxzPLjHPMmxFBpZJbZI=
+		jwmF0BomqfWQQbwtzQrgSTwF1tY=
 		</data>
 		<key>Headers/BlockIDSDK-Swift.h</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		/1t6wwUuNJO4E7Yiujc2J92Ymts=
+		thq9YxOXzw2w3dUierBlE6IqsUY=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		0DOvXM1qsfwhGcxEKh56sxx1e1I=
+		xLk6pgcgwKImxuZ3X4MClVKcz0k=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		0DOvXM1qsfwhGcxEKh56sxx1e1I=
+		xLk6pgcgwKImxuZ3X4MClVKcz0k=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>QRGenerator.nib</key>
 		<data>
-		A6FPWTEklCo2nJ8fahnJT1ZY8J8=
+		CU0GRRowa8KQ5iLZn4FUEID3h8I=
 		</data>
 		<key>default.metallib</key>
 		<data>
@@ -79,7 +79,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DEjYZ/qfbbxm41iec6xVE1kshS+kID+Pcp4r1tR+MXI=
+			5l/Wc49LI29WXzmt+LrKl0B5Cmef4ftTzhlLXKPNAyc=
 			</data>
 		</dict>
 		<key>Headers/BlockIDSDK-Swift.h</key>
@@ -135,7 +135,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kHjgNiXPmeULA9QIeB4cq664X13rwcupnqBxblCcRng=
+			ZHsAy2qf3+71dSPIuUU1ocms+xW+AddPO3NHe2RvVEc=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftdoc</key>
@@ -149,7 +149,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kHjgNiXPmeULA9QIeB4cq664X13rwcupnqBxblCcRng=
+			ZHsAy2qf3+71dSPIuUU1ocms+xW+AddPO3NHe2RvVEc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -163,7 +163,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WynPkDsOtySpA+RAuIgkpGRHMLBE99qTgNCq03sjyxg=
+			yti+cBekwwUW2XJcAv+CAonbUDG8Zb+YXXAXat6R+M0=
 			</data>
 		</dict>
 		<key>default.metallib</key>
