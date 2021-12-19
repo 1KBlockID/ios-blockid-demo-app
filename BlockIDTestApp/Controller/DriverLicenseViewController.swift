@@ -91,6 +91,36 @@ class DriverLicenseViewController: UIViewController {
         }
         
     }
+    
+    private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
+        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Driver License?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            self.verifyDL(withDLData: dl, token: token)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+            self.setDriverLicense(withDLData: dl, token: token)
+        }))
+        
+        self.present(alert, animated: true)
+    }
+    
+    private func verifyDL(withDLData dl: [String : Any]?, token: String) {
+        self.view.makeToastActivity(.center)
+
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: "61a3f09647005c00132b6439", dic: dl ?? [:]) { [self] (status, dataDic, error) in
+            DispatchQueue.main.async {
+                self.view.hideToastActivity()
+                if !status {
+                    //Verification failed
+                    return
+                }
+                print("Dictionary : \(dataDic!)")
+                //Verification success
+                self.setDriverLicense(withDLData: dl, token: token)
+            }
+        }
+    }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
         self.view.makeToastActivity(.center)
@@ -151,7 +181,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         //Check if Not to Expiring Soon
         if error?.code != CustomErrors.kDocumentAboutToExpire.code {
-            self.setDriverLicense(withDLData: dl, token: token)
+            self.wantToVerifyAlert(withDLData: dl, token: token)
             return
         }
         
@@ -159,7 +189,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-            self.setDriverLicense(withDLData: dl, token: token)
+            self.wantToVerifyAlert(withDLData: dl, token: token)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         
