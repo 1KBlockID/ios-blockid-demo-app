@@ -78,6 +78,7 @@ class LiveIDViewController: UIViewController {
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
+    private let isResettingExpressionsAllowed = true
 
 
     @IBOutlet private weak var _viewBG: UIView!
@@ -123,7 +124,7 @@ class LiveIDViewController: UIViewController {
                     
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
-                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, liveIdResponseDelegate: self)
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning()
@@ -329,7 +330,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-        if !inFocus {
+        if !inFocus && isResettingExpressionsAllowed {
             DispatchQueue.main.async {
                 self._lblInformation.text = "Please try again"
                 Vibration.oldSchool.vibrate()
