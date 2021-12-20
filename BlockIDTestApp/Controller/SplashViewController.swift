@@ -34,11 +34,12 @@ class SplashViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.registerView.isHidden = true
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        BlockIDSDK.sharedInstance.setProxy(host: "209.127.191.180",
+        // To set any proxy uncomment below line
+        /*BlockIDSDK.sharedInstance.setProxy(host: "209.127.191.180",
                                            port: 9279,
                                            userName: "skfssubn",
                                            password: "esvgvx488tt3",
-                                           isHTPPOnly: true)
+                                           isHTPPOnly: true)*/
         BlockIDSDK.sharedInstance.setLicenseKey(key: Tenant.licenseKey)
         setRegisterButtonTitle()
     }
