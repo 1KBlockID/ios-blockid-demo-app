@@ -109,31 +109,33 @@ class DriverLicenseViewController: UIViewController {
         self.view.makeToastActivity(.center)
 
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:]) { [self] (status, dataDic, error) in
-            DispatchQueue.main.async {
-                self.view.hideToastActivity()
-                if !status {
-                    //Verification failed
-                    self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
-                        self.goBack()
-                    })
-                    return
-                }
-                
-                //Verification success, call documentRegistration API
-                
-                // - Recommended for future use -
-                // Update DL dictionary to include array of token recieved
-                // from verifyDocument API response.
-                if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]], var dlObj = dl {
-                    var tokens = [String]()
-                    for certification in certifications {
-                        let token = certification["token"] as? String ?? ""
-                        tokens.append(token)
+            DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    if !status {
+                        //Verification failed
+                        self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            self.goBack()
+                        })
+                        return
                     }
-                    dlObj["tokens"] = tokens
-                    self.setDriverLicense(withDLData: dlObj, token: token)
-                } else {
-                    self.setDriverLicense(withDLData: dl, token: token)
+                    
+                    //Verification success, call documentRegistration API
+                    
+                    // - Recommended for future use -
+                    // Update DL dictionary to include array of token recieved
+                    // from verifyDocument API response.
+                    if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]], var dlObj = dl {
+                        var tokens = [String]()
+                        for certification in certifications {
+                            let token = certification["token"] as? String ?? ""
+                            tokens.append(token)
+                        }
+                        dlObj["tokens"] = tokens
+                        self.setDriverLicense(withDLData: dlObj, token: token)
+                    } else {
+                        self.setDriverLicense(withDLData: dl, token: token)
+                    }
                 }
             }
         }
