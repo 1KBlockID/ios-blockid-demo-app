@@ -95,11 +95,11 @@ class DriverLicenseViewController: UIViewController {
     private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
         let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Driver License?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.verifyDL(withDLData: dl, token: token)
-        }))
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
+        }))
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+            self.verifyDL(withDLData: dl, token: token)
         }))
         
         self.present(alert, animated: true)
@@ -118,8 +118,23 @@ class DriverLicenseViewController: UIViewController {
                     })
                     return
                 }
-                //Verification success
-                self.setDriverLicense(withDLData: dl, token: token)
+                
+                //Verification success, call documentRegistration API
+                
+                // - Recommended for future use -
+                // Update DL dictionary to include array of token recieved
+                // from verifyDocument API response.
+                if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]], var dlObj = dl {
+                    var tokens = [String]()
+                    for certification in certifications {
+                        let token = certification["token"] as? String ?? ""
+                        tokens.append(token)
+                    }
+                    dlObj["tokens"] = tokens
+                    self.setDriverLicense(withDLData: dlObj, token: token)
+                } else {
+                    self.setDriverLicense(withDLData: dl, token: token)
+                }
             }
         }
     }
