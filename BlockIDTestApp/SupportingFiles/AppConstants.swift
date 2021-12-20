@@ -17,4 +17,5 @@ public class Tenant : NSObject {
 public class AppConsant: NSObject {
     static let buildVersion = "buildVersion"
     static let appVersionKey = "appVersionKey"
+    static let dvcID = "61a3f09647005c00132b6439"
 }
