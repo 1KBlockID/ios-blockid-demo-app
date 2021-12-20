@@ -123,7 +123,7 @@ class LiveIDViewController: UIViewController {
                     
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
-                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, liveIdResponseDelegate: self)
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, shouldResetOnWrongExpresssion: false, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning()
