@@ -108,14 +108,16 @@ class DriverLicenseViewController: UIViewController {
     private func verifyDL(withDLData dl: [String : Any]?, token: String) {
         self.view.makeToastActivity(.center)
 
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: "61a3f09647005c00132b6439", dic: dl ?? [:]) { [self] (status, dataDic, error) in
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:]) { [self] (status, dataDic, error) in
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
                 if !status {
                     //Verification failed
+                    self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        self.goBack()
+                    })
                     return
                 }
-                print("Dictionary : \(dataDic!)")
                 //Verification success
                 self.setDriverLicense(withDLData: dl, token: token)
             }
