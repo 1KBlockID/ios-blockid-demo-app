@@ -56,6 +56,13 @@ extension UIViewController {
         }
     }
     
+    func showSSNView() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let dlVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
+            self.navigationController?.pushViewController(dlVC, animated: true)
+        }
+    }
+    
     func showPassportView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {

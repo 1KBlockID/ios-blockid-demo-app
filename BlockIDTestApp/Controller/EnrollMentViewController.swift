@@ -12,6 +12,7 @@ import Toast_Swift
 
 
 public enum Enrollments: String {
+    case SSN = "Social Security Number"
     case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -26,7 +27,8 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense,
+    var enrollmentArray = [Enrollments.SSN,
+                           Enrollments.DriverLicense,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -71,6 +73,8 @@ extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enrolmentObj = enrollmentArray[indexPath.row].rawValue
         switch enrolmentObj {
+        case Enrollments.SSN.rawValue:
+            print("ssn")
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
@@ -113,6 +117,21 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    private func enrollSSN() {
+        let docID = getDocumentID(docIndex: 1 ,type: .SSN ,category: .Identity_Document) ?? ""
+        if  !docID.isEmpty {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Social Security Number", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .DL, id: docID)
+            }))
+            self.present(alert, animated: true)
+            return
+        }
+        showSSNView()
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {
