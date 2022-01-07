@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import BlockIDSDK
+import Toast_Swift
 
 class SSNViewController: UIViewController {
     
@@ -15,6 +17,7 @@ class SSNViewController: UIViewController {
     @IBOutlet weak var txtFieldMiddleName: UITextField!
     @IBOutlet weak var txtFieldLastName: UITextField!
     @IBOutlet weak var txtFieldDob: UITextField!
+    @IBOutlet weak var txtFieldCountry: UITextField!
     @IBOutlet weak var txtFieldAddress: UITextField!
     @IBOutlet weak var txtFieldZipCode: UITextField!
     @IBOutlet weak var txtFieldEmail: UITextField!
@@ -23,6 +26,34 @@ class SSNViewController: UIViewController {
     @IBOutlet weak var txtFieldCity: UITextField!
     @IBOutlet weak var btnUserConsent: UIButton!
     @IBOutlet weak var btnContinue: UIButton!
+    
+    // MARK: - Private Properties -
+    private var ssnPayload: [String: Any] {
+
+        var ssnDict = [ "id": txtFieldSSN.text ?? "",
+                 "type": RegisterDocType.SSN.rawValue,
+                 "documentId": txtFieldSSN.text ?? "",
+                 "documentType": RegisterDocType.SSN.rawValue.uppercased(),
+                 "category": RegisterDocCategory.Misc_Document.rawValue,
+                 "userConsent": btnContinue.isSelected,
+                 "ssn": txtFieldSSN.text ?? "",
+                 "firstName": txtFieldFirstName.text ?? "",
+                 "lastName": txtFieldLastName.text ?? "",
+                 "dob": dateYYYmmDD ?? "",
+                 "street": txtFieldAddress.text ?? "",
+                 "city": txtFieldCity.text ?? "",
+                 "state": txtFieldState.text ?? "",
+                 "zipCode": txtFieldZipCode.text ?? "",
+                 "country": txtFieldCountry.text ?? "",
+                 "email": txtFieldEmail.text ?? "",
+                 "phone": txtFieldPhoneNo.text ?? "" ]
+        
+        if !txtFieldMiddleName.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            ssnDict["middleName"] = txtFieldMiddleName.text
+        }
+    }
+    
+    private var dateYYYmmDD: String?
     
     // MARK: - View LifeCycle -
     override func viewDidLoad() {
@@ -51,21 +82,19 @@ class SSNViewController: UIViewController {
 extension SSNViewController {
     
     private func setupObservers() {
-        
         txtFieldCity.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldSSN.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldDob.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldAddress.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldEmail.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldPhoneNo.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldZipCode.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldState.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        txtFieldCountry.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldLastName.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldFirstName.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldMiddleName.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
     }
     
     @objc func textFieldDidChange(textField: UITextField) {
+        btnContinue.isUserInteractionEnabled = btnUserConsent.isSelected
         btnContinue.isUserInteractionEnabled = !textField.text!.isEmpty
         btnContinue.backgroundColor = textField.text!.isEmpty ? .darkGray : .black
     }
@@ -94,35 +123,59 @@ extension SSNViewController {
     
     private func verifySSN() {
         
-        
-        
-    }
-}
-
-// MARK: - UITextFieldDelegate -
-extension SSNViewController: UITextFieldDelegate {
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == txtFieldDob {
-            let picker = UIDatePicker()
-            picker.datePickerMode = .date
-            picker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
-            // If the date field has focus, display a date picker instead of keyboard.
-            // Set the text to the date currently displayed by the picker.
-            textField.inputView = picker
-            textField.text = formatDateForDisplay(date: picker.date)
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload) { status, dataDic, errorResponse in
+            self.view.hideToastActivity()
+            if status {
+                if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]] {
+                    if certifications.filter({ $0["verified"] as? Bool == false }).count > 1 {
+                        self.view.makeToast("The information you provided does not match the records. Please try again.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                    }
+                } else {
+                    self.view.makeToast("Your Social Security Number has been verified.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }
+            } else {
+                self.view.makeToast(errorResponse?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
         }
     }
-    
-    @objc func updateDateField(sender: UIDatePicker) {
-        txtFieldDob?.text = formatDateForDisplay(date: sender.date)
-    }
-    
-    
-    // Formats the date chosen with the date picker.
-    fileprivate func formatDateForDisplay(date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        return formatter.string(from: date)
-    }
 }
+    
+    // MARK: - UITextFieldDelegate -
+    extension SSNViewController: UITextFieldDelegate {
+        
+        func textFieldDidBeginEditing(_ textField: UITextField) {
+            if textField == txtFieldDob {
+                let picker = UIDatePicker()
+                picker.datePickerMode = .date
+                picker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
+                // If the date field has focus, display a date picker instead of keyboard.
+                // Set the text to the date currently displayed by the picker.
+                textField.inputView = picker
+                textField.text = formatDateForDisplay(date: picker.date)
+            }
+        }
+        
+        @objc func updateDateField(sender: UIDatePicker) {
+            txtFieldDob?.text = formatDateForDisplay(date: sender.date)
+        }
+        
+        
+        // Formats the date chosen with the date picker.
+        fileprivate func formatDateForDisplay(date: Date) -> String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM/dd/yyyy"
+            
+            let formatter2 = DateFormatter()
+            formatter2.dateFormat = "yyyy/mm/dd"
+            dateYYYmmDD = formatter2.string(from: date)
+            
+            return formatter.string(from: date)
+        }
+    }

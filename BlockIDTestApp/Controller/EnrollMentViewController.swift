@@ -12,11 +12,11 @@ import Toast_Swift
 
 
 public enum Enrollments: String {
-    case SSN = "Social Security Number"
     case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
+    case SSN = "Verify SSN"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
@@ -27,11 +27,11 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.SSN,
-                           Enrollments.DriverLicense,
+    var enrollmentArray = [Enrollments.DriverLicense,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
+                           Enrollments.SSN,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
@@ -73,8 +73,6 @@ extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enrolmentObj = enrollmentArray[indexPath.row].rawValue
         switch enrolmentObj {
-        case Enrollments.SSN.rawValue:
-            print("ssn")
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
@@ -83,6 +81,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollPassport(index: 2)
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
+        case Enrollments.SSN.rawValue:
+            enrollSSN()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -126,7 +126,7 @@ extension EnrollMentViewController {
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+                self.unenrollDocument(registerDocType: .SSN, id: docID)
             }))
             self.present(alert, animated: true)
             return
