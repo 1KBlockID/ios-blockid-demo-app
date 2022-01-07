@@ -18,7 +18,7 @@ class SSNViewController: UIViewController {
     @IBOutlet weak var txtFieldLastName: UITextField!
     @IBOutlet weak var txtFieldDob: UITextField!
     @IBOutlet weak var txtFieldCountry: UITextField!
-    @IBOutlet weak var txtFieldAddress: UITextField!
+    @IBOutlet weak var txtFieldStreet: UITextField!
     @IBOutlet weak var txtFieldZipCode: UITextField!
     @IBOutlet weak var txtFieldEmail: UITextField!
     @IBOutlet weak var txtFieldPhoneNo: UITextField!
@@ -29,26 +29,48 @@ class SSNViewController: UIViewController {
     
     // MARK: - Private Properties -
     private var ssnPayload: [String: Any] {
-        var ssnDict: [String: Any] = [ "id": txtFieldSSN.text ?? "",
-                                       "type": RegisterDocType.SSN.rawValue,
-                                       "documentId": txtFieldSSN.text ?? "",
+        var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
                                        "documentType": RegisterDocType.SSN.rawValue.uppercased(),
                                        "category": RegisterDocCategory.Misc_Document.rawValue,
-                                       "userConsent": btnContinue.isSelected,
-                                       "ssn": txtFieldSSN.text ?? "",
-                                       "firstName": txtFieldFirstName.text ?? "",
-                                       "lastName": txtFieldLastName.text ?? "",
-                                       "dob": dateYYYmmDD ?? "",
-                                       "street": txtFieldAddress.text ?? "",
-                                       "city": txtFieldCity.text ?? "",
-                                       "state": txtFieldState.text ?? "",
-                                       "zipCode": txtFieldZipCode.text ?? "",
-                                       "country": txtFieldCountry.text ?? "",
-                                       "email": txtFieldEmail.text ?? "",
-                                       "phone": txtFieldPhoneNo.text ?? "" ]
+                                       "userConsent": btnContinue.isSelected ]
         
-        if !txtFieldMiddleName.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            ssnDict["middleName"] = txtFieldMiddleName.text
+        if let ssnText = txtFieldSSN.text, !ssnText.trim().isEmpty {
+            ssnDict["id"] = ssnText
+            ssnDict["documentId"] = ssnText
+            ssnDict["ssn"] = ssnText
+        }
+        if let firstName = txtFieldFirstName.text, !firstName.isEmpty {
+            ssnDict["firstName"] = firstName
+        }
+        if let middleName = txtFieldMiddleName.text, !middleName.isEmpty {
+            ssnDict["middleName"] = middleName
+        }
+        if let lastName = txtFieldLastName.text, !lastName.isEmpty {
+            ssnDict["lastName"] = lastName
+        }
+        if let dob = txtFieldDob.text, !dob.isEmpty {
+            ssnDict["dob"] = dob
+        }
+        if let street = txtFieldStreet.text, !street.isEmpty {
+            ssnDict["street"] = street
+        }
+        if let city = txtFieldCity.text, !city.isEmpty {
+            ssnDict["city"] = city
+        }
+        if let state = txtFieldState.text, !state.isEmpty {
+            ssnDict["state"] = state
+        }
+        if let zipCode = txtFieldZipCode.text, !zipCode.isEmpty {
+            ssnDict["zipCode"] = zipCode
+        }
+        if let country = txtFieldCountry.text, !country.isEmpty {
+            ssnDict["country"] = country
+        }
+        if let emailAddress = txtFieldEmail.text, !emailAddress.isEmpty {
+            ssnDict["email"] = emailAddress
+        }
+        if let phoneNo = txtFieldPhoneNo.text, !phoneNo.isEmpty {
+            ssnDict["phone"] = phoneNo
         }
         return ssnDict
     }
@@ -89,7 +111,7 @@ extension SSNViewController {
         txtFieldCity.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldSSN.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldDob.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldAddress.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        txtFieldStreet.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldZipCode.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldState.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         txtFieldCountry.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -108,7 +130,7 @@ extension SSNViewController {
         
         if txtFieldSSN.text!.trim().isEmpty {
           return "SSN can not be empty"
-        } else if !txtFieldFirstName.text!.isValid(type: .SSN) {
+        } else if !txtFieldSSN.text!.isValid(type: .SSN) {
             return "Invalid SSN"
         } else if txtFieldFirstName.text!.trim().isEmpty {
             return "First Name can not be empty"
@@ -140,25 +162,39 @@ extension SSNViewController {
     private func verifySSN() {
         
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload) { status, dataDic, errorResponse in
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload)
+        { status, dataDic, errorResponse in
             self.view.hideToastActivity()
+            var title: String = ""
+            var message: String = ""
             if status {
-                if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]] {
+                if let dataDict = dataDic,
+                    let certifications = dataDict["certifications"] as? [[String: Any]] {
                     if certifications.filter({ $0["verified"] as? Bool == false }).count > 1 {
-                        self.view.makeToast("The information you provided does not match the records. Please try again.", duration: 3.0, position: .center, title: "Error", completion: {_ in
-                            self.navigationController?.popViewController(animated: true)
-                        })
+                        UserDefaults.standard.set(false, forKey: "isSSNVerified")
+                        title = "Error"
+                        message = "The information you provided does not match the records. Please try again."
                     }
                 } else {
-                    self.view.makeToast("Your Social Security Number has been verified.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-                        self.navigationController?.popViewController(animated: true)
-                    })
+                    UserDefaults.standard.set(true, forKey: "isSSNVerified")
+                    title = "Success"
+                    message = "Your Social Security Number has been verified."
                 }
             } else {
-                self.view.makeToast(errorResponse?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
-                    self.navigationController?.popViewController(animated: true)
-                })
+                title = "Error"
+                message = "There is some error in the request data"
+                UserDefaults.standard.set(false, forKey: "isSSNVerified")
             }
+            
+            let alert = UIAlertController(title: title,
+                                          message: message,
+                                          preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .default,
+                                          handler: {_ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true)
         }
     }
 }
@@ -176,6 +212,16 @@ extension SSNViewController {
                 textField.inputView = picker
                 textField.text = formatDateForDisplay(date: picker.date)
             }
+        }
+        
+        func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            if textField == txtFieldSSN {
+                let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
+                if newString.count > 9 { //restrict input upto 9 characters
+                    return false
+                }
+            }
+            return true
         }
         
         @objc func updateDateField(sender: UIDatePicker) {

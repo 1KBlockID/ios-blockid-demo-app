@@ -942,6 +942,9 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="290" height="34"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
+                                                        <connections>
+                                                            <outlet property="delegate" destination="bGs-ch-VfJ" id="bTt-Kf-3Jc"/>
+                                                        </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Oth-we-RFP">
                                                         <rect key="frame" x="0.0" y="44" width="290" height="34"/>
@@ -1088,7 +1091,6 @@
                     <connections>
                         <outlet property="btnContinue" destination="7n0-OP-bFF" id="VEw-b5-Obt"/>
                         <outlet property="btnUserConsent" destination="pm2-Xp-En2" id="yWy-cN-Wmi"/>
-                        <outlet property="txtFieldAddress" destination="oxq-sM-vTZ" id="JSC-Qa-u7b"/>
                         <outlet property="txtFieldCity" destination="oNg-3b-vVX" id="fta-ok-oLA"/>
                         <outlet property="txtFieldCountry" destination="iAS-rZ-gpD" id="vub-Z2-dCh"/>
                         <outlet property="txtFieldDob" destination="Lqv-dW-0NY" id="kzE-z7-NO5"/>
@@ -1099,6 +1101,7 @@
                         <outlet property="txtFieldPhoneNo" destination="Xt1-L9-411" id="PRI-Ff-FZa"/>
                         <outlet property="txtFieldSSN" destination="o91-fO-B8r" id="r20-TV-VYY"/>
                         <outlet property="txtFieldState" destination="I7R-Eb-51f" id="eKe-IK-lah"/>
+                        <outlet property="txtFieldStreet" destination="oxq-sM-vTZ" id="JSC-Qa-u7b"/>
                         <outlet property="txtFieldZipCode" destination="zeV-Wk-ELe" id="lG1-8l-Hmg"/>
                     </connections>
                 </viewController>

@@ -40,9 +40,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .SSN:
-            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .SSN ,category: .Misc_Document)
-            self.lblEnrollment.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
-            self.accessoryType = (docId != nil) ? .checkmark : .none
+            self.accessoryType = UserDefaults.standard.bool(forKey: "isSSNVerified") ? .checkmark : .none
         case .LiveID:
             self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
