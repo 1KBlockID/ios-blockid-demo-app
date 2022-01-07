@@ -16,4 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    func applicationWillTerminate(_ application: UIApplication) {
+        UserDefaults.standard.set(false, forKey: "isSSNVerified")
+    }
 }
