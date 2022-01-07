@@ -906,27 +906,28 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DW6-do-XGX">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="867"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="855"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kJf-xt-ea6">
-                                                <rect key="frame" x="0.0" y="16" width="60" height="30"/>
+                                                <rect key="frame" x="0.0" y="16" width="60" height="18"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="N5V-mG-k8T"/>
                                                 </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="iconBackarrow"/>
+                                                <color key="tintColor" systemColor="labelColor"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" image="iconBackarrow"/>
                                                 <connections>
-                                                    <action selector="doBack:" destination="bGs-ch-VfJ" eventType="touchUpInside" id="wFt-VU-EjV"/>
+                                                    <action selector="goBack:" destination="bGs-ch-VfJ" eventType="touchUpInside" id="N8F-ko-SFJ"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SSN Verification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gd9-18-MIS">
-                                                <rect key="frame" x="60" y="14.5" width="215.5" height="33.5"/>
+                                                <rect key="frame" x="60" y="8.5" width="215.5" height="33.5"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="28"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We’ll verify the information you’ve entered with details available on your SSN profile." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQh-SB-G5O">
-                                                <rect key="frame" x="15" y="59" width="266" height="33"/>
+                                                <rect key="frame" x="15" y="47" width="266" height="33"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="33" id="gNd-Rj-MdD"/>
                                                 </constraints>
@@ -935,7 +936,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xl9-4Z-jeF">
-                                                <rect key="frame" x="15" y="109" width="290" height="518"/>
+                                                <rect key="frame" x="15" y="97" width="290" height="518"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="SSN*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="o91-fO-B8r">
                                                         <rect key="frame" x="0.0" y="0.0" width="290" height="34"/>
@@ -1003,7 +1004,7 @@
                                                 </subviews>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7n0-OP-bFF">
-                                                <rect key="frame" x="15" y="731" width="290" height="48"/>
+                                                <rect key="frame" x="15" y="719" width="290" height="48"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="XvS-EV-HUv"/>
@@ -1018,7 +1019,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Xp-En2">
-                                                <rect key="frame" x="15" y="659" width="20" height="20"/>
+                                                <rect key="frame" x="15" y="647" width="20" height="20"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="20" id="YmR-7h-2mU"/>
@@ -1029,8 +1030,8 @@
                                                 <state key="selected" image="ssnCheck"/>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1N5-cU-Nh4">
-                                                <rect key="frame" x="45" y="659" width="260" height="42"/>
-                                                <string key="text">I attest that the information I have provided is corrected and accept the user of Fair Credit Reproting Act data to verify my identitya</string>
+                                                <rect key="frame" x="45" y="647" width="260" height="42"/>
+                                                <string key="text">I attest that the information I have provided is correct and accept the use of Fair Credit Reporting Act data to verify my identity.</string>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2733,6 +2734,9 @@
         <image name="qrScanner" width="346" height="378"/>
         <image name="ssnCheck" width="20" height="20"/>
         <image name="ssnUnCheck" width="20" height="20"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

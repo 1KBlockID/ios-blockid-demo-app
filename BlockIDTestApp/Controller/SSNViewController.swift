@@ -29,28 +29,28 @@ class SSNViewController: UIViewController {
     
     // MARK: - Private Properties -
     private var ssnPayload: [String: Any] {
-
-        var ssnDict = [ "id": txtFieldSSN.text ?? "",
-                 "type": RegisterDocType.SSN.rawValue,
-                 "documentId": txtFieldSSN.text ?? "",
-                 "documentType": RegisterDocType.SSN.rawValue.uppercased(),
-                 "category": RegisterDocCategory.Misc_Document.rawValue,
-                 "userConsent": btnContinue.isSelected,
-                 "ssn": txtFieldSSN.text ?? "",
-                 "firstName": txtFieldFirstName.text ?? "",
-                 "lastName": txtFieldLastName.text ?? "",
-                 "dob": dateYYYmmDD ?? "",
-                 "street": txtFieldAddress.text ?? "",
-                 "city": txtFieldCity.text ?? "",
-                 "state": txtFieldState.text ?? "",
-                 "zipCode": txtFieldZipCode.text ?? "",
-                 "country": txtFieldCountry.text ?? "",
-                 "email": txtFieldEmail.text ?? "",
-                 "phone": txtFieldPhoneNo.text ?? "" ]
+        var ssnDict: [String: Any] = [ "id": txtFieldSSN.text ?? "",
+                                       "type": RegisterDocType.SSN.rawValue,
+                                       "documentId": txtFieldSSN.text ?? "",
+                                       "documentType": RegisterDocType.SSN.rawValue.uppercased(),
+                                       "category": RegisterDocCategory.Misc_Document.rawValue,
+                                       "userConsent": btnContinue.isSelected,
+                                       "ssn": txtFieldSSN.text ?? "",
+                                       "firstName": txtFieldFirstName.text ?? "",
+                                       "lastName": txtFieldLastName.text ?? "",
+                                       "dob": dateYYYmmDD ?? "",
+                                       "street": txtFieldAddress.text ?? "",
+                                       "city": txtFieldCity.text ?? "",
+                                       "state": txtFieldState.text ?? "",
+                                       "zipCode": txtFieldZipCode.text ?? "",
+                                       "country": txtFieldCountry.text ?? "",
+                                       "email": txtFieldEmail.text ?? "",
+                                       "phone": txtFieldPhoneNo.text ?? "" ]
         
         if !txtFieldMiddleName.text!.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             ssnDict["middleName"] = txtFieldMiddleName.text
         }
+        return ssnDict
     }
     
     private var dateYYYmmDD: String?
@@ -66,14 +66,14 @@ class SSNViewController: UIViewController {
     // MARK: - IBOutlets Actions -
     @IBAction func doContinue(_ sender: UIButton) {
         guard let error = isValidInput() else {
-            // continue
+            verifySSN()
             return
         }
         self.showAlertView(title: "Alert", message: error)
     }
     
-    @IBAction func doBack(_ sender: UIButton) {
-        
+    @IBAction func goBack(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -102,20 +102,32 @@ extension SSNViewController {
     // TextField Validations
     private func isValidInput() -> String? {
         
-        if !txtFieldSSN.text!.isValid(type: .SSN) {
-            return "Invalid Social Security Number"
+        if txtFieldSSN.text!.isEmpty {
+          return "SSN can not be empty"
+        } else if !txtFieldFirstName.text!.isValid(type: .SSN) {
+            return "Invalid SSN"
+        } else if txtFieldFirstName.text!.isEmpty {
+            return "First Name can not be empty"
         } else if !txtFieldFirstName.text!.isValid(type: .firstName) {
             return "Invalid First Name"
+        } else if txtFieldLastName.text!.isEmpty {
+            return "Last Name can not be empty"
         } else if !txtFieldLastName.text!.isValid(type: .lastName) {
             return "Invalid Last Name"
+        } else if txtFieldDob.text!.isEmpty {
+            return "Date of birth can not be empty"
         } else if !txtFieldDob.text!.isValid(type: .DOB) {
             return "Invalid Date of Birth"
-        } else if !txtFieldEmail.text!.isValid(type: .email) {
-            return "Invalid Email Address"
+        } else if txtFieldZipCode.text!.isEmpty {
+            return "Zip Code can not be empty"
         } else if !txtFieldZipCode.text!.isValid(type: .zipCode) {
             return "Invalid Zip code"
-        } else if !txtFieldPhoneNo.text!.isValid(type: .phone) {
-            return "Invalid Phone Number"
+        } else if txtFieldCity.text!.isEmpty {
+            return "City can not be empty"
+        } else if txtFieldState.text!.isEmpty {
+            return "State can not be empty"
+        } else if txtFieldCountry.text!.isEmpty {
+            return "Country can not be empty"
         }
         
         return nil

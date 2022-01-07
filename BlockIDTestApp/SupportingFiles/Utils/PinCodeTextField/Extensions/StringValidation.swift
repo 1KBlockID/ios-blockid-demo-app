@@ -27,7 +27,7 @@ enum RegexType {
         case .phone :
             return "^[0-9]{10}$"
         case .zipCode:
-            return "[0-9]{6}"
+            return "[0-9]{4-6}"
         case .DOB:
             return "[\\d]{2}(/|-|.)[\\d]{2}(/|-|.)[\\d]{4}"
         case .SSN:
