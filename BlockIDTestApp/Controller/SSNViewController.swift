@@ -106,31 +106,31 @@ extension SSNViewController {
     // TextField Validations
     private func isValidInput() -> String? {
         
-        if txtFieldSSN.text!.isEmpty {
+        if txtFieldSSN.text!.trim().isEmpty {
           return "SSN can not be empty"
         } else if !txtFieldFirstName.text!.isValid(type: .SSN) {
             return "Invalid SSN"
-        } else if txtFieldFirstName.text!.isEmpty {
+        } else if txtFieldFirstName.text!.trim().isEmpty {
             return "First Name can not be empty"
         } else if !txtFieldFirstName.text!.isValid(type: .firstName) {
             return "Invalid First Name"
-        } else if txtFieldLastName.text!.isEmpty {
+        } else if txtFieldLastName.text!.trim().isEmpty {
             return "Last Name can not be empty"
         } else if !txtFieldLastName.text!.isValid(type: .lastName) {
             return "Invalid Last Name"
-        } else if txtFieldDob.text!.isEmpty {
+        } else if txtFieldDob.text!.trim().isEmpty {
             return "Date of birth can not be empty"
         } else if !txtFieldDob.text!.isValid(type: .DOB) {
             return "Invalid Date of Birth"
-        } else if txtFieldZipCode.text!.isEmpty {
+        } else if txtFieldZipCode.text!.trim().isEmpty {
             return "Zip Code can not be empty"
         } else if !txtFieldZipCode.text!.isValid(type: .zipCode) {
             return "Invalid Zip code"
-        } else if txtFieldCity.text!.isEmpty {
+        } else if txtFieldCity.text!.trim().isEmpty {
             return "City can not be empty"
-        } else if txtFieldState.text!.isEmpty {
+        } else if txtFieldState.text!.trim().isEmpty {
             return "State can not be empty"
-        } else if txtFieldCountry.text!.isEmpty {
+        } else if txtFieldCountry.text!.trim().isEmpty {
             return "Country can not be empty"
         }
         
