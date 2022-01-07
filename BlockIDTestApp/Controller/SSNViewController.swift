@@ -76,12 +76,15 @@ class SSNViewController: UIViewController {
     }
     
     private var dateYYYmmDD: String?
+    private var isAllFieldsValid: Bool = false
     
     // MARK: - View LifeCycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        //btnContinue.isEnabled = false
+        btnContinue.isEnabled = false
+        self.btnContinue.backgroundColor = .darkGray
         setupObservers()
+        setupDataSource()
         // Do any additional setup after loading the view.
     }
     
@@ -89,7 +92,6 @@ class SSNViewController: UIViewController {
     // MARK: - IBOutlets Actions -
     @IBAction func doContinue(_ sender: UIButton) {
         guard let error = isValidInput() else {
-            //btnContinue.isEnabled = true
             verifySSN()
             return
         }
@@ -103,6 +105,13 @@ class SSNViewController: UIViewController {
     
     @IBAction func doUserConsent(_ sender: UIButton) {
        btnUserConsent.isSelected = !btnUserConsent.isSelected
+        if  isAllFieldsValid && !self.btnContinue.isEnabled {
+            self.btnContinue.isEnabled = true
+            self.btnContinue.backgroundColor = .black
+        } else {
+            self.btnContinue.isEnabled = false
+            self.btnContinue.backgroundColor = .darkGray
+        }
     }
 }
 
@@ -111,21 +120,52 @@ class SSNViewController: UIViewController {
 extension SSNViewController {
     
     private func setupObservers() {
-        txtFieldCity.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldSSN.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldDob.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldStreet.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldZipCode.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldState.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldCountry.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldLastName.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        txtFieldFirstName.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+        [txtFieldCity, txtFieldSSN, txtFieldDob,
+         txtFieldStreet, txtFieldZipCode, txtFieldState,
+         txtFieldCountry, txtFieldLastName, txtFieldFirstName].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
     }
     
-    @objc func textFieldDidChange(textField: UITextField) {
-        btnContinue.isUserInteractionEnabled = btnUserConsent.isSelected
-        btnContinue.isUserInteractionEnabled = !textField.text!.isEmpty
-        btnContinue.backgroundColor = textField.text!.isEmpty ? .darkGray : .black
+    private func setupDataSource() {
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+            let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
+                                                                          type: RegisterDocType.DL.rawValue,
+                                                                          category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
+            guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
+                return
+            }
+            txtFieldFirstName.text = arrDocuments[0]["firstName"] as? String
+            txtFieldLastName.text = arrDocuments[0]["lastName"] as? String
+            txtFieldDob.text = arrDocuments[0]["dob"] as? String
+            txtFieldStreet.text = arrDocuments[0]["street"] as? String
+            txtFieldCity.text = arrDocuments[0]["city"] as? String
+            txtFieldState.text = arrDocuments[0]["state"] as? String
+            txtFieldZipCode.text = arrDocuments[0]["zipCode"] as? String
+            txtFieldCountry.text = arrDocuments[0]["country"] as? String
+            
+        }
+    }
+    
+    @objc func editingChanged(textField: UITextField) {
+        textField.text = textField.text?.trimmingCharacters(in: .whitespaces)
+        
+        guard
+            let firstName = txtFieldFirstName.text, !firstName.isEmpty,
+            let lastName = txtFieldLastName.text, !lastName.isEmpty,
+            let state = txtFieldState.text, !state.isEmpty,
+            let zipCode = txtFieldZipCode.text, !zipCode.isEmpty,
+            let city = txtFieldCity.text, !city.isEmpty,
+            let ssn = txtFieldSSN.text, !ssn.isEmpty,
+            let dob = txtFieldDob.text, !dob.isEmpty,
+            let country = txtFieldCountry.text, !country.isEmpty,
+            let street = txtFieldStreet.text, !street.isEmpty
+        else
+        {
+            isAllFieldsValid = false
+            return
+        }
+        // enable continue if all conditions are met
+        isAllFieldsValid = true
     }
     
     // TextField Validations
