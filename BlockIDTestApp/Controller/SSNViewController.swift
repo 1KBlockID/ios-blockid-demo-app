@@ -48,7 +48,7 @@ class SSNViewController: UIViewController {
         if let lastName = txtFieldLastName.text, !lastName.isEmpty {
             ssnDict["lastName"] = lastName
         }
-        if let dob = txtFieldDob.text, !dob.isEmpty {
+        if let dob = self.dateYYYmmDD, !dob.isEmpty {
             ssnDict["dob"] = dob
         }
         if let street = txtFieldStreet.text, !street.isEmpty {
@@ -80,6 +80,7 @@ class SSNViewController: UIViewController {
     // MARK: - View LifeCycle -
     override func viewDidLoad() {
         super.viewDidLoad()
+        //btnContinue.isEnabled = false
         setupObservers()
         // Do any additional setup after loading the view.
     }
@@ -88,9 +89,11 @@ class SSNViewController: UIViewController {
     // MARK: - IBOutlets Actions -
     @IBAction func doContinue(_ sender: UIButton) {
         guard let error = isValidInput() else {
+            //btnContinue.isEnabled = true
             verifySSN()
             return
         }
+        
         self.showAlertView(title: "Alert", message: error)
     }
     
@@ -127,7 +130,6 @@ extension SSNViewController {
     
     // TextField Validations
     private func isValidInput() -> String? {
-        
         if txtFieldSSN.text!.trim().isEmpty {
           return "SSN can not be empty"
         } else if !txtFieldSSN.text!.isValid(type: .SSN) {
@@ -144,44 +146,51 @@ extension SSNViewController {
             return "Date of birth can not be empty"
         } else if !txtFieldDob.text!.isValid(type: .DOB) {
             return "Invalid Date of Birth"
+        } else if txtFieldStreet.text!.trim().isEmpty {
+            return "Street can not be empty"
         } else if txtFieldZipCode.text!.trim().isEmpty {
             return "Zip Code can not be empty"
-        } else if !txtFieldZipCode.text!.isValid(type: .zipCode) {
-            return "Invalid Zip code"
         } else if txtFieldCity.text!.trim().isEmpty {
             return "City can not be empty"
         } else if txtFieldState.text!.trim().isEmpty {
             return "State can not be empty"
+        } else if !txtFieldZipCode.text!.isValid(type: .zipCode) {
+            return "Invalid Zip code"
         } else if txtFieldCountry.text!.trim().isEmpty {
             return "Country can not be empty"
+        } else if !btnUserConsent.isSelected {
+            return "Consent is not given"
         }
         
         return nil
     }
     
     private func verifySSN() {
-        
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload)
         { status, dataDic, errorResponse in
             self.view.hideToastActivity()
             var title: String = ""
             var message: String = ""
+            var alertTag: Int = 0
             if status {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
-                    if certifications.filter({ $0["verified"] as? Bool == false }).count > 1 {
+                    if certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
                         UserDefaults.standard.set(false, forKey: "isSSNVerified")
                         title = "Error"
                         message = "The information you provided does not match the records. Please try again."
+                        alertTag = 1001
                     }
                 } else {
                     UserDefaults.standard.set(true, forKey: "isSSNVerified")
                     title = "Success"
                     message = "Your Social Security Number has been verified."
+                    alertTag = 1002
                 }
             } else {
                 title = "Error"
+                alertTag = 1001
                 message = "There is some error in the request data"
                 UserDefaults.standard.set(false, forKey: "isSSNVerified")
             }
@@ -189,11 +198,18 @@ extension SSNViewController {
             let alert = UIAlertController(title: title,
                                           message: message,
                                           preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: .default,
-                                          handler: {_ in
-                self.navigationController?.popViewController(animated: true)
-            }))
+            if alertTag == 1002 {
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .default,
+                                              handler: {_ in
+                        self.navigationController?.popViewController(animated: true)
+                }))
+            } else if alertTag == 1001 {
+                alert.addAction(UIAlertAction(title: "Retry",
+                                              style: .default,
+                                              handler: nil))
+            }
+            
             self.present(alert, animated: true)
         }
     }
@@ -215,12 +231,13 @@ extension SSNViewController {
         }
         
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
             if textField == txtFieldSSN {
-                let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
-                if newString.count > 9 { //restrict input upto 9 characters
-                    return false
-                }
+                return newString.count <= 9
+            } else if textField == txtFieldZipCode {
+                return newString.count <= 5
             }
+            
             return true
         }
         
@@ -228,14 +245,13 @@ extension SSNViewController {
             txtFieldDob?.text = formatDateForDisplay(date: sender.date)
         }
         
-        
         // Formats the date chosen with the date picker.
         fileprivate func formatDateForDisplay(date: Date) -> String {
             let formatter = DateFormatter()
             formatter.dateFormat = "MM/dd/yyyy"
             
             let formatter2 = DateFormatter()
-            formatter2.dateFormat = "yyyy/mm/dd"
+            formatter2.dateFormat = "yyyy/MM/dd"
             dateYYYmmDD = formatter2.string(from: date)
             
             return formatter.string(from: date)
