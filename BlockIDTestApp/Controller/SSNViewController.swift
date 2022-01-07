@@ -75,6 +75,10 @@ class SSNViewController: UIViewController {
     @IBAction func goBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @IBAction func doUserConsent(_ sender: UIButton) {
+       btnUserConsent.isSelected = !btnUserConsent.isSelected
+    }
 }
 
 
