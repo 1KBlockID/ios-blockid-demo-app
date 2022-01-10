@@ -28,6 +28,8 @@ class SSNViewController: UIViewController {
     @IBOutlet weak var btnContinue: UIButton!
     
     // MARK: - Private Properties -
+    // to store the current active textfield
+    var activeTextField : UITextField? = nil
     private var ssnPayload: [String: Any] {
         var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
                                        "documentType": RegisterDocType.SSN.rawValue.uppercased(),
@@ -83,6 +85,7 @@ class SSNViewController: UIViewController {
         super.viewDidLoad()
         btnContinue.isEnabled = false
         self.btnContinue.backgroundColor = .darkGray
+        self.btnContinue.layer.cornerRadius = self.btnContinue.frame.height/2
         setupObservers()
         setupDataSource()
         // Do any additional setup after loading the view.
@@ -121,6 +124,8 @@ extension SSNViewController {
     
     private func setupObservers() {
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         [txtFieldCity, txtFieldSSN, txtFieldDob,
          txtFieldStreet, txtFieldZipCode, txtFieldState,
          txtFieldCountry, txtFieldLastName, txtFieldFirstName].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
@@ -131,7 +136,7 @@ extension SSNViewController {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
-            guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
+            guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]], arrDocuments.count > 0 else {
                 return
             }
             txtFieldFirstName.text = arrDocuments[0]["firstName"] as? String
@@ -166,6 +171,34 @@ extension SSNViewController {
         }
         // enable continue if all conditions are met
         isAllFieldsValid = true
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+           // if keyboard size is not available for some reason, dont do anything
+           return
+        }
+        
+        var shouldMoveViewUp = false
+        // if active text field is not nil
+        if let activeTextField = activeTextField {
+            
+            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
+            let topOfKeyboard = self.view.frame.height - keyboardSize.height
+            // if the bottom of Textfield is below the top of keyboard, move up
+            if bottomOfTextField > topOfKeyboard {
+                shouldMoveViewUp = true
+            }
+        }
+
+          if(shouldMoveViewUp) {
+            self.view.frame.origin.y = 0 - keyboardSize.height
+          }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+      // move back the root view origin to zero
+      self.view.frame.origin.y = 0
     }
     
     // TextField Validations
@@ -259,6 +292,7 @@ extension SSNViewController {
     extension SSNViewController: UITextFieldDelegate {
         
         func textFieldDidBeginEditing(_ textField: UITextField) {
+            self.activeTextField = textField
             if textField == txtFieldDob {
                 let picker = UIDatePicker()
                 picker.datePickerMode = .date
@@ -271,6 +305,14 @@ extension SSNViewController {
         }
         
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+            
+            if let char = string.cString(using: String.Encoding.utf8) {
+                let isBackSpace = strcmp(char, "\\b")
+                if (isBackSpace == -92) {
+                    return true
+                }
+            }
+            
             let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
             if textField == txtFieldSSN {
                 return newString.count <= 9
@@ -278,6 +320,15 @@ extension SSNViewController {
                 return newString.count <= 5
             }
             
+            return true
+        }
+        
+        func textFieldDidEndEditing(_ textField: UITextField) {
+            self.activeTextField = nil
+        }
+        
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            textField.resignFirstResponder()
             return true
         }
         
