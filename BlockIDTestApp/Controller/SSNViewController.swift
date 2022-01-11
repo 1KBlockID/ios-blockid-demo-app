@@ -106,13 +106,7 @@ class SSNViewController: UIViewController {
     
     @IBAction func doUserConsent(_ sender: UIButton) {
        btnUserConsent.isSelected = !btnUserConsent.isSelected
-        if  isAllFieldsValid && !self.btnContinue.isEnabled {
-            self.btnContinue.isEnabled = true
-            self.btnContinue.backgroundColor = .black
-        } else {
-            self.btnContinue.isEnabled = false
-            self.btnContinue.backgroundColor = .darkGray
-        }
+        continueBtnStateConfig()
     }
 }
 
@@ -169,6 +163,7 @@ extension SSNViewController {
         }
         // enable continue if all conditions are met
         isAllFieldsValid = true
+        continueBtnStateConfig()
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -232,6 +227,16 @@ extension SSNViewController {
         }
         
         return nil
+    }
+    
+    private func continueBtnStateConfig() {
+        if  isAllFieldsValid && !self.btnContinue.isEnabled {
+            self.btnContinue.isEnabled = true
+            self.btnContinue.backgroundColor = .black
+        } else {
+            self.btnContinue.isEnabled = false
+            self.btnContinue.backgroundColor = .darkGray
+        }
     }
     
     private func verifySSN() {
