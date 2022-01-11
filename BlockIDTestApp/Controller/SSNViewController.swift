@@ -32,13 +32,11 @@ class SSNViewController: UIViewController {
     private var activeTextField : UITextField? = nil
     private var ssnPayload: [String: Any] {
         var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
-                                       "documentType": RegisterDocType.SSN.rawValue.uppercased(),
                                        "category": RegisterDocCategory.Misc_Document.rawValue,
                                        "userConsent": btnContinue.isSelected ]
         
         if let ssnText = txtFieldSSN.text, !ssnText.trim().isEmpty {
             ssnDict["id"] = ssnText
-            ssnDict["documentId"] = ssnText
             ssnDict["ssn"] = ssnText
         }
         if let firstName = txtFieldFirstName.text, !firstName.isEmpty {
