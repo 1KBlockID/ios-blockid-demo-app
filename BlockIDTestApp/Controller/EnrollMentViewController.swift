@@ -16,6 +16,7 @@ public enum Enrollments: String {
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
+    case SSN = "Verify SSN"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
@@ -30,6 +31,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
+                           Enrollments.SSN,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
@@ -79,6 +81,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollPassport(index: 2)
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
+        case Enrollments.SSN.rawValue:
+            showSSNVerificationView()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
