@@ -29,7 +29,7 @@ class SSNViewController: UIViewController {
     
     // MARK: - Private Properties -
     // to store the current active textfield
-    var activeTextField : UITextField? = nil
+    private var activeTextField : UITextField? = nil
     private var ssnPayload: [String: Any] {
         var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
                                        "documentType": RegisterDocType.SSN.rawValue.uppercased(),
@@ -88,7 +88,6 @@ class SSNViewController: UIViewController {
         self.btnContinue.layer.cornerRadius = self.btnContinue.frame.height/2
         setupObservers()
         setupDataSource()
-        // Do any additional setup after loading the view.
     }
     
     
@@ -98,7 +97,6 @@ class SSNViewController: UIViewController {
             verifySSN()
             return
         }
-        
         self.showAlertView(title: "Alert", message: error)
     }
     
@@ -178,7 +176,6 @@ extension SSNViewController {
            // if keyboard size is not available for some reason, dont do anything
            return
         }
-        
         var shouldMoveViewUp = false
         // if active text field is not nil
         if let activeTextField = activeTextField {
@@ -190,10 +187,9 @@ extension SSNViewController {
                 shouldMoveViewUp = true
             }
         }
-
-          if(shouldMoveViewUp) {
+        if(shouldMoveViewUp) {
             self.view.frame.origin.y = 0 - keyboardSize.height
-          }
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -282,7 +278,6 @@ extension SSNViewController {
                                               style: .default,
                                               handler: nil))
             }
-            
             self.present(alert, animated: true)
         }
     }
@@ -312,14 +307,12 @@ extension SSNViewController {
                     return true
                 }
             }
-            
             let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
             if textField == txtFieldSSN {
                 return newString.count <= 9
             } else if textField == txtFieldZipCode {
                 return newString.count <= 5
             }
-            
             return true
         }
         
@@ -340,11 +333,9 @@ extension SSNViewController {
         fileprivate func formatDateForDisplay(date: Date) -> String {
             let formatter = DateFormatter()
             formatter.dateFormat = "MM/dd/yyyy"
-            
             let formatter2 = DateFormatter()
             formatter2.dateFormat = "yyyy/MM/dd"
             dateYYYmmDD = formatter2.string(from: date)
-            
             return formatter.string(from: date)
         }
     }
