@@ -82,7 +82,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.SSN.rawValue:
-            verifySSN()
+            showSSNVerificationView()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -117,10 +117,6 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
-    }
-    
-    private func verifySSN() {
-        showSSNView()
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {

@@ -56,7 +56,7 @@ extension UIViewController {
         }
     }
     
-    func showSSNView() {
+    func showSSNVerificationView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
             self.navigationController?.pushViewController(dlVC, animated: true)
