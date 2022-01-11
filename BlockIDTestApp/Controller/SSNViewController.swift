@@ -248,23 +248,27 @@ extension SSNViewController {
             if status {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
-                    if certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
-                        UserDefaults.standard.set(false, forKey: "isSSNVerified")
+                    
+                    if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 {
                         title = "Error"
-                        message = "The information you provided does not match the records. Please try again."
+                        message = "There is some error in the request data"
                         alertTag = 1001
+                    } else {
+                        if certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
+                            title = "Error"
+                            message = "The information you provided does not match the records. Please try again."
+                            alertTag = 1001
+                        } else {
+                            title = "Success"
+                            message = "Your Social Security Number has been verified."
+                            alertTag = 1002
+                        }
                     }
-                } else {
-                    UserDefaults.standard.set(true, forKey: "isSSNVerified")
-                    title = "Success"
-                    message = "Your Social Security Number has been verified."
-                    alertTag = 1002
                 }
             } else {
                 title = "Error"
                 alertTag = 1001
                 message = "There is some error in the request data"
-                UserDefaults.standard.set(false, forKey: "isSSNVerified")
             }
             
             let alert = UIAlertController(title: title,

@@ -41,7 +41,6 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .SSN:
             self.lblEnrollment.text = enrollment.rawValue
-            self.accessoryType = UserDefaults.standard.bool(forKey: "isSSNVerified") ? .checkmark : .none
         case .LiveID:
             self.lblEnrollment.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
