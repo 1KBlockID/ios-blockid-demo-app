@@ -142,7 +142,6 @@ extension SSNViewController {
     }
     
     @objc func editingChanged(textField: UITextField) {
-        textField.text = textField.text?.trimmingCharacters(in: .whitespaces)
         
         guard
             let firstName = txtFieldFirstName.text, !firstName.isEmpty,
@@ -308,6 +307,9 @@ extension SSNViewController {
         
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
             
+            if textField.text?.count == 0 && string == " " {
+                return false
+            }
             if let char = string.cString(using: String.Encoding.utf8) {
                 let isBackSpace = strcmp(char, "\\b")
                 if (isBackSpace == -92) {
