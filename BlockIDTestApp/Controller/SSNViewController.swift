@@ -156,11 +156,15 @@ extension SSNViewController {
         else
         {
             isAllFieldsValid = false
+            self.btnContinue.isEnabled = false
+            self.btnContinue.backgroundColor = .darkGray
             return
         }
         // enable continue if all conditions are met
         isAllFieldsValid = true
-        continueBtnStateConfig()
+        if !self.btnContinue.isEnabled {
+            continueBtnStateConfig()
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
