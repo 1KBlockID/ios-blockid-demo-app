@@ -40,31 +40,31 @@ class SSNViewController: UIViewController {
             ssnDict["ssn"] = ssnText
         }
         if let firstName = txtFieldFirstName.text, !firstName.isEmpty {
-            ssnDict["firstName"] = firstName
+            ssnDict["firstName"] = firstName.condenseWhitespace()
         }
         if let middleName = txtFieldMiddleName.text, !middleName.isEmpty {
-            ssnDict["middleName"] = middleName
+            ssnDict["middleName"] = middleName.condenseWhitespace()
         }
         if let lastName = txtFieldLastName.text, !lastName.isEmpty {
-            ssnDict["lastName"] = lastName
+            ssnDict["lastName"] = lastName.condenseWhitespace()
         }
         if let dob = self.dateYYYmmDD, !dob.isEmpty {
             ssnDict["dob"] = dob
         }
         if let street = txtFieldStreet.text, !street.isEmpty {
-            ssnDict["street"] = street
+            ssnDict["street"] = street.condenseWhitespace()
         }
         if let city = txtFieldCity.text, !city.isEmpty {
-            ssnDict["city"] = city
+            ssnDict["city"] = city.condenseWhitespace()
         }
         if let state = txtFieldState.text, !state.isEmpty {
-            ssnDict["state"] = state
+            ssnDict["state"] = state.condenseWhitespace()
         }
         if let zipCode = txtFieldZipCode.text, !zipCode.isEmpty {
             ssnDict["zipCode"] = zipCode
         }
         if let country = txtFieldCountry.text, !country.isEmpty {
-            ssnDict["country"] = country
+            ssnDict["country"] = country.condenseWhitespace()
         }
         if let emailAddress = txtFieldEmail.text, !emailAddress.isEmpty {
             ssnDict["email"] = emailAddress
