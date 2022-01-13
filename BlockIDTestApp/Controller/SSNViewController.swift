@@ -162,7 +162,7 @@ extension SSNViewController {
         }
         // enable continue if all conditions are met
         isAllFieldsValid = true
-        if !self.btnContinue.isEnabled {
+        if btnUserConsent.isSelected {
             continueBtnStateConfig()
         }
     }
@@ -231,7 +231,7 @@ extension SSNViewController {
     }
     
     private func continueBtnStateConfig() {
-        if  isAllFieldsValid && !self.btnContinue.isEnabled {
+        if  isAllFieldsValid && btnUserConsent.isSelected {
             self.btnContinue.isEnabled = true
             self.btnContinue.backgroundColor = .black
         } else {
