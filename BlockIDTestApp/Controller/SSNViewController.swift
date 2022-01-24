@@ -290,8 +290,8 @@ extension SSNViewController {
                                               handler: nil))
                 alert.addAction(UIAlertAction(title: "Details", style: .default, handler: { action in
                     // navigate to next screen
-                    if let dataDic = dataDic {
-                        if let payload = self.handleFailedSSNResponse(payload: dataDic) {
+                    if var dataDic = dataDic {
+                        if let payload = self.handleFailedSSNResponse(payload: &dataDic) {
                             
                             if let theJSONData = try? JSONSerialization.data(
                                 withJSONObject: payload,
@@ -312,72 +312,100 @@ extension SSNViewController {
         }
     }
     
-    private func handleFailedSSNResponse(payload: [String: Any]) -> [String: Any]? {
+    
+    
+    private func handleFailedSSNResponse( payload: inout [String: Any]) -> [String: Any]? {
         
-        var dataDic: [String: Any]?
-        if let certifications = payload["certifications"] as? [[String: Any]] {
-            for certificate in certifications {
-                if let metaData = certificate["metadata"] as? [String: Any] {
+        var certificates: [[String: Any]] = [[:]]
+        var verifiedPeople: [[String: Any]] = [[:]]
+        
+        if let certifcations = payload["certifications"] as? [[String: Any]] {
+            for var certificate in certifcations {
+                if var metaData = certificate["metadata"] as? [String: Any] {
                     if let verfiedPeople = metaData["verifiedPeople"] as? [[String: Any]] {
+                        
                         for var people in verfiedPeople {
                             
                             if var frstName = people["firstName"] as? [String: Any], let _ = frstName["value"] {
                                 frstName.updateValue(maskedData, forKey: "value")
+                                people["firstName"] = frstName
                             }
                             
                             if var middleName = people["middleName"] as? [String: Any], let _ = middleName["value"] {
                                 middleName.updateValue(maskedData, forKey: "value")
+                                people["middleName"] = middleName
                             }
                             
                             if var lastName = people["lastName"] as? [String: Any], let _ = lastName["value"] {
                                 lastName.updateValue(maskedData, forKey: "value")
+                                people["lastName"] = lastName
                             }
                             
                             if var ssn = people["ssn"] as? [String: Any], let _ = ssn["value"] {
                                 ssn.updateValue(maskedData, forKey: "value")
+                                people["ssn"] = ssn
                             }
                             
-                            if let dob = people["dateOfBirth"] as? [String: Any] {
+                            if var dob = people["dateOfBirth"] as? [String: Any] {
                                 if var month = dob["month"] as? [String: Any], let _ = month["value"] {
                                     month.updateValue(maskedData, forKey: "value")
+                                    dob["month"] = month
                                 }
                                 if var day = dob["day"] as? [String: Any], let _ = day["value"] {
                                     day.updateValue(maskedData, forKey: "value")
+                                    dob["day"] = day
                                 }
                                 if var year = dob["year"] as? [String: Any], let _ = year["value"] {
                                     year.updateValue(maskedData, forKey: "value")
+                                    dob["year"] = year
                                 }
+                                people["dateOfBirth"] = dob
                             }
                             
                             if var age = people["age"] as? [String: Any], let _ = age["value"] {
                                 age.updateValue(maskedData, forKey: "value")
+                                people["age"] = age
                             }
                             
-                            if let addresses =  people["addresses"] as? [[String: Any]] {
+                            if let addresses = people["addresses"] as? [[String: Any]] {
+                                var addressDict: [[String: Any]] = [[:]]
                                 for var address in addresses {
                                     address["value"] = maskedData
+                                    addressDict.append(address)
                                 }
+                                people["addresses"] = addressDict
                             }
-                            if let emails =  people["emails"] as? [[String: Any]] {
+                            
+                            if let emails = people["emails"] as? [[String: Any]] {
+                                var emailDict: [[String: Any]] = [[:]]
                                 for var email in emails {
                                     email["value"] = maskedData
+                                    emailDict.append(email)
                                 }
+                                people["emails"] = emailDict
                             }
-                            if let phones =  people["phones"] as? [[String: Any]] {
+                            
+                            if let phones = people["phones"] as? [[String: Any]] {
+                                var phoneDict: [[String: Any]] = [[:]]
                                 for var phone in phones {
                                     phone["value"] = maskedData
+                                    phoneDict.append(phone)
                                 }
+                                people["phones"] = phoneDict
                             }
                             
-                            
                             people["indicators"] = maskedData
+                            verifiedPeople.append(people)
                         }
+                        metaData["verifiedPeople"] = verifiedPeople
                     }
+                    certificate["metadata"] = metaData
                 }
+                certificates.append(certificate)
             }
+            payload["certifications"] = certificates
         }
-        dataDic = payload
-        return dataDic
+        return payload
     }
 }
     
