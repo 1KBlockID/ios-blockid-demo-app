@@ -30,6 +30,7 @@ class SSNViewController: UIViewController {
     // MARK: - Private Properties -
     // to store the current active textfield
     private var activeTextField : UITextField? = nil
+    private var maskedData = "XXXXXX"
     private var ssnPayload: [String: Any] {
         var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
                                        "category": RegisterDocCategory.Misc_Document.rawValue,
@@ -287,9 +288,96 @@ extension SSNViewController {
                 alert.addAction(UIAlertAction(title: "Retry",
                                               style: .default,
                                               handler: nil))
+                alert.addAction(UIAlertAction(title: "Details", style: .default, handler: { action in
+                    // navigate to next screen
+                    if let dataDic = dataDic {
+                        if let payload = self.handleFailedSSNResponse(payload: dataDic) {
+                            
+                            if let theJSONData = try? JSONSerialization.data(
+                                withJSONObject: payload,
+                                options: []) {
+                                let theJSONText = String(data: theJSONData,
+                                                           encoding: .ascii)
+                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                                if let ssnResponseVc = storyBoard.instantiateViewController(withIdentifier: "SSNVerifyResponseViewController") as? SSNVerifyResponseViewController {
+                                    ssnResponseVc.markedJSONpayload = theJSONText
+                                    self.navigationController?.pushViewController(ssnResponseVc, animated: true)
+                                }
+                            }
+                        }
+                    }
+                }))
             }
             self.present(alert, animated: true)
         }
+    }
+    
+    private func handleFailedSSNResponse(payload: [String: Any]) -> [String: Any]? {
+        
+        var dataDic: [String: Any]?
+        if let certifications = payload["certifications"] as? [[String: Any]] {
+            for certificate in certifications {
+                if let metaData = certificate["metadata"] as? [String: Any] {
+                    if let verfiedPeople = metaData["verifiedPeople"] as? [[String: Any]] {
+                        for var people in verfiedPeople {
+                            
+                            if var frstName = people["firstName"] as? [String: Any], let _ = frstName["value"] {
+                                frstName.updateValue(maskedData, forKey: "value")
+                            }
+                            
+                            if var middleName = people["middleName"] as? [String: Any], let _ = middleName["value"] {
+                                middleName.updateValue(maskedData, forKey: "value")
+                            }
+                            
+                            if var lastName = people["lastName"] as? [String: Any], let _ = lastName["value"] {
+                                lastName.updateValue(maskedData, forKey: "value")
+                            }
+                            
+                            if var ssn = people["ssn"] as? [String: Any], let _ = ssn["value"] {
+                                ssn.updateValue(maskedData, forKey: "value")
+                            }
+                            
+                            if let dob = people["dateOfBirth"] as? [String: Any] {
+                                if var month = dob["month"] as? [String: Any], let _ = month["value"] {
+                                    month.updateValue(maskedData, forKey: "value")
+                                }
+                                if var day = dob["day"] as? [String: Any], let _ = day["value"] {
+                                    day.updateValue(maskedData, forKey: "value")
+                                }
+                                if var year = dob["year"] as? [String: Any], let _ = year["value"] {
+                                    year.updateValue(maskedData, forKey: "value")
+                                }
+                            }
+                            
+                            if var age = people["age"] as? [String: Any], let _ = age["value"] {
+                                age.updateValue(maskedData, forKey: "value")
+                            }
+                            
+                            if let addresses =  people["addresses"] as? [[String: Any]] {
+                                for var address in addresses {
+                                    address["value"] = maskedData
+                                }
+                            }
+                            if let emails =  people["emails"] as? [[String: Any]] {
+                                for var email in emails {
+                                    email["value"] = maskedData
+                                }
+                            }
+                            if let phones =  people["phones"] as? [[String: Any]] {
+                                for var phone in phones {
+                                    phone["value"] = maskedData
+                                }
+                            }
+                            
+                            
+                            people["indicators"] = maskedData
+                        }
+                    }
+                }
+            }
+        }
+        dataDic = payload
+        return dataDic
     }
 }
     
