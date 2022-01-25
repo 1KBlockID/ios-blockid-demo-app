@@ -39,7 +39,7 @@ class SSNVerifyResponseViewController: UIViewController {
             if MFMailComposeViewController.canSendMail() {
                 self.present(mailComposeViewController, animated: true, completion: nil)
             }else{
-                print("Can't send email")
+                self.showAlertView(title: "Alert", message: "Mail services are not available")
             }
         }
     }
