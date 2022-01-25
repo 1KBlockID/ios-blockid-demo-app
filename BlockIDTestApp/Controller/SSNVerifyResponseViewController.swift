@@ -12,13 +12,20 @@ class SSNVerifyResponseViewController: UIViewController {
 
     // MARK: - IBOutlets -
     @IBOutlet weak var txtView: UITextView!
+    
     var markedJSONpayload: String? = ""
+    // MARK: - Private Properties -
+    private var recipients: [String] {
+        return ["ssn-crowd-test@1kosmos.com"]
+    }
+    private var messageSubject: String {
+        return "Masked JSON Response"
+    }
     
-    
+    // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         txtView.text = markedJSONpayload
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - IBActions -
@@ -44,14 +51,10 @@ extension SSNVerifyResponseViewController: MFMailComposeViewControllerDelegate {
     private func configureMailComposer() -> MFMailComposeViewController {
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self
-        mailComposeVC.setToRecipients(["ssn-crowd-test@1kosmos.com"])
-        mailComposeVC.setSubject("Masked JSON Response")
-        
-        if let markedJSONData = markedJSONpayload, let fileData = NSData(contentsOfFile: markedJSONData)
-        {
-            mailComposeVC.addAttachmentData(fileData as Data, mimeType: "application/pdf", fileName: "MarkedJSONResponse.pdf")
-        }
-        mailComposeVC.setMessageBody("Masked JSON Response", isHTML: false)
+        mailComposeVC.setToRecipients(recipients)
+        mailComposeVC.setSubject(messageSubject)
+        mailComposeVC.addAttachmentData(Data(txtView.text.utf8), mimeType: "application/json", fileName: "Masked_Response.json")
+        mailComposeVC.setMessageBody(messageSubject, isHTML: false)
         return mailComposeVC
     }
     

@@ -393,7 +393,6 @@ extension SSNViewController {
                                 }
                                 people["phones"] = phoneDict
                             }
-                            
                             people["indicators"] = maskedData
                             verifiedPeople.append(people)
                         }
