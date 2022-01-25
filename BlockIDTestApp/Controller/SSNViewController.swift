@@ -310,11 +310,9 @@ extension SSNViewController {
             }
             self.present(alert, animated: true)
         }
-    }
+    }    
     
-    
-    
-    private func handleFailedSSNResponse( payload: inout [String: Any]) -> [String: Any]? {
+    private func handleFailedSSNResponse(payload: inout [String: Any]) -> [String: Any]? {
         
         var certificates: [[String: Any]] = [[:]]
         var verifiedPeople: [[String: Any]] = [[:]]
