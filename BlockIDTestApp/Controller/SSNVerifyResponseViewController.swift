@@ -38,7 +38,7 @@ class SSNVerifyResponseViewController: UIViewController {
             let mailComposeViewController = configureMailComposer()
             if MFMailComposeViewController.canSendMail() {
                 self.present(mailComposeViewController, animated: true, completion: nil)
-            }else{
+            } else {
                 self.showAlertView(title: "Alert", message: "Mail services are not available")
             }
         }
