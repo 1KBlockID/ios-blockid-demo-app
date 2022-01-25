@@ -1138,6 +1138,79 @@
             </objects>
             <point key="canvasLocation" x="771" y="860"/>
         </scene>
+        <!--Verify Response View Controller-->
+        <scene sceneID="HJ1-7b-H8M">
+            <objects>
+                <viewController storyboardIdentifier="SSNVerifyResponseViewController" id="Fub-FC-Vzg" customClass="SSNVerifyResponseViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ifL-Go-0gY">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SSN Verification details" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJo-aZ-zO3">
+                                <rect key="frame" x="60" y="10" width="200" height="43"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T5E-hy-jFW">
+                                <rect key="frame" x="0.0" y="18" width="60" height="18"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="ei8-6o-hdd"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="iconBackarrow"/>
+                                <connections>
+                                    <action selector="goBack:" destination="Fub-FC-Vzg" eventType="touchUpInside" id="QP0-DB-VrA"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="No Content !!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fHf-D6-qji">
+                                <rect key="frame" x="0.0" y="61" width="320" height="507"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Fub-FC-Vzg" id="iTO-Lb-1uI"/>
+                                </connections>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZhX-Zt-U8t">
+                                <rect key="frame" x="285" y="14.5" width="25" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="AMv-97-quR"/>
+                                    <constraint firstAttribute="height" constant="25" id="nqC-y9-wLf"/>
+                                </constraints>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="square.and.arrow.up" catalog="system"/>
+                                <connections>
+                                    <action selector="doShare:" destination="Fub-FC-Vzg" eventType="touchUpInside" id="bb0-rZ-KBe"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Umo-lW-Fi8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fHf-D6-qji" firstAttribute="bottom" secondItem="Umo-lW-Fi8" secondAttribute="bottom" id="3ZA-Hu-2RF"/>
+                            <constraint firstItem="fJo-aZ-zO3" firstAttribute="centerX" secondItem="Umo-lW-Fi8" secondAttribute="centerX" id="A0n-Fg-hcC"/>
+                            <constraint firstItem="fHf-D6-qji" firstAttribute="trailing" secondItem="Umo-lW-Fi8" secondAttribute="trailing" id="Ees-hu-aib"/>
+                            <constraint firstItem="T5E-hy-jFW" firstAttribute="top" secondItem="Umo-lW-Fi8" secondAttribute="top" constant="18" id="MmO-vt-C8Y"/>
+                            <constraint firstItem="ZhX-Zt-U8t" firstAttribute="centerY" secondItem="T5E-hy-jFW" secondAttribute="centerY" id="QXp-qC-eLV"/>
+                            <constraint firstItem="fJo-aZ-zO3" firstAttribute="leading" secondItem="T5E-hy-jFW" secondAttribute="trailing" id="Roh-ag-xSk"/>
+                            <constraint firstItem="fHf-D6-qji" firstAttribute="top" secondItem="fJo-aZ-zO3" secondAttribute="bottom" constant="8" symbolic="YES" id="gTc-kA-fpc"/>
+                            <constraint firstItem="fHf-D6-qji" firstAttribute="leading" secondItem="Umo-lW-Fi8" secondAttribute="leading" id="pxl-I8-cDO"/>
+                            <constraint firstItem="fJo-aZ-zO3" firstAttribute="top" secondItem="Umo-lW-Fi8" secondAttribute="top" constant="10" id="rc4-Tw-zKo"/>
+                            <constraint firstItem="Umo-lW-Fi8" firstAttribute="trailing" secondItem="ZhX-Zt-U8t" secondAttribute="trailing" constant="10" id="reJ-1e-hcT"/>
+                            <constraint firstItem="T5E-hy-jFW" firstAttribute="leading" secondItem="ifL-Go-0gY" secondAttribute="leading" id="tRo-Ln-szG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="txtView" destination="fHf-D6-qji" id="6bV-Ml-yjx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EeR-4w-ue2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1526.25" y="808.09859154929575"/>
+        </scene>
         <!--Enroll Ment View Controller-->
         <scene sceneID="k45-2V-MmN">
             <objects>
@@ -2767,6 +2840,7 @@
         <image name="iconWarning" width="20" height="20"/>
         <image name="qrErrorBg" width="347" height="40"/>
         <image name="qrScanner" width="346" height="378"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="ssnCheck" width="20" height="20"/>
         <image name="ssnUnCheck" width="20" height="20"/>
         <systemColor name="labelColor">
