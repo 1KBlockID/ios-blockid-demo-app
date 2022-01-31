@@ -356,9 +356,9 @@
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
-				3CEE336226441562003FDB78 /* ShellScript */,
 				5D7ED1C626E630E00057EF0F /* Embed Frameworks */,
 				8351347E4E50D54A7A60891B /* [CP] Embed Pods Frameworks */,
+				3CEE336226441562003FDB78 /* ShellScript */,
 			);
 			buildRules = (
 			);
