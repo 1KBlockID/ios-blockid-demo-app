@@ -1164,7 +1164,7 @@
                                     <action selector="goBack:" destination="Fub-FC-Vzg" eventType="touchUpInside" id="QP0-DB-VrA"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="No Content !!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fHf-D6-qji">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="No Content !!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="fHf-D6-qji">
                                 <rect key="frame" x="0.0" y="61" width="320" height="507"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
