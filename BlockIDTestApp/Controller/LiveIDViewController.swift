@@ -79,7 +79,8 @@ class LiveIDViewController: UIViewController {
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
     private let isResettingExpressionsAllowed = true
-
+    private var isLoaderHidden: Bool = false
+    var isLivenessNeeded: Bool = false 
 
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -97,6 +98,13 @@ class LiveIDViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if isLivenessNeeded {
+            _lblPageTitle.text = "Enroll LiveID (with liveness check)"
+        } else {
+            _lblPageTitle.text = "Enroll LiveID"
+        }
+        
         if isForVerification {
             //For LiveID Verification
             _lblPageTitle.text = "LiveID Authentication"
@@ -127,7 +135,11 @@ class LiveIDViewController: UIViewController {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    self.liveIdScannerHelper?.startLiveIDScanning()
+                    if self.isLivenessNeeded {
+                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                    } else {
+                        self.liveIdScannerHelper?.startLiveIDScanning()
+                    }
                 }
             }
         }
@@ -264,6 +276,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
+        if isLoaderHidden {
+            self.view.hideToastActivity()
+        }
         if error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
             self.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
                 
@@ -273,14 +288,20 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
         
         guard let face = liveIdImage, let signToken = signatureToken else {
-            self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
-                if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
-                    self.showAppLogin()
-                }
-                else {
-                    self.goBack()
-                }
-            })
+            
+            var errorMessage = error?.message ?? ""
+            if let dict = error?.object {
+                errorMessage = "(" + "\(error?.code ?? 0)" + ")"  + (error?.message ?? "") + "\n"
+                let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: [])
+                let decoded = String(data: jsonData, encoding: .utf8)!
+                errorMessage += decoded
+            }
+
+            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {_ in
+                self.goBack()
+            }))
+            self.present(alert, animated: true)
             return
 
         }
@@ -323,6 +344,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             }
         }
 
+    }
+    
+    func faceLivenessCheckStarted() {
+        isLoaderHidden = true
+        self.view.makeToastActivity(.center)
     }
     
     func focusOnFaceChanged(isFocused: Bool?) {
