@@ -44,8 +44,8 @@
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
-		E63282FA27A9824D0025D7FA /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63282F827A982470025D7FA /* BlockIDSDK.framework */; };
-		E63282FB27A9824D0025D7FA /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E63282F827A982470025D7FA /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E657B1DA27AA529D002DC51C /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E657B1D827AA5291002DC51C /* BlockIDSDK.framework */; };
+		E657B1DB27AA529E002DC51C /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E657B1D827AA5291002DC51C /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
 /* End PBXBuildFile section */
@@ -67,7 +67,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E63282FB27A9824D0025D7FA /* BlockIDSDK.framework in Embed Frameworks */,
+				E657B1DB27AA529E002DC51C /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +119,7 @@
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
-		E63282F827A982470025D7FA /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
+		E657B1D827AA5291002DC51C /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		E6FFD6642786E376004CBB62 /* SSNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNViewController.swift; sourceTree = "<group>"; };
 		E6FFD666278702C5004CBB62 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,7 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
-				E63282FA27A9824D0025D7FA /* BlockIDSDK.framework in Frameworks */,
+				E657B1DA27AA529D002DC51C /* BlockIDSDK.framework in Frameworks */,
 				311C30213CB6450A1BDDC631 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +148,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E63282F827A982470025D7FA /* BlockIDSDK.framework */,
+				E657B1D827AA5291002DC51C /* BlockIDSDK.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				4533970E6227BC63AC9EAF80 /* Pods_BlockIDTestApp.framework */,
 			);
@@ -754,6 +754,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = BlockIDTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -792,6 +793,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_WORKSPACE = NO;
