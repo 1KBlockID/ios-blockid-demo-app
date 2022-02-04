@@ -20,6 +20,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
+    case LiveID_liveness = "LiveID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
@@ -35,6 +36,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
+                           Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
@@ -88,7 +90,9 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.DeviceAuth.rawValue:
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
-            enrollLiveID()
+            enrollLiveID(isLivenessNeeded: false)
+        case Enrollments.LiveID_liveness.rawValue:
+            enrollLiveID(isLivenessNeeded: true)
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.RecoverMnemonics.rawValue:
@@ -245,9 +249,9 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollLiveID() {
+    private func enrollLiveID(isLivenessNeeded: Bool) {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            showLiveIDView()
+            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
         }
     }
     
