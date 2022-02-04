@@ -290,11 +290,13 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         guard let face = liveIdImage, let signToken = signatureToken else {
             
             var errorMessage = error?.message ?? ""
-            if let dict = error?.object {
+            if let dict = error?.responseObj {
                 errorMessage = "(" + "\(error?.code ?? 0)" + ")"  + (error?.message ?? "") + "\n"
                 let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: [])
                 let decoded = String(data: jsonData, encoding: .utf8)!
                 errorMessage += decoded
+            } else {
+                errorMessage = (error?.message ?? "") + "(" + "\(error?.code ?? 0)" + ")"  + "\n"
             }
 
             let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
