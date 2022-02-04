@@ -10,7 +10,7 @@ target 'BlockIDTestApp' do
   pod 'Alamofire','~> 4.9.1'
   pod 'CryptoSwift', '~> 1.3.0'
   pod 'BigInt', '~> 4.0'
-  pod 'SwiftyTesseract', '~> 2.2.3'
+  pod 'SwiftyTesseract', '~> 3.1.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Toast-Swift', '~> 5.0.1'
 end
