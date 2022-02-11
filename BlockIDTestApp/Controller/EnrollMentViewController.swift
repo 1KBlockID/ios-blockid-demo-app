@@ -9,6 +9,7 @@
 import Foundation
 import BlockIDSDK
 import Toast_Swift
+import UIKit
 
 
 public enum Enrollments: String {
@@ -42,10 +43,27 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
+    @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if let version = BlockIDSDK.sharedInstance.getVersion() {
+            if let buildNo = version.components(separatedBy: ".").max(by: {$1.count > $0.count}) {
+                let versionArr = version.components(separatedBy: ".")
+                var sdkVersion = ""
+                for index in 0...versionArr.count - 1 {
+                    if versionArr[index] != buildNo {
+                        if index < versionArr.count - 2 {
+                            sdkVersion += versionArr[index] + "."
+                        } else {
+                            sdkVersion += versionArr[index]
+                        }
+                    }
+                }
+                lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
+            }
+        }
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
     }
