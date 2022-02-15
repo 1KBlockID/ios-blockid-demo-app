@@ -327,6 +327,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     func readyForExpression(_ livenessFactor: LivenessFactorType) {
         DispatchQueue.main.async {
             self._lblInformation.isHidden = false
+            self._lblInformation.text = ""
             Vibration.success.vibrate()
             switch livenessFactor {
             case .BLINK:
@@ -358,9 +359,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-        if !inFocus && isResettingExpressionsAllowed {
+        if !inFocus {
             DispatchQueue.main.async {
-                self._lblInformation.text = "Please try again"
+                self._lblInformation.text = "Out of focus !!!. Please try again."
                 Vibration.oldSchool.vibrate()
             }
         }

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
+		1FA3A44827B67C770023044F /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; };
+		1FA3A44927B67C770023044F /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		311C30213CB6450A1BDDC631 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4533970E6227BC63AC9EAF80 /* Pods_BlockIDTestApp.framework */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
@@ -44,8 +46,6 @@
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
-		E63FE18527AD588A003CE4A2 /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; };
-		E63FE18627AD588A003CE4A2 /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
 /* End PBXBuildFile section */
@@ -61,13 +61,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B6C81A0E27A3FAA200C58414 /* Embed Frameworks */ = {
+		1FA3A44A27B67C780023044F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E63FE18627AD588A003CE4A2 /* BlockIDSDK.framework in Embed Frameworks */,
+				1FA3A44927B67C770023044F /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,7 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
-				E63FE18527AD588A003CE4A2 /* BlockIDSDK.framework in Frameworks */,
+				1FA3A44827B67C770023044F /* BlockIDSDK.framework in Frameworks */,
 				311C30213CB6450A1BDDC631 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,8 +357,8 @@
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				3CEE336226441562003FDB78 /* ShellScript */,
-				B6C81A0E27A3FAA200C58414 /* Embed Frameworks */,
 				BE0F025132C4B15D116BF72C /* [CP] Embed Pods Frameworks */,
+				1FA3A44A27B67C780023044F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -761,7 +761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.97;
+				MARKETING_VERSION = 1.4.98;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -821,7 +821,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.97;
+				MARKETING_VERSION = 1.4.98;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
