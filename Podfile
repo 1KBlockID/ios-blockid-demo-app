@@ -25,6 +25,9 @@ post_install do |installer|
 
       # set iOS Deployment Target to 11.0
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+      
+      # set build library for distribution to true
+            config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
     end
   end
 end
