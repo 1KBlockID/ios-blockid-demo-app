@@ -41,8 +41,6 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		6E3930FD43D05A6DBA3B6162 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2977441D986C58991972C2D5 /* Pods_BlockIDTestApp.framework */; };
-		B60176E627C665FD005E499C /* BlockIDSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; };
-		B60176E727C665FD005E499C /* BlockIDSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
@@ -67,7 +65,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B60176E727C665FD005E499C /* BlockIDSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,7 +116,6 @@
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
-		E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BlockIDSDK.framework; sourceTree = "<group>"; };
 		E6FFD6642786E376004CBB62 /* SSNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNViewController.swift; sourceTree = "<group>"; };
 		E6FFD666278702C5004CBB62 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -137,7 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
-				B60176E627C665FD005E499C /* BlockIDSDK.framework in Frameworks */,
 				6E3930FD43D05A6DBA3B6162 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +143,6 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E63FE18327AD5880003CE4A2 /* BlockIDSDK.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				2977441D986C58991972C2D5 /* Pods_BlockIDTestApp.framework */,
 			);
@@ -761,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.98;
+				MARKETING_VERSION = 1.6.00;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -821,7 +815,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.98;
+				MARKETING_VERSION = 1.6.00;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
