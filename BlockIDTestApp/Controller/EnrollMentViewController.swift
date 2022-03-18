@@ -10,7 +10,7 @@ import Foundation
 import BlockIDSDK
 import Toast_Swift
 import UIKit
-
+import SafariServices
 
 public enum Enrollments: String {
     case DriverLicense = "Driver License 1"
@@ -22,6 +22,7 @@ public enum Enrollments: String {
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
     case LiveID_liveness = "LiveID (with liveness check)"
+    case FIDO_DEMO  = "Fido2 Demo"
     case LoginWithQR  = "Login With QR"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
@@ -39,6 +40,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID,
                            Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
+                           Enrollments.FIDO_DEMO,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
     
@@ -113,6 +115,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollLiveID(isLivenessNeeded: true)
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
+        case Enrollments.FIDO_DEMO.rawValue:
+            fido2Demo()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
@@ -120,6 +124,37 @@ extension EnrollMentViewController: UITableViewDelegate {
         default:
             return
         }
+    }
+    
+}
+
+extension EnrollMentViewController {
+    private func fido2Demo() {
+        let alert = UIAlertController(title: "Fido2 Demo", message: "Enter username", preferredStyle: .alert)
+        //2. Add the text field. You can configure it however you need.
+        alert.addTextField { (textField) in
+            textField.text = ""
+        }
+        
+        // 3. Grab the value from the text field, and print it when the user clicks OK.
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+            let value = textField?.text ?? ""
+            self.launchFido2Page(username: value)
+            //no need to show the error!
+        }))
+
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func launchFido2Page(username: String!) {
+        if let url = URL(string: "https://1kfido.blockid.co/appless_demo/index2.html?username=" + username) {
+                let config = SFSafariViewController.Configuration()
+                config.entersReaderIfAvailable = true
+
+                let vc = SFSafariViewController(url: url, configuration: config)
+                present(vc, animated: true)
+            }
     }
     
 }
