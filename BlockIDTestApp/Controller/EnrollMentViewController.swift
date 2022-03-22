@@ -23,6 +23,8 @@ public enum Enrollments: String {
     case LiveID  = "LiveID"
     case LiveID_liveness = "LiveID (with liveness check)"
     case LoginWithQR  = "Login With QR"
+    case FIDORegister = "FIDO Registration"
+    case FIDOAuth = "FIDO Authentication"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
 }
@@ -39,6 +41,8 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID,
                            Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
+                           Enrollments.FIDORegister,
+                           Enrollments.FIDOAuth,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
     
@@ -284,6 +288,14 @@ extension EnrollMentViewController {
         self.present(alert, animated: true)
         return
        
+    }
+}
+
+extension EnrollMentViewController {
+    private func registerFIDO() {
+        BlockIDSDK.sharedInstance.registerForFIDO(username: <#T##String#>, tenantDNS: <#T##String#>, community: <#T##String#>) { (success, error, message) in
+            
+        }
     }
 }
 
