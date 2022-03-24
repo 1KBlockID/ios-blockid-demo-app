@@ -7,7 +7,7 @@ target 'BlockIDTestApp' do
 
   # Pods for BlockIDTestApp
   pod 'Toast-Swift', '~> 5.0.1'
-  pod 'BlockIDSDK', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.6.10'
+  pod 'BlockIDSDK', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.6.20'
 end
 
 post_install do |installer|

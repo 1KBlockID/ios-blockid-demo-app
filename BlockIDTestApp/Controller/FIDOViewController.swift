@@ -38,6 +38,15 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func authenticateTapped(_ sender: Any) {
+        if let username = self.txtFieldUsername.text {
+            BlockIDSDK.sharedInstance.authenticateFIDOKey(userName: username,
+                                                      tenantDNS: Tenant.defaultTenant.dns!,
+                                                      communityName: Tenant.defaultTenant.community!)
+            { status, error in
+                
+                
+            }
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
