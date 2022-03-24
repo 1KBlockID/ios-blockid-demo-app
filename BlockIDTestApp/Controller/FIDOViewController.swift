@@ -1,0 +1,48 @@
+//
+//  FIDOViewController.swift
+//  BlockIDTestApp
+//
+//  Created by Kuldeep Choudhary on 23/03/22.
+//
+
+import Foundation
+import UIKit
+import BlockIDSDK
+
+class FIDOViewController: UIViewController, UITextFieldDelegate {
+    
+    @IBOutlet weak var txtFieldUsername: UITextField!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.txtFieldUsername.delegate = self
+    }
+    
+    @IBAction func backTapped(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+
+    }
+    
+    
+    @IBAction func registerTapped(_ sender: Any) {
+        if let username = self.txtFieldUsername.text {
+            BlockIDSDK.sharedInstance.registerFIDOKey(userName: username,
+                                                      tenantDNS: Tenant.defaultTenant.dns!,
+                                                      communityName: Tenant.defaultTenant.community!)
+            { status, error in
+                
+                
+            }
+        }
+    }
+    
+    @IBAction func authenticateTapped(_ sender: Any) {
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
+    
+}

@@ -23,8 +23,7 @@ public enum Enrollments: String {
     case LiveID  = "LiveID"
     case LiveID_liveness = "LiveID (with liveness check)"
     case LoginWithQR  = "Login With QR"
-    case FIDORegister = "FIDO Registration"
-    case FIDOAuth = "FIDO Authentication"
+    case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
 }
@@ -41,8 +40,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID,
                            Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
-                           Enrollments.FIDORegister,
-                           Enrollments.FIDOAuth,
+                           Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
     
@@ -117,6 +115,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollLiveID(isLivenessNeeded: true)
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
+        case Enrollments.FIDO2.rawValue:
+            launchForFIDO2()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
@@ -292,10 +292,12 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func registerFIDO() {
-        BlockIDSDK.sharedInstance.registerForFIDO(username: <#T##String#>, tenantDNS: <#T##String#>, community: <#T##String#>) { (success, error, message) in
-            
-        }
+    private func launchForFIDO2() {
+        let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDOViewController
+        self.navigationController?.pushViewController(fido2VC, animated: true)
+                                                     
+
     }
+
 }
 
