@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -40,6 +40,8 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
+		5D35E90527EC36EC00634B22 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D35E90327EC36E000634B22 /* BlockIDSDK.xcframework */; };
+		5D35E90627EC36EC00634B22 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D35E90327EC36E000634B22 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
 		6E3930FD43D05A6DBA3B6162 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2977441D986C58991972C2D5 /* Pods_BlockIDTestApp.framework */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
@@ -58,6 +60,20 @@
 			remoteInfo = BlockIDTestApp;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5D35E90727EC36EC00634B22 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5D35E90627EC36EC00634B22 /* BlockIDSDK.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		13ECE525BBE876AD61598463 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -101,8 +117,8 @@
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		517BEF5DB8982B3641F7A1D8 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		5D35E90327EC36E000634B22 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
-		5DA0443C27EB5ABD00D0F839 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D35E90527EC36EC00634B22 /* BlockIDSDK.xcframework in Frameworks */,
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				6E3930FD43D05A6DBA3B6162 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
@@ -133,7 +150,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DA0443C27EB5ABD00D0F839 /* SafariServices.framework */,
+				5D35E90327EC36E000634B22 /* BlockIDSDK.xcframework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				2977441D986C58991972C2D5 /* Pods_BlockIDTestApp.framework */,
 			);
@@ -343,6 +360,7 @@
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				AE671F90E3894657F3ACF23C /* [CP] Embed Pods Frameworks */,
+				5D35E90727EC36EC00634B22 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
