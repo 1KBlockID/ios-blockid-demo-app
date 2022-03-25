@@ -31,7 +31,14 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                                       tenantDNS: Tenant.defaultTenant.dns!,
                                                       communityName: Tenant.defaultTenant.community!)
             { status, error in
-                print("33\n")
+                if status {
+                    let alert = UIAlertController(title: "Success", message: "You have successfully registered", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                       // self.navigationController?.popViewController(animated: true)
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -45,7 +52,14 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                                       communityName: Tenant.defaultTenant.community!)
             { status, error in
                 
-                print("36\n")
+                if status {
+                    let alert = UIAlertController(title: "Success", message: "You have successfully authenticated", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                        self.navigationController?.popViewController(animated: true)
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
