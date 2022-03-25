@@ -11,7 +11,6 @@ import BlockIDSDK
 import Toast_Swift
 import UIKit
 
-
 public enum Enrollments: String {
     case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
@@ -63,13 +62,14 @@ class EnrollMentViewController: UIViewController {
                         }
                     }
                 }
+        
                 lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
             }
         }
+     
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
     }
-    
 }
 
 extension EnrollMentViewController: UITableViewDataSource {
@@ -83,8 +83,6 @@ extension EnrollMentViewController: UITableViewDataSource {
         cell.setupCell(enrollment: enrollmentArray[indexPath.row])
         return cell
     }
-    
-    
 }
 
 extension EnrollMentViewController: UITableViewDelegate {
@@ -125,7 +123,6 @@ extension EnrollMentViewController: UITableViewDelegate {
             return
         }
     }
-    
 }
 
 extension EnrollMentViewController {
@@ -139,17 +136,21 @@ extension EnrollMentViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .DL, id: docID)
             }))
+        
             self.present(alert, animated: true)
             return
         }
+        
         showDLView()
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {
         let strDoc = BIDDocumentProvider.shared.getUserDocument(id: id, type: registerDocType.rawValue, category: nil) ?? ""
+        
         guard let arrDoc = CommonFunctions.convertJSONStringToJSONObject(strDoc) as? [[String : Any]] else {
             return
         }
+        
         if let dictDoc = arrDoc.first {
             self.view.makeToastActivity(.center)
             BlockIDSDK.sharedInstance.unregisterDocument(dictDoc: dictDoc) {
@@ -175,6 +176,7 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
+        
         showPassportView()
     }
 }
@@ -190,12 +192,13 @@ extension EnrollMentViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .NATIONAL_ID, id: docID)
             }))
+           
             self.present(alert, animated: true)
             return
         }
+     
         showNationalIDView()
     }
-    
 }
 
 extension EnrollMentViewController {
@@ -207,10 +210,12 @@ extension EnrollMentViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.showPinView(pinActivity: .isRemoving)
             }))
+        
             self.present(alert, animated: true)
             return
             
         }
+        
         showPinView(pinActivity: .isEnrolling)
     }
 }
@@ -285,9 +290,9 @@ extension EnrollMentViewController {
             self.resetAppNSDK()
             self.showHomeView()
         }))
+        
         self.present(alert, animated: true)
         return
-       
     }
 }
 
@@ -295,9 +300,5 @@ extension EnrollMentViewController {
     private func launchForFIDO2() {
         let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDOViewController
         self.navigationController?.pushViewController(fido2VC, animated: true)
-                                                     
-
     }
-
 }
-
