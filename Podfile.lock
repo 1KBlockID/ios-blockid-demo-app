@@ -1,15 +1,8 @@
 PODS:
   - Alamofire (4.9.1)
   - BigInt (4.0.0)
-  - BlockIDSDK (1.6.10):
-    - Alamofire (~> 4.9.1)
-    - BigInt (~> 4.0)
-    - CryptoSwift (~> 1.3.0)
-    - OpenSSL-Universal (~> 1.1.180)
-    - SwiftyTesseract (~> 3.1.3)
-    - TrustWalletCore (~> 2.5.6)
   - CryptoSwift (1.3.8)
-  - OpenSSL-Universal (1.1.1300)
+  - OpenSSL-Universal (1.1.1400)
   - SwiftProtobuf (1.19.0)
   - SwiftyTesseract (3.1.3)
   - Toast-Swift (5.0.1)
@@ -21,8 +14,13 @@ PODS:
     - SwiftProtobuf
 
 DEPENDENCIES:
-  - BlockIDSDK (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.6.10`)
+  - Alamofire (~> 4.9.1)
+  - BigInt (~> 4.0)
+  - CryptoSwift (~> 1.3.0)
+  - OpenSSL-Universal (~> 1.1.180)
+  - SwiftyTesseract (~> 3.1.3)
   - Toast-Swift (~> 5.0.1)
+  - TrustWalletCore (~> 2.5.6)
 
 SPEC REPOS:
   trunk:
@@ -35,27 +33,16 @@ SPEC REPOS:
     - Toast-Swift
     - TrustWalletCore
 
-EXTERNAL SOURCES:
-  BlockIDSDK:
-    :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.6.10
-
-CHECKOUT OPTIONS:
-  BlockIDSDK:
-    :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.6.10
-
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockIDSDK: d39341f7269accc9d52196245942da0f62c7331b
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
-  OpenSSL-Universal: e7311447fd2419f57420c79524b641537387eff2
+  OpenSSL-Universal: cd40d7493c1e9696794f62e2a0e8c729115b7188
   SwiftProtobuf: 6ef3f0e422ef90d6605ca20b21a94f6c1324d6b3
   SwiftyTesseract: 1f3d96668ae92dc2208d9842c8a59bea9fad2cbb
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 77ed44e6965e5121245d7fafc58c56a03bf13490
 
-PODFILE CHECKSUM: 0731fd8b397b146aaff31b882a8bd55aa9480120
+PODFILE CHECKSUM: 0b8ffb225d86296606fe796da07d6b659ee884bd
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

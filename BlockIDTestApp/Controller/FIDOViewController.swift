@@ -31,20 +31,21 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                                       tenantDNS: Tenant.defaultTenant.dns!,
                                                       communityName: Tenant.defaultTenant.community!)
             { status, error in
-                
-                
+                print("33\n")
             }
         }
     }
     
     @IBAction func authenticateTapped(_ sender: Any) {
+        print("34\n")
         if let username = self.txtFieldUsername.text {
+            print("35\n")
             BlockIDSDK.sharedInstance.authenticateFIDOKey(userName: username,
                                                       tenantDNS: Tenant.defaultTenant.dns!,
                                                       communityName: Tenant.defaultTenant.community!)
             { status, error in
                 
-                
+                print("36\n")
             }
         }
     }
