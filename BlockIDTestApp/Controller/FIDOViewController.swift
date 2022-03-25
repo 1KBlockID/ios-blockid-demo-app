@@ -14,16 +14,13 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var txtFieldUsername: UITextField!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
+        super.viewDidLoad()   
         self.txtFieldUsername.delegate = self
     }
     
     @IBAction func backTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-
     }
-    
     
     @IBAction func registerTapped(_ sender: Any) {
         if let username = self.txtFieldUsername.text {
@@ -34,7 +31,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                 if status {
                     let alert = UIAlertController(title: "Success", message: "You have successfully registered", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                       // self.navigationController?.popViewController(animated: true)
+                       // do nothing
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
@@ -51,11 +48,10 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                                       tenantDNS: Tenant.defaultTenant.dns!,
                                                       communityName: Tenant.defaultTenant.community!)
             { status, error in
-                
                 if status {
                     let alert = UIAlertController(title: "Success", message: "You have successfully authenticated", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                        self.navigationController?.popViewController(animated: true)
+                        // do nothing
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
@@ -68,5 +64,4 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
-    
 }
