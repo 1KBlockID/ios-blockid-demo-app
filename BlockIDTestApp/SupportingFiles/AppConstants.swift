@@ -18,4 +18,5 @@ public class AppConsant: NSObject {
     static let buildVersion = "buildVersion"
     static let appVersionKey = "appVersionKey"
     static let dvcID = "default_config"
+    static let fidoUserName = "fidoUserName"
 }
