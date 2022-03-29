@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
-		2E51BE0F7DE36FB5442A30C2 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8E7E82FB899CF1A8D161355 /* Pods_BlockIDTestApp.framework */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
@@ -41,11 +40,12 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
+		5D3BD5C827F3508B00FCB1BB /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3BD5C627F3508600FCB1BB /* BlockIDSDK.xcframework */; };
+		5D3BD5C927F3508B00FCB1BB /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3BD5C627F3508600FCB1BB /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
-		B69802C927F3250E00F84F52 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F93C0E927EE3D5F0089BCC8 /* BlockIDSDK.xcframework */; };
-		B69802CA27F3250E00F84F52 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1F93C0E927EE3D5F0089BCC8 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
+		D11D4254B982B79D1FD4E745 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47B6006611DDC145FC736317 /* Pods_BlockIDTestApp.framework */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
@@ -68,7 +68,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B69802CA27F3250E00F84F52 /* BlockIDSDK.xcframework in Embed Frameworks */,
+				5D3BD5C927F3508B00FCB1BB /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,8 +76,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0327D39513BCC94759E2D4B6 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
-		1F93C0E927EE3D5F0089BCC8 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
 		1FA0938C268472A6008AAAA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,12 +115,12 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		47B6006611DDC145FC736317 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5D3BD5C627F3508600FCB1BB /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
-		905E80A736681568EE98FF8C /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9A7A5AA7F2E6052D30C2BBC7 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
-		D8E7E82FB899CF1A8D161355 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E5B3B3ECC341AFA41BC2041A /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
 		E6FFD6642786E376004CBB62 /* SSNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNViewController.swift; sourceTree = "<group>"; };
 		E6FFD666278702C5004CBB62 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
@@ -138,9 +138,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B69802C927F3250E00F84F52 /* BlockIDSDK.xcframework in Frameworks */,
+				5D3BD5C827F3508B00FCB1BB /* BlockIDSDK.xcframework in Frameworks */,
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
-				2E51BE0F7DE36FB5442A30C2 /* Pods_BlockIDTestApp.framework in Frameworks */,
+				D11D4254B982B79D1FD4E745 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,9 +150,9 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1F93C0E927EE3D5F0089BCC8 /* BlockIDSDK.xcframework */,
+				5D3BD5C627F3508600FCB1BB /* BlockIDSDK.xcframework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				D8E7E82FB899CF1A8D161355 /* Pods_BlockIDTestApp.framework */,
+				47B6006611DDC145FC736317 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -323,8 +323,8 @@
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				905E80A736681568EE98FF8C /* Pods-BlockIDTestApp.debug.xcconfig */,
-				E5B3B3ECC341AFA41BC2041A /* Pods-BlockIDTestApp.release.xcconfig */,
+				9A7A5AA7F2E6052D30C2BBC7 /* Pods-BlockIDTestApp.debug.xcconfig */,
+				0327D39513BCC94759E2D4B6 /* Pods-BlockIDTestApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -354,13 +354,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
 			buildPhases = (
-				C846B037F96A8DC7A72CBDA2 /* [CP] Check Pods Manifest.lock */,
+				30CF5259336234CE02BC38D3 /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
-				FF114E1AEE783BF407260662 /* [CP] Embed Pods Frameworks */,
 				B69802CB27F3250E00F84F52 /* Embed Frameworks */,
+				43D9FCA205A2AB67F2FBBBEC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -449,7 +449,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\"\n\necho \"DOB: $date_of_build\"\n";
 		};
-		C846B037F96A8DC7A72CBDA2 /* [CP] Check Pods Manifest.lock */ = {
+		30CF5259336234CE02BC38D3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -471,7 +471,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FF114E1AEE783BF407260662 /* [CP] Embed Pods Frameworks */ = {
+		43D9FCA205A2AB67F2FBBBEC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -727,7 +727,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 905E80A736681568EE98FF8C /* Pods-BlockIDTestApp.debug.xcconfig */;
+			baseConfigurationReference = 9A7A5AA7F2E6052D30C2BBC7 /* Pods-BlockIDTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -788,7 +788,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E5B3B3ECC341AFA41BC2041A /* Pods-BlockIDTestApp.release.xcconfig */;
+			baseConfigurationReference = 0327D39513BCC94759E2D4B6 /* Pods-BlockIDTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
