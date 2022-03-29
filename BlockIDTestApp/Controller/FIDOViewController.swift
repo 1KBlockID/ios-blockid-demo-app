@@ -16,6 +16,10 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()   
         self.txtFieldUsername.delegate = self
+        guard let registeredUser = UserDefaults.standard.string(forKey: AppConsant.fidoUserName) else {
+            return
+        }
+        self.txtFieldUsername.text = registeredUser
     }
     
     @IBAction func backTapped(_ sender: Any) {
@@ -23,31 +27,62 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func registerTapped(_ sender: Any) {
-        if let username = self.txtFieldUsername.text {
-            BlockIDSDK.sharedInstance.registerFIDOKey(userName: username,
-                                                      tenantDNS: Tenant.defaultTenant.dns!,
-                                                      communityName: Tenant.defaultTenant.community!)
-            { status, error in
-                if status {
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDOKey(userName: username,
+                                                  tenantDNS: Tenant.defaultTenant.dns!,
+                                                  communityName: Tenant.defaultTenant.community!)
+        { status, error in
+            self.view.hideToastActivity()
+            if status {
                     let alert = UIAlertController(title: "Success", message: "You have successfully registered", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                        // do nothing
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
+                UserDefaults.standard.set(username, forKey: AppConsant.fidoUserName)
+            } else {
+                guard let msg = error?.message, let code = error?.code else {
+                    return
                 }
+                let alert = UIAlertController(title: "Error", message: "\(msg), \(code)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                   // do nothing
+                    
+                }))
+                self.present(alert, animated: true, completion: nil)
             }
         }
+       
     }
     
     @IBAction func authenticateTapped(_ sender: Any) {
-        print("34\n")
-        if let username = self.txtFieldUsername.text {
-            print("35\n")
-            BlockIDSDK.sharedInstance.authenticateFIDOKey(userName: username,
-                                                      tenantDNS: Tenant.defaultTenant.dns!,
-                                                      communityName: Tenant.defaultTenant.community!)
-            { status, error in
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        self.view.makeToastActivity(.center)
+        
+        BlockIDSDK.sharedInstance.authenticateFIDOKey(userName: username,
+                                                  tenantDNS: Tenant.defaultTenant.dns!,
+                                                  communityName: Tenant.defaultTenant.community!)
+        { status, error in
+                self.view.hideToastActivity()
                 if status {
                     let alert = UIAlertController(title: "Success", message: "You have successfully authenticated", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
@@ -55,8 +90,17 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
+                }  else {
+                    guard let msg = error?.message, let code = error?.code else {
+                        return
+                    }
+                    let alert = UIAlertController(title: "Error", message: "\(msg), \(code)", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                       // do nothing
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
                 }
-            }
         }
     }
     
