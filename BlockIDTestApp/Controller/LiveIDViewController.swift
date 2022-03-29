@@ -78,7 +78,7 @@ class LiveIDViewController: UIViewController {
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
-    private let isResettingExpressionsAllowed = true
+    private let isResettingExpressionsAllowed = false
     private var isLoaderHidden: Bool = false
     var isLivenessNeeded: Bool = false 
 
