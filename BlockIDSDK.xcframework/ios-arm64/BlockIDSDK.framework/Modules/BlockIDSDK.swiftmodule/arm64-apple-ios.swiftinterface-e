@@ -1192,7 +1192,7 @@ public enum LivenessFactorType {
   }
 }
 @objc public class LiveIDScannerHelper : ObjectiveC.NSObject {
-  public init(scanningMode: BlockIDSDK.ScanningMode, bidScannerView: BlockIDSDK.BIDScannerView, shouldResetOnWrongExpresssion: Swift.Bool = true, liveIdResponseDelegate: BlockIDSDK.LiveIDResponseDelegate)
+  public init(scanningMode: BlockIDSDK.ScanningMode, bidScannerView: BlockIDSDK.BIDScannerView, overlayFrame: CoreGraphics.CGRect? = nil, shouldResetOnWrongExpresssion: Swift.Bool = true, liveIdResponseDelegate: BlockIDSDK.LiveIDResponseDelegate)
   public func startLiveIDScanning(dvcID: Swift.String? = nil)
   public func stopLiveIDScanning()
   @objc deinit
