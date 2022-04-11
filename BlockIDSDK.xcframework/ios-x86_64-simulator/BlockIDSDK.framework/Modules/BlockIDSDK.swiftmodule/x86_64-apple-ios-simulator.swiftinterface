@@ -648,7 +648,7 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Ses
   public func migrateData(bidTenant: BIDTenant, clientTenant: BIDTenant, completion: @escaping BIDMigrationCallback)
   public func getVersion() -> Swift.String?
   public func compareFaces(base64Img1: Swift.String, base64Img2: Swift.String, purpose: CompareFacePurpose, completion: @escaping (BIDFaceCompareScore?, ErrorResponse?) -> Swift.Void)
-  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, ErrorResponse?) -> Swift.Void))
+  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, ErrorResponse?) -> Swift.Void))
   public func registerFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping Fido2Callback)
   public func authenticateFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping Fido2Callback)
   @objc deinit

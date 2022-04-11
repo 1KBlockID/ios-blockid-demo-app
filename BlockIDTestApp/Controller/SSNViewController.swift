@@ -243,7 +243,7 @@ extension SSNViewController {
     
     private func verifySSN() {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload, verifications: ["ssn_verify"])
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload)
         { status, dataDic, errorResponse in
             self.view.hideToastActivity()
             var title: String = ""
