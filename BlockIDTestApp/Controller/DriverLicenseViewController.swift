@@ -105,7 +105,7 @@ class DriverLicenseViewController: UIViewController {
         self.present(alert, animated: true)
     }
     
-    private func verifyDL(withDLData dl: [String : Any]?, token: String) {
+    private func verifyDL(withDLData dl: [String: Any]?, token: String) {
         self.view.makeToastActivity(.center)
 
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:]) { [self] (status, dataDic, error) in

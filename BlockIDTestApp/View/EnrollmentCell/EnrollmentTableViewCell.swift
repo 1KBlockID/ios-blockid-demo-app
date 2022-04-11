@@ -49,6 +49,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.accessoryType = BlockIDSDK.sharedInstance.isPinRegistered() ? .checkmark : .none
         default:
             self.lblEnrollment.text = enrollment.rawValue
+            self.accessoryType = .none
             break
         }
         
