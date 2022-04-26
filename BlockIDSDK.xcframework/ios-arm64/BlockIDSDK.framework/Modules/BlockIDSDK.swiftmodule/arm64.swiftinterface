@@ -270,6 +270,8 @@ public struct DTHStruct {
   public func setPin(pin: Swift.String)
   public func getLicenseKey() -> Swift.String?
   public func setLicenseKey(key: Swift.String)
+  public func setDvcId(dvcId: Swift.String)
+  public func getDvcId() -> Swift.String?
   public func getTenant() -> BIDTenant?
   public func setTenant(tenant: BIDTenant)
   public func setLiveIDRegistered(_ value: Swift.Bool)
@@ -479,23 +481,6 @@ public struct ResponseAPDU {
   public var sw2: Swift.UInt8
   public init(data: [Swift.UInt8], sw1: Swift.UInt8, sw2: Swift.UInt8)
 }
-@_hasMissingDesignatedInitializers public class BIDFaceCompareScore : Swift.Codable {
-  public var isIdentical: Swift.Bool? {
-    get
-  }
-  public var minScore: Swift.Double? {
-    get
-  }
-  public var match: Swift.Bool? {
-    get
-  }
-  public var confidence: Swift.Double? {
-    get
-  }
-  @objc deinit
-  public func encode(to encoder: Swift.Encoder) throws
-  required public init(from decoder: Swift.Decoder) throws
-}
 public enum BiometricError {
   case NoID
   case cancel
@@ -567,6 +552,7 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Ses
   public func isReady() -> Swift.Bool
   public func setLicenseKey(key: Swift.String)
   public func getLicenseKey() -> Swift.String
+  public func setDvcID(dvcID: Swift.String)
   public func setRestoreMode()
   public func isRestoreModeOn() -> Swift.Bool
   public func setMigrationMode()
@@ -581,11 +567,11 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Ses
   public func removePin(pin: Swift.String, completion: @escaping UserAPICallback)
   public func getLiveIDImage() -> UIKit.UIImage?
   public func setLiveID(liveIdImage: UIKit.UIImage, liveIdProofedBy: Swift.String? = nil, sigToken: Swift.String? = nil, completion: @escaping LiveIDCallback)
-  public func verifyLiveID(image: UIKit.UIImage, sigToken: Swift.String, completion: @escaping LiveIDCallback)
+  public func verifyLiveID(image: UIKit.UIImage, sigToken: Swift.String? = nil, completion: @escaping LiveIDCallback)
   public func registerDocument(obj: [Swift.String : Any], sigToken: Swift.String? = nil, completion: @escaping UserAPICallback)
   public func registerDocument(obj: [Swift.String : Any], storeArtifacts: Swift.Bool, syncArtifacts: Swift.Bool, sigToken: Swift.String? = nil, completion: @escaping UserAPICallback)
-  public func registerDocument(obj: [Swift.String : Any], liveIdProofedBy: Swift.String, docSignToken: Swift.String? = nil, faceImage: UIKit.UIImage, liveIDSignToken: Swift.String, completion: @escaping UserAPICallback)
-  public func registerDocument(obj: [Swift.String : Any], storeArtifacts: Swift.Bool, syncArtifacts: Swift.Bool, liveIdProofedBy: Swift.String, docSignToken: Swift.String? = nil, faceImage: UIKit.UIImage, liveIDSignToken: Swift.String, completion: @escaping UserAPICallback)
+  public func registerDocument(obj: [Swift.String : Any], liveIdProofedBy: Swift.String, docSignToken: Swift.String? = nil, faceImage: UIKit.UIImage, liveIDSignToken: Swift.String? = nil, completion: @escaping UserAPICallback)
+  public func registerDocument(obj: [Swift.String : Any], storeArtifacts: Swift.Bool, syncArtifacts: Swift.Bool, liveIdProofedBy: Swift.String, docSignToken: Swift.String? = nil, faceImage: UIKit.UIImage, liveIDSignToken: Swift.String? = nil, completion: @escaping UserAPICallback)
   public func isCurrentDocumentExists(dictDoc: [Swift.String : Any]) -> Swift.Bool
   public func unregisterDocument(dictDoc: [Swift.String : Any], completion: @escaping UserAPICallback)
   public func setProxy(host: Swift.String, port: Swift.Int, userName: Swift.String, password: Swift.String, isHTPPOnly: Swift.Bool)
@@ -647,20 +633,10 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Ses
   public func purgeData(forKey key: Swift.String)
   public func migrateData(bidTenant: BIDTenant, clientTenant: BIDTenant, completion: @escaping BIDMigrationCallback)
   public func getVersion() -> Swift.String?
-  public func compareFaces(base64Img1: Swift.String, base64Img2: Swift.String, purpose: CompareFacePurpose, completion: @escaping (BIDFaceCompareScore?, ErrorResponse?) -> Swift.Void)
-  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, ErrorResponse?) -> Swift.Void))
+  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, ErrorResponse?) -> Swift.Void))
   public func registerFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping Fido2Callback)
   public func authenticateFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping Fido2Callback)
   @objc deinit
-}
-public enum CompareFacePurpose : Swift.String {
-  case authentication
-  case doc_enrollment
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: TOTPUtils
@@ -1362,6 +1338,7 @@ public struct CustomErrors {
   public static let kCommunityIsMandatory: (code: Swift.Int, msg: Swift.String)
   public static let kCancelledProcess: (code: Swift.Int, msg: Swift.String)
   public static let kSessionExpired: (code: Swift.Int, msg: Swift.String)
+  public static let KServiceUrlNotSet: (code: Swift.Int, msg: Swift.String)
 }
 @objc public class ErrorResponse : ObjectiveC.NSObject {
   public var code: Swift.Int
@@ -2195,9 +2172,6 @@ extension BiometricType : Swift.Hashable {}
 extension LogLevel : Swift.Equatable {}
 extension LogLevel : Swift.Hashable {}
 extension LogLevel : Swift.RawRepresentable {}
-extension CompareFacePurpose : Swift.Equatable {}
-extension CompareFacePurpose : Swift.Hashable {}
-extension CompareFacePurpose : Swift.RawRepresentable {}
 extension TOTPUtils.Algorithm : Swift.Hashable {}
 extension TOTPUtils.Error : Swift.Equatable {}
 extension TOTPUtils.Error : Swift.Hashable {}
