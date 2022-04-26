@@ -77,7 +77,7 @@ extension UIViewController {
         }
     }
     
-    func showAuthenticationViewController(qrModel: AuthQRModel, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
+    func showAuthenticationViewController(qrModel: AuthenticationPayloadV1, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as! AuthenticateViewController
         authVc.qrModel =  qrModel

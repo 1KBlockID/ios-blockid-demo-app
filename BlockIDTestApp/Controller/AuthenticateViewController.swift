@@ -21,7 +21,7 @@ class AuthenticateViewController: UIViewController {
 
     public var delegate : AuthenticateViewControllerDelegate?
     public var qrOption : QROptions?
-    public var qrModel: AuthQRModel!
+    public var qrModel: AuthenticationPayloadV1!
     var qroptions = ""
     var location: (Double, Double) = (0.0, 0.0)
     var userId: String?

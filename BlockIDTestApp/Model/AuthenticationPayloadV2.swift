@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AuthQRUWL2: NSObject, Codable {
+public class AuthenticationPayloadV2: NSObject, Codable {
     public var scopes: String? = ""
     public var authtype: String? = ""
     public var strId: String? = ""
@@ -32,8 +32,8 @@ public class AuthQRUWL2: NSObject, Codable {
         case version = "__v"
     }
     
-    func getAuthRequestModel(sessionUrl: String) -> AuthQRModel {
-        let authRequestModel = AuthQRModel()
+    func getAuthRequestModel(sessionUrl: String) -> AuthenticationPayloadV1 {
+        let authRequestModel = AuthenticationPayloadV1()
         authRequestModel.authtype = self.authtype
         authRequestModel.scopes = self.scopes
         authRequestModel.creds = ""
