@@ -48,6 +48,8 @@
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
+		E6734C3D2816B5E900658171 /* GetSessionAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6734C3C2816B5E900658171 /* GetSessionAuthAPI.swift */; };
+		E689A17B2817DB1E00DCBED6 /* AuthQRUWL2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthQRUWL2.swift */; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
 /* End PBXBuildFile section */
@@ -124,6 +126,8 @@
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
 		DA42CB8FC742B05935D851F5 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
+		E6734C3C2816B5E900658171 /* GetSessionAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSessionAuthAPI.swift; sourceTree = "<group>"; };
+		E689A17A2817DB1E00DCBED6 /* AuthQRUWL2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthQRUWL2.swift; sourceTree = "<group>"; };
 		E6FFD6642786E376004CBB62 /* SSNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNViewController.swift; sourceTree = "<group>"; };
 		E6FFD666278702C5004CBB62 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				3C78FA07264AA1D8001576DF /* DocumentHolder.swift */,
+				E689A17A2817DB1E00DCBED6 /* AuthQRUWL2.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -210,6 +215,7 @@
 		3CEE330D264413C2003FDB78 /* BlockIDTestApp */ = {
 			isa = PBXGroup;
 			children = (
+				E6734C3B2816B5AB00658171 /* APIs */,
 				3C78FA06264AA1C9001576DF /* Model */,
 				3CEE3342264414E7003FDB78 /* BlockIDTestApp.entitlements */,
 				3CEE3343264414E7003FDB78 /* Controller */,
@@ -331,6 +337,14 @@
 				5F868963BDD017E20223E008 /* Pods-BlockIDTestApp.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E6734C3B2816B5AB00658171 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				E6734C3C2816B5E900658171 /* GetSessionAuthAPI.swift */,
+			);
+			path = APIs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -513,6 +527,7 @@
 				3CEE339026443347003FDB78 /* PinViewController.swift in Sources */,
 				B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
+				E689A17B2817DB1E00DCBED6 /* AuthQRUWL2.swift in Sources */,
 				3CEE3351264414E7003FDB78 /* CommonFunctions.swift in Sources */,
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
 				3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */,
@@ -534,6 +549,7 @@
 				3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */,
 				3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */,
 				B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */,
+				E6734C3D2816B5E900658171 /* GetSessionAuthAPI.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
@@ -751,7 +767,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.20;
+				MARKETING_VERSION = 1.7.20;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -811,7 +827,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.20;
+				MARKETING_VERSION = 1.7.20;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

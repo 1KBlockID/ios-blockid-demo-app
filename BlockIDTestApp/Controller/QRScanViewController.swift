@@ -68,12 +68,20 @@ extension QRScanViewController: QRScanResponseDelegate {
     }
     
     private func processQRData(_ data: String) {
-        //decode the base64 payload data
         
+        // uwl 2.0
+        if data.hasPrefix("https://") && data.contains("/sessions") {
+            handleUWL2(data: data)
+            return
+        }
+        
+        // uwl 1.0
+        //decode the base64 payload data
         guard let decodedData = Data(base64Encoded: data) else {
             self.inValidQRCode()
             return
         }
+        
         let decodedString = String(data: decodedData, encoding: .utf8)!
         let qrModel = CommonFunctions.jsonStringToObject(json: decodedString) as AuthQRModel?
         
@@ -83,6 +91,45 @@ extension QRScanViewController: QRScanResponseDelegate {
         // 2. If scopes has "windows", replace it by "scep_creds"
         qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
         presentConsentViewWithData(qrdata: qrModel!)
+    }
+    
+    private func processScope(qrModel: AuthQRModel?) {
+        // 1. Scopes converted to lowercase
+        qrModel?.scopes = qrModel?.scopes?.lowercased()
+        // 2. If scopes has "windows", replace it by "scep_creds"
+        qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
+        if let qrModel = qrModel {
+            presentConsentViewWithData(qrdata: qrModel)
+        }
+    }
+    
+    private func handleUWL2(data: String) {
+        
+            let arrSplitStrings = data.components(separatedBy: "/session/")
+            let url = arrSplitStrings.first ?? ""
+            if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
+
+                GetSessionAuthAPI.sharedInstance.getSessionAuthRequest(url: data) { [self] response, message, isSuccess in
+                    
+                    if isSuccess {
+                        let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthQRUWL2?
+                        let authQRUWL1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
+                        processScope(qrModel: authQRUWL1)
+                    } else {
+                        // Show toast
+                        self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            self.goBack()
+                            return
+                        })
+                    }
+                }
+            } else {
+                // Show toast
+                self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    self.goBack()
+                    return
+                })
+            }
     }
     
     private func inValidQRCode() {
@@ -121,6 +168,7 @@ public class AuthQRModel: NSObject, Codable {
     public var community: String? = ""
     public var authPage: String? = ""
     public var name: String? = ""
+    var sessionUrl: String? = ""
     
     func getBidOrigin() -> BIDOrigin? {
         let bidOrigin = BIDOrigin()
@@ -148,6 +196,7 @@ public struct AuthRequestModel {
     var origin: BIDOrigin!
     var isConsentGiven: Bool = false
     var userId: String?
+    var sessionUrl: String = ""
 }
 extension QRScanViewController: AuthenticateViewControllerDelegate {
     func onAuthenticate(status: Bool) {
