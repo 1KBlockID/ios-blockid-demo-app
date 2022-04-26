@@ -68,14 +68,22 @@ extension QRScanViewController: QRScanResponseDelegate {
     }
     
     private func processQRData(_ data: String) {
-        //decode the base64 payload data
         
+        // uwl 2.0
+        if data.hasPrefix("https://") && data.contains("/sessions") {
+            handleUWL2(data: data)
+            return
+        }
+        
+        // uwl 1.0
+        //decode the base64 payload data
         guard let decodedData = Data(base64Encoded: data) else {
             self.inValidQRCode()
             return
         }
+        
         let decodedString = String(data: decodedData, encoding: .utf8)!
-        let qrModel = CommonFunctions.jsonStringToObject(json: decodedString) as AuthQRModel?
+        let qrModel = CommonFunctions.jsonStringToObject(json: decodedString) as AuthenticationPayloadV1?
         
         // 1. Scopes converted to lowercase
         qrModel?.scopes = qrModel?.scopes?.lowercased()
@@ -85,13 +93,52 @@ extension QRScanViewController: QRScanResponseDelegate {
         presentConsentViewWithData(qrdata: qrModel!)
     }
     
+    private func processScope(qrModel: AuthenticationPayloadV1?) {
+        // 1. Scopes converted to lowercase
+        qrModel?.scopes = qrModel?.scopes?.lowercased()
+        // 2. If scopes has "windows", replace it by "scep_creds"
+        qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
+        if let qrModel = qrModel {
+            presentConsentViewWithData(qrdata: qrModel)
+        }
+    }
+    
+    private func handleUWL2(data: String) {
+        
+            let arrSplitStrings = data.components(separatedBy: "/session/")
+            let url = arrSplitStrings.first ?? ""
+            if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
+
+                GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
+                    
+                    if isSuccess {
+                        let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
+                        let authQRUWL1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
+                        processScope(qrModel: authQRUWL1)
+                    } else {
+                        // Show toast
+                        self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            self.goBack()
+                            return
+                        })
+                    }
+                }
+            } else {
+                // Show toast
+                self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    self.goBack()
+                    return
+                })
+            }
+    }
+    
     private func inValidQRCode() {
         self._viewBtn.isHidden = false
         self._qrView.isHidden = true
         self.showAlertView(title: "Invalid Code", message: "Unsupported QR code detected.")
     }
     
-    private func presentConsentViewWithData(qrdata: AuthQRModel) {
+    private func presentConsentViewWithData(qrdata: AuthenticationPayloadV1) {
         self._viewBtn.isHidden = false
         self._qrView.isHidden = true
         self.navigationController?.popViewController(animated: true)
@@ -110,35 +157,7 @@ extension QRScanViewController: QRScanResponseDelegate {
 
     }
 }
-public class AuthQRModel: NSObject, Codable {
-    public var authtype: String? = ""
-    public var scopes: String? = ""
-    public var creds: String? = ""
-    public var publicKey: String? = ""
-    public var session: String? = ""
-    public var api: String? = ""
-    public var tag: String? = ""
-    public var community: String? = ""
-    public var authPage: String? = ""
-    public var name: String? = ""
-    
-    func getBidOrigin() -> BIDOrigin? {
-        let bidOrigin = BIDOrigin()
-        bidOrigin.api = self.api
-        bidOrigin.tag = self.tag
-        bidOrigin.name = self.name
-        bidOrigin.community = self.community
-        bidOrigin.publicKey = self.publicKey
-        bidOrigin.session = self.session
-        bidOrigin.authPage = self.authPage
-        
-        if (bidOrigin.authPage == nil) { //default to native auth without a specific method.
-            bidOrigin.authPage = AccountAuthConstants.kNativeAuthScehema
-        }
-        
-        return bidOrigin
-    }
-}
+
 public struct AuthRequestModel {
     var lat: Double = 0.0
     var lon: Double = 0.0
@@ -148,6 +167,7 @@ public struct AuthRequestModel {
     var origin: BIDOrigin!
     var isConsentGiven: Bool = false
     var userId: String?
+    var sessionUrl: String = ""
 }
 extension QRScanViewController: AuthenticateViewControllerDelegate {
     func onAuthenticate(status: Bool) {

@@ -1698,10 +1698,6 @@
                                         <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3Copy" translatesAutoresizingMaskIntoConstraints="NO" id="dqk-o8-UCV">
-                                        <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
-                                        <color key="tintColor" systemColor="systemRedColor"/>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rg0-Qk-de0">
                                         <rect key="frame" x="48" y="501" width="224" height="48"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1731,6 +1727,10 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="group3Copy" translatesAutoresizingMaskIntoConstraints="NO" id="dqk-o8-UCV">
+                                        <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
+                                        <color key="tintColor" systemColor="systemRedColor"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>

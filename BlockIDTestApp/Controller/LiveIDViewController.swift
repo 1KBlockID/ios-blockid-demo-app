@@ -80,7 +80,8 @@ class LiveIDViewController: UIViewController {
     private let selectedMode: ScanningMode = .SCAN_LIVE
     private let isResettingExpressionsAllowed = false
     private var isLoaderHidden: Bool = false
-    var isLivenessNeeded: Bool = false 
+    var isLivenessNeeded: Bool = false
+    private var imgOverlay: UIImageView!
 
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -92,7 +93,7 @@ class LiveIDViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         _viewBG.isHidden = true
-        _imgOverlay.isHidden = true
+       // _imgOverlay.isHidden = true
         _lblInformation.isHidden = true
     }
     
@@ -129,10 +130,17 @@ class LiveIDViewController: UIViewController {
                     bidView.frame = self._viewLiveIDScan.frame
                     self.view.addSubview(bidView)
                     self._viewLiveIDScan.isHidden = true
+                    let imageName = "group3Copy.png"
+                    let image = UIImage(named: imageName)
+                    self.imgOverlay = UIImageView(image: image!)
+                    self.imgOverlay.contentMode = .scaleAspectFit
+                    self.imgOverlay.frame = self._imgOverlay.frame
+                    self.imgOverlay.tintColor = .red
+                    self.view.addSubview(self.imgOverlay)
                     
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
-                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     if self.isLivenessNeeded {
@@ -345,6 +353,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             case .MOVE_DOWN:
                 self._lblInformation.text = DetectionMsg.down*/
             }
+            self.imgOverlay.tintColor = .green
         }
 
     }
@@ -361,10 +370,17 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         
         if !inFocus {
             DispatchQueue.main.async {
+                self.imgOverlay.tintColor = .red
                 self._lblInformation.text = "Out of focus !!!. Please try again."
                 Vibration.oldSchool.vibrate()
             }
+        } else {
+            DispatchQueue.main.async {
+                self.imgOverlay.tintColor = .green
+
+            }
         }
+
     }
     
     func wrongExpressionDetected(_ livenessFactor: LivenessFactorType) {
@@ -386,8 +402,12 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             factor = "Moved Down"*/
         }
         
-        self._lblInformation.text = "Wrong Expression: \(factor)"
-        Vibration.oldSchool.vibrate()
+        DispatchQueue.main.async {
+            self.imgOverlay.tintColor = .red
+            self._lblInformation.text = "Wrong Expression: \(factor)"
+            Vibration.oldSchool.vibrate()
+
+        }
     }
     
 }
