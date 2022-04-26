@@ -21,8 +21,8 @@ class AuthenticateViewController: UIViewController {
 
     public var delegate : AuthenticateViewControllerDelegate?
     public var qrOption : QROptions?
-    public var qrModel: AuthQRModel!
-    var qroptions = ""
+    public var qrModel: AuthenticationPayloadV1!
+    var qrOptions = ""
     var location: (Double, Double) = (0.0, 0.0)
     var userId: String?
     private var scopeAttributesDic: [String: Any]?
@@ -75,7 +75,7 @@ class AuthenticateViewController: UIViewController {
         var qrData = ""
         switch qrOption {
         case .withScopeData:
-            qrData = qroptions
+            qrData = qrOptions
         case .withPresetData:
             qrData = _txtPresetData.text ?? ""
         case .none:
@@ -127,13 +127,19 @@ class AuthenticateViewController: UIViewController {
     
     @IBAction func btnAuthenticate(_ sender: UIButton) {
         guard let data = qrModel else { return }
-        let datamodel = AuthRequestModel(lat: location.0, lon: location.1, session: data.session ?? "", creds: data.creds ?? "", scopes: data.scopes ?? "", origin: data.getBidOrigin(), isConsentGiven: true, userId: userId)
+        var dataModel: AuthRequestModel
+        
+        if let sessionUrl = data.sessionUrl, !sessionUrl.isEmpty {
+            dataModel = AuthRequestModel(lat: location.0, lon: location.1, session: data.session ?? "", creds: data.creds ?? "", scopes: data.scopes ?? "", origin: data.getBidOrigin(), isConsentGiven: true, userId: userId, sessionUrl: sessionUrl)
+        } else {
+            dataModel = AuthRequestModel(lat: location.0, lon: location.1, session: data.session ?? "", creds: data.creds ?? "", scopes: data.scopes ?? "", origin: data.getBidOrigin(), isConsentGiven: true, userId: userId)
+        }
         
         switch qrOption {
         case .withScopeData:
-            self.authenticateUserWithScopes(datamodel: datamodel)
+            self.authenticateUserWithScopes(dataModel: dataModel)
         case .withPresetData:
-            self.authenticateUserWithPreset(datamodel: datamodel)
+            self.authenticateUserWithPreset(dataModel: dataModel)
         default:
             break
         }
@@ -141,10 +147,11 @@ class AuthenticateViewController: UIViewController {
        
     }
     
-    private func authenticateUserWithPreset(datamodel: AuthRequestModel) {
+    private func authenticateUserWithPreset(dataModel: AuthRequestModel) {
         self.view.makeToastActivity(.center)
         let dictScopes = ["data" : _txtPresetData.text]
-        BlockIDSDK.sharedInstance.authenticateUser(sessionId: datamodel.session, creds: datamodel.creds, dictScopes: dictScopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, sessionid, error) in
+            
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, dictScopes: dictScopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId) {  [weak self] (status, sessionid, error) in
             self?.view.hideToastActivity()
             if status {
                 //if success
@@ -175,10 +182,10 @@ class AuthenticateViewController: UIViewController {
     }
    
     
-    private func authenticateUserWithScopes(datamodel: AuthRequestModel) {
+    private func authenticateUserWithScopes(dataModel: AuthRequestModel) {
         self.view.makeToastActivity(.center)
 
-        BlockIDSDK.sharedInstance.authenticateUser(sessionId: datamodel.session, creds: datamodel.creds, scopes: datamodel.scopes, lat: datamodel.lat, lon: datamodel.lon, origin: datamodel.origin, userId: datamodel.userId) {  [weak self] (status, sessionid, error) in
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, scopes: dataModel.scopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId) {  [weak self] (status, sessionid, error) in
             self?.view.hideToastActivity()
             if status {
                 //if success
