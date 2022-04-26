@@ -8,8 +8,8 @@
 import Foundation
 import Alamofire
 
-public class GetSessionAuthAPI {
-    static let sharedInstance = GetSessionAuthAPI()
+public class GetSessionData {
+    static let sharedInstance = GetSessionData()
     let kSessionAuthModelNotFound: (code: Int, message: String) = (1006, "Session auth model not found")
 
     private init() {

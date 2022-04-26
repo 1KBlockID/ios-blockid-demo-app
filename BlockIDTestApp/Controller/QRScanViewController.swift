@@ -109,7 +109,7 @@ extension QRScanViewController: QRScanResponseDelegate {
             let url = arrSplitStrings.first ?? ""
             if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
 
-                GetSessionAuthAPI.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
+                GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
                     
                     if isSuccess {
                         let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?

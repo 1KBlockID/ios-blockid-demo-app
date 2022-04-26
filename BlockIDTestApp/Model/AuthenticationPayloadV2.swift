@@ -8,15 +8,15 @@
 import Foundation
 
 public class AuthenticationPayloadV2: NSObject, Codable {
-    public var scopes: String? = ""
-    public var authtype: String? = ""
-    public var strId: String? = ""
-    public var sessionId: String? = ""
+    public var scopes: String?
+    public var authtype: String?
+    public var strId: String?
+    public var sessionId: String?
     public var origin: Origin?
-    public var publicKey: String? = ""
+    public var publicKey: String?
     public var createdTS: Int?
     public var expiryTS: Int?
-    public var expiresDate: String? = ""
+    public var expiresDate: String?
     public var version: Int?
     
     enum CodingKeys: String, CodingKey {

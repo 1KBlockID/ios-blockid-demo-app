@@ -79,11 +79,12 @@ extension UIViewController {
     
     func showAuthenticationViewController(qrModel: AuthenticationPayloadV1, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as! AuthenticateViewController
-        authVc.qrModel =  qrModel
-        authVc.delegate = delegate
-        authVc.qrOption = qrOption
-        self.navigationController?.pushViewController(authVc, animated: false)
+        if let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as? AuthenticateViewController {
+            authVc.qrModel =  qrModel
+            authVc.delegate = delegate
+            authVc.qrOption = qrOption
+            self.navigationController?.pushViewController(authVc, animated: false)
+        }
     }
     
     func showRFIDViewController(delegate: EPassportChipScanViewControllerDelegate) {
