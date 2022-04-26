@@ -108,7 +108,7 @@ class DriverLicenseViewController: UIViewController {
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
         self.view.makeToastActivity(.center)
 
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:]) { [self] (status, dataDic, error) in
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()
