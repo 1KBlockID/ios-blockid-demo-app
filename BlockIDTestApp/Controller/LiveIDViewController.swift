@@ -82,6 +82,7 @@ class LiveIDViewController: UIViewController {
     private var isLoaderHidden: Bool = false
     var isLivenessNeeded: Bool = false
     private var imgOverlay: UIImageView!
+    var onFinishCallback: ((_ status: Bool) -> Void)?
 
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -242,6 +243,9 @@ class LiveIDViewController: UIViewController {
                 return
             }
             //Verification successful
+            if let onFinishCallback = self.onFinishCallback {
+                onFinishCallback(true)
+            }
             self.goBack()
         }
     }

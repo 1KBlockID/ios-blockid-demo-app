@@ -127,6 +127,35 @@ class AuthenticateViewController: UIViewController {
     
     @IBAction func btnAuthenticate(_ sender: UIButton) {
         guard let data = qrModel else { return }
+        
+        // LiveID Authentication Capability...
+        // check if liveID is enrolled or not...
+        if data.authtype?.lowercased() == "face" {
+            if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+                self.view.makeToast("Please enroll LiveID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    self.goBack()
+                })
+                return
+            }
+            
+            // Authenticate liveID on liveIDcontroller screen...
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+                liveIDVC.isForVerification = true
+                liveIDVC.onFinishCallback = { (status) -> Void in
+                    if status {
+                        self.doAuthenticate(data: data)
+                    }
+                }
+                self.navigationController?.pushViewController(liveIDVC, animated: true)
+            }
+            return
+        }
+        
+        self.doAuthenticate(data: data)
+    }
+    
+    private func doAuthenticate(data: AuthenticationPayloadV1) {
         var dataModel: AuthRequestModel
         
         if let sessionUrl = data.sessionUrl, !sessionUrl.isEmpty {
@@ -143,8 +172,6 @@ class AuthenticateViewController: UIViewController {
         default:
             break
         }
-        
-       
     }
     
     private func authenticateUserWithPreset(dataModel: AuthRequestModel) {
