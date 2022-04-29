@@ -128,31 +128,85 @@ class AuthenticateViewController: UIViewController {
     @IBAction func btnAuthenticate(_ sender: UIButton) {
         guard let data = qrModel else { return }
         
-        // LiveID Authentication Capability...
-        // check if liveID is enrolled or not...
-        if data.authtype?.lowercased() == "face" {
-            if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-                self.view.makeToast("Please enroll LiveID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
-                    self.goBack()
-                })
-                return
+        // check authType for authentication..
+        if let authType = data.authtype?.lowercased() {
+            switch authType {
+            case "face":
+                askForLiveID(data: data)
+            case "pin":
+                askForPin(data: data)
+            case "fingerprint":
+                askForDeviceAuth(data: data)
+            default:
+                doAuthenticate(data: data)
             }
-            
-            // Authenticate liveID on liveIDcontroller screen...
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
-                liveIDVC.isForVerification = true
-                liveIDVC.onFinishCallback = { (status) -> Void in
-                    if status {
-                        self.doAuthenticate(data: data)
-                    }
-                }
-                self.navigationController?.pushViewController(liveIDVC, animated: true)
-            }
+        }
+    }
+    
+    private func askForLiveID(data: AuthenticationPayloadV1) {
+        
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            self.view.makeToast("Please enroll LiveID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.goBack()
+            })
             return
         }
         
-        self.doAuthenticate(data: data)
+        // Authenticate liveID on liveIDcontroller screen...
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+            liveIDVC.isForVerification = true
+            liveIDVC.onFinishCallback = { (status) -> Void in
+                if status {
+                    self.doAuthenticate(data: data)
+                }
+            }
+            self.navigationController?.pushViewController(liveIDVC, animated: true)
+        }
+    }
+    
+    private func askForPin(data: AuthenticationPayloadV1) {
+        
+        if !BlockIDSDK.sharedInstance.isPinRegistered() {
+            self.view.makeToast("Please enroll PIN in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.goBack()
+            })
+            return
+        }
+        
+        // Authenticate PIN on PinViewcontroller screen...
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let pinVC = storyBoard.instantiateViewController(withIdentifier: "PinViewController") as? PinViewController {
+            pinVC.pinActivity = .isLogin
+            pinVC.onFinishCallback = { (status) -> Void in
+                if status {
+                    self.doAuthenticate(data: data)
+                }
+            }
+            self.navigationController?.pushViewController(pinVC, animated: true)
+        }
+        
+    }
+    
+    private func askForDeviceAuth(data: AuthenticationPayloadV1) {
+        
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+            self.view.makeToast("Please enroll Touch ID / Face ID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.goBack()
+            })
+            return
+        }
+        
+        // Authenticate DeviceAuth...
+        BIDAuthProvider.shared.verifyDeviceAuth { (success, error, message) in
+            if !success {
+                if let messageUW = message {
+                    self.showAlertView(title: "Error", message: messageUW)
+                }
+            } else {
+                self.doAuthenticate(data: data)
+            }
+        }
     }
     
     private func doAuthenticate(data: AuthenticationPayloadV1) {
