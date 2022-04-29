@@ -135,6 +135,8 @@ class AuthenticateViewController: UIViewController {
                 askForLiveID(data: data)
             case "pin":
                 askForPin(data: data)
+            case "fingerprint":
+                askForDeviceAuth(data: data)
             default:
                 doAuthenticate(data: data)
             }
@@ -184,6 +186,27 @@ class AuthenticateViewController: UIViewController {
             self.navigationController?.pushViewController(pinVC, animated: true)
         }
         
+    }
+    
+    private func askForDeviceAuth(data: AuthenticationPayloadV1) {
+        
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+            self.view.makeToast("Please enroll Touch ID / Face ID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.goBack()
+            })
+            return
+        }
+        
+        // Authenticate DeviceAuth...
+        BIDAuthProvider.shared.verifyDeviceAuth { (success, error, message) in
+            if !success {
+                if let messageUW = message {
+                    self.showAlertView(title: "Error", message: messageUW)
+                }
+            } else {
+                self.doAuthenticate(data: data)
+            }
+        }
     }
     
     private func doAuthenticate(data: AuthenticationPayloadV1) {
