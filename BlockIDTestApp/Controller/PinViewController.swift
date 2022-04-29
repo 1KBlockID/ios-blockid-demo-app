@@ -17,14 +17,16 @@ public enum PinActivity {
 }
   
 class PinViewController: UIViewController {
-    @IBOutlet private weak var _viewPin: PinCodeTextField!
     
+    @IBOutlet private weak var _viewPin: PinCodeTextField!
     @IBOutlet weak var lblIncorrectPin: UILabel!
     @IBOutlet weak var _enterPinTitle: UILabel!
     
     private var isIncorrectPin = false
-    public var pinActivity = PinActivity.isEnrolling
     private var _firstPin: String!
+    
+    public var pinActivity = PinActivity.isEnrolling
+    var onFinishCallback: ((_ status: Bool) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +65,11 @@ class PinViewController: UIViewController {
         if pinActivity == .isLogin || pinActivity == .isRemoving {
              if BlockIDSDK.sharedInstance.verifyPin(pin:_viewPin.text ?? "") {
                 if pinActivity == .isLogin {
+                    if let onFinishCallback = self.onFinishCallback {
+                        onFinishCallback(true)
+                        self.goBack()
+                        return 
+                    }
                     self.showEnrollmentView()
                 }
                 else if  pinActivity == .isRemoving {
