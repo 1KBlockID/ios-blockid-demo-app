@@ -7,13 +7,13 @@ target 'BlockIDTestApp' do
 
   # Pods for BlockIDTestApp
   pod 'Toast-Swift', '~> 5.0.1'
-  pod 'TrustWalletCore', '~> 2.5.6'
-  pod 'Alamofire','~> 4.9.1'
-  pod 'CryptoSwift', '~> 1.3.0'
-  pod 'BigInt', '~> 4.0'
-  pod 'SwiftyTesseract', '~> 3.1.3'
-  pod 'OpenSSL-Universal', '~> 1.1.180'
-  
+#  pod 'TrustWalletCore', '~> 2.5.6'
+#  pod 'Alamofire','~> 4.9.1'
+#  pod 'CryptoSwift', '~> 1.3.0'
+#  pod 'BigInt', '~> 4.0'
+#  pod 'SwiftyTesseract', '~> 3.1.3'
+#  pod 'OpenSSL-Universal', '~> 1.1.180'
+  pod 'BlockIDSDK', :path => '../ios-kernel-sdk/'
 end
 
 post_install do |installer|

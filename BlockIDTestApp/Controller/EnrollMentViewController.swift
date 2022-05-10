@@ -23,6 +23,7 @@ public enum Enrollments: String {
     case LiveID_liveness = "LiveID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
+    case FIDO2_NATIVE = "FIDO2 Native"
     case RecoverMnemonics  = "Recover Mnemonics"
     case resetApp  = "Reset App"
 }
@@ -40,6 +41,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
+                           Enrollments.FIDO2_NATIVE,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
     
@@ -119,6 +121,16 @@ extension EnrollMentViewController: UITableViewDelegate {
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
             resetApp()
+        case Enrollments.FIDO2_NATIVE.rawValue:
+            print ("Fido2 Native clicked!")
+            WebAuthnService().updateSession()
+            WebAuthnService().registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
+                guard isSuccess, let options = response else {
+                    print ("Attestation options failed")
+                    return
+                }
+                print (options)
+            }
         default:
             return
         }
@@ -126,7 +138,6 @@ extension EnrollMentViewController: UITableViewDelegate {
 }
 
 extension EnrollMentViewController {
-    
     private func enrollDL() {
         let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
         if  !docID.isEmpty {
