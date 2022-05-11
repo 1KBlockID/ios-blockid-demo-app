@@ -19,9 +19,27 @@ class EnrollmentTableViewCell: UITableViewCell {
     public func setupCell(enrollment: Enrollments) {
         
         switch enrollment {
+        case .AddUser:
+            self.lblEnrollment.text = enrollment.rawValue
+            if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
+                
+                if let tagNCommunity = (linkedUserAccounts[0].origin.name != nil && !(linkedUserAccounts[0].origin.name?.isEmpty ?? false)) ?
+                linkedUserAccounts[0].origin.name :
+                        linkedUserAccounts[0].origin.community {
+                    if let tag = linkedUserAccounts[0].origin.tag {
+                        let tenatInfo = tag + " | " + tagNCommunity
+                        self.lblEnrollment.text = linkedUserAccounts[0].userId + "\n" + tenatInfo
+                    }
+
+                } else {
+                    self.lblEnrollment.text = linkedUserAccounts[0].userId
+                }
+                self.accessoryType = .checkmark
+            } else {
+                self.accessoryType = .none
+            }
         case .DeviceAuth:
             self.lblEnrollment.text = enrollment.rawValue
-
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
         case .DriverLicense:
             let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)

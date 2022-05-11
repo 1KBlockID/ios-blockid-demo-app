@@ -12,6 +12,7 @@ import Toast_Swift
 import UIKit
 
 public enum Enrollments: String {
+    case AddUser = "Add User"
     case DriverLicense = "Driver License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -29,7 +30,8 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense,
+    var enrollmentArray = [Enrollments.AddUser,
+                           Enrollments.DriverLicense,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -93,6 +95,8 @@ extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enrolmentObj = enrollmentArray[indexPath.row].rawValue
         switch enrolmentObj {
+        case Enrollments.AddUser.rawValue:
+            addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.Passport1.rawValue:
@@ -142,6 +146,23 @@ extension EnrollMentViewController {
         }
         
         showDLView()
+    }
+    
+    private func addUser() {
+        
+        // need to discuss ...
+        if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
+            let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+               // self.unenrollDocument(registerDocType: .DL, id: docID)
+            }))
+        
+            self.present(alert, animated: true)
+            return
+        }
+        showAddUserViewController()
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {
