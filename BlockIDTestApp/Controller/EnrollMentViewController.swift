@@ -13,7 +13,7 @@ import UIKit
 
 public enum Enrollments: String {
     case AddUser = "Add User"
-    case DriverLicense = "Driver License 1"
+    case DriverLicense = "Drivers License 1"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
@@ -134,7 +134,7 @@ extension EnrollMentViewController {
     private func enrollDL() {
         let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
         if  !docID.isEmpty {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in

@@ -93,7 +93,7 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
-        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Driver License?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Drivers License?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
@@ -165,7 +165,7 @@ class DriverLicenseViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Driver License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Drivers License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }
