@@ -156,13 +156,37 @@ extension EnrollMentViewController {
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-               // self.unenrollDocument(registerDocType: .DL, id: docID)
+                self.unlinkUser(linkedAccount: linkedUserAccounts[0])
             }))
         
             self.present(alert, animated: true)
             return
         }
         showAddUserViewController()
+    }
+    
+    private func unlinkUser(linkedAccount: BIDLinkedAccount) {
+        
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.unLinkAccount(bidLinkedAccount: linkedAccount,
+                                                deviceToken: nil) { [weak self] (success, error) in
+            guard let weakSelf = self else {return}
+            weakSelf.view.hideToastActivity()
+            if success {
+                weakSelf.view.makeToast("Your account is removed", duration: 3.0, position: .center)
+                weakSelf.tableEnrollments.reloadData()
+            } else {
+                // failure
+                if error?.code == NSURLErrorNotConnectedToInternet {
+                    weakSelf.view.makeToast(ErrorConfig.noInternet.message, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: nil)
+                } else {
+                    weakSelf.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: nil)
+                }
+
+            }
+            
+        }
+        
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {

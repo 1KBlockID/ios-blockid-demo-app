@@ -54,7 +54,9 @@ class AddUserViewController: UIViewController {
     // MARK: - Private methods -
     // INIT QR scanner
     private func scanQRCode() {
-        qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode, bidScannerView: viewQRScan, kQRScanResponseDelegate: self)
+        qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode,
+                                               bidScannerView: viewQRScan,
+                                               kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
 
@@ -65,7 +67,11 @@ class AddUserViewController: UIViewController {
             DispatchQueue.main.async {
                 self.view.hideToastActivity()
             }
-            self.view.makeToast("Unsupported QR code detected.", duration: 3.0, position: .center, title: "Invalid Code", completion: {_ in
+            self.view.makeToast("Unsupported QR code detected.",
+                                duration: 3.0,
+                                position: .center,
+                                title: "Invalid Code",
+                                completion: {_ in
                 self.goBack()
             })
             return
@@ -111,7 +117,11 @@ class AddUserViewController: UIViewController {
         case MagicLinkAuthType.none.rawValue:
             self.getUserOnboardingPublicKey()
         case MagicLinkAuthType.otp.rawValue, MagicLinkAuthType.authn.rawValue:
-            self.view.makeToast("Auth type: \(authType) not supported.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+            self.view.makeToast("Auth type: \(authType) not supported.",
+                                duration: 3.0,
+                                position: .center,
+                                title: "Error",
+                                completion: {_ in
                 self.goBack()
             })
         default:
@@ -124,7 +134,10 @@ class AddUserViewController: UIViewController {
         if data.hasPrefix("https://") && data.contains("/acr") {
             if let incomingURL = URL(string: data) {
                 // validate magic link data
-                    guard let components = NSURLComponents(url: incomingURL, resolvingAgainstBaseURL: true) else {
+                    guard let components = NSURLComponents(url: incomingURL,
+                                                           resolvingAgainstBaseURL: true),
+                          let scheme = components.scheme,
+                          let host = components.host else {
                         return
                     }
                     // Check for specific URL components that you need.
@@ -133,13 +146,16 @@ class AddUserViewController: UIViewController {
                     }
                     if let code = params.first(where: { $0.name == "code" })?.value {
                         self.magicLink = MagicLink(url: incomingURL.absoluteString,
-                                                  baseUrl: components.scheme! + "://" + components.host!,
+                                                  baseUrl: scheme + "://" + host,
                                                   code: code,
                                                   path: incomingURL.path)
                         
                     } else {
                         
-                        self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.", duration: 3.0,
+                                            position: .center,
+                                            title: "Error",
+                                            completion: {_ in
                             self.goBack()
                         })
                     }
@@ -147,13 +163,18 @@ class AddUserViewController: UIViewController {
             
             //decode the base64 payload data
             guard let code = magicLink?.code, let decodedData = Data(base64Encoded: code) else {
-                self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error",
+                                    completion: {_ in
                     self.goBack()
                 })
                 return
             }
             
-            if let decodedString = String(data: decodedData, encoding: .utf8) {
+            if let decodedString = String(data: decodedData,
+                                          encoding: .utf8) {
                     magicLinkData = CommonFunctions.jsonStringToObject(json: decodedString) as MagicLinkModel?
             }
             
@@ -161,8 +182,29 @@ class AddUserViewController: UIViewController {
         }
     }
     
+    // Check if location services are enabled ......
+    private func checkLocationServices() {
+        if CLLocationManager.locationServicesEnabled() {
+            switch CLLocationManager.authorizationStatus() {
+                case .notDetermined, .restricted, .denied:
+                self.buildInAppBrowserURL()
+                self.completionForLocationObj = nil
+                case .authorizedAlways, .authorizedWhenInUse:
+                self.locationManager.startUpdatingLocation()
+                self.performMagicLinkOperation {
+                    self.buildInAppBrowserURL()
+                    self.completionForLocationObj = nil
+                }
+                @unknown default:
+                    break
+            }
+        } else {
+            self.buildInAppBrowserURL()
+            self.completionForLocationObj = nil
+        }
+    }
+    
     // Fetch userOnboarding public key ...
-    // FIX ME : need to change this..
     private func getUserOnboardingPublicKey() {
         
         let baseUrl = (magicLink?.baseUrl ?? "") + (magicLink?.path ?? "")
@@ -175,19 +217,20 @@ class AddUserViewController: UIViewController {
             // success
             if response.statusCode == 200 && response.error == nil {
                 self.userOnboardingServerPublicKey = response.result?.publicKey
-                self.locationManager.startUpdatingLocation()
-                self.performMagicLinkOperation {
-                    self.buildInAppBrowserURL()
-                    self.completionForLocationObj = nil
-                }
+                self.checkLocationServices()
                 return
             }
             // failure
             let error = ErrorResponse(code: response.statusCode ?? 001, msg: response.error?.localizedDescription ?? "")
             if error.code == NSURLErrorNotConnectedToInternet {
-                self.showAlertView(title: ErrorConfig.noInternet.title, message: ErrorConfig.noInternet.message)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: ErrorConfig.noInternet.message)
             } else {
-                self.view.makeToast(error.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                self.view.makeToast(error.message,
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error",
+                                    completion: {_ in
                     self.goBack()
                 })
             }
@@ -223,7 +266,8 @@ extension AddUserViewController {
     
     private func buildInAppBrowserURL() {
         var finalURL = magicLink?.url ?? ""
-        if let payload = makePayload(userOnboardingServerPublicKey ?? "", code: self.magicLinkData?.code ?? "") {
+        if let payload = makePayload(userOnboardingServerPublicKey ?? "",
+                                     code: self.magicLinkData?.code ?? "") {
             finalURL += "&payload=" + payload
             debugPrint("Magic Link url with code + payload -> \(finalURL)")
             if let url = URL(string: finalURL) {
@@ -233,7 +277,8 @@ extension AddUserViewController {
     }
     
     private func makePayload(_ publicKey: String, code: String) -> String? {
-        let eventDataRequest = BlockIDSDK.sharedInstance.getEventData(publicKey: publicKey, lon: location.1, lat: location.0)
+        let eventDataRequest = BlockIDSDK.sharedInstance.getEventData(publicKey: publicKey,
+                                                                      lon: location.1, lat: location.0)
         guard let eventDataRequest = BlockIDSDK.sharedInstance.encryptString(str: eventDataRequest, rcptKey: publicKey) else {
             return nil
         }
@@ -253,7 +298,8 @@ extension AddUserViewController {
         
         guard let decodedData = Data(base64Encoded: payload) else {
             self.view.makeToast("User registration is unsuccessful. Please try again.",
-                                duration: 3.0, position: .center, title: "Error", completion: {_ in
+                                duration: 3.0, position: .center,
+                                title: "Error", completion: {_ in
                 self.goBack()
             })
             return
@@ -263,26 +309,38 @@ extension AddUserViewController {
             return
         }
         
-        let responseStr = BlockIDSDK.sharedInstance.decryptString(str: decodedString, senderKey: publicKey)
-        guard let responseStr = responseStr, let response = CommonFunctions.jsonStringToObject(json: responseStr) as AuthLinkUrlData? else {
+        let responseStr = BlockIDSDK.sharedInstance.decryptString(str: decodedString,
+                                                                  senderKey: publicKey)
+        guard let responseStr = responseStr,
+                let response = CommonFunctions.jsonStringToObject(json: responseStr) as AuthLinkUrlData? else {
             return
         }
         
-        let linkResponseStr = BlockIDSDK.sharedInstance.decryptString(str: (response.data)!, senderKey: (response.getPublicKey()))
-        guard let linkResponseStr = linkResponseStr,
-              let linkResponse = CommonFunctions.jsonStringToObject(json: linkResponseStr) as BIDOnboardedUserAccount? else {
-            return
+        if let responseData = response.data {
+            let linkResponseStr = BlockIDSDK.sharedInstance.decryptString(str: responseData,
+                                                                          senderKey: (response.getPublicKey()))
+            guard let linkResponseStr = linkResponseStr,
+                  let linkResponse = CommonFunctions.jsonStringToObject(json: linkResponseStr) as BIDOnboardedUserAccount? else {
+                return
+            }
+            
+            addUser(linkResponse)
         }
-        
-        addUser(linkResponse)
     }
     
     //  addPrelink user API call...
     private func addUser(_ user: BIDOnboardedUserAccount?) {
         self.view.hideToastActivity()
         
-        guard let userIdUW = user?.userId, let originUW = user?.origin, let isLinkedUW = user?.isLinked, isLinkedUW == true else {
-            self.view.makeToast(ErrorConfig.error.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
+        guard let userIdUW = user?.userId,
+                let originUW = user?.origin,
+                let isLinkedUW = user?.isLinked,
+                isLinkedUW == true else {
+            self.view.makeToast(ErrorConfig.error.message,
+                                duration: 3.0,
+                                position: .center,
+                                title: ErrorConfig.error.title,
+                                completion: {_ in
                 self.goBack()
             })
             return
@@ -293,12 +351,19 @@ extension AddUserViewController {
                                                    scep_privatekey: user?.scep_privatekey ?? "",
                                                    origin: originUW, account: user?.account) { (status, error) in
             if status {
-                self.view.makeToast("User registration successful.", duration: 3.0, position: .center, title: "Success", completion: {_ in
+                self.view.makeToast("User registration successful.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Success",
+                                    completion: {_ in
                     self.goBack()
                 })
             } else {
                 self.view.makeToast("User registration is unsuccessful. Please try again.",
-                                    duration: 3.0, position: .center, title: "Error", completion: {_ in
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error",
+                                    completion: {_ in
                     self.goBack()
                 })
             }
@@ -334,6 +399,7 @@ extension AddUserViewController: WKNavigationDelegate {
 }
 
 
+// MARK: - CLLocationManagerDelegate
 extension AddUserViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locValue: CLLocationCoordinate2D = manager.location!.coordinate
