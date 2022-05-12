@@ -165,7 +165,7 @@ class DriverLicenseViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Drivers License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Drivers License enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }

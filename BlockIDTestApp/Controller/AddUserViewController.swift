@@ -44,7 +44,6 @@ class AddUserViewController: UIViewController {
         super.viewWillAppear(animated)
         self.locationManager.requestAlwaysAuthorization()
     }
-   
     
     // MARK: - IBActions -
     @IBAction func onBack(_ sender: Any) {
@@ -255,11 +254,8 @@ extension AddUserViewController: QRScanResponseDelegate {
         qrScannerHelper?.stopQRScanning()
         viewQRScan.isHidden = true
         imgQRscan.isHidden = true
-        
         self.processQRData(qrCodeData ?? "")
-
     }
-    
 }
 
 extension AddUserViewController {
@@ -397,7 +393,6 @@ extension AddUserViewController: WKNavigationDelegate {
         decisionHandler(.cancel)
     }
 }
-
 
 // MARK: - CLLocationManagerDelegate
 extension AddUserViewController: CLLocationManagerDelegate {
