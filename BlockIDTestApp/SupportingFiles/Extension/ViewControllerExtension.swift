@@ -77,6 +77,13 @@ extension UIViewController {
         }
     }
     
+    func showAddUserViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let addUserVC = storyBoard.instantiateViewController(withIdentifier: "AddUserViewController") as? AddUserViewController {
+            self.navigationController?.pushViewController(addUserVC, animated: true)
+        }
+    }
+    
     func showAuthenticationViewController(qrModel: AuthenticationPayloadV1, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as? AuthenticateViewController {
