@@ -1288,6 +1288,7 @@ public class DataGroup15 : DataGroup {
   @objc deinit
 }
 public struct CustomErrors {
+  public static let kLicenseKeyNotFound: (code: Swift.Int, msg: Swift.String)
   public static let kLicenseyKeyExpired: (code: Swift.Int, msg: Swift.String)
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)

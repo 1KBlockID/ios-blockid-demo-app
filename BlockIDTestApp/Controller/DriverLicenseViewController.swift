@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import BlockIDSDK
 import Toast_Swift
+import UIKit
   
 class DriverLicenseViewController: UIViewController {
 
@@ -18,6 +19,9 @@ class DriverLicenseViewController: UIViewController {
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
+    private var manualCaptureImg: UIImage?
+    
+    var isLivenessNeeded: Bool = false
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -142,6 +146,21 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
+        
+        if isLivenessNeeded {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+                documentLivenessVC.onLivenessFinished = {
+                    self.registerDriversLicense(withDLData: dl, token: token)
+                }
+                self.navigationController?.pushViewController(documentLivenessVC, animated: true)
+                return
+            }
+        }
+        self.registerDriversLicense(withDLData: dl, token: token)
+    }
+    
+    private func registerDriversLicense(withDLData dl: [String : Any]?, token: String) {
         self.view.makeToastActivity(.center)
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue

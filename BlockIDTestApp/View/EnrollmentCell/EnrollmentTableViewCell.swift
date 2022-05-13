@@ -43,7 +43,7 @@ class EnrollmentTableViewCell: UITableViewCell {
         case .DeviceAuth:
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
-        case .DriverLicense:
+        case .DriverLicense, .DriverLicense_Liveness:
             let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
             self.textLabel?.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
             self.accessoryType = (docId != nil) ? .checkmark : .none

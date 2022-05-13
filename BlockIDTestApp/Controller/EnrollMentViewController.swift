@@ -14,6 +14,7 @@ import UIKit
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
+    case DriverLicense_Liveness = "Drivers License (with liveness check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
@@ -32,6 +33,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
+                           Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -99,6 +101,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
+        case Enrollments.DriverLicense_Liveness.rawValue:
+            showDocumentLivenessVC()
         case Enrollments.Passport1.rawValue:
             enrollPassport(index: 1)
         case Enrollments.Passport2.rawValue:
