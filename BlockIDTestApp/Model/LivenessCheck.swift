@@ -7,13 +7,6 @@
 
 import Foundation
 
-//{
-//    "liveness_score": 5.970656,
-//    "quality_score": 0.6582916,
-//    "liveness_probability": 1.0,
-//    "status_code": "OK"
-//}
-
 class LivenessCheck: NSObject, Codable {
     
     var livenessScore: Double?
@@ -30,5 +23,15 @@ class LivenessCheck: NSObject, Codable {
     
 }
 
-
+class LivenessCheckError: NSObject, Codable {
+    var error: String?
+    var message: String?
+    var status: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case error
+        case message
+        case status
+    }
+}
 

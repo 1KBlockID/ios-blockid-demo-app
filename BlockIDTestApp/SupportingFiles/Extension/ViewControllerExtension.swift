@@ -49,10 +49,9 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
     
-    func showDLView(isLivenssNeeded: Bool = false) {
+    func showDLView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
-            dlVC.isLivenessNeeded = isLivenssNeeded
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }
@@ -60,9 +59,6 @@ extension UIViewController {
     func showDocumentLivenessVC() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
-            documentLivenessVC.onLivenessFinished = {
-                self.showDLView(isLivenssNeeded: true)
-            }
             self.navigationController?.pushViewController(documentLivenessVC, animated: true)
         }
     }

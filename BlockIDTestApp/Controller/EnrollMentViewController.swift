@@ -102,7 +102,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.DriverLicense_Liveness.rawValue:
-            showDocumentLivenessVC()
+            documentLivenessVC()
         case Enrollments.Passport1.rawValue:
             enrollPassport(index: 1)
         case Enrollments.Passport2.rawValue:
@@ -150,6 +150,22 @@ extension EnrollMentViewController {
         }
         
         showDLView()
+    }
+    
+    private func documentLivenessVC() {
+        let docID = getDocumentID(docIndex: 1 , type: .DL , category: .Identity_Document) ?? ""
+        if  !docID.isEmpty {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .DL, id: docID)
+            }))
+        
+            self.present(alert, animated: true)
+            return
+        }
+        showDocumentLivenessVC()
     }
     
     private func addUser() {

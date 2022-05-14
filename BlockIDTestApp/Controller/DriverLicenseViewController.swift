@@ -147,20 +147,6 @@ class DriverLicenseViewController: UIViewController {
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
         
-        if isLivenessNeeded {
-            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-            if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
-                documentLivenessVC.onLivenessFinished = {
-                    self.registerDriversLicense(withDLData: dl, token: token)
-                }
-                self.navigationController?.pushViewController(documentLivenessVC, animated: true)
-                return
-            }
-        }
-        self.registerDriversLicense(withDLData: dl, token: token)
-    }
-    
-    private func registerDriversLicense(withDLData dl: [String : Any]?, token: String) {
         self.view.makeToastActivity(.center)
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
@@ -217,6 +203,33 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             
         }
         
+        if isLivenessNeeded {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+                documentLivenessVC.onLivenessFinished = { (sender) in
+                    if let sender = sender {
+                        sender.navigationController?.popViewController(animated: true)
+                        if error?.code == CustomErrors.kDocumentAboutToExpire.code {
+                            //About to Expire, Show Alert
+                            let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                                self.setDriverLicense(withDLData: dl, token: token)
+                            }))
+                            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                            return
+                        }
+                        self.setDriverLicense(withDLData: dl, token: token)
+                    }
+                }
+                self.navigationController?.pushViewController(documentLivenessVC, animated: true)
+                return
+            }
+        }
+        showVerificationAlert(dl: dl, token: token, error: error)
+    }
+    
+    private func showVerificationAlert(dl: [String: Any], token: String, error: ErrorResponse?) {
         //Check if Not to Expiring Soon
         if error?.code != CustomErrors.kDocumentAboutToExpire.code {
             self.wantToVerifyAlert(withDLData: dl, token: token)
@@ -225,12 +238,10 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         //About to Expire, Show Alert
         let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
-        
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             self.wantToVerifyAlert(withDLData: dl, token: token)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        
         self.present(alert, animated: true)
     }
     
