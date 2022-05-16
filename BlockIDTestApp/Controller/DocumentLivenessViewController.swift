@@ -9,48 +9,43 @@ import UIKit
 
 class DocumentLivenessViewController: UIViewController {
     
-    // MARK: - IBOutlets -
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var captureBtn: UIButton!
-    
     // MARK: - Callbacks -
     var onLivenessFinished: ((UIViewController?) -> ())?
+    private var capturedImg: UIImage?
+    private var picker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        openCamera()
     }
     
     // MARK: - IBActions -
-    @IBAction func didTapButton(_ sender: UIButton) {
-        
-        guard sender.currentTitle == "Take Picture" else {
-            documentLivenessAPI()
-            return
-        }
-        let picker = UIImagePickerController()
+    @IBAction func onBack(_ sender: UIButton) {
+        self.goBack()
+    }
+    
+    // MARK: - Private Methods -
+    // init Camera...
+    private func openCamera() {
+        picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .camera
         picker.allowsEditing = true
         present(picker, animated: true)
     }
     
-    @IBAction func onBack(_ sender: UIButton) {
-        self.goBack()
-    }
-    
-    
-    // MARK: - Private Methods -
     // API for IDRND document liveness check...
     private func documentLivenessAPI() {
         
-        self.view.makeToastActivity(.center)
-        if let image = imageView.image {
+       // self.view.makeToastActivity(.center)
+        self.picker.view.makeToastActivity(.center)
+        if let image = self.capturedImg {
             DocumentLiveness.sharedInstance.checkLiveness(reqParameter: image) { [weak self] success, dataModel, errorModel ,errorStr in
                 guard let weakSelf = self else {return}
-                weakSelf.view.hideToastActivity()
+                weakSelf.picker.view.hideToastActivity()
                 guard errorStr == nil else {
-                    weakSelf.view.makeToast(errorStr, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    weakSelf.picker.view.makeToast(errorStr, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        weakSelf.picker.dismiss(animated: true, completion: nil)
                         weakSelf.goBack()
                     })
                     return
@@ -60,14 +55,16 @@ class DocumentLivenessViewController: UIViewController {
                     let message = (errModel.message ?? "Something went wrong")
                     let code = ": \(errModel.status ?? 400)"
                     let title = errModel.error ?? "Error"
-                    weakSelf.view.makeToast(message, duration: 3.0, position: .center, title: title+code, completion: {_ in
+                    weakSelf.picker.view.makeToast(message, duration: 3.0, position: .center, title: title+code, completion: {_ in
+                        weakSelf.picker.dismiss(animated: true, completion: nil)
                         weakSelf.goBack()
                     })
                     return
                 }
                 
                     guard let statusCode = dataModel?.statusCode, statusCode.lowercased() == "ok"  else {
-                        weakSelf.view.makeToast(dataModel?.statusCode, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        weakSelf.picker.view.makeToast(dataModel?.statusCode, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            weakSelf.picker.dismiss(animated: true, completion: nil)
                             weakSelf.goBack()
                         })
                         return
@@ -76,6 +73,7 @@ class DocumentLivenessViewController: UIViewController {
                     if let livenessProb = dataModel?.livnessProbability, livenessProb > 0.5 {
                         // start DL scanning ....
                         if let onLivenessFinished = weakSelf.onLivenessFinished {
+                            weakSelf.picker.dismiss(animated: true, completion: nil)
                             onLivenessFinished(weakSelf)
                             return
                         }
@@ -86,12 +84,14 @@ class DocumentLivenessViewController: UIViewController {
                             if var vcArray = weakSelf.navigationController?.viewControllers {
                                 vcArray.removeLast()
                                 vcArray.append(dlVC)
+                                weakSelf.picker.dismiss(animated: true, completion: nil)
                                 weakSelf.navigationController?.setViewControllers(vcArray, animated: false)
                             }
                         }
                         
                     }  else {
-                        weakSelf.view.makeToast("Liveness does not match the minimum required score.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        weakSelf.picker.view.makeToast("Liveness does not match the minimum required score.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            weakSelf.picker.dismiss(animated: true, completion: nil)
                             weakSelf.goBack()
                         })
                     }
@@ -119,16 +119,17 @@ extension DocumentLivenessViewController: UIImagePickerControllerDelegate, UINav
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+        self.goBack()
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        picker.dismiss(animated: true, completion: nil)
+       // picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             return
         }
-        imageView.image = image
-        self.captureBtn.setTitle("Verify Document", for: .normal)
+        self.capturedImg = image
+        self.documentLivenessAPI()
     }
 }

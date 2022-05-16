@@ -86,7 +86,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="75.5" height="100"/>
                                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                                                        <state key="normal" title="TouchID / FaceID">
+                                                        <state key="normal" title="Touch ID / Face ID">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <connections>
@@ -162,7 +162,7 @@
                                             <constraint firstAttribute="height" constant="100" id="6Un-Cs-OoY"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name=".SFUI-Semibold" family=".AppleSystemUIFont" pointSize="15"/>
-                                        <state key="normal" title="TouchID / FaceID">
+                                        <state key="normal" title="Touch ID / Face ID">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -3007,24 +3007,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IcA-sq-tuf">
-                                <rect key="frame" x="20" y="50" width="280" height="440"/>
-                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bkl-71-uN9">
-                                <rect key="frame" x="48" y="510" width="224" height="48"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="G6o-8e-9dn"/>
-                                </constraints>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Take Picture">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="didTapButton:" destination="7mD-y5-OWi" eventType="touchUpInside" id="tuy-z8-Abf"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vvs-x3-F7P">
                                 <rect key="frame" x="2" y="15" width="60" height="20"/>
                                 <constraints>
@@ -3052,23 +3034,12 @@
                         <viewLayoutGuide key="safeArea" id="JKU-Bl-ajW"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="IcA-sq-tuf" firstAttribute="top" secondItem="JKU-Bl-ajW" secondAttribute="top" constant="50" id="I4M-98-cE1"/>
-                            <constraint firstItem="IcA-sq-tuf" firstAttribute="leading" secondItem="JKU-Bl-ajW" secondAttribute="leading" constant="20" id="LCZ-nE-pbr"/>
-                            <constraint firstItem="Bkl-71-uN9" firstAttribute="width" secondItem="nb8-m3-vF7" secondAttribute="width" multiplier="0.7" id="PAN-4T-4GB"/>
                             <constraint firstItem="Vvs-x3-F7P" firstAttribute="leading" secondItem="JKU-Bl-ajW" secondAttribute="leading" constant="2" id="QPA-3F-rii"/>
                             <constraint firstItem="XSF-RR-Jlm" firstAttribute="leading" secondItem="Vvs-x3-F7P" secondAttribute="trailing" constant="2" id="Vxp-WK-cEN"/>
                             <constraint firstItem="XSF-RR-Jlm" firstAttribute="centerY" secondItem="Vvs-x3-F7P" secondAttribute="centerY" id="X5l-kk-LOI"/>
-                            <constraint firstItem="Bkl-71-uN9" firstAttribute="centerX" secondItem="IcA-sq-tuf" secondAttribute="centerX" id="diz-aG-zj9"/>
                             <constraint firstItem="Vvs-x3-F7P" firstAttribute="top" secondItem="JKU-Bl-ajW" secondAttribute="top" constant="15" id="fVv-fs-yNS"/>
-                            <constraint firstItem="JKU-Bl-ajW" firstAttribute="trailing" secondItem="IcA-sq-tuf" secondAttribute="trailing" constant="20" id="iNz-uD-k20"/>
-                            <constraint firstItem="JKU-Bl-ajW" firstAttribute="bottom" secondItem="Bkl-71-uN9" secondAttribute="bottom" constant="10" id="pe8-m8-CPR"/>
-                            <constraint firstItem="Bkl-71-uN9" firstAttribute="top" secondItem="IcA-sq-tuf" secondAttribute="bottom" constant="20" id="ppw-Sb-hL6"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="captureBtn" destination="Bkl-71-uN9" id="tvi-nX-7al"/>
-                        <outlet property="imageView" destination="IcA-sq-tuf" id="V7y-n9-3ak"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qxC-Kq-fYz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3092,9 +3063,6 @@
         <image name="ssnUnCheck" width="20" height="20"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>

@@ -14,15 +14,15 @@ import UIKit
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
-    case DriverLicense_Liveness = "Drivers License (with liveness check)"
+    case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
     case SSN = "Verify SSN"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
-    case LiveID  = "LiveID"
-    case LiveID_liveness = "LiveID (with liveness check)"
+    case LiveID  = "Live ID"
+    case LiveID_liveness = "Live ID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
@@ -136,30 +136,33 @@ extension EnrollMentViewController: UITableViewDelegate {
 extension EnrollMentViewController {
     
     private func enrollDL() {
-        let docID = getDocumentID(docIndex: 1 , type: .DL , category: .Identity_Document) ?? ""
-        if  !docID.isEmpty {
+        let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+        if let docId = document.docId,
+            !docId.isEmpty,
+            let isLivenessReq = document.islivenessNeeded, !isLivenessReq {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+                self.unenrollDocument(registerDocType: .DL, id: docId)
             }))
         
             self.present(alert, animated: true)
             return
         }
-        
         showDLView()
     }
     
     private func documentLivenessVC() {
-        let docID = getDocumentID(docIndex: 1 , type: .DL , category: .Identity_Document) ?? ""
-        if  !docID.isEmpty {
+        let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+        if let docId = document.docId,
+            !docId.isEmpty,
+            let isLivenessReq = document.islivenessNeeded, isLivenessReq {
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+                self.unenrollDocument(registerDocType: .DL, id: docId)
             }))
         
             self.present(alert, animated: true)
@@ -292,7 +295,7 @@ extension EnrollMentViewController {
             BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
                 if success {
                     self.tableEnrollments.reloadData()
-                    self.view.makeToast("TouchID / FaceID is now enabled.", duration: 3.0, position: .center)
+                    self.view.makeToast("Touch ID / Face ID is now enabled.", duration: 3.0, position: .center)
                     
                 } else {
                     if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -313,7 +316,7 @@ extension EnrollMentViewController {
     private func unEnrollDeviceAuth() {
         BIDAuthProvider.shared.unenrollDeviceAuth(completion: { (success, error, message) in
             if success {
-                self.view.makeToast("TouchID / FaceID is now unenrolled from App.", duration: 3.0, position: .center)
+                self.view.makeToast("Touch ID / Face ID is now unenrolled from App.", duration: 3.0, position: .center)
                 self.tableEnrollments.reloadData()
             } else {
                 if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {

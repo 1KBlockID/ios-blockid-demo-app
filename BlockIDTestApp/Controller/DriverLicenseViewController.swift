@@ -197,18 +197,19 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         scanCompleteUIUpdates()
         
-        guard let dl = dictDriveLicense, let token = signToken else {
+        guard var dl = dictDriveLicense, let token = signToken else {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
             return
             
         }
-        
+            dl["isLivenessRequired"] = false
         if isLivenessNeeded {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
                 documentLivenessVC.onLivenessFinished = { (sender) in
                     if let sender = sender {
-                        sender.navigationController?.popViewController(animated: true)
+                        sender.navigationController?.popViewController(animated: false)
+                        dl["isLivenessRequired"] = true 
                         if error?.code == CustomErrors.kDocumentAboutToExpire.code {
                             //About to Expire, Show Alert
                             let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
@@ -222,7 +223,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
                         self.setDriverLicense(withDLData: dl, token: token)
                     }
                 }
-                self.navigationController?.pushViewController(documentLivenessVC, animated: true)
+                self.navigationController?.pushViewController(documentLivenessVC, animated: false)
                 return
             }
         }

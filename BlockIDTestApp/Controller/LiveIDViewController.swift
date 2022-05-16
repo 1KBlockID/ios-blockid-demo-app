@@ -102,14 +102,14 @@ class LiveIDViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if isLivenessNeeded {
-            _lblPageTitle.text = "Enroll LiveID (with liveness check)"
+            _lblPageTitle.text = "Enroll Live ID (with Liveness Check)"
         } else {
-            _lblPageTitle.text = "Enroll LiveID"
+            _lblPageTitle.text = "Enroll Live ID"
         }
         
         if isForVerification {
             //For LiveID Verification
-            _lblPageTitle.text = "LiveID Authentication"
+            _lblPageTitle.text = "Live ID Authentication"
         }
         startLiveIDScanning()
     }
@@ -144,11 +144,12 @@ class LiveIDViewController: UIViewController {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    if self.isLivenessNeeded {
-                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-                    } else {
-                        self.liveIdScannerHelper?.startLiveIDScanning()
-                    }
+                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+//                    if self.isLivenessNeeded {
+//                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+//                    } else {
+//                        self.liveIdScannerHelper?.startLiveIDScanning()
+//                    }
                 }
             }
         }
@@ -156,6 +157,14 @@ class LiveIDViewController: UIViewController {
     }
         
     private func goBack() {
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: EnrollMentViewController.self) {
+                    self.navigationController?.popToViewController(viewController, animated: true)
+                }
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -184,7 +193,7 @@ class LiveIDViewController: UIViewController {
             }
             // SUCCESS
             self.stopLiveIDScanning()
-            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+            self.view.makeToast("Live ID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                 self.goBack()
             })
 
