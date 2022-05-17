@@ -145,11 +145,6 @@ class LiveIDViewController: UIViewController {
                     }
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-//                    if self.isLivenessNeeded {
-//                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-//                    } else {
-//                        self.liveIdScannerHelper?.startLiveIDScanning()
-//                    }
                 }
             }
         }
