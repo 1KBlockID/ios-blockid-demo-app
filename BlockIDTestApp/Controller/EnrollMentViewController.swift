@@ -122,15 +122,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.resetApp.rawValue:
             resetApp()
         case Enrollments.FIDO2_NATIVE.rawValue:
-            print ("Fido2 Native clicked!")
-            WebAuthnService().updateSession()
-            WebAuthnService().registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
-                guard isSuccess, let options = response else {
-                    print ("Attestation options failed")
-                    return
-                }
-                print (options)
-            }
+            launchForFIDO2Native()
         default:
             return
         }
@@ -310,6 +302,11 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     private func launchForFIDO2() {
         let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDOViewController
+        self.navigationController?.pushViewController(fido2VC, animated: true)
+    }
+
+    private func launchForFIDO2Native() {
+        let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDONativePlatformVC
         self.navigationController?.pushViewController(fido2VC, animated: true)
     }
 }

@@ -14,6 +14,8 @@ target 'BlockIDTestApp' do
 #  pod 'SwiftyTesseract', '~> 3.1.3'
 #  pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'BlockIDSDK', :path => '../ios-kernel-sdk/'
+  pod 'AlamofireNetworkActivityLogger', '~> 2.4'
+  pod 'WebAuthnKit', '~> 0.9.6'
 end
 
 post_install do |installer|

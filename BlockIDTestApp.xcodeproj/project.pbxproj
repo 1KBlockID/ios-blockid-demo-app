@@ -45,6 +45,10 @@
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
 		99205C4F28297B7D000010F6 /* WebAuthnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99205C4E28297B7D000010F6 /* WebAuthnService.swift */; };
 		99205C52282AD278000010F6 /* AttestationOptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99205C51282AD278000010F6 /* AttestationOptionResponse.swift */; };
+		99205C6D282AECFD000010F6 /* libYubiKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99205C68282AEC87000010F6 /* libYubiKit.a */; };
+		99205C70282AF155000010F6 /* FIDONativeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99205C6F282AF155000010F6 /* FIDONativeVC.swift */; };
+		99BEA39C282C2AF300E27C38 /* FIDONativePlatformVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BEA39B282C2AF300E27C38 /* FIDONativePlatformVC.swift */; };
+		99BEA3A0282C32B900E27C38 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BEA39F282C32B900E27C38 /* Base64.swift */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
@@ -62,6 +66,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
 			remoteInfo = BlockIDTestApp;
+		};
+		99205C67282AEC87000010F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99205C62282AEC87000010F6 /* YubiKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95C29611206247210091318B;
+			remoteInfo = YubiKit;
+		};
+		99205C69282AEC87000010F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99205C62282AEC87000010F6 /* YubiKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 95885B2520A3187700828D02;
+			remoteInfo = YubiKitTests;
+		};
+		99205C6B282AECE6000010F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 99205C62282AEC87000010F6 /* YubiKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 95C29610206247210091318B;
+			remoteInfo = YubiKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -111,6 +136,11 @@
 		5D78A9312817EB1D00B43D48 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		99205C4E28297B7D000010F6 /* WebAuthnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthnService.swift; sourceTree = "<group>"; };
 		99205C51282AD278000010F6 /* AttestationOptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttestationOptionResponse.swift; sourceTree = "<group>"; };
+		99205C62282AEC87000010F6 /* YubiKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YubiKit.xcodeproj; path = "../../yubikit-ios/YubiKit/YubiKit.xcodeproj"; sourceTree = "<group>"; };
+		99205C6E282AEF15000010F6 /* BlockIDTestApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BlockIDTestApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		99205C6F282AF155000010F6 /* FIDONativeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDONativeVC.swift; sourceTree = "<group>"; };
+		99BEA39B282C2AF300E27C38 /* FIDONativePlatformVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDONativePlatformVC.swift; sourceTree = "<group>"; };
+		99BEA39F282C32B900E27C38 /* Base64.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
 		BB56D8843F70A1463BF8F249 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99205C6D282AECFD000010F6 /* libYubiKit.a in Frameworks */,
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				53013CFF491D6F9D9DD4334C /* Pods_BlockIDTestApp.framework in Frameworks */,
@@ -186,6 +217,8 @@
 		3CEE3302264413C2003FDB78 = {
 			isa = PBXGroup;
 			children = (
+				99205C6E282AEF15000010F6 /* BlockIDTestApp-Bridging-Header.h */,
+				99205C62282AEC87000010F6 /* YubiKit.xcodeproj */,
 				3CEE330D264413C2003FDB78 /* BlockIDTestApp */,
 				1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */,
 				3CEE330C264413C2003FDB78 /* Products */,
@@ -247,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
+				99BEA39F282C32B900E27C38 /* Base64.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -270,6 +304,8 @@
 				3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */,
 				E6FFD6642786E376004CBB62 /* SSNViewController.swift */,
 				E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */,
+				99205C6F282AF155000010F6 /* FIDONativeVC.swift */,
+				99BEA39B282C2AF300E27C38 /* FIDONativePlatformVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -329,6 +365,15 @@
 			path = FIDO;
 			sourceTree = "<group>";
 		};
+		99205C63282AEC87000010F6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				99205C68282AEC87000010F6 /* libYubiKit.a */,
+				99205C6A282AEC87000010F6 /* YubiKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +427,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				99205C6C282AECE6000010F6 /* PBXTargetDependency */,
 			);
 			name = BlockIDTestApp;
 			productName = BlockIDTestApp;
@@ -417,6 +463,12 @@
 			mainGroup = 3CEE3302264413C2003FDB78;
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 99205C63282AEC87000010F6 /* Products */;
+					ProjectRef = 99205C62282AEC87000010F6 /* YubiKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* BlockIDTestApp */,
@@ -424,6 +476,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		99205C68282AEC87000010F6 /* libYubiKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libYubiKit.a;
+			remoteRef = 99205C67282AEC87000010F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		99205C6A282AEC87000010F6 /* YubiKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = YubiKitTests.xctest;
+			remoteRef = 99205C69282AEC87000010F6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA09386268472A6008AAAA1 /* Resources */ = {
@@ -533,6 +602,7 @@
 				E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */,
 				E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */,
 				99205C52282AD278000010F6 /* AttestationOptionResponse.swift in Sources */,
+				99205C70282AF155000010F6 /* FIDONativeVC.swift in Sources */,
 				E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */,
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
@@ -544,8 +614,10 @@
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
 				3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */,
 				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
+				99BEA39C282C2AF300E27C38 /* FIDONativePlatformVC.swift in Sources */,
 				5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
+				99BEA3A0282C32B900E27C38 /* Base64.swift in Sources */,
 				3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */,
 				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,
 				3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */,
@@ -567,6 +639,11 @@
 			isa = PBXTargetDependency;
 			target = 3CEE330A264413C2003FDB78 /* BlockIDTestApp */;
 			targetProxy = 1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */;
+		};
+		99205C6C282AECE6000010F6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = YubiKit;
+			targetProxy = 99205C6B282AECE6000010F6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -801,6 +878,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BlockIDTestApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -862,6 +940,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BlockIDTestApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

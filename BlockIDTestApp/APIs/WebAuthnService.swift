@@ -10,22 +10,32 @@ import BlockIDSDK
 import Alamofire
 
 public class WebAuthnService {
+    static let origin = "1k-dev.1kosmos.net"
+
     public let authSelection: [String: Any] = [
         "authenticatorAttachment" : "cross-platform",
         "userVerification": "required"
     ]
     public var request_options: [String: Any];
+    private var sessionInfo: String?
+
+//    public let TENANT_ID = "ten";
+//    public let COMMUNITY_ID = "com";
+//    public let DNS = "asf";
+//    private let LICENSE_KEY = "123";
+    private let TENANT_ID = "5f3d8d0cd866fa61019cf968";
+    private let COMMUNITY_ID = "5f3d8d0cd866fa61019cf969";
+    private let DNS = "1k-dev.1kosmos.net";
     private let LICENSE_KEY = "3f2282e9-3d46-4961-b103-a9319ad4560c";
     
+    private let USER_NAME = "iosclient4"
+    private let DISPLAY_NAME = "iosclient4"
+
     init() {
-        let TENANT_ID = "5f3d8d0cd866fa61019cf968";
-        let COMMUNITY_ID = "5f3d8d0cd866fa61019cf969";
-        let DNS = "1k-dev.1kosmos.net";
-        
         request_options = [
             "dns" : DNS,
-            "username" : "iosclient",
-            "displayName" : "iosclient",
+            "username" : USER_NAME,
+            "displayName" : DISPLAY_NAME,
             "tenantId" : TENANT_ID,
             "communityId" : COMMUNITY_ID,
             "attestation": "direct",
@@ -33,7 +43,7 @@ public class WebAuthnService {
         ]
     }
 
-    public func updateSession() {
+    public func updateSession(completion: @escaping (String?) -> Void) {
         BlockIDSDK.sharedInstance.generateNewSession(tenantDNS: Tenant.defaultTenant.dns!,
                                                         communityName: Tenant.defaultTenant.community!) {
             status, msg, error, sessionId in
@@ -43,6 +53,7 @@ public class WebAuthnService {
                 return
             }
             print ("Session ID: " + (sessionId ?? ""))
+            completion (sessionId)
         }
     }
     
@@ -57,21 +68,236 @@ public class WebAuthnService {
             "requestid" : requestID
         ]
         Alamofire.request(url, method: .post, parameters: request_options, encoding: JSONEncoding.default, headers: headers)
-            .responseJSON { [self] response in
+            .responseJSON (){ [self] response in
                 switch response.result {
                 case .success:
                     guard let data = response.data, let options = AttestationOptionResponse(response: data) else {
                         completion(nil, "Error reading attestation option", true)
                         return
                     }
-                    print (data.prettyJson())
+//                    print (data.prettyJson())
                     completion(options.attestationOption, nil, true)
 
                 case .failure(let error):
                     print(error)
-                    if let data = response.data {
-                        print (data.prettyJson())
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+                    completion(nil, "error", false)
+                @unknown default:
+                    completion(nil, "error", false)
+                }
+        }
+    }
+    
+    public func registerResult(url: String = "https://httpbin.org/post", sessionID: String,
+                               response: MakeCredentialOnKeyRegistrationResponse,
+                               completion: @escaping ((_ response: AttestationOption?, _ message: String?, _ isSuccess: Bool) -> Void)) {
+        guard let requestID = BlockIDSDK.sharedInstance.getRequestID() else {
+            completion(nil, "Error reading requestID", false)
+            return
+        }
+//        let headers: HTTPHeaders = [:]
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "licensekey" : LICENSE_KEY,
+            "requestid" : requestID,
+            "sessionInfo": sessionID
+        ]
+        let attestation: [String: Any] = [
+            "clientDataJSON": response.clientDataJSON.base64EncodedString(),
+            "attestationObject": response.attestationObject.base64URLEncodedString(),
+            "getTransports": [:],
+            "getPublicKey" : [:],
+            "getPublicKeyAlgorithm": [:],
+            "getAuthenticatorData": [:]
+        ]
+        let request_results:[String: Any] = [
+            "id": response.rawid,
+            "rawId": response.rawid,
+            "dns" : DNS,
+            "tenantId" : TENANT_ID,
+            "communityId" : COMMUNITY_ID,
+            "getClientExtensionResults" : [:],
+            "type" : "public-key",
+            "authenticatorAttachment" : "cross-platform",
+            "response": attestation,
+        ]
+
+        Alamofire.request(url, method: .post, parameters: request_results, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { [self] response in
+                switch response.result {
+                case .success:
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+//                    guard let data = response.data, let options = AttestationOptionResponse(response: data) else {
+//                        completion(nil, "Error reading attestation option", true)
+//                        return
+//                    }
+                    completion(nil, "error", true)
+
+                case .failure(let error):
+                    print(error)
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+                    completion(nil, "error", false)
+                @unknown default:
+                    completion(nil, "error", false)
+                }
+        }
+    }
+    
+    public func registerResult(url: String = "https://httpbin.org/post", sessionID: String,
+                               response: AttestationResult,
+                               completion: @escaping ((_ response: AttestationOption?, _ message: String?, _ isSuccess: Bool) -> Void)) {
+        guard let requestID = BlockIDSDK.sharedInstance.getRequestID() else {
+            completion(nil, "Error reading requestID", false)
+            return
+        }
+//        let headers: HTTPHeaders = [:]
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "licensekey" : LICENSE_KEY,
+            "requestid" : requestID,
+            "sessionInfo": sessionID
+        ]
+        let attestation: [String: Any] = [
+            "clientDataJSON": response.clientDataJSON,
+            "attestationObject": response.attestationObject,
+            "getTransports": [:],
+            "getPublicKey" : [:],
+            "getPublicKeyAlgorithm": [:],
+            "getAuthenticatorData": [:]
+        ]
+        let request_results:[String: Any] = [
+            "id": response.id,
+            "rawId": response.rawid,
+            "dns" : DNS,
+            "tenantId" : TENANT_ID,
+            "communityId" : COMMUNITY_ID,
+            "getClientExtensionResults" : [:],
+            "type" : "public-key",
+            "authenticatorAttachment" : "cross-platform",
+            "response": attestation,
+        ]
+
+        Alamofire.request(url, method: .post, parameters: request_results, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { [self] response in
+                switch response.result {
+                case .success:
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+//                    guard let data = response.data, let options = AttestationOptionResponse(response: data) else {
+//                        completion(nil, "Error reading attestation option", true)
+//                        return
+//                    }
+                    completion(nil, "error", true)
+
+                case .failure(let error):
+                    print(error)
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+                    completion(nil, "error", false)
+                @unknown default:
+                    completion(nil, "error", false)
+                }
+        }
+    }
+
+    public func authOptions(url: String = "https://1k-dev.1kosmos.net/webauthn/u1/assertion/options", completion: @escaping ((_ response: AssertionOption?, _ message: String?, _ isSuccess: Bool) -> Void)) {
+        guard let requestID = BlockIDSDK.sharedInstance.getRequestID() else {
+            completion(nil, "Error reading requestID", false)
+            return
+        }
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "licensekey" : LICENSE_KEY,
+            "requestid" : requestID
+        ]
+        let auth_options: [String: Any] = [
+            "dns" : DNS,
+            "username" : USER_NAME,
+            "displayName" : DISPLAY_NAME,
+            "tenantId" : TENANT_ID,
+            "communityId" : COMMUNITY_ID,
+        ]
+
+        Alamofire.request(url, method: .post, parameters: auth_options, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON (){ [self] response in
+                switch response.result {
+                case .success:
+                    guard let data = response.data, let options = AssertionOptionResponse(response: data) else {
+                        completion(nil, "Error reading attestation option", true)
+                        return
                     }
+//                    print (data.prettyJson())
+                    completion(options.assertionOption, nil, true)
+
+                case .failure(let error):
+                    print(error)
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+                    completion(nil, "error", false)
+                @unknown default:
+                    completion(nil, "error", false)
+                }
+        }
+    }
+
+    public func authResult(url: String = "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result", sessionID: String,
+                               response: AssertOnKeyAuthenticationResponse,
+                               completion: @escaping ((_ response: AttestationOption?, _ message: String?, _ isSuccess: Bool) -> Void)) {
+        guard let requestID = BlockIDSDK.sharedInstance.getRequestID() else {
+            completion(nil, "Error reading requestID", false)
+            return
+        }
+        let headers: HTTPHeaders = [
+            "Content-Type": "application/json",
+            "licensekey" : LICENSE_KEY,
+            "requestid" : requestID,
+            "sessionInfo": sessionID
+        ]
+        let attestation: [String: Any] = [
+            "clientDataJSON": response.clientDataJSON,
+            "authenticatorData": response.authenticatorData, // "authenticatorData"
+            "signature": response.signature,
+            "userHandle" : response.credentialId //user-id
+        ]
+        let request_results:[String: Any] = [
+            "id": response.credentialId,
+            "rawId": response.credentialId,
+            "dns" : DNS,
+            "tenantId" : TENANT_ID,
+            "communityId" : COMMUNITY_ID,
+            "getClientExtensionResults" : [:],
+            "type" : "public-key",
+            "authenticatorAttachment" : "cross-platform",
+            "response": attestation,
+        ]
+
+        Alamofire.request(url, method: .post, parameters: request_results, encoding: JSONEncoding.default, headers: headers)
+            .responseJSON { [self] response in
+                switch response.result {
+                case .success:
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
+//                    guard let data = response.data, let options = AttestationOptionResponse(response: data) else {
+//                        completion(nil, "Error reading attestation option", true)
+//                        return
+//                    }
+                    completion(nil, "error", true)
+
+                case .failure(let error):
+                    print(error)
+//                    if let data = response.data {
+//                        print (data.prettyJson())
+//                    }
                     completion(nil, "error", false)
                 @unknown default:
                     completion(nil, "error", false)
