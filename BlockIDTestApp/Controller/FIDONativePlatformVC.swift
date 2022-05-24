@@ -21,18 +21,16 @@ class FIDONativePlatformVC: FIDOViewController {
             var credOptions: PublicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions(
                 challenge: Bytes.fromString(String (decoding: Data(base64Encoded: self.base64urlToBase64(base64url: options.challenge))!, as: UTF8.self)),
                 rpId: options.rpId, allowCredentials: [], userVerification: .required, timeout: 60000)
-            print("==========================================")
             for credentialId in options.allowCredentials {
                 print("credentialId: " + self.base64urlToBase64(base64url: credentialId))
                 let id = Data(base64Encoded: self.base64urlToBase64(base64url: credentialId))
                 credOptions.addAllowCredential(credentialId: [UInt8] (id!),
                                                transports: [.internal_])
             }
-            print("==========================================")
             firstly {
                 self.webAuthnClient.get(credOptions)
             }.done { assertion in
-                var authResponse: AssertOnKeyAuthenticationResponse = AssertOnKeyAuthenticationResponse(credentialId: assertion.id, authenticatorData: Base64.encodeBase64URL(assertion.response.authenticatorData), clientDataJSON: Base64.encodeBase64URL(assertion.response.clientDataJSON.data(using: .utf8)!), signature: Base64.encodeBase64URL(assertion.response.signature))
+                var authResponse: AssertOnKeyAuthenticationResponse = AssertOnKeyAuthenticationResponse(credentialId: assertion.id, authenticatorData: Base64.encodeBase64URL(assertion.response.authenticatorData), clientDataJSON: Base64.encodeBase64URL(assertion.response.clientDataJSON.data(using: .utf8)!), signature: Base64.encodeBase64URL(assertion.response.signature), userId: assertion.id)
                 WebAuthnService().authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
                                                  sessionID: self.sessionId!, response: authResponse)
                     {response, message, isSuccess in
