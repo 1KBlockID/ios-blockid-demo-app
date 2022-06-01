@@ -18,12 +18,12 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
         connectionCallback = nil
 //        print ("Connection " + error.localizedDescription)
     }
-    
+
     func didCancelConnectingNFC(_ error: Error) {
 //        connectionCallback = nil
         print ("Connection " + error.localizedDescription)
     }
-    
+
     func didDisconnectNFC(_ connection: YKFNFCConnection, error: Error?) {
         nfcConnection = nil
         session = nil
@@ -32,7 +32,7 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
     func didConnectAccessory(_ connection: YKFAccessoryConnection) {
         accessoryConnection = connection
     }
-    
+
     func didDisconnectAccessory(_ connection: YKFAccessoryConnection, error: Error?) {
         accessoryConnection = nil
         session = nil
@@ -43,7 +43,7 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
             print ("Yubikey touch events")
         }
     }
-    
+
     func connection(completion: @escaping (_ connection: YKFConnectionProtocol) -> Void) {
         if let connection = accessoryConnection {
             completion(connection)
@@ -84,7 +84,6 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
             session in
             self.sessionId = session
         }
-
     }
 
     override func viewDidLoad() {
@@ -93,7 +92,16 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
     }
 
     @IBAction override func authenticateTapped(_ sender: Any) {
-        WebAuthnService().authOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/options") {response, message, isSuccess in
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        WebAuthnService(username).authOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/options") {response, message, isSuccess in
             guard isSuccess, let options = response else {
                 print ("Assertion options failed")
                 return
@@ -108,7 +116,7 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
                     print ("Yubikey Success")
                     DispatchQueue.main.async {
                         //url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result"
-                        WebAuthnService().authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
+                        WebAuthnService(username).authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
                                                          sessionID: self.sessionId!, response: response)
                             {response, message, isSuccess in
                         }
@@ -125,8 +133,17 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
 
     var sessionId: String?
     @IBAction override func registerTapped(_ sender: Any) {
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
         //url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options"
-        WebAuthnService().registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
+        WebAuthnService(username).registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
             guard isSuccess, let options = response else {
                 print ("Attestation options failed")
                 return
@@ -141,7 +158,7 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
                     print ("Yubikey Success")
                     DispatchQueue.main.async {
                         //url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result"
-                        WebAuthnService().registerResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result",
+                        WebAuthnService(username).registerResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result",
                                                          sessionID: self.sessionId!, response: response)
                             {response, message, isSuccess in
                             
@@ -183,7 +200,7 @@ extension FIDONativeVC {
 
     func makeCredentialOnKey(response: AttestationOption,  completion: @escaping (Result<MakeCredentialOnKeyRegistrationResponse, Error>) -> Void) {
 //        let challengeData = Data(response.challenge.utf8)
-        let challengeData = Data(base64Encoded: response.challenge)!
+        let challengeData = Data(base64URLEncoded: response.challenge)!
         let clientData = YKFWebAuthnClientData(type: .create, challenge: challengeData, origin: WebAuthnService.origin)!
         
         let clientDataHash = clientData.clientDataHash!
@@ -294,26 +311,35 @@ extension FIDONativeVC {
 }
 
 extension Data {
-    public func base64URLEncodedString(options: Data.Base64EncodingOptions = []) -> String {
-        return base64EncodedString(options: options).base64URLEscaped()
+    init?(base64URLEncoded string: String) {
+        self.init(base64Encoded: string.toggleBase64URLSafe(on: false))
+    }
+
+    func base64URLEncodedString() -> String {
+        return self.base64EncodedString().toggleBase64URLSafe(on: true)
     }
 }
 
 extension String {
-    func base64Encoded() -> String? {
-        return data(using: .utf8)?.base64EncodedString()
+    func toggleBase64URLSafe(on: Bool) -> String {
+        if on {
+            // Make base64 string safe for passing into URL query params
+            let base64url = self.replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "=", with: "")
+            return base64url
+        } else {
+            // Return to base64 encoding
+            var base64 = self.replacingOccurrences(of: "_", with: "/")
+                .replacingOccurrences(of: "-", with: "+")
+            // Add any necessary padding with `=`
+            if base64.count % 4 != 0 {
+                base64.append(String(repeating: "=", count: 4 - base64.count % 4))
+            }
+            return base64
+        }
     }
-
-    func base64Decoded() -> String {
-        guard let data = Data(base64Encoded: self) else { return self }
-        return String(data: data, encoding: .utf8) ?? self
-    }
-
-    public func base64URLEscaped() -> String {
-        return replacingOccurrences(of: "+", with: "-")
-            .replacingOccurrences(of: "/", with: "_")
-            .replacingOccurrences(of: "=", with: "")
-    }
+    
 }
 
 extension UIAlertController {

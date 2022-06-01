@@ -28,10 +28,12 @@ public class WebAuthnService {
     private let DNS = "1k-dev.1kosmos.net";
     private let LICENSE_KEY = "3f2282e9-3d46-4961-b103-a9319ad4560c";
     
-    private let USER_NAME = "iosclient4"
-    private let DISPLAY_NAME = "iosclient4"
+    private let USER_NAME: String
+    private let DISPLAY_NAME: String
 
-    init() {
+    init(_ userName: String = "") {
+        USER_NAME = userName
+        DISPLAY_NAME = userName.capitalized
         request_options = [
             "dns" : DNS,
             "username" : USER_NAME,
@@ -187,15 +189,11 @@ public class WebAuthnService {
             .responseJSON { [self] response in
                 switch response.result {
                 case .success:
-//                    if let data = response.data {
-//                        print (data.prettyJson())
-//                    }
-//                    guard let data = response.data, let options = AttestationOptionResponse(response: data) else {
-//                        completion(nil, "Error reading attestation option", true)
-//                        return
-//                    }
-                    completion(nil, "error", true)
-
+                    if let data = response.data {
+                        completion(nil, data.prettyJson(), true)
+                        return
+                    }
+                    completion(nil, "error", false)
                 case .failure(let error):
                     print(error)
 //                    if let data = response.data {
@@ -291,7 +289,7 @@ public class WebAuthnService {
 //                        completion(nil, "Error reading attestation option", true)
 //                        return
 //                    }
-                    completion(nil, "error", true)
+                    completion(nil, "", true)
 
                 case .failure(let error):
                     print(error)

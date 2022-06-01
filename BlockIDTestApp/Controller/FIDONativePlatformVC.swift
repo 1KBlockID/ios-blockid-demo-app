@@ -8,22 +8,25 @@ class FIDONativePlatformVC: FIDOViewController {
     private var sessionId:String?
     
     @IBAction override func authenticateTapped(_ sender: Any) {
-//        WebAuthnService().updateSession() {
-//            session in
-//            self.sessionId = session
-//        }
-        //url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options"
-        WebAuthnService().authOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/options") {response, message, isSuccess in
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        WebAuthnService(username).authOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/options") {response, message, isSuccess in
             guard isSuccess, let options = response else {
                 print ("Attestation options failed")
                 return
             }
             var credOptions: PublicKeyCredentialRequestOptions = PublicKeyCredentialRequestOptions(
-                challenge: Bytes.fromString(String (decoding: Data(base64Encoded: self.base64urlToBase64(base64url: options.challenge))!, as: UTF8.self)),
+                challenge: Bytes.fromString(String (decoding: Data(base64URLEncoded: options.challenge)!, as: UTF8.self)),
                 rpId: options.rpId, allowCredentials: [], userVerification: .required, timeout: 60000)
             for credentialId in options.allowCredentials {
-                print("credentialId: " + self.base64urlToBase64(base64url: credentialId))
-                let id = Data(base64Encoded: self.base64urlToBase64(base64url: credentialId))
+                let id = Data(base64URLEncoded: credentialId)
                 credOptions.addAllowCredential(credentialId: [UInt8] (id!),
                                                transports: [.internal_])
             }
@@ -31,9 +34,20 @@ class FIDONativePlatformVC: FIDOViewController {
                 self.webAuthnClient.get(credOptions)
             }.done { assertion in
                 var authResponse: AssertOnKeyAuthenticationResponse = AssertOnKeyAuthenticationResponse(credentialId: assertion.id, authenticatorData: Base64.encodeBase64URL(assertion.response.authenticatorData), clientDataJSON: Base64.encodeBase64URL(assertion.response.clientDataJSON.data(using: .utf8)!), signature: Base64.encodeBase64URL(assertion.response.signature), userId: assertion.id)
-                WebAuthnService().authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
+                WebAuthnService(username).authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
                                                  sessionID: self.sessionId!, response: authResponse)
-                    {response, message, isSuccess in
+                    { response, message, isSuccess in
+                        var alertMessage: String?
+                        if isSuccess {
+                            alertMessage = "User authentication success\n" + (message ?? "")
+                        } else {
+                            alertMessage = "Failed to authenticate, please try again later"
+                        }
+                        let alert = UIAlertController(title: "Authenticate", message: alertMessage!, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                           // do nothing
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                 }
 
             }.catch { error in
@@ -45,19 +59,24 @@ class FIDONativePlatformVC: FIDOViewController {
     }
     
     @IBAction override func registerTapped(_ sender: Any) {
-//        WebAuthnService().updateSession() {
-//            session in
-//            self.sessionId = session
-//        }
-        //url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options"
-        WebAuthnService().registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
+        guard let username = self.txtFieldUsername.text,
+              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+               // do nothing
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        WebAuthnService(username).registerOptions(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/options") {response, message, isSuccess in
             guard isSuccess, let options = response else {
                 print ("Attestation options failed")
                 return
             }
             print (options)
             var credOptions = PublicKeyCredentialCreationOptions()
-            credOptions.challenge = Bytes.fromString(String (decoding: Data(base64Encoded: options.challenge)!, as: UTF8.self))
+            
+            credOptions.challenge = Bytes.fromString(String(decoding: Data(base64URLEncoded: options.challenge)!, as: UTF8.self))
             credOptions.user.id = Bytes.fromString(options.userId)
             credOptions.user.name = options.userName
             credOptions.user.displayName = options.userName
@@ -80,10 +99,20 @@ class FIDONativePlatformVC: FIDOViewController {
                 print("==========================================")
                 let response = AttestationResult(clientDataJSON: Base64.encodeBase64URL(credential.response.clientDataJSON.data(using: .utf8)!), attestationObject: Base64.encodeBase64URL(credential.response.attestationObject), rawid:
                     Base64.encodeBase64URL(credential.rawId), id: credential.id)
-                WebAuthnService().registerResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result",
+                WebAuthnService(username).registerResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result",
                                                  sessionID: self.sessionId!, response: response)
                     {response, message, isSuccess in
-
+                        var alertMessage: String?
+                        if isSuccess {
+                            alertMessage = "User registration success\n" + (message ?? "")
+                        } else {
+                            alertMessage = "Failed to register, please try again later"
+                        }
+                        let alert = UIAlertController(title: "Registration", message: alertMessage!, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                           // do nothing
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                 }
             }.catch { error in
                 print ("Error creating credential: " + error.localizedDescription)
@@ -97,7 +126,6 @@ class FIDONativePlatformVC: FIDOViewController {
             session in
             self.sessionId = session
         }
-
     }
 
     private func setupWebAuthnClient() {
@@ -107,16 +135,6 @@ class FIDONativePlatformVC: FIDOViewController {
             origin:        WebAuthnService.origin,
             authenticator: authenticator
         )
-    }
-    
-    func base64urlToBase64(base64url: String) -> String {
-        var base64 = base64url
-            .replacingOccurrences(of: "-", with: "+")
-            .replacingOccurrences(of: "_", with: "/")
-        if base64.count % 4 != 0 {
-            base64.append(String(repeating: "=", count: 4 - base64.count % 4))
-        }
-        return base64
     }
 }
 

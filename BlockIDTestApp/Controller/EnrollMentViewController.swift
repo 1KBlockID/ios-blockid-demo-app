@@ -293,7 +293,7 @@ extension EnrollMentViewController {
             self.resetAppNSDK()
             self.showHomeView()
         }))
-        
+
         self.present(alert, animated: true)
         return
     }
