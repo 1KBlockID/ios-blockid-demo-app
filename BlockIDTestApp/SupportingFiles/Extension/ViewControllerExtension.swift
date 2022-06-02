@@ -109,6 +109,13 @@ extension UIViewController {
         }
     }
     
+    func showWebViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let webViewVC = storyBoard.instantiateViewController(withIdentifier: "WebscannerViewController") as? WebscannerViewController {
+            self.navigationController?.pushViewController(webViewVC, animated: true)
+        }
+    }
+    
     func showAuthenticationViewController(qrModel: AuthenticationPayloadV1, qrOption: QROptions, delegate: AuthenticateViewControllerDelegate ) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let authVc = storyBoard.instantiateViewController(withIdentifier: "AuthenticateViewController") as? AuthenticateViewController {

@@ -10,11 +10,13 @@ import Foundation
 import BlockIDSDK
 import Toast_Swift
 import UIKit
+import WebKit
 
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
+    case Dl_WebScanner = "Add Document (Web Scanner)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
@@ -34,6 +36,7 @@ class EnrollMentViewController: UIViewController {
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
                            Enrollments.DriverLicense_Liveness,
+                           Enrollments.Dl_WebScanner,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -50,6 +53,8 @@ class EnrollMentViewController: UIViewController {
     @IBOutlet weak var tableEnrollments: UITableView!
     @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
+    var webView: WKWebView!
+    private var sessionDict: [String: Any]?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -103,6 +108,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDL()
         case Enrollments.DriverLicense_Liveness.rawValue:
             documentLivenessVC()
+        case Enrollments.Dl_WebScanner.rawValue:
+            self.showWebViewController()
         case Enrollments.Passport1.rawValue:
             enrollPassport(index: 1)
         case Enrollments.Passport2.rawValue:

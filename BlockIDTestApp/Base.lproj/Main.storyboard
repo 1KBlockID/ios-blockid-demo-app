@@ -3045,6 +3045,67 @@
             </objects>
             <point key="canvasLocation" x="4051.875" y="878.87323943661977"/>
         </scene>
+        <!--Webscanner View Controller-->
+        <scene sceneID="mNp-a4-oeS">
+            <objects>
+                <viewController storyboardIdentifier="WebscannerViewController" id="7HO-gI-hel" customClass="WebscannerViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="lkk-06-Udw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="csJ-LC-rY4">
+                                <rect key="frame" x="15" y="15" width="60" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="fMg-ee-gqT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="iconBackarrow"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtColor" value="primary4"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtFont" value="fontRegular"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="doBack:" destination="7HO-gI-hel" eventType="touchUpInside" id="nhb-y4-vw8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add document (webSDK)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzQ-XM-11t">
+                                <rect key="frame" x="77" y="13" width="233.5" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42x-kO-2K0">
+                                <rect key="frame" x="0.0" y="45" width="320" height="523"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pyq-OS-EPk"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vzQ-XM-11t" firstAttribute="leading" secondItem="csJ-LC-rY4" secondAttribute="trailing" constant="2" id="0S6-LG-4fP"/>
+                            <constraint firstItem="csJ-LC-rY4" firstAttribute="leading" secondItem="pyq-OS-EPk" secondAttribute="leading" constant="15" id="57l-mQ-o5H"/>
+                            <constraint firstItem="42x-kO-2K0" firstAttribute="top" secondItem="vzQ-XM-11t" secondAttribute="bottom" constant="8" symbolic="YES" id="T2a-J4-kD8"/>
+                            <constraint firstItem="42x-kO-2K0" firstAttribute="leading" secondItem="pyq-OS-EPk" secondAttribute="leading" id="Ter-8d-U6X"/>
+                            <constraint firstItem="csJ-LC-rY4" firstAttribute="top" secondItem="pyq-OS-EPk" secondAttribute="top" constant="15" id="aMR-EV-cdB"/>
+                            <constraint firstItem="vzQ-XM-11t" firstAttribute="centerY" secondItem="csJ-LC-rY4" secondAttribute="centerY" id="psW-wb-GYa"/>
+                            <constraint firstItem="42x-kO-2K0" firstAttribute="bottom" secondItem="pyq-OS-EPk" secondAttribute="bottom" id="sak-Od-0EB"/>
+                            <constraint firstItem="42x-kO-2K0" firstAttribute="trailing" secondItem="pyq-OS-EPk" secondAttribute="trailing" id="v4s-4Q-Gy3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="webView" destination="42x-kO-2K0" id="Hqi-oa-DLB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cqr-js-y0Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4781.25" y="878.87323943661977"/>
+        </scene>
     </scenes>
     <resources>
         <image name="brandLogo" width="269" height="97"/>
