@@ -62,3 +62,51 @@ public class DataSessionRequest: NSObject, Codable {
         self.data = data 
     }
 }
+
+public class VerifySessionRequest: NSObject, Codable {
+    
+    var sessionId: String!
+    var dvcID: String!
+    init(sessionId: String, dvcID: String) {
+        self.sessionId = sessionId
+        self.dvcID = dvcID
+    }
+    
+}
+
+public class DocumentSessionResult: Codable {
+    public var responseStatus: String?
+    public var dlObject: [String: Any]
+    
+    
+    enum CodingKeys: String, CodingKey {
+        case dlObject = "dl_object"
+        case responseStatus
+    }
+
+    public required init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        if values.contains(.dlObject) {
+            dlObject = try values.decode([String: Any].self, forKey: .dlObject)
+        } else {
+            dlObject = [String: Any]()
+        }
+        if values.contains(.responseStatus) {
+            responseStatus = try values.decode(String?.self, forKey: .responseStatus)
+        }
+        else {
+            responseStatus = ""
+        }
+
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        if !dlObject.isEmpty {
+            try container.encode(self.dlObject, forKey: .dlObject)
+        }
+        if let status = responseStatus, !status.isEmpty {
+            try container.encode(self.responseStatus, forKey: .responseStatus)
+        }
+    }
+}

@@ -3045,10 +3045,10 @@
             </objects>
             <point key="canvasLocation" x="4051.875" y="878.87323943661977"/>
         </scene>
-        <!--Webscanner View Controller-->
+        <!--Web Scanner View Controller-->
         <scene sceneID="mNp-a4-oeS">
             <objects>
-                <viewController storyboardIdentifier="WebscannerViewController" id="7HO-gI-hel" customClass="WebscannerViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebScannerViewController" id="7HO-gI-hel" customClass="WebScannerViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lkk-06-Udw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3078,7 +3078,7 @@
                             </label>
                             <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="42x-kO-2K0">
                                 <rect key="frame" x="0.0" y="45" width="320" height="523"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>

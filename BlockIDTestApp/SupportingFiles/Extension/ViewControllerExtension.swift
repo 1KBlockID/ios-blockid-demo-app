@@ -111,7 +111,7 @@ extension UIViewController {
     
     func showWebViewController() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let webViewVC = storyBoard.instantiateViewController(withIdentifier: "WebscannerViewController") as? WebscannerViewController {
+        if let webViewVC = storyBoard.instantiateViewController(withIdentifier: "WebScannerViewController") as? WebScannerViewController {
             self.navigationController?.pushViewController(webViewVC, animated: true)
         }
     }
