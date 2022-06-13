@@ -3070,8 +3070,8 @@
                                     <action selector="doBack:" destination="7HO-gI-hel" eventType="touchUpInside" id="nhb-y4-vw8"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add document (webSDK)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzQ-XM-11t">
-                                <rect key="frame" x="77" y="13" width="233.5" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add document " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzQ-XM-11t">
+                                <rect key="frame" x="77" y="13" width="142.5" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -3099,6 +3099,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnBack" destination="csJ-LC-rY4" id="IYA-Fu-DWU"/>
                         <outlet property="webView" destination="42x-kO-2K0" id="Hqi-oa-DLB"/>
                     </connections>
                 </viewController>

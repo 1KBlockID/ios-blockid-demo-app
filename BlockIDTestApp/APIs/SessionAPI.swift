@@ -65,7 +65,7 @@ class SessionAPI {
                         completion(obj, nil)
                     }
                 case .failure(let error):
-                    print("error",error.localizedDescription)
+                    completion(nil, nil)
                     //completion((error._code, error, nil))
                 }
             }
@@ -167,13 +167,23 @@ class SessionAPI {
                         }
                     } catch(let error) {
                         completion(nil, error.localizedDescription)
+                        self.cancelOngoingRequest()
                     }
                     
                 case .failure(let error):
                     completion(nil, error.localizedDescription)
+                    self.cancelOngoingRequest()
                 }
             }
         
+    }
+    
+    func cancelOngoingRequest() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (sessionDataTask, uploadData, downloadData) in
+            sessionDataTask.forEach { $0.cancel() }
+            uploadData.forEach { $0.cancel() }
+            downloadData.forEach { $0.cancel() }
+        }
     }
     
 }

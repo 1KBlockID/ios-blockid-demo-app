@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -54,6 +54,8 @@
 		E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */; };
 		E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */; };
 		E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6734C3C2816B5E900658171 /* GetSessionData.swift */; };
+		E68249FE28521BAD006276A7 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E68249FC28521BA4006276A7 /* BlockIDSDK.xcframework */; };
+		E68249FF28521BAD006276A7 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E68249FC28521BA4006276A7 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */; };
 		E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */; };
 		E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */; };
@@ -80,6 +82,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E68249FF28521BAD006276A7 /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +144,7 @@
 		E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkPayload.swift; sourceTree = "<group>"; };
 		E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLinkUrlData.swift; sourceTree = "<group>"; };
 		E6734C3C2816B5E900658171 /* GetSessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSessionData.swift; sourceTree = "<group>"; };
+		E68249FC28521BA4006276A7 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV2.swift; sourceTree = "<group>"; };
 		E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV1.swift; sourceTree = "<group>"; };
 		E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLiveness.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				53013CFF491D6F9D9DD4334C /* Pods_BlockIDTestApp.framework in Frameworks */,
+				E68249FE28521BAD006276A7 /* BlockIDSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -174,6 +179,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E68249FC28521BA4006276A7 /* BlockIDSDK.xcframework */,
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				2D0A78EB17E230657AC2956F /* Pods_BlockIDTestApp.framework */,
