@@ -47,7 +47,6 @@ class SessionAPI {
                                          "requestid": requestID,
                                          "Content-Type": "application/json"]
         
-        
         Alamofire.request(url,
                           method: .post,
                           parameters: payload,
@@ -67,7 +66,6 @@ class SessionAPI {
                     completion(nil, nil)
                 }
             }
-        
     }
     
     private func generateRequestID() -> String? {
