@@ -78,7 +78,6 @@ public class DocumentSessionResult: Codable {
     public var responseStatus: String?
     public var dlObject: [String: Any]
     
-    
     enum CodingKeys: String, CodingKey {
         case dlObject = "dl_object"
         case responseStatus
