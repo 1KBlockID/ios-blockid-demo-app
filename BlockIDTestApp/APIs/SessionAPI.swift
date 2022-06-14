@@ -57,7 +57,6 @@ class SessionAPI {
                 switch response.result {
                 case .success:
                     guard let data = response.data else {
-                        // completion((response.response?.statusCode, response.result.error, nil))
                         return
                     }
                     let decoder = JSONDecoder()
@@ -66,7 +65,6 @@ class SessionAPI {
                     }
                 case .failure(let error):
                     completion(nil, nil)
-                    //completion((error._code, error, nil))
                 }
             }
         
