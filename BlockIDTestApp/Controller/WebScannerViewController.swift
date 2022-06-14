@@ -17,6 +17,8 @@ class WebScannerViewController: UIViewController {
     
     // MARK: - Private properties -
     private var sessionId: String?
+    
+    var linkedAccount: BIDLinkedAccount?
 
     // MARK: - View lifecycle -
     override func viewDidLoad() {
@@ -33,8 +35,7 @@ class WebScannerViewController: UIViewController {
     // MARK: - Private methods -
     private func startwebSDKScan() {
         
-        guard let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, !linkedUserAccounts.isEmpty else {
-            self.showAlertView(title: "Error", message: "Please add a user in order to add document.")
+        guard let linkedUserAccount = linkedAccount else {
             return
         }
         
@@ -44,7 +45,7 @@ class WebScannerViewController: UIViewController {
             let sessionRequest = ["tenantDNS": "idpass.1kosmos.net",
                                   "communityName": "default",
                                   "documentType": "dl_object",
-                                  "userUID": linkedUserAccounts[0].userId,
+                                  "userUID": linkedUserAccount.userId,
                                   "did": BlockIDSDK.sharedInstance.getDID()]
             
             SessionAPI.sharedInstance.createSession(dvcID: AppConsant.dvcID, dict: sessionRequest) { [weak self] object, error in
@@ -85,33 +86,30 @@ class WebScannerViewController: UIViewController {
                             self.view.makeToastActivity(.center)
                             self.btnBack.isEnabled = false
                             self.btnBack.alpha = 0.5
-                            BlockIDSDK.sharedInstance.registerDocument(obj: response.dlObject, sigToken: "") { status, error in
-                                DispatchQueue.main.async {
-                                    self.view.hideToastActivity()
-                                    self.btnBack.isEnabled = true
-                                    self.btnBack.alpha = 1.0
-                                    if !status {
-                                        // FAILED
-                                        if error?.code == CustomErrors.kLiveIDMandatory.code {
-                                            DocumentStore.sharedInstance.setData(documentData: response.dlObject, token: "")
-                                            self.navigationController?.popViewController(animated: true)
-                                            self.showLiveIDView()
-                                            return
-                                        }
-                                        
-                                        self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
-                                            SessionAPI.sharedInstance.cancelOngoingRequest()
-                                            self.navigationController?.popViewController(animated: true)
-                                        })
-                                        return
-                                    }
-                                    // SUCCESS
-                                    self.view.makeToast("Drivers License enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
-                                        self.navigationController?.popViewController(animated: true)
-                                    })
-                                }
-                            }
                             
+                                if let faceObj = response.liveIdObject["face"] as? String {
+                                    let faceImg = CommonFunctions.convertImageFromBase64String(str: faceObj)
+                                    let proofedBy = response.liveIdObject["proofedBy"] as? String ?? ""
+                                    BlockIDSDK.sharedInstance.registerDocument(obj: response.dlObject, liveIdProofedBy: proofedBy, faceImage: faceImg) { status, error in
+                                        DispatchQueue.main.async {
+                                            self.view.hideToastActivity()
+                                            self.btnBack.isEnabled = true
+                                            self.btnBack.alpha = 1.0
+                                            if !status {
+                                                // FAILED
+                                                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                                                    SessionAPI.sharedInstance.cancelOngoingRequest()
+                                                    self.navigationController?.popViewController(animated: true)
+                                                })
+                                                return
+                                            }
+                                            // SUCCESS
+                                            self.view.makeToast("Drivers License enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                                                self.navigationController?.popViewController(animated: true)
+                                            })
+                                        }
+                                    }
+                            }
                         }
                     }
                 } else {

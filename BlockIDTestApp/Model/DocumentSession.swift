@@ -77,9 +77,11 @@ public class VerifySessionRequest: NSObject, Codable {
 public class DocumentSessionResult: Codable {
     public var responseStatus: String?
     public var dlObject: [String: Any]
+    public var liveIdObject: [String: Any]
     
     enum CodingKeys: String, CodingKey {
         case dlObject = "dl_object"
+        case liveIdObject = "liveid_object"
         case responseStatus
     }
 
@@ -90,6 +92,13 @@ public class DocumentSessionResult: Codable {
         } else {
             dlObject = [String: Any]()
         }
+        
+        if values.contains(.liveIdObject) {
+            liveIdObject = try values.decode([String: Any].self, forKey: .liveIdObject)
+        } else {
+            liveIdObject = [String: Any]()
+        }
+        
         if values.contains(.responseStatus) {
             responseStatus = try values.decode(String?.self, forKey: .responseStatus)
         }
@@ -103,6 +112,9 @@ public class DocumentSessionResult: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         if !dlObject.isEmpty {
             try container.encode(self.dlObject, forKey: .dlObject)
+        }
+        if !liveIdObject.isEmpty {
+            try container.encode(self.liveIdObject, forKey: .liveIdObject)
         }
         if let status = responseStatus, !status.isEmpty {
             try container.encode(self.responseStatus, forKey: .responseStatus)
