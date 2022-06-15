@@ -17,8 +17,6 @@ class WebScannerViewController: UIViewController {
     
     // MARK: - Private properties -
     private var sessionId: String?
-    
-    var linkedAccount: BIDLinkedAccount?
 
     // MARK: - View lifecycle -
     override func viewDidLoad() {
@@ -35,17 +33,13 @@ class WebScannerViewController: UIViewController {
     // MARK: - Private methods -
     private func startwebSDKScan() {
         
-        guard let linkedUserAccount = linkedAccount else {
-            return
-        }
-        
         self.view.makeToastActivity(.center)
         SessionAPI.sharedInstance.fetchServerPublicKey { (publicKey, error) in
             
             let sessionRequest = ["tenantDNS": "idpass.1kosmos.net",
                                   "communityName": "default",
                                   "documentType": "dl_object",
-                                  "userUID": linkedUserAccount.userId,
+                                  "userUID": BlockIDSDK.sharedInstance.getDID(),
                                   "did": BlockIDSDK.sharedInstance.getDID()]
             
             SessionAPI.sharedInstance.createSession(dvcID: AppConsant.dvcID, dict: sessionRequest) { [weak self] object, error in

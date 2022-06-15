@@ -111,14 +111,8 @@ extension UIViewController {
     
     func showWebViewController() {
         
-        guard let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, !linkedUserAccounts.isEmpty else {
-            self.showAlertView(title: "Error", message: "Please add a user in order to add document.")
-            return
-        }
-        
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let webViewVC = storyBoard.instantiateViewController(withIdentifier: "WebScannerViewController") as? WebScannerViewController {
-            webViewVC.linkedAccount =  linkedUserAccounts[0]
             self.navigationController?.pushViewController(webViewVC, animated: true)
         }
     }
