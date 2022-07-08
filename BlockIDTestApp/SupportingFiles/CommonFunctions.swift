@@ -27,7 +27,7 @@ class CommonFunctions {
     private static func getBundleVersion() -> String {
         var hexBundleVersion = ""
         if let bVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
-            hexBundleVersion = bVersion
+            hexBundleVersion = String(format:"%02X", Int(bVersion)!)
         }
         return hexBundleVersion
     }
