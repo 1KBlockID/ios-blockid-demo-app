@@ -12,7 +12,7 @@ class CommonFunctions {
     
     static func getAppBundleVersion() -> (String, String) {
         let appVer = getAppVersion()
-        let bundleVer = getBundleVersionHex()
+        let bundleVer = getBundleVersion()
         return (appVer, bundleVer)
     }
     
@@ -24,7 +24,7 @@ class CommonFunctions {
         return appVersion
     }
     
-    private static func getBundleVersionHex() -> String {
+    private static func getBundleVersion() -> String {
         var hexBundleVersion = ""
         if let bVersion = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             hexBundleVersion = String(format:"%02X", Int(bVersion)!)

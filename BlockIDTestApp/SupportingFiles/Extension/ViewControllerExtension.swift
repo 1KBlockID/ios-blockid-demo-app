@@ -10,6 +10,24 @@ import UIKit
 import BlockIDSDK
 
 extension UIViewController {
+    
+    // Mark: - Fix me -
+    public func getDriverLicenseData(docIndex: Int, category: RegisterDocCategory) -> (docId: String?, islivenessNeeded: Bool?) {
+        let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
+                                                                      type: RegisterDocType.DL.rawValue,
+                                                                  category: category.rawValue) ?? ""
+        guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
+            return (nil, nil)
+        }
+        
+        let index = (docIndex-1)
+        if arrDocuments.count > index{
+            let dictDoc = arrDocuments[index]
+            return (dictDoc["id"] as? String, dictDoc["isLivenessRequired"] as? Bool)
+        }
+        return (nil, nil)
+    }
+    
     public func getDocumentID(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> String? {
         let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
                                                                   type: type.rawValue,
@@ -53,6 +71,13 @@ extension UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
             self.navigationController?.pushViewController(dlVC, animated: true)
+        }
+    }
+    
+    func showDocumentLivenessVC() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+            self.navigationController?.pushViewController(documentLivenessVC, animated: false)
         }
     }
     

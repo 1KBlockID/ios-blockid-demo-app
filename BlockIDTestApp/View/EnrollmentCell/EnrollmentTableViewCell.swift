@@ -44,20 +44,54 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
         case .DriverLicense:
-            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
-            self.textLabel?.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
-            self.accessoryType = (docId != nil) ? .checkmark : .none
+            //let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
+            self.textLabel?.text = enrollment.rawValue
+            if let controllerObj = controllerObj {
+                let document = controllerObj.getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+                if let docId = document.docId,
+                    !docId.isEmpty,
+                    let islivenessReq = document.islivenessNeeded, !islivenessReq {
+                    self.textLabel?.text = enrollment.rawValue
+                    self.detailTextLabel?.text = "(#"+(docId)+")"
+                    self.accessoryType = .checkmark
+                } else {
+                    self.accessoryType = .none
+                }
+            }
+        case .DriverLicense_Liveness:
+            self.textLabel?.text = enrollment.rawValue
+            if let controllerObj = controllerObj {
+                let document = controllerObj.getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+                if let docId = document.docId,
+                    !docId.isEmpty,
+                    let islivenessReq = document.islivenessNeeded, islivenessReq {
+                    self.textLabel?.text = enrollment.rawValue
+                    self.detailTextLabel?.text = "(#"+(docId)+")"
+                    self.accessoryType = .checkmark
+                } else {
+                    self.accessoryType = .none
+                }
+            }
         case .Passport1:
             let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .PPT ,category: .Identity_Document)
-            self.textLabel?.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.textLabel?.text = enrollment.rawValue
+            if let docId = docId, !docId.isEmpty {
+                self.detailTextLabel?.text = "(#"+(docId)+")"
+            }
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .Passport2:
             let docId = controllerObj?.getDocumentID(docIndex: 2 ,type: .PPT ,category: .Identity_Document)
-            self.textLabel?.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.textLabel?.text = enrollment.rawValue
+            if let docId = docId, !docId.isEmpty {
+                self.detailTextLabel?.text = "(#"+(docId)+")"
+            }
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .NationalID:
             let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document)
-            self.textLabel?.text = enrollment.rawValue+"(#"+(docId ?? "")+")"
+            self.textLabel?.text = enrollment.rawValue
+            if let docId = docId, !docId.isEmpty {
+                self.detailTextLabel?.text = "(#"+(docId)+")"
+            }
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .SSN:
             self.textLabel?.text = enrollment.rawValue
