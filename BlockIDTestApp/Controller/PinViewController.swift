@@ -140,9 +140,9 @@ class PinViewController: UIViewController {
             if !status {
                 var title: String? = nil
                 var msg: String? = nil
-                if error?.code == NSURLErrorNotConnectedToInternet {
+                if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
                     title = ErrorConfig.noInternet.title
-                    msg = ErrorConfig.noInternet.message
+                    msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 }
                 else if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
                     self.showAppLogin()

@@ -120,8 +120,14 @@ extension NationalIDViewController: NationalIDResponseDelegate {
            self.showAppLogin()
         }
         //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code || error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
+        if error?.code == CustomErrors.kDocumentExpired.code {
             self.view.makeToast(error?.message, duration: 3.0, position: .center)
+            return
+        }
+        
+        if error?.code == CustomErrors.License.MODULES_NOT_ENABLED.code {
+            let localizedMessage = "MODULES_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULES_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage, duration: 3.0, position: .center)
             return
         }
         

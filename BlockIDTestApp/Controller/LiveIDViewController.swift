@@ -257,9 +257,10 @@ class LiveIDViewController: UIViewController {
     private func showErrorDialog(_ error: ErrorResponse?) {
         var title: String? = nil
         var msg: String? = nil
-        if error?.code == NSURLErrorNotConnectedToInternet {
+        if error?.code == NSURLErrorNotConnectedToInternet ||
+            error?.code == CustomErrors.Network.OFFLINE.code {
+            msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
-            msg = ErrorConfig.noInternet.message
         }
         else if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
             self.showAppLogin()
@@ -295,9 +296,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         if isLoaderHidden {
             self.view.hideToastActivity()
         }
-        if error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
-                
+        if error?.code == CustomErrors.License.MODULES_NOT_ENABLED.code {
+            let localizedMessage = "MODULES_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULES_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
                 self.goBack()
             })
             return

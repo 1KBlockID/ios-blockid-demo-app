@@ -93,8 +93,10 @@ class SplashViewController: UIViewController {
                 self?.registerView.isHidden = false
                 self?.btnRestoreAccount.isHidden = true
             } else {
-                if error?.code == NSURLErrorNotConnectedToInternet {
-                    self?.showAlertView(title: "", message: error!.message)
+                if error?.code == NSURLErrorNotConnectedToInternet ||
+                    error?.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self?.showAlertView(title: "", message: localizedMessage)
                 }
                 else {
                     self?.showAlertView(title: "", message: error!.message)

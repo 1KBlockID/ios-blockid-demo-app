@@ -243,8 +243,9 @@ class AuthenticateViewController: UIViewController {
                 })
 
             } else {
-                if error?.code == NSURLErrorNotConnectedToInternet {
-                    self?.view.makeToast(ErrorConfig.noInternet.message, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
+                if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self?.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
                         
                     })
                 } else if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -277,8 +278,10 @@ class AuthenticateViewController: UIViewController {
                 })
 
             } else {
-                if error?.code == NSURLErrorNotConnectedToInternet {
-                    self?.view.makeToast(ErrorConfig.noInternet.message, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
+                if error?.code == NSURLErrorNotConnectedToInternet ||
+                    error?.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self?.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
                         
                     })
                 } else if (error)?.code == CustomErrors.kUnauthorizedAccess.code {

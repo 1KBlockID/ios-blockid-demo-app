@@ -200,8 +200,11 @@ extension EnrollMentViewController {
                 weakSelf.tableEnrollments.reloadData()
             } else {
                 // failure
-                if error?.code == NSURLErrorNotConnectedToInternet {
-                    weakSelf.view.makeToast(ErrorConfig.noInternet.message, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: nil)
+                if error?.code == NSURLErrorNotConnectedToInternet ||
+                    error?.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self?.showAlertView(title: "", message: localizedMessage)
+                    weakSelf.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: nil)
                 } else {
                     weakSelf.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: nil)
                 }
