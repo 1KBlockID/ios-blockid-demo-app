@@ -96,7 +96,7 @@ class SplashViewController: UIViewController {
                 if error?.code == NSURLErrorNotConnectedToInternet ||
                     error?.code == CustomErrors.Network.OFFLINE.code {
                     let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                    self?.showAlertView(title: "", message: localizedMessage)
+                    self?.showAlertView(title: "Error", message: localizedMessage)
                 }
                 else {
                     self?.showAlertView(title: "", message: error!.message)

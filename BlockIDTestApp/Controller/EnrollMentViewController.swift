@@ -203,7 +203,7 @@ extension EnrollMentViewController {
                 if error?.code == NSURLErrorNotConnectedToInternet ||
                     error?.code == CustomErrors.Network.OFFLINE.code {
                     let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                    self?.showAlertView(title: "", message: localizedMessage)
+                    self?.showAlertView(title: "Error", message: localizedMessage)
                     weakSelf.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: nil)
                 } else {
                     weakSelf.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: nil)
