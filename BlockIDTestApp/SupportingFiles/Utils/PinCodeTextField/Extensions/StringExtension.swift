@@ -21,6 +21,7 @@ internal extension String {
     }
 }
 
+// MARK: - Localization -
 extension String {
     func localizedMessage(_ code: Int) -> String {
         return String(format: NSLocalizedString(self, comment: ""), code)
