@@ -189,16 +189,29 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
-        //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code || error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center)
+        // Check if DL is Expired...
+        if error?.code == CustomErrors.kDocumentExpired.code {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        // DL Module not enabled...
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center)
             return
         }
         
         scanCompleteUIUpdates()
         
         guard var dl = dictDriveLicense, let token = signToken else {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center)
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
             return
             
         }

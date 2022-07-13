@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  BlockIDTestApp
+
+  Created by Aditya Sharma on 12/07/22.
+  
+*/
+
+// MARK: - Network Errors -
+"OFFLINE" = "Please check your internet connection (%d).";
+
+// MARK: - License Errors -
+"UNAUTHORIZED" = "The license key is not authorized (%d).";
+"EXPIRED" = "The license key is expired (%d).";
+"MODULES_EMPTY" = "The license key is not enabled with required modules (%d).";
+"MODULE_NOT_ENABLED" = "The license key is not enabled with required modules (%d).";
+"BAD_REQUEST" = "Bad request (%d).";
+"INVALID" = "The license key is invalid (%d).";

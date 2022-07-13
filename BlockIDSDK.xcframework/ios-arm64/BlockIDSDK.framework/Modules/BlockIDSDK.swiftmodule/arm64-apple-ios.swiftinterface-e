@@ -1288,14 +1288,22 @@ public class DataGroup15 : BlockIDSDK.DataGroup {
   @objc deinit
 }
 public struct CustomErrors {
-  public static let kLicenseKeyNotFound: (code: Swift.Int, msg: Swift.String)
-  public static let kLicenseyKeyExpired: (code: Swift.Int, msg: Swift.String)
+  public struct Network {
+    public static let OFFLINE: (code: Swift.Int, message: Swift.String)
+  }
+  public struct License {
+    public static let UNAUTHORIZED: (code: Swift.Int, message: Swift.String)
+    public static let EXPIRED: (code: Swift.Int, message: Swift.String)
+    public static let MODULES_EMPTY: (code: Swift.Int, message: Swift.String)
+    public static let MODULE_NOT_ENABLED: (code: Swift.Int, message: Swift.String)
+    public static let BAD_REQUEST: (code: Swift.Int, message: Swift.String)
+    public static let INVALID: (code: Swift.Int, message: Swift.String)
+  }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)
   public static let kSomethingWentWrong: (code: Swift.Int, msg: Swift.String)
   public static let kSomeProblemWhileFaceFinding: (code: Swift.Int, msg: Swift.String)
   public static let kUnauthorizedAccess: (code: Swift.Int, msg: Swift.String)
-  public static let kLicenseyKeyNotEnabled: (code: Swift.Int, msg: Swift.String)
   public static let kPublicKeyRequired: (code: Swift.Int, msg: Swift.String)
   public static let kEncryption: (code: Swift.Int, msg: Swift.String)
   public static let kDecryption: (code: Swift.Int, msg: Swift.String)
@@ -1333,7 +1341,6 @@ public struct CustomErrors {
   public static let kMagicLinkExpired: (code: Swift.Int, msg: Swift.String)
   public static let kMagicLinkCodeRedeemed: (code: Swift.Int, msg: Swift.String)
   public static let kTenantRegisterFailed: (code: Swift.Int, msg: Swift.String)
-  public static let kUnauthorizedLicenseKey: (code: Swift.Int, msg: Swift.String)
   public static let kUserNameIsMandatory: (code: Swift.Int, msg: Swift.String)
   public static let kTenantTagIsMandatory: (code: Swift.Int, msg: Swift.String)
   public static let kCommunityIsMandatory: (code: Swift.Int, msg: Swift.String)
