@@ -298,7 +298,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center,
+                                title: ErrorConfig.error.title, completion: {_ in
                 self.goBack()
             })
             return

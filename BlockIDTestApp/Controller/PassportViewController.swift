@@ -179,14 +179,22 @@ class PassportViewController: UIViewController {
             
         case CustomErrors.License.MODULE_NOT_ENABLED.code:
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: "Error", completion: {_ in
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center,
+                                title: "Error",
+                                completion: {_ in
                 self._viewEPassportScan.isHidden = false
                 self.ppScannerHelper?.startRFIDScanning()
             })
             return
             
         default:
-            self.view.makeToast(msg, duration: 3.0, position: .center, title: "Error", completion: {_ in
+            self.view.makeToast(msg,
+                                duration: 3.0,
+                                position: .center,
+                                title: "Error",
+                                completion: {_ in
                 self.goBack()
             })
             return

@@ -245,9 +245,10 @@ class AuthenticateViewController: UIViewController {
             } else {
                 if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
                     let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                    self?.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
-                        
-                    })
+                    self?.view.makeToast(localizedMessage,
+                                         duration: 3.0,
+                                         position: .center,
+                                         title: ErrorConfig.noInternet.title, completion: {_ in })
                 } else if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
                     self?.view.makeToast(error!.message, duration: 3.0, position: .center, title: "", completion: {_ in
                         self?.goBack()
@@ -281,9 +282,10 @@ class AuthenticateViewController: UIViewController {
                 if error?.code == NSURLErrorNotConnectedToInternet ||
                     error?.code == CustomErrors.Network.OFFLINE.code {
                     let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                    self?.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: ErrorConfig.noInternet.title, completion: {_ in
-                        
-                    })
+                    self?.view.makeToast(localizedMessage,
+                                         duration: 3.0,
+                                         position: .center,
+                                         title: ErrorConfig.noInternet.title, completion: {_ in })
                 } else if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
                     self?.view.makeToast(error!.message, duration: 3.0, position: .center, title: "", completion: {_ in
                         self?.goBack()
