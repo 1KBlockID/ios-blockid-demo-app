@@ -6,11 +6,11 @@
 	<dict>
 		<key>BIDScannerView.nib</key>
 		<data>
-		XS8H/cnRZbR1m1qTSrBuSTUE8zw=
+		ikAyWvvKu8IqiOFdDXQvb5G4Wes=
 		</data>
 		<key>Headers/BlockIDSDK-Swift.h</key>
 		<data>
-		AvOO5co4KuyMB/nvyxkZmng3w/w=
+		iycqJpfZunvRfEybn/q1zid0aTw=
 		</data>
 		<key>Headers/BlockIDSDK.h</key>
 		<data>
@@ -26,31 +26,19 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Cyfo+V995c+Y3XyUs2vmpmtuKPE=
+		r+3ngGChyotrJ44XUWeQlPAQSEA=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		44/3gabmBRIrgb2djD0Unef4iak=
+		ITF6irpxaUeMSBsj7RyhlyXjRqA=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		K5T1znKxd7kkAB2/Bp2991M8wYA=
+		iGLQmFkqT/dN1IEotqsRDWuDywg=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		bv81mVopTz7/bB8Y8FGjl/8dy1c=
-		</data>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftdoc</key>
-		<data>
-		44/3gabmBRIrgb2djD0Unef4iak=
-		</data>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftinterface</key>
-		<data>
-		K5T1znKxd7kkAB2/Bp2991M8wYA=
-		</data>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftmodule</key>
-		<data>
-		bv81mVopTz7/bB8Y8FGjl/8dy1c=
+		ytVU1nPRMBftN9L5HIoWrrp0yLo=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -62,7 +50,7 @@
 		</data>
 		<key>default.metallib</key>
 		<data>
-		PnRz/n2Hb6G8qlWbzS07GtSMQQM=
+		F9im9eB8Xkep0hJ+dhgkg+Fz6CY=
 		</data>
 		<key>tessdata/OCRB.traineddata</key>
 		<data>
@@ -75,14 +63,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4seF3Rqquqk/NFdVRj01n1ykfXZ77QVFLnM13JK/8XM=
+			MVbzqmkHsYmwtwiVgBImWCUZfuMPyyLRPOXlA+LSgNo=
 			</data>
 		</dict>
 		<key>Headers/BlockIDSDK-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RRAp08AtqDl+DsXnSpgLO8TbPuGq2WnOZY7sj+XsaF0=
+			r1QreMt4EN+MwxeT6Inu4F4OF4EQryHIIGHHRxnFxv4=
 			</data>
 		</dict>
 		<key>Headers/BlockIDSDK.h</key>
@@ -110,42 +98,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0/ynFYmVmPI18qdQ2iayKLbI3tca7jtWjHAj0xQBKOw=
+			RNyoHS1uRyhEO4duwMMYTWg7iJMUExDlpheBzbK0pzM=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QCiawpHh2HMx7g6bYtcNFj3YISMBpHR+Q0jRid0XNFQ=
+			dig3u/+7kIuIMnWkRQdseU1foJNbtSKO6bRDRKuuTRQ=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JvcD9IaBVo3DiwE9B8rH8tn9pTUJVEU8TFkDthaFQyw=
-			</data>
-		</dict>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftdoc</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			0/ynFYmVmPI18qdQ2iayKLbI3tca7jtWjHAj0xQBKOw=
-			</data>
-		</dict>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftinterface</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			QCiawpHh2HMx7g6bYtcNFj3YISMBpHR+Q0jRid0XNFQ=
-			</data>
-		</dict>
-		<key>Modules/BlockIDSDK.swiftmodule/arm64.swiftmodule</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			JvcD9IaBVo3DiwE9B8rH8tn9pTUJVEU8TFkDthaFQyw=
+			OpW4n5aA9BQuCwmVPReqbeFBX/rt9m96s5W+O6wuXMs=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -166,7 +133,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			6rkhb5DGl0oVQ6AG5qtrJ2YldY/WDOWtirHBhrE6cSk=
+			PjPr+yteFSH/9gCWqU0OmH9MdAWC1RfrsayD6LxBtKU=
 			</data>
 		</dict>
 		<key>tessdata/OCRB.traineddata</key>

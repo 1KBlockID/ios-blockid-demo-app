@@ -221,9 +221,10 @@ class AddUserViewController: UIViewController {
             }
             // failure
             let error = ErrorResponse(code: response.statusCode ?? 001, msg: response.error?.localizedDescription ?? "")
-            if error.code == NSURLErrorNotConnectedToInternet {
+            if error.code == NSURLErrorNotConnectedToInternet || error.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
-                                   message: ErrorConfig.noInternet.message)
+                                   message: localizedMessage)
             } else {
                 self.view.makeToast(error.message,
                                     duration: 3.0,

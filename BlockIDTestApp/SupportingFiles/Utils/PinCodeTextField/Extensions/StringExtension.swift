@@ -20,3 +20,10 @@ internal extension String {
         return components.filter { !$0.isEmpty }.joined(separator: " ")
     }
 }
+
+// MARK: - Localization -
+extension String {
+    func localizedMessage(_ code: Int) -> String {
+        return String(format: NSLocalizedString(self, comment: ""), code)
+    }
+}
