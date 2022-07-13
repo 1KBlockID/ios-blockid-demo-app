@@ -106,8 +106,8 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     
     private func beginRegistration(bidTenant: BIDTenant) {
         assert(Thread.isMainThread, "call me on main thread")
-//        self.view.makeToastActivity(.center)
-        
+        let title: String = "Error"
+        var msg: String = ""
         BlockIDSDK.sharedInstance.registerTenant(tenant: bidTenant) { [weak self] (status, error, tenant) in
             if status {
                 //On Success, process restore
@@ -135,13 +135,25 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                     self?.view.hideToastActivity()
                 }
             } else {
-                if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
-                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                    self?.showAlertView(title: "Error", message: localizedMessage)
+                switch error?.code {
+                case  CustomErrors.Network.OFFLINE.code:
+                    msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                case CustomErrors.License.UNAUTHORIZED.code:
+                    msg = "UNAUTHORIZED".localizedMessage(CustomErrors.License.UNAUTHORIZED.code)
+                case CustomErrors.License.EXPIRED.code:
+                    msg = "EXPIRED".localizedMessage(CustomErrors.License.EXPIRED.code)
+                case CustomErrors.License.MODULES_EMPTY.code:
+                    msg = "MODULES_EMPTY".localizedMessage(CustomErrors.License.MODULES_EMPTY.code)
+                case CustomErrors.License.MODULE_NOT_ENABLED.code:
+                    msg = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+                case CustomErrors.License.BAD_REQUEST.code:
+                    msg = "BAD_REQUEST".localizedMessage(CustomErrors.License.BAD_REQUEST.code)
+                case CustomErrors.License.INVALID.code:
+                    msg = "INVALID".localizedMessage(CustomErrors.License.INVALID.code)
+                 default:
+                    msg = error?.message ?? ""
                 }
-                else {
-                    self?.showAlertView(title: "", message: error!.message)
-                }
+                self?.showAlertView(title: "", message: error!.message)
                 self?.view.hideToastActivity()
             }
         }
