@@ -153,7 +153,7 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                  default:
                     msg = error?.message ?? ""
                 }
-                self?.showAlertView(title: "", message: error!.message)
+                self?.showAlertView(title: title, message: msg)
                 self?.view.hideToastActivity()
             }
         }

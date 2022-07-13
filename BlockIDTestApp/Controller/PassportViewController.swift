@@ -184,8 +184,7 @@ class PassportViewController: UIViewController {
                                 position: .center,
                                 title: "Error",
                                 completion: {_ in
-                self._viewEPassportScan.isHidden = false
-                self.ppScannerHelper?.startRFIDScanning()
+                self.goBack()
             })
             return
             
