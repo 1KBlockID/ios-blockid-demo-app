@@ -177,8 +177,8 @@ class PassportViewController: UIViewController {
             })
             return
             
-        case CustomErrors.License.MODULES_NOT_ENABLED.code:
-            let localizedMessage = "MODULES_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULES_NOT_ENABLED.code)
+        case CustomErrors.License.MODULE_NOT_ENABLED.code:
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
             self.view.makeToast(localizedMessage, duration: 3.0, position: .center, title: "Error", completion: {_ in
                 self._viewEPassportScan.isHidden = false
                 self.ppScannerHelper?.startRFIDScanning()
@@ -210,7 +210,7 @@ extension PassportViewController: PassportResponseDelegate {
             error?.code == CustomErrors.kInvalidPP.code ||
             error?.code == CustomErrors.kPPRFIDTimeout.code ||
             error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
-            error?.code == CustomErrors.License.MODULES_NOT_ENABLED.code {
+            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             
             guard let err = error else {
                 return

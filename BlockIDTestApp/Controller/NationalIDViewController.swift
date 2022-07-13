@@ -125,8 +125,8 @@ extension NationalIDViewController: NationalIDResponseDelegate {
             return
         }
         
-        if error?.code == CustomErrors.License.MODULES_NOT_ENABLED.code {
-            let localizedMessage = "MODULES_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULES_NOT_ENABLED.code)
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
             self.view.makeToast(localizedMessage, duration: 3.0, position: .center)
             return
         }

@@ -1294,7 +1294,8 @@ public struct CustomErrors {
   public struct License {
     public static let UNAUTHORIZED: (code: Swift.Int, message: Swift.String)
     public static let EXPIRED: (code: Swift.Int, message: Swift.String)
-    public static let MODULES_NOT_ENABLED: (code: Swift.Int, message: Swift.String)
+    public static let MODULES_EMPTY: (code: Swift.Int, message: Swift.String)
+    public static let MODULE_NOT_ENABLED: (code: Swift.Int, message: Swift.String)
     public static let BAD_REQUEST: (code: Swift.Int, message: Swift.String)
     public static let INVALID: (code: Swift.Int, message: Swift.String)
   }
