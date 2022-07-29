@@ -13,7 +13,8 @@ target 'BlockIDTestApp' do
   pod 'BigInt', '~> 4.0'
   pod 'SwiftyTesseract', '~> 3.1.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
-  
+  pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
+  pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
 end
 
 post_install do |installer|
