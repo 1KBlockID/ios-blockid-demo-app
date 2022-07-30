@@ -14,6 +14,7 @@ target 'BlockIDTestApp' do
   pod 'SwiftyTesseract', '~> 3.1.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
+  pod 'Firebase/Analytics', '~> 8.12.0'
   #pod 'FirebaseCore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
   #pod 'FirebaseFirestore', :git => 'https://github.com/firebase/firebase-ios-sdk.git', :branch => 'master'
 end
