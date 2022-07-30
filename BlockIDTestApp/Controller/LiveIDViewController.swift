@@ -364,6 +364,8 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.up
             case .MOVE_DOWN:
                 self._lblInformation.text = DetectionMsg.down*/
+            @unknown default:
+                return
             }
             self.imgOverlay.tintColor = .green
         }
