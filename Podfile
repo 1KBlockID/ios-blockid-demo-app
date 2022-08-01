@@ -14,6 +14,7 @@ target 'BlockIDTestApp' do
   pod 'SwiftyTesseract', '~> 3.1.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
+  pod 'Firebase/Analytics', '~> 8.12.0'
 end
 
 post_install do |installer|
