@@ -185,17 +185,17 @@ class AddUserViewController: UIViewController {
     private func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
-                case .notDetermined, .restricted, .denied:
+            case .notDetermined, .restricted, .denied:
                 self.buildInAppBrowserURL()
                 self.completionForLocationObj = nil
-                case .authorizedAlways, .authorizedWhenInUse:
+            case .authorizedAlways, .authorizedWhenInUse:
                 self.locationManager.startUpdatingLocation()
                 self.performMagicLinkOperation {
                     self.buildInAppBrowserURL()
                     self.completionForLocationObj = nil
                 }
-                @unknown default:
-                    break
+            @unknown default:
+                break
             }
         } else {
             self.buildInAppBrowserURL()
@@ -343,11 +343,29 @@ extension AddUserViewController {
             return
         }
         
-        BlockIDSDK.sharedInstance.addPreLinkedUser(userId: userIdUW,
-                                                   scep_hash: user?.scep_hash ?? "",
-                                                   scep_privatekey: user?.scep_privatekey ?? "",
-                                                   origin: originUW, account: user?.account) { (status, error) in
+        BlockIDSDK.sharedInstance
+            .addPreLinkedUser(userId: userIdUW,
+                              scep_hash: user?.scep_hash ?? "",
+                              scep_privatekey: user?.scep_privatekey ?? "",
+                              scep_expiry: user?.scep_expiry ?? "",
+                              origin: originUW,
+                              account: user?.account) { (status, error) in
             if status {
+                //FIXME: - Uncomment below code for FIDO2 registration
+//                let response = BlockIDSDK.sharedInstance.getLinkedUserAccounts()
+//                let linkedAccounts = response.linkedUsers
+//
+//                BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: linkedAccounts.first, type: .PLATFORM) { _, _ in
+//                    // Fido registration is failed || succeed, show success dialog
+//                    self.view.makeToast("User registration successful.",
+//                                        duration: 3.0,
+//                                        position: .center,
+//                                        title: "Success",
+//                                        completion: {_ in
+//                        self.goBack()
+//                    })
+//                }
+                
                 self.view.makeToast("User registration successful.",
                                     duration: 3.0,
                                     position: .center,
@@ -355,6 +373,7 @@ extension AddUserViewController {
                                     completion: {_ in
                     self.goBack()
                 })
+
             } else {
                 self.view.makeToast("User registration is unsuccessful. Please try again.",
                                     duration: 3.0,
