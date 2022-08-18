@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '11.0'
+ platform :ios, '12.0'
 
 target 'BlockIDTestApp' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -15,6 +15,9 @@ target 'BlockIDTestApp' do
   pod 'OpenSSL-Universal', '~> 1.1.180'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
   pod 'Firebase/Analytics', '~> 8.12.0'
+  pod 'WebAuthnKit', :git => 'https://github.com/1KBlockID/WebAuthnKit-iOS.git', :tag => '2.0.2'
+  pod 'EllipticCurveKeyPair', :git => 'https://github.com/1KBlockID/EllipticCurveKeyPair.git', :tag => '2.0.2'
+
 end
 
 post_install do |installer|

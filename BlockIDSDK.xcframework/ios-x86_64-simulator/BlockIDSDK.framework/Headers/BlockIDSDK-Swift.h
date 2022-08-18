@@ -266,6 +266,9 @@ SWIFT_CLASS("_TtC10BlockIDSDK10BlockIDSDK")
 
 
 
+
+
+
 SWIFT_CLASS("_TtC10BlockIDSDK10DeviceAuth")
 @interface DeviceAuth : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
