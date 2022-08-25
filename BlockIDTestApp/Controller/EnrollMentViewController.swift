@@ -26,6 +26,7 @@ public enum Enrollments: String {
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
+    case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
 }
 
@@ -45,6 +46,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
+                           Enrollments.WalletConnect,
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
@@ -125,6 +127,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             launchForFIDO2()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
+        case Enrollments.WalletConnect.rawValue:
+            self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
         default:
