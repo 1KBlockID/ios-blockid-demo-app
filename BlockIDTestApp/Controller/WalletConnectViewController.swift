@@ -29,7 +29,7 @@ class WalletConnectViewController: UIViewController {
             name: "BlockID Demo",
             description: "1Kosmos WalletConenct Demo",
             url: "example.wallet",
-            icons: ["https://avatars.githubusercontent.com/u/37784886"])
+            icons: ["https://www.1kosmos.com/favicon.ico"])
         walletConnectHelper = WalletConnectHelper.init(delegate: self, metadata: metadata)
     }
     
@@ -97,13 +97,21 @@ extension WalletConnectViewController: WalletConnectDelegate {
         DispatchQueue.main.async {
             let consentVC = self.storyboard?.instantiateViewController(withIdentifier: "WalletConsentViewController") as! WalletConsentViewController
             consentVC.proposal = proposal
+            consentVC.isForProposal = true
             consentVC.delegate = self
             self.present(consentVC, animated: true)
         }
     }
     
     func receivedSignTransactionRequest(request: Request) {
-        
+        print("--Transaction request---\n \(request)")
+        DispatchQueue.main.async {
+            let consentVC = self.storyboard?.instantiateViewController(withIdentifier: "WalletConsentViewController") as! WalletConsentViewController
+            consentVC.sessionRequest = request
+            consentVC.isForProposal = false
+            consentVC.delegate = self
+            self.present(consentVC, animated: true)
+        }
     }
 
     func receivedActiveSessions(sessions: [ActiveSessionItem]) {
@@ -115,12 +123,12 @@ extension WalletConnectViewController: WalletConnectDelegate {
         self.present(alert, animated: true)
     }
     
-    func disconnectWalletSession() {
+    func disconnectWalletSession(remainingSession: [ActiveSessionItem]) {
+        self.sessionItems = remainingSession
         let alert = UIAlertController(title: "Success", message: "Your wallet has been disconnected", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
             DispatchQueue.main.async { [weak self] in
-                self?.sessionItems.remove(at: selectedIndex.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
+                self?.connectTable.reloadData()
             }
         }))
         self.present(alert, animated: true)
@@ -138,9 +146,16 @@ extension WalletConnectViewController: WalletConnectDelegate {
 
 extension WalletConnectViewController: WalletConsentVCDelegate {
 
-    func approved(isApproved: Bool) {
+    func proposalApproved(isApproved: Bool) {
         Task {
             try await self.walletConnectHelper?.responseToProposal(isAccepted: isApproved)
         }
     }
+    
+    func signApproved(isApproved: Bool, request: Request) {
+        self.walletConnectHelper?.signTransaction(isApproved: isApproved, request: request)
+    }
 }
+
+
+

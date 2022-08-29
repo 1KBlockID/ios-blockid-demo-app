@@ -10,30 +10,65 @@ import WalletConnectSign
 import BlockIDSDK
 
 protocol WalletConsentVCDelegate: AnyObject {
-    func approved(isApproved: Bool)
+    func proposalApproved(isApproved: Bool)
+    func signApproved(isApproved: Bool, request: Request)
 }
 class WalletConsentViewController: UIViewController {
 
     var proposal: Session.Proposal!
+    var isForProposal: Bool!
+    var sessionRequest: Request!
     weak var delegate: WalletConsentVCDelegate?
 
+    @IBOutlet weak var viewTitleLbl: UILabel!
     @IBOutlet weak var dAppUrlLbl: UILabel!
     @IBOutlet weak var walletAddressLbl: UILabel!
+    @IBOutlet weak var signTransView: UIView!
+    @IBOutlet weak var proposalView: UIView!
     
+    @IBOutlet weak var fromAddressLbl: UILabel!
+    @IBOutlet weak var toAddressLbl: UILabel!
+    @IBOutlet weak var valueLbl: UILabel!
+    @IBOutlet weak var gasPriceLbl: UILabel!
+    @IBOutlet weak var dataLbl: UILabel!
+    @IBOutlet weak var nonceLbl: UILabel!
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        dAppUrlLbl.text = proposal.proposer.url
-        walletAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
+        if isForProposal {
+            viewTitleLbl.text = "Would you like to connect with your wallet"
+            signTransView.isHidden = true
+            proposalView.isHidden = false
+            dAppUrlLbl.text = proposal.proposer.url
+            walletAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
+        } else {
+            viewTitleLbl.text = "Would you like to sign this transaction request"
+            signTransView.isHidden = false
+            proposalView.isHidden = true
+            fromAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
+            toAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
+            //FIXME: - With WEB3 - Decode Params and show on labels
+            //let params = try! sessionRequest.params.get([EthereumTransaction].self)
+        }
     }
 
     @IBAction func approveTapped(_ sender: Any) {
-        self.delegate?.approved(isApproved: true)
+        if isForProposal {
+            self.delegate?.proposalApproved(isApproved: true)
+        } else {
+            self.delegate?.signApproved(isApproved: true, request: sessionRequest)
+        }
         self.dismiss(animated: true)
     }
 
     @IBAction func rejectTapped(_ sender: Any)  {
-        self.delegate?.approved(isApproved: false)
-            self.dismiss(animated: true)
+        if isForProposal {
+            self.delegate?.proposalApproved(isApproved: false)
+        } else {
+            self.delegate?.signApproved(isApproved: false, request: sessionRequest)
+        }
+        self.dismiss(animated: true)
     }
 
 }
