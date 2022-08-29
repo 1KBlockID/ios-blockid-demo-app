@@ -650,6 +650,7 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BlockIDSDK.BIDLinkedAccount?, type: BlockIDSDK.FIDO2KeyType, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func checkSCEPCertificate(requestedAccount: BlockIDSDK.BIDLinkedAccount, completion: @escaping BlockIDSDK.SCEPCertificateCallback)
+  public func getWalletConnect(metadata: WalletConnectSign.AppMetadata)
   @objc deinit
 }
 extension BlockIDSDK.BlockIDSDK {
@@ -857,7 +858,7 @@ public protocol WalletConnectDelegate : AnyObject {
   func receivedSessionProposal(proposal: WalletConnectSign.Session.Proposal?)
   func receivedSignTransactionRequest(request: WalletConnectSign.Request)
   func receivedActiveSessions(sessions: [BlockIDSDK.ActiveSessionItem])
-  func disconnectWalletSession()
+  func disconnectWalletSession(remainingSession: [BlockIDSDK.ActiveSessionItem])
   func receivedError(error: BlockIDSDK.WalletConnectErrors)
 }
 public struct WalletConnectMetadata {
@@ -866,14 +867,10 @@ public struct WalletConnectMetadata {
 @objc public class WalletConnectHelper : ObjectiveC.NSObject {
   public init(delegate: BlockIDSDK.WalletConnectDelegate, metadata: BlockIDSDK.WalletConnectMetadata)
   public func connect(uriCode: Swift.String)
-  public func disconnect()
-  public func signTransaction()
+  public func disconnect(session: BlockIDSDK.ActiveSessionItem)
+  public func signTransaction(isApproved: Swift.Bool, request: WalletConnectSign.Request)
   public func getActiveSessions() -> [BlockIDSDK.ActiveSessionItem]
-  
-  #if compiler(>=5.3) && $AsyncAwait
-  public func responseToProposal(isAccepted: Swift.Bool) async
-  #endif
-
+  public func responseToProposal(isAccepted: Swift.Bool)
   @objc deinit
 }
 public struct ActiveSessionItem {
