@@ -63,6 +63,7 @@ enum Vibration {
             case .selection:
                 UISelectionFeedbackGenerator().selectionChanged()
             case .oldSchool:
+                //FIXME: - Need to be fixed
                 print("old school----->")
                 //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             }

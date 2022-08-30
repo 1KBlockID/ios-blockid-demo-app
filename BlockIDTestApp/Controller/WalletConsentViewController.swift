@@ -61,7 +61,6 @@ class WalletConsentViewController: UIViewController {
                 signTransView.isHidden = false
                 proposalView.isHidden = true
                 let params = sessionRequest.params.value as! [[String: String]]
-                print("---SIGN REQUEST----\(params)")
                 fromAddressLbl.text = params[0]["from"]
                 toAddressLbl.text = params[0]["to"]
                 valueLbl.text = params[0]["value"]
