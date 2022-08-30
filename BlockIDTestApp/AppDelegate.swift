@@ -8,10 +8,15 @@
 
 import UIKit
 import Firebase
+import WalletConnectSign
+import BlockIDSDK
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    var currentProposal: Session.Proposal?
+    var walletConnectHelper: WalletConnectHelper?
+    var sessionItems: [ActiveSessionItem] = []
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -21,4 +26,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+}
+
+// MARK: -
+extension UIApplication {
+    func topMostViewController() -> UIViewController? {
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        if var topController = keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            return topController.topMostViewController()
+        }
+        return nil
+    }
 }

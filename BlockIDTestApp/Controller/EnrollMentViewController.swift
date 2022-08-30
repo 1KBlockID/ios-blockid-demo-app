@@ -10,6 +10,7 @@ import Foundation
 import BlockIDSDK
 import Toast_Swift
 import UIKit
+import WalletConnectSign
 
 public enum Enrollments: String {
     case AddUser = "Add User"
@@ -26,6 +27,7 @@ public enum Enrollments: String {
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
+    case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
 }
 
@@ -45,11 +47,26 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
+                           Enrollments.WalletConnect,
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let appDelegate = appDelegate {
+            let metadata = AppMetadata(
+                name: "BlockID Demo",
+                description: "1Kosmos WalletConenct Demo",
+                url: "example.wallet",
+                icons: ["https://www.1kosmos.com/favicon.ico"])
+            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
+                                                                       metadata: metadata,
+                                                                       delegate: appDelegate)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -125,6 +142,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             launchForFIDO2()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
+        case Enrollments.WalletConnect.rawValue:
+            self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
         default:

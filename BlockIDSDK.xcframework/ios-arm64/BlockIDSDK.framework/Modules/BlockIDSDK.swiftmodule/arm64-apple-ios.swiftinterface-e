@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
-// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
+// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
 import ARKit
 import AVFoundation
 import Accelerate
@@ -21,12 +21,17 @@ import MetalKit
 import OpenSSL
 import PromiseKit
 import SafariServices
+import Starscream
 import Swift
 import SwiftUI
 import SwiftyTesseract
 import UIKit
 import Vision
+import WalletConnectRelay
+import WalletConnectSign
+import WalletConnectUtils
 import WalletCore
+import Web3
 import WebAuthnKit
 import WebKit
 import _Concurrency
@@ -589,7 +594,6 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   public func isPinRegistered() -> Swift.Bool
   public func isDeviceAuthRegisterd() -> Swift.Bool
   public func isLiveIDRegisterd() -> Swift.Bool
-  public func isVoiceIDRegisterd() -> Swift.Bool
   public func isPassportEnrolled() -> Swift.Bool
   public func isDLEnrolled() -> Swift.Bool
   public func isSSNEnrolled() -> Swift.Bool
@@ -742,7 +746,6 @@ public enum ScannerType {
 public typealias VerifyLiveIDCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 public enum AuthAssetType : Swift.String {
   case pin
-  case voiceID
   case device
   case liveID
   public init?(rawValue: Swift.String)
@@ -764,9 +767,6 @@ public enum AuthAssetType : Swift.String {
   public func enrollPin(pin: Swift.String, proofedBy: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
   public func verifyPin(pin: Swift.String) -> Swift.Bool
   public func unEnrollPin(pin: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func enrollVoiceID()
-  public func unenrollVoiceID()
-  public func verifyVoiceID()
   public func enrollDeviceAuth(completion: @escaping (Swift.Bool, Any?, Swift.String?) -> Swift.Void)
   public func unenrollDeviceAuth(completion: @escaping (Swift.Bool, Any?, Swift.String?) -> Swift.Void)
   public func verifyDeviceAuth(completion: @escaping (Swift.Bool, BlockIDSDK.BiometricError?, Swift.String?) -> Swift.Void)
@@ -843,6 +843,32 @@ public enum SecureMessagingSupportedAlgorithms {
 public class SecureMessaging {
   public init(encryptionAlgorithm: BlockIDSDK.SecureMessagingSupportedAlgorithms = .DES, ksenc: [Swift.UInt8], ksmac: [Swift.UInt8], ssc: [Swift.UInt8])
   @objc deinit
+}
+extension Starscream.WebSocket : WalletConnectRelay.WebSocketConnecting {
+}
+public protocol WalletConnectDelegate : AnyObject {
+  func onSessionProposal(sessionProposal: WalletConnectSign.Session.Proposal?)
+  func onSessionRequest(request: WalletConnectSign.Request)
+  func onSessionSettleResponse(sessions: [BlockIDSDK.ActiveSessionItem])
+  func onSessionDisconnect(remainingSession: [BlockIDSDK.ActiveSessionItem])
+  func onError(error: Swift.Error)
+}
+@objc public class WalletConnectHelper : ObjectiveC.NSObject {
+  public init(projectID: Swift.String, metadata: WalletConnectSign.AppMetadata, delegate: BlockIDSDK.WalletConnectDelegate)
+  public func connect(uri: Swift.String)
+  public func disconnect(session: BlockIDSDK.ActiveSessionItem)
+  public func approveSession(request: WalletConnectSign.Request)
+  public func rejectSession(request: WalletConnectSign.Request)
+  public func getActiveSessions() -> [BlockIDSDK.ActiveSessionItem]
+  public func approveConnection(sessionProposal: WalletConnectSign.Session.Proposal)
+  public func rejectConnection(sessionProposal: WalletConnectSign.Session.Proposal)
+  @objc deinit
+}
+public struct ActiveSessionItem {
+  public let dappName: Swift.String
+  public let dappURL: Swift.String
+  public let iconURL: Swift.String
+  public let topic: Swift.String
 }
 @available(iOS 13, macOS 10.15, *)
 public enum NFCPassportReaderError : Swift.Error {
