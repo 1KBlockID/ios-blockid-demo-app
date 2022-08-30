@@ -123,7 +123,7 @@ extension WalletConnectViewController {
     }
     
     @objc func onSessionSettleResponse(notification: Notification) {
-        self.sessionItems = notification.userInfo?["sessionItems"] as? [ActiveSessionItem] ?? []
+        self.sessionItems = notification.userInfo?[kSessionItems] as? [ActiveSessionItem] ?? []
         if isProposalReceived {
             let alert = UIAlertController(title: "Success", message: "Your wallet has been connected to \(appDelegate?.currentProposal?.proposer.url ?? "DApp")", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
@@ -152,7 +152,7 @@ extension WalletConnectViewController {
     }
     
     @objc func onSessionDisconnect(notification: Notification) {
-        self.sessionItems = notification.userInfo?["sessionItems"] as? [ActiveSessionItem] ?? []
+        self.sessionItems = notification.userInfo?[kSessionItems] as? [ActiveSessionItem] ?? []
         manageDisconnectSession(remainingSessions: self.sessionItems)
     }
 }

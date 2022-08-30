@@ -13,6 +13,7 @@ import UIKit
 let kOnSessionSettleResponse = "onSessionSettleResponse"
 let kOnSessionDisconnect = "onSessionDisconnect"
 let kOnSessionProposal = "onSessionProposal"
+let kSessionItems = "sessionItems"
 
 let appDelegate = UIApplication.shared.delegate as? AppDelegate
 extension AppDelegate: WalletConnectDelegate {
@@ -49,7 +50,7 @@ extension AppDelegate: WalletConnectDelegate {
         appDelegate?.sessionItems = sessions
         NotificationCenter.default.post(name: Notification.Name(kOnSessionSettleResponse),
                                         object: nil,
-                                        userInfo: ["sessionItems":sessions])
+                                        userInfo: [kSessionItems:sessions])
     }
     
     func onSessionDisconnect(remainingSession: [ActiveSessionItem]) {
@@ -61,7 +62,7 @@ extension AppDelegate: WalletConnectDelegate {
                 topVCObj.present(alert, animated: true)
                 NotificationCenter.default.post(name: Notification.Name(kOnSessionDisconnect),
                                                 object: nil,
-                                                userInfo: ["sessionItems":remainingSession])
+                                                userInfo: [kSessionItems:remainingSession])
             }
         }
     }
