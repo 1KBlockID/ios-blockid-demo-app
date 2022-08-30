@@ -84,8 +84,6 @@ class WalletConnectViewController: UIViewController {
 
 extension WalletConnectViewController: ScanQRViewDelegate {
     func scannedData(data: String) {
-        print("------SCANNED DATA-----")
-        print("\(data)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             appDelegate?.walletConnectHelper?.connect(uri: data)
         }
