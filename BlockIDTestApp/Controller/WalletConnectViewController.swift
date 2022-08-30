@@ -25,9 +25,18 @@ class WalletConnectViewController: UIViewController {
     }
     
     fileprivate func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionSettleResponse(notification:)), name: Notification.Name(kOnSessionSettleResponse), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionDisconnect(notification:)), name: Notification.Name(kOnSessionDisconnect), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionProposal(notification:)), name: Notification.Name(kOnSessionProposal), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.onSessionSettleResponse(notification:)),
+                                               name: Notification.Name(kOnSessionSettleResponse),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.onSessionDisconnect(notification:)),
+                                               name: Notification.Name(kOnSessionDisconnect),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.onSessionProposal(notification:)),
+                                               name: Notification.Name(kOnSessionProposal),
+                                               object: nil)
     }
     
     override func viewDidLoad() {
