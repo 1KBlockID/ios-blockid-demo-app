@@ -238,5 +238,39 @@ extension UIViewController {
     public func alertForCameraAccess() {
         self.openSettings(title: "Camera Inaccessible", message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
     }
+    
+    // MARK: - Topmost View Controller
+    func topMostViewController() -> UIViewController? {
+        // if root view is Navigation
+        if let navigationController = self as? UINavigationController {
+            return navigationController.visibleViewController?.topMostViewController()
+        }
+        // if root view is Tab
+        if let tabController = self as? UITabBarController {
+            if let selectedTab = tabController.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabController.topMostViewController()
+        }
+        // otherwise
+        if self.presentedViewController == nil {
+            return self
+        }
+        // Navigation
+        if let navigationCon = self.presentedViewController as? UINavigationController {
+            if let visibleController = navigationCon.visibleViewController {
+                return visibleController.topMostViewController()
+            }
+        }
+        // Tab
+        if let tabCon = self.presentedViewController as? UITabBarController {
+            if let selectedTab = tabCon.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabCon.topMostViewController()
+        }
+        // otherwise
+        return self.presentedViewController?.topMostViewController()
+    }
 }
 
