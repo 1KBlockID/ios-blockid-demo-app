@@ -10,7 +10,7 @@ import WalletConnectSign
 import BlockIDSDK
 
 protocol WalletConsentVCDelegate: AnyObject {
-    func proposalApproved(isApproved: Bool)
+    func proposalApproved(isApproved: Bool, sessionProposal: Session.Proposal)
     func signApproved(isApproved: Bool, request: Request)
 }
 class WalletConsentViewController: UIViewController {
@@ -75,7 +75,7 @@ class WalletConsentViewController: UIViewController {
     
     @IBAction func approveTapped(_ sender: Any) {
         if isForProposal {
-            self.delegate?.proposalApproved(isApproved: true)
+            self.delegate?.proposalApproved(isApproved: true, sessionProposal: self.proposal)
         } else {
             self.delegate?.signApproved(isApproved: true, request: sessionRequest)
         }
@@ -84,7 +84,7 @@ class WalletConsentViewController: UIViewController {
 
     @IBAction func rejectTapped(_ sender: Any)  {
         if isForProposal {
-            self.delegate?.proposalApproved(isApproved: false)
+            self.delegate?.proposalApproved(isApproved: false, sessionProposal: self.proposal)
         } else {
             self.delegate?.signApproved(isApproved: false, request: sessionRequest)
         }

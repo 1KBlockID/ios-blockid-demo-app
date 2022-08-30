@@ -10,6 +10,7 @@ import Foundation
 import BlockIDSDK
 import Toast_Swift
 import UIKit
+import WalletConnectSign
 
 public enum Enrollments: String {
     case AddUser = "Add User"
@@ -52,6 +53,20 @@ class EnrollMentViewController: UIViewController {
     @IBOutlet weak var tableEnrollments: UITableView!
     @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let appDelegate = appDelegate {
+            let metadata = AppMetadata(
+                name: "BlockID Demo",
+                description: "1Kosmos WalletConenct Demo",
+                url: "example.wallet",
+                icons: ["https://www.1kosmos.com/favicon.ico"])
+            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
+                                                                       metadata: metadata,
+                                                                       delegate: appDelegate)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
