@@ -31,6 +31,7 @@ import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
 import WalletCore
+import Web3
 import WebAuthnKit
 import WebKit
 import _Concurrency
@@ -650,6 +651,7 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Erro
   public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping FIDO2Callback)
   public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BIDLinkedAccount?, type: FIDO2KeyType, completion: @escaping FIDO2Callback)
   public func checkSCEPCertificate(requestedAccount: BIDLinkedAccount, completion: @escaping SCEPCertificateCallback)
+  public func getWalletConnect(metadata: WalletConnectSign.AppMetadata)
   @objc deinit
 }
 extension BlockIDSDK {
@@ -857,7 +859,7 @@ public protocol WalletConnectDelegate : AnyObject {
   func receivedSessionProposal(proposal: WalletConnectSign.Session.Proposal?)
   func receivedSignTransactionRequest(request: WalletConnectSign.Request)
   func receivedActiveSessions(sessions: [ActiveSessionItem])
-  func disconnectWalletSession()
+  func disconnectWalletSession(remainingSession: [ActiveSessionItem])
   func receivedError(error: WalletConnectErrors)
 }
 public struct WalletConnectMetadata {
@@ -866,14 +868,10 @@ public struct WalletConnectMetadata {
 @objc public class WalletConnectHelper : ObjectiveC.NSObject {
   public init(delegate: WalletConnectDelegate, metadata: WalletConnectMetadata)
   public func connect(uriCode: Swift.String)
-  public func disconnect()
-  public func signTransaction()
+  public func disconnect(session: ActiveSessionItem)
+  public func signTransaction(isApproved: Swift.Bool, request: WalletConnectSign.Request)
   public func getActiveSessions() -> [ActiveSessionItem]
-  
-  #if compiler(>=5.3) && $AsyncAwait
-  public func responseToProposal(isAccepted: Swift.Bool) async
-  #endif
-
+  public func responseToProposal(isAccepted: Swift.Bool)
   @objc deinit
 }
 public struct ActiveSessionItem {

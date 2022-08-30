@@ -18,12 +18,14 @@ class WalletConnectViewController: UIViewController {
     var sessionItems: [ActiveSessionItem] = []
     var currentProposal: Session.Proposal?
     var selectedIndex: IndexPath?
+    private var isProposalReceived = false
 
     @IBOutlet weak var connectTable: UITableView!
     @IBOutlet weak var disconnectBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.disconnectBtn.isHidden = true
         connectTable.register(UINib(nibName: "WalletConnectTableViewCell", bundle: nil), forCellReuseIdentifier: "WalletConnectTableViewCell")
         let metadata = WalletConnectMetadata(
             name: "BlockID Demo",
@@ -40,12 +42,21 @@ class WalletConnectViewController: UIViewController {
     @IBAction func connectDAppTapped(_ sender: Any) {
         let scanQRVC = self.storyboard?.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
         scanQRVC.delegate = self
-
         self.present(scanQRVC, animated: true)
     }
     
     @IBAction func disconnectTapped(_ sender: Any) {
-        
+        guard let indexpath = selectedIndex else {
+            let alert = UIAlertController(title: "Error", message: "No DApp selected!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        walletConnectHelper?.disconnect(session: sessionItems[indexpath.row])
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
+            self.sessionItems = self.walletConnectHelper?.getActiveSessions() ?? []
+            self.disconnectWalletSession(remainingSession: self.sessionItems)
+        })
     }
 }
 
@@ -94,6 +105,8 @@ extension WalletConnectViewController: WalletConnectDelegate {
     
     func receivedSessionProposal(proposal: Session.Proposal?) {
         currentProposal = proposal
+        isProposalReceived = true
+        print("---CURRENT PROPOSAL---\n \(currentProposal.debugDescription)")
         DispatchQueue.main.async {
             let consentVC = self.storyboard?.instantiateViewController(withIdentifier: "WalletConsentViewController") as! WalletConsentViewController
             consentVC.proposal = proposal
@@ -105,10 +118,12 @@ extension WalletConnectViewController: WalletConnectDelegate {
     
     func receivedSignTransactionRequest(request: Request) {
         print("--Transaction request---\n \(request)")
+        let sessions = sessionItems.filter({$0.topic == request.topic})
         DispatchQueue.main.async {
             let consentVC = self.storyboard?.instantiateViewController(withIdentifier: "WalletConsentViewController") as! WalletConsentViewController
             consentVC.sessionRequest = request
             consentVC.isForProposal = false
+            consentVC.sessionUrl = sessions[0].dappURL
             consentVC.delegate = self
             self.present(consentVC, animated: true)
         }
@@ -116,22 +131,37 @@ extension WalletConnectViewController: WalletConnectDelegate {
 
     func receivedActiveSessions(sessions: [ActiveSessionItem]) {
         self.sessionItems = sessions
-        let alert = UIAlertController(title: "Success", message: "Your wallet has been connected to \(currentProposal?.proposer.url)", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-            self.connectTable.reloadData()
-        }))
-        self.present(alert, animated: true)
+        if isProposalReceived {
+            let alert = UIAlertController(title: "Success", message: "Your wallet has been connected to \(currentProposal?.proposer.url ?? "DApp")", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
+                self.connectTable.reloadData()
+            }))
+            self.present(alert, animated: true)
+        } else {
+            DispatchQueue.main.async {
+                self.connectTable.reloadData()
+            }
+        }
+        if self.sessionItems.count != 0 {
+            self.disconnectBtn.isHidden = false
+        }
+
     }
     
     func disconnectWalletSession(remainingSession: [ActiveSessionItem]) {
         self.sessionItems = remainingSession
-        let alert = UIAlertController(title: "Success", message: "Your wallet has been disconnected", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-            DispatchQueue.main.async { [weak self] in
+        DispatchQueue.main.async { [weak self] in
+            let alert = UIAlertController(title: "Success", message: "Your wallet has been disconnected", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
                 self?.connectTable.reloadData()
-            }
-        }))
-        self.present(alert, animated: true)
+                if self?.sessionItems.count != 0 {
+                    self?.disconnectBtn.isHidden = false
+                } else {
+                    self?.disconnectBtn.isHidden = true
+                }
+            }))
+            self?.present(alert, animated: true)
+        }
     }
     
     func receivedError(error: WalletConnectErrors) {
@@ -139,7 +169,9 @@ extension WalletConnectViewController: WalletConnectDelegate {
         case .SDK_LOCKED:
             print("SDK is LOCKED-------->")
         case .NOT_CONNECTED:
-            print("NOT CONNECTED -------->")
+            let alert = UIAlertController(title: "Error", message: "Not able to connect", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
     }
 }

@@ -63,7 +63,8 @@ enum Vibration {
             case .selection:
                 UISelectionFeedbackGenerator().selectionChanged()
             case .oldSchool:
-                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                print("old school----->")
+                //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             }
         }
     }
