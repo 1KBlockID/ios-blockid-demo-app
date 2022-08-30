@@ -25,16 +25,21 @@ class WalletConnectViewController: UIViewController {
     }
     
     fileprivate func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionRequest(notification:)), name: Notification.Name(kOnSessionSettleResponse), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionSettleResponse(notification:)), name: Notification.Name(kOnSessionSettleResponse), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionDisconnect(notification:)), name: Notification.Name(kOnSessionDisconnect), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.onSessionProposal(notification:)), name: Notification.Name(kOnSessionProposal), object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.disconnectBtn.isHidden = true
         connectTable.register(UINib(nibName: "WalletConnectTableViewCell", bundle: nil), forCellReuseIdentifier: "WalletConnectTableViewCell")
         addObservers()
+        self.sessionItems = appDelegate?.walletConnectHelper?.getActiveSessions() ?? []
+        if self.sessionItems.count != 0 {
+            self.disconnectBtn.isHidden = false
+        } else {
+            self.disconnectBtn.isHidden = true
+        }
     }
     
     @IBAction func backTapped(_ sender: Any) {
@@ -50,7 +55,7 @@ class WalletConnectViewController: UIViewController {
     @IBAction func disconnectTapped(_ sender: Any) {
         guard let indexpath = selectedIndex else {
             let alert = UIAlertController(title: "Error", message: "No DApp selected!", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true)
             return
         }
@@ -58,6 +63,12 @@ class WalletConnectViewController: UIViewController {
         DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
             self.sessionItems = appDelegate?.walletConnectHelper?.getActiveSessions() ?? []
             self.manageDisconnectSession(remainingSessions: self.sessionItems)
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Success", message: "Your wallet has been disconnected", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                }))
+                self.present(alert, animated: true)
+            }
         })
     }
 }
@@ -108,16 +119,14 @@ extension WalletConnectViewController: UITableViewDelegate {
 // MARK: - WalletConnectDelegate Listeners -
 extension WalletConnectViewController {
     @objc func onSessionProposal(notification: Notification) {
-        print("<<<<<<<<< receivedSessionProposal")
         isProposalReceived = true
     }
     
-    @objc func onSessionRequest(notification: Notification) {
-        print("<<<<<<<<< receivedActiveSessions",notification.userInfo?["sessionItems"] as Any)
+    @objc func onSessionSettleResponse(notification: Notification) {
         self.sessionItems = notification.userInfo?["sessionItems"] as? [ActiveSessionItem] ?? []
         if isProposalReceived {
             let alert = UIAlertController(title: "Success", message: "Your wallet has been connected to \(appDelegate?.currentProposal?.proposer.url ?? "DApp")", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
                 self.connectTable.reloadData()
             }))
             self.present(alert, animated: true)
@@ -132,16 +141,17 @@ extension WalletConnectViewController {
     }
 
     fileprivate func manageDisconnectSession(remainingSessions: [ActiveSessionItem]) {
-        self.connectTable.reloadData()
-        if self.sessionItems.count != 0 {
-            self.disconnectBtn.isHidden = false
-        } else {
-            self.disconnectBtn.isHidden = true
+        DispatchQueue.main.async {
+            self.connectTable.reloadData()
+            if self.sessionItems.count != 0 {
+                self.disconnectBtn.isHidden = false
+            } else {
+                self.disconnectBtn.isHidden = true
+            }
         }
     }
     
     @objc func onSessionDisconnect(notification: Notification) {
-        print("<<<<<<<<< disconnectWalletSession",notification.userInfo?["sessionItems"] as Any)
         self.sessionItems = notification.userInfo?["sessionItems"] as? [ActiveSessionItem] ?? []
         manageDisconnectSession(remainingSessions: self.sessionItems)
     }
