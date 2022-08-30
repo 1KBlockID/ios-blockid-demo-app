@@ -18,6 +18,7 @@ class WalletConsentViewController: UIViewController {
     var proposal: Session.Proposal!
     var isForProposal: Bool!
     var sessionRequest: Request!
+    var sessionUrl: String!
     weak var delegate: WalletConsentVCDelegate?
 
     @IBOutlet weak var viewTitleLbl: UILabel!
@@ -25,6 +26,7 @@ class WalletConsentViewController: UIViewController {
     @IBOutlet weak var walletAddressLbl: UILabel!
     @IBOutlet weak var signTransView: UIView!
     @IBOutlet weak var proposalView: UIView!
+    @IBOutlet weak var personalSignView: UIView!
     
     @IBOutlet weak var fromAddressLbl: UILabel!
     @IBOutlet weak var toAddressLbl: UILabel!
@@ -32,27 +34,45 @@ class WalletConsentViewController: UIViewController {
     @IBOutlet weak var gasPriceLbl: UILabel!
     @IBOutlet weak var dataLbl: UILabel!
     @IBOutlet weak var nonceLbl: UILabel!
-
+    @IBOutlet weak var signMsgLbl: UILabel!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         if isForProposal {
             viewTitleLbl.text = "Would you like to connect with your wallet"
             signTransView.isHidden = true
+            personalSignView.isHidden = true
             proposalView.isHidden = false
             dAppUrlLbl.text = proposal.proposer.url
             walletAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
         } else {
-            viewTitleLbl.text = "Would you like to sign this transaction request"
-            signTransView.isHidden = false
-            proposalView.isHidden = true
-            fromAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
-            toAddressLbl.text = "0x" + BlockIDSDK.sharedInstance.getDID()
-            //FIXME: - With WEB3 - Decode Params and show on labels
-            //let params = try! sessionRequest.params.get([EthereumTransaction].self)
+            viewTitleLbl.text = "Would you like to sign transaction request for \n \(sessionUrl ?? "DApp")"
+            dAppUrlLbl.isHidden = true
+            if sessionRequest.method == "personal_sign" {
+                personalSignView.isHidden = false
+                signTransView.isHidden = true
+                proposalView.isHidden = true
+                let params = sessionRequest.params.value as! [String]
+                let msg = params[0].convertHexToString()
+                signMsgLbl.text = msg
+            } else {
+                personalSignView.isHidden = true
+                signTransView.isHidden = false
+                proposalView.isHidden = true
+                let params = sessionRequest.params.value as! [[String: String]]
+                print("---SIGN REQUEST----\(params)")
+                fromAddressLbl.text = params[0]["from"]
+                toAddressLbl.text = params[0]["to"]
+                valueLbl.text = params[0]["value"]
+                gasPriceLbl.text = params[0]["gasPrice"]
+                dataLbl.text = params[0]["data"]
+                nonceLbl.text = params[0]["nonce"]
+            }
         }
     }
 
+    
     @IBAction func approveTapped(_ sender: Any) {
         if isForProposal {
             self.delegate?.proposalApproved(isApproved: true)
@@ -71,4 +91,16 @@ class WalletConsentViewController: UIViewController {
         self.dismiss(animated: true)
     }
 
+}
+
+extension String {
+    func convertHexToString() -> String {
+        let regex = try! NSRegularExpression(pattern: "(0x)?([0-9A-Fa-f]{2})", options: .caseInsensitive)
+        let textNS = self as NSString
+        let matchesArray = regex.matches(in: textNS as String, options: [], range: NSMakeRange(0, textNS.length))
+        let characters = matchesArray.map {
+            Character(UnicodeScalar(UInt32(textNS.substring(with: $0.range(at: 2)), radix: 16)!)!)
+        }
+        return String(characters)
+    }
 }

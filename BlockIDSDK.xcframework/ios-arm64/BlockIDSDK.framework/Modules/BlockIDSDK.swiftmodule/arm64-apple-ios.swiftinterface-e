@@ -31,6 +31,7 @@ import WalletConnectRelay
 import WalletConnectSign
 import WalletConnectUtils
 import WalletCore
+import Web3
 import WebAuthnKit
 import WebKit
 import _Concurrency
