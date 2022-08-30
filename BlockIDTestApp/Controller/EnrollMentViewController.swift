@@ -57,12 +57,14 @@ class EnrollMentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let appDelegate = appDelegate {
-            let metadata = WalletConnectMetadata(
+            let metadata = AppMetadata(
                 name: "BlockID Demo",
                 description: "1Kosmos WalletConenct Demo",
                 url: "example.wallet",
                 icons: ["https://www.1kosmos.com/favicon.ico"])
-            appDelegate.walletConnectHelper = WalletConnectHelper.init(delegate: appDelegate, metadata: metadata)
+            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
+                                                                       metadata: metadata,
+                                                                       delegate: appDelegate)
         }
     }
     

@@ -10,27 +10,29 @@ import BlockIDSDK
 import WalletConnectSign
 import UIKit
 
-let kReceivedActiveSessions = "receivedActiveSessions"
-let kDisconnectWalletSession = "disconnectWalletSession"
+let kOnSessionSettleResponse = "onSessionSettleResponse"
+let kOnSessionDisconnect = "onSessionDisconnect"
+let kOnSessionProposal = "onSessionProposal"
 
 let appDelegate = UIApplication.shared.delegate as? AppDelegate
 extension AppDelegate: WalletConnectDelegate {
     
-    func receivedSessionProposal(proposal: Session.Proposal?) {
+    func onSessionProposal(sessionProposal: Session.Proposal?) {
         print("<<<< >>>>",#function)
-        currentProposal = proposal
+        currentProposal = sessionProposal
         DispatchQueue.main.async {
         if let topVCObj = UIApplication.shared.topMostViewController() {
                 let consentVC = topVCObj.storyboard?.instantiateViewController(withIdentifier: "WalletConsentViewController") as! WalletConsentViewController
-                consentVC.proposal = proposal
+                consentVC.proposal = sessionProposal
                 consentVC.isForProposal = true
                 consentVC.delegate = appDelegate
                 topVCObj.present(consentVC, animated: true)
             }
+            NotificationCenter.default.post(name: Notification.Name(kOnSessionProposal), object: nil)
         }
     }
     
-    func receivedSignTransactionRequest(request: Request) {
+    func onSessionRequest(request: Request) {
         print("<<<< >>>>",#function)
         print("--Transaction request---\n \(request)")
         if let topVCObj = UIApplication.shared.topMostViewController() {
@@ -44,33 +46,20 @@ extension AppDelegate: WalletConnectDelegate {
         }
     }
     
-    func receivedActiveSessions(sessions: [ActiveSessionItem]) {
+    func onSessionSettleResponse(sessions: [ActiveSessionItem]) {
         print("<<<< >>>>",#function,sessions)
-        if let topVCObj = UIApplication.shared.topMostViewController() {
-            print(topVCObj)
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Success",
-                                              message: "Your wallet has been connected to \(self.currentProposal?.proposer.url ?? "")",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "Ok",
-                                              style: .default,
-                                              handler: {_ in 
-                    NotificationCenter.default.post(name: Notification.Name(kReceivedActiveSessions),
-                                                    object: nil,
-                                                    userInfo: ["sessionItems":sessions])
-                }))
-                topVCObj.present(alert, animated: true)
-            }
-        }
+        NotificationCenter.default.post(name: Notification.Name(kOnSessionSettleResponse),
+                                        object: nil,
+                                        userInfo: ["sessionItems":sessions])
     }
     
-    func disconnectWalletSession(remainingSession: [ActiveSessionItem]) {
+    func onSessionDisconnect(remainingSession: [ActiveSessionItem]) {
         print("<<<< >>>>",#function)
         if let topVCObj = UIApplication.shared.topMostViewController() {
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "Success", message: "Your wallet has been disconnected", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {_ in
-                        NotificationCenter.default.post(name: Notification.Name(kDisconnectWalletSession),
+                        NotificationCenter.default.post(name: Notification.Name(kOnSessionDisconnect),
                                                         object: nil,
                                                         userInfo: ["sessionItems":remainingSession])
                 }))
@@ -79,29 +68,38 @@ extension AppDelegate: WalletConnectDelegate {
         }
     }
     
-    func receivedError(error: WalletConnectErrors) {
+    func onError(error: Error) {
         print("<<<< >>>>",#function)
-        switch error {
-        case .SDK_LOCKED:
-            print("SDK is LOCKED-------->")
-        case .NOT_CONNECTED:
-            print("NOT CONNECTED -------->")
+        if let topVCObj = UIApplication.shared.topMostViewController() {
+            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            topVCObj.present(alert, animated: true)
         }
     }
 }
 
 
 extension AppDelegate: WalletConsentVCDelegate {
-
-    func proposalApproved(isApproved: Bool) {
+    
+    func proposalApproved(isApproved: Bool, sessionProposal: Session.Proposal) {
         print("<<<< >>>>",#function)
-        Task {
-            try await walletConnectHelper?.responseToProposal(isAccepted: isApproved)
+        if isApproved {
+            Task {
+                try await walletConnectHelper?.approveConnection(sessionProposal: sessionProposal)
+            }
+        } else {
+            Task {
+                try await walletConnectHelper?.rejectConnection(sessionProposal: sessionProposal)
+            }
         }
     }
-
+    
     func signApproved(isApproved: Bool, request: Request) {
         print("<<<< >>>>",#function)
-        walletConnectHelper?.signTransaction(isApproved: isApproved, request: request)
+        if isApproved {
+            walletConnectHelper?.approveSession(request: request)
+        } else {
+            walletConnectHelper?.rejectSession(request: request)
+        }
     }
 }
