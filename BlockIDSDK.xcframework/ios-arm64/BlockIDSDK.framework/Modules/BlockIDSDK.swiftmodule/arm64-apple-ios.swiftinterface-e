@@ -1,5 +1,5 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
 // swift-module-flags: -target arm64-apple-ios13.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
 import ARKit
 import AVFoundation
@@ -232,6 +232,15 @@ public class BIDOrigin : Swift.Codable, Swift.Equatable {
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+}
+public enum AccessCodeType : Swift.String {
+  case VERIFICATION
+  case INVITATION
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
 }
 public enum ScanningMode {
   case SCAN_DEMO
@@ -646,7 +655,7 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   public func purgeData(forKey key: Swift.String)
   public func migrateData(bidTenant: BlockIDSDK.BIDTenant, clientTenant: BlockIDSDK.BIDTenant, completion: @escaping BlockIDSDK.BIDMigrationCallback)
   public func getVersion() -> Swift.String?
-  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, BlockIDSDK.ErrorResponse?) -> Swift.Void))
+  public func verifyDocument(dvcID: Swift.String? = nil, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, BlockIDSDK.ErrorResponse?) -> Swift.Void))
   public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BlockIDSDK.BIDLinkedAccount?, type: BlockIDSDK.FIDO2KeyType, completion: @escaping BlockIDSDK.FIDO2Callback)
@@ -654,14 +663,10 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   @objc deinit
 }
 extension BlockIDSDK.BlockIDSDK {
-  public func createAccessCode(version: BlockIDSDK.Version, linkType: BlockIDSDK.AccessCodeType, payload: [Swift.String : Any], template: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
+  public func createAccessCode(payload: BlockIDSDK.CreateAccessCodePayload, completion: @escaping BlockIDSDK.AccessCodeAPIsCallback)
   public func validateAccessCode(code: Swift.String, completion: @escaping BlockIDSDK.AccessCodeValidationAPICallback)
   public func redeemAccessCode(phoneNumber: Swift.String? = nil, code: Swift.String, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
   public func redeemAccessCode(code: Swift.String, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
-}
-extension BlockIDSDK.BlockIDSDK {
-  public func registerEmail(email: Swift.String, proofedBy: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func isEmailRegistered() -> Swift.Bool
 }
 extension BlockIDSDK.BlockIDSDK {
   public func registerPhoneNumber(phoneNumber: Swift.String, proofedBy: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
@@ -1317,6 +1322,10 @@ extension BlockIDSDK.DriverLicenseScanHelper : BlockIDSDK.DriverLicenseResponseD
   public func scanFrontSide()
   public func scanBackSide()
 }
+public class CreateAccessCodePayload {
+  public init(version: BlockIDSDK.Version, type: BlockIDSDK.AccessCodeType, emailID: Swift.String, emailSubject: Swift.String, emailTemplate: Swift.String)
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BIDDriverLicense : BlockIDSDK.BIDDocumentData {
   public class func makeDriverLicenseObj(dlData: BlockIDSDK.DriverLicenseData?, dlOcr: Swift.String?, dlFrontImage: Swift.String?, dlBackImage: Swift.String?, userPhoto: Swift.String?, dlBarcodeInfo: Swift.String?) -> BlockIDSDK.BIDDriverLicense
   override public func encode(to encoder: Swift.Encoder) throws
@@ -1493,6 +1502,7 @@ extension BlockIDSDK.NFCViewDisplayMessage {
     get
   }
 }
+public typealias AccessCodeAPIsCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
 public class NotImplementedDG : BlockIDSDK.DataGroup {
   @objc deinit
@@ -1504,26 +1514,7 @@ public enum RegisterDocType : Swift.String {
   case PIN
   case LIVE_ID
   case SSN
-  case EMAIL
   case PHONE
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public enum Version : Swift.String {
-  case ATHENA
-  case DEFAULT
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public enum AccessCodeType : Swift.String {
-  case VERIFICATION
-  case USERINVITATION
   public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
@@ -1543,8 +1534,8 @@ public typealias DocumentEnrollmentCallback = ((_ status: Swift.Bool, _ error: B
 @_hasMissingDesignatedInitializers public class BIDDocumentProvider {
   public static let shared: BlockIDSDK.BIDDocumentProvider
   public func getUserDocument(id: Swift.String?, type: Swift.String?, category: Swift.String?) -> Swift.String?
+  public func getDocument(id: Swift.String?, type: Swift.String?, category: Swift.String?) -> Swift.Array<Any>?
   public func registerPhoneNumber(phoneNumber: Swift.String, proofedBy: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func registerEmail(email: Swift.String, proofedBy: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
   @objc deinit
 }
 @available(iOS 13, *)
@@ -2092,6 +2083,15 @@ public enum DataGroupId : Swift.Int, Swift.CaseIterable {
     get
   }
 }
+public enum Version : Swift.String {
+  case DEFAULT
+  case ATHENA
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public typealias RequestBody = [Swift.String : Swift.AnyObject]
 public typealias NetworkResponseCallback<T> = (statusCode: Swift.Int?, error: Swift.Error?, result: T?) where T : Swift.Decodable
 public typealias APIResponseCallback<T> = (status: Swift.Bool, message: Swift.String, error: BlockIDSDK.ErrorResponse?, result: T?) where T : Swift.Decodable
@@ -2271,6 +2271,9 @@ extension BlockIDSDK.APIFailedError : Foundation.LocalizedError {
 }
 extension BlockIDSDK.KeychainItemAccessibility : Swift.Equatable {}
 extension BlockIDSDK.KeychainItemAccessibility : Swift.Hashable {}
+extension BlockIDSDK.AccessCodeType : Swift.Equatable {}
+extension BlockIDSDK.AccessCodeType : Swift.Hashable {}
+extension BlockIDSDK.AccessCodeType : Swift.RawRepresentable {}
 extension BlockIDSDK.ScanningMode : Swift.Equatable {}
 extension BlockIDSDK.ScanningMode : Swift.Hashable {}
 extension BlockIDSDK.PassportAuthenticationStatus : Swift.Equatable {}
@@ -2320,12 +2323,6 @@ extension BlockIDSDK.FIDO2KeyType : Swift.RawRepresentable {}
 extension BlockIDSDK.RegisterDocType : Swift.Equatable {}
 extension BlockIDSDK.RegisterDocType : Swift.Hashable {}
 extension BlockIDSDK.RegisterDocType : Swift.RawRepresentable {}
-extension BlockIDSDK.Version : Swift.Equatable {}
-extension BlockIDSDK.Version : Swift.Hashable {}
-extension BlockIDSDK.Version : Swift.RawRepresentable {}
-extension BlockIDSDK.AccessCodeType : Swift.Equatable {}
-extension BlockIDSDK.AccessCodeType : Swift.Hashable {}
-extension BlockIDSDK.AccessCodeType : Swift.RawRepresentable {}
 extension BlockIDSDK.RegisterDocCategory : Swift.Equatable {}
 extension BlockIDSDK.RegisterDocCategory : Swift.Hashable {}
 extension BlockIDSDK.RegisterDocCategory : Swift.RawRepresentable {}
@@ -2345,3 +2342,6 @@ extension BlockIDSDK.DataGroupId : Swift.Equatable {}
 extension BlockIDSDK.DataGroupId : Swift.Hashable {}
 @available(iOS 13, macOS 10.15, *)
 extension BlockIDSDK.DataGroupId : Swift.RawRepresentable {}
+extension BlockIDSDK.Version : Swift.Equatable {}
+extension BlockIDSDK.Version : Swift.Hashable {}
+extension BlockIDSDK.Version : Swift.RawRepresentable {}
