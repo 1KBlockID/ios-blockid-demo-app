@@ -618,7 +618,6 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Erro
   public func getOfflineTOTP(bidLinkedAccount: BIDLinkedAccount) -> (totp: TOTP?, error: ErrorResponse?)
   public func checkUserExist(userId: Swift.String, origin: BIDOrigin) -> Swift.Bool
   public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BIDOrigin, account: BIDAccount?, completion: @escaping UserAPICallback)
-  public func linkUser(userId: Swift.String, origin: BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, account: BIDAccount?, completion: @escaping UserAPICallback)
   public func restoreUserDataFromWallet(completion: @escaping UserAPICallback)
   public func addNativeAccount(method: Swift.String!, userId: Swift.String, password: Swift.String, origin: BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, completion: @escaping UserAPICallback)
   public func unLinkAccount(bidLinkedAccount: BIDLinkedAccount, deviceToken: Swift.String? = nil, completion: @escaping UserAPICallback)
@@ -1035,6 +1034,8 @@ extension NationalIDScanHelper : NationalIDResponseDelegate {
 }
 @_hasMissingDesignatedInitializers public class AccessCodeValidationResponseDecryptedData : Swift.Codable {
   public var uuid: Swift.String!
+  public var tenantId: Swift.String!
+  public var communityId: Swift.String!
   public var accesscodepayload: AccessCodeResponseDataPayload!
   public var phoneRequired: Swift.Bool?
   public var smsServiceNumber: Swift.String?
