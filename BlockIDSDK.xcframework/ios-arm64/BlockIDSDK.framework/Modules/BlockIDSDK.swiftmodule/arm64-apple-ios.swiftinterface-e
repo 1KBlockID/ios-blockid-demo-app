@@ -618,7 +618,6 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   public func getOfflineTOTP(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount) -> (totp: BlockIDSDK.TOTP?, error: BlockIDSDK.ErrorResponse?)
   public func checkUserExist(userId: Swift.String, origin: BlockIDSDK.BIDOrigin) -> Swift.Bool
   public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BlockIDSDK.BIDOrigin, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func linkUser(userId: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
   public func restoreUserDataFromWallet(completion: @escaping BlockIDSDK.UserAPICallback)
   public func addNativeAccount(method: Swift.String!, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
   public func unLinkAccount(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount, deviceToken: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
@@ -1035,6 +1034,8 @@ extension BlockIDSDK.NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegat
 }
 @_hasMissingDesignatedInitializers public class AccessCodeValidationResponseDecryptedData : Swift.Codable {
   public var uuid: Swift.String!
+  public var tenantId: Swift.String!
+  public var communityId: Swift.String!
   public var accesscodepayload: BlockIDSDK.AccessCodeResponseDataPayload!
   public var phoneRequired: Swift.Bool?
   public var smsServiceNumber: Swift.String?
