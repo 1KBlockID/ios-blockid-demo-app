@@ -28,12 +28,14 @@ public enum Enrollments: String {
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
     case WalletConnect = "WalletConnect"
+    case MyCards = "My Cards"
     case resetApp  = "Reset App"
 }
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.AddUser,
+    var enrollmentArray = [Enrollments.MyCards,
+                           Enrollments.AddUser,
                            Enrollments.DriverLicense,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
@@ -146,6 +148,9 @@ extension EnrollMentViewController: UITableViewDelegate {
             self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
+        case Enrollments.MyCards.rawValue:
+            // open MyCards Screen
+            showMyCardsScreen()
         default:
             return
         }
@@ -398,5 +403,15 @@ extension EnrollMentViewController {
     private func launchForFIDO2() {
         let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDOViewController
         self.navigationController?.pushViewController(fido2VC, animated: true)
+    }
+}
+
+// MARK: - Verifiable Credentials: My Cards -
+extension EnrollMentViewController {
+    private func showMyCardsScreen() {
+        let myCardsVC = MyCardsViewController(nibName: "MyCardsViewController",
+                                              bundle: nil)
+        self.navigationController?.pushViewController(myCardsVC,
+                                                      animated: true)
     }
 }
