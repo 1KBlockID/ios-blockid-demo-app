@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PassKit
 import BlockIDSDK
 
 // define type of document using which the
@@ -21,8 +20,12 @@ class MyCardsViewController: UIViewController {
     // enrolled drivers licenses
     private var registeredDocument: [String: Any]?
     
-    // define list of pass
-    let passes = ["BoardingPass", "Event", "Generic", "StoreCard", "Coupon"]
+    // datasource
+    private var cardsDataSource: [[String: Any]] = []
+    
+    // MARK: - IBOutlets -
+    @IBOutlet weak var lblNoCards: UILabel!
+    @IBOutlet weak var tblCardsView: UITableView!
     
     // MARK: - View Life cycle -
     override func viewDidLoad() {
@@ -32,6 +35,11 @@ class MyCardsViewController: UIViewController {
         
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
+        
+        // read stored vfc cards
+        if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+            self.cardsDataSource = cards
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,22 +49,21 @@ class MyCardsViewController: UIViewController {
         self.title = "My Cards"
         
         // show navigation bar
-        self.showNavigationBar(yorn: false)
+        self.showNavigationBar(yorn: true)
         
         // add button items
         self.setupNavigationBarButtons()
+        
+        //
+        self.lblNoCards.isHidden = (self.cardsDataSource.count == 0) ? false : true
+        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         // hide navigation bar
-        self.showNavigationBar(yorn: true)
-    }
-    
-    // MARK: - IBActions -
-    @IBAction func addToAppleWallet(sender: Any) {
-        self.addCardToAppleWallet()
+        self.showNavigationBar(yorn: false)
     }
 }
 
@@ -81,7 +88,7 @@ extension MyCardsViewController {
     }
     
     private func showNavigationBar(yorn: Bool) -> Void {
-        self.navigationController?.setNavigationBarHidden(yorn,
+        self.navigationController?.setNavigationBarHidden(!yorn,
                                                           animated: false)
     }
     
@@ -134,74 +141,6 @@ extension MyCardsViewController {
         self.present(optionsController,
                      animated: true,
                      completion: nil)
-    }
-    
-    private func addCardToAppleWallet() -> Void {
-        // reading pass file data from local file;
-        // the data should come from API
-        if let path = Bundle.main.url(forResource: passes.randomElement(),
-                                      withExtension: "pkpass") {
-            do {
-                let passData = try Data(contentsOf: path)
-                
-                do {
-                    // Create Pass Object
-                    let pass = try PKPass(data: passData)
-                    
-                    // Access Pass Library
-                    let passLibrary = PKPassLibrary()
-                    
-                    // check is pass exists
-                    if (passLibrary.containsPass(pass)) {
-                        let alert = UIAlertController(title: "Pass Exists",
-                                                      message: "Pass is already in Passbook.",
-                                                      preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "OK",
-                                                      style: .default,
-                                                      handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    } else {
-                        if let passVC = PKAddPassesViewController(pass: pass) {
-                            passVC.delegate = self
-                            self.present(passVC, animated: true)
-                        }
-                    }
-                } catch {
-                    let alert = UIAlertController(title: "Invalid Pass",
-                                                  message: error.localizedDescription + ".",
-                                                  preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default,
-                                                  handler: nil))
-                    
-                    self.present(alert, animated: true)
-                    
-                }
-            } catch {
-                let alert = UIAlertController(title: "Error",
-                                              message: "Unable to ready pass file.",
-                                              preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "OK",
-                                              style: .default,
-                                              handler: nil))
-                
-                self.present(alert, animated: true)
-            }
-        } else {
-            let alert = UIAlertController(title: "Error",
-                                          message: "Pass file not found.",
-                                          preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: .default,
-                                          handler: nil))
-            
-            self.present(alert, animated: true)
-        }
     }
     
     private func intiateAddIDCardFlow() -> Void {
@@ -285,16 +224,47 @@ extension MyCardsViewController {
                 if error == nil {
                     if let result = result,
                        let publicKey = result["publicKey"] as? String {
-                        print("VCS Public Key: ", publicKey as String, "\n")
                         
+                        // prepare verifiable document
                         let vDocument = ["did": BlockIDSDK.sharedInstance.getDID(),
                                          "document": self.registeredDocument!]
-                        
+
+                        // create verfiable credentials using above verifiable document
                         VerifiableCredentialsHelper.shared.createVerifiableCredentialsFromDocument(document: vDocument,
                                                                                                    serviceURL: vcsURL,
-                                                                                                   publicKey: publicKey) { (result, error) in
-                            print("Result: ", result as Any, "\n")
-                            print("Error: ", error as Any, "\n")
+                                                                                                   publicKey: publicKey) { (responseResult, responseError) in
+                            if responseError == nil {
+                                if let vfcResult = responseResult {
+                                    self.cardsDataSource.append(vfcResult)
+                                    UserDefaults.standard.set(self.cardsDataSource,
+                                                              forKey: "VFC_CARDS")
+                                    self.lblNoCards.isHidden = true
+                                    self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                                    self.tblCardsView.reloadData()
+                                } else {
+                                    // show error message
+                                    let alert = UIAlertController(title: "Oh no ...",
+                                                                  message: "Verifiable credentials could not be created. Try again.",
+                                                                  preferredStyle: .alert)
+
+                                    alert.addAction(UIAlertAction(title: "OK",
+                                                                  style: .default,
+                                                                  handler: nil))
+
+                                    self.present(alert, animated: true)
+                                }
+                            } else {
+                                // show error message
+                                let alert = UIAlertController(title: "Oh no ...",
+                                                              message: responseError?.localizedDescription,
+                                                              preferredStyle: .alert)
+
+                                alert.addAction(UIAlertAction(title: "OK",
+                                                              style: .default,
+                                                              handler: nil))
+
+                                self.present(alert, animated: true)
+                            }
                         }
                     } else {
                         // public key not found for 'vcs' url
@@ -315,11 +285,11 @@ extension MyCardsViewController {
                     let alert = UIAlertController(title: "Oh no ...",
                                                   message: error?.localizedDescription,
                                                   preferredStyle: .alert)
-                    
+
                     alert.addAction(UIAlertAction(title: "OK",
                                                   style: .default,
                                                   handler: nil))
-                    
+
                     self.present(alert, animated: true)
                 }
             }
@@ -331,9 +301,43 @@ extension MyCardsViewController {
     }
 }
 
-// MARK: - PKAddPassesViewControllerDelegate -
-extension MyCardsViewController: PKAddPassesViewControllerDelegate {
-    func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
-        self.dismiss(animated: true)
+// MARK: - UITableViewDataSource -
+extension MyCardsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.cardsDataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell
+        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "MyCardsTableViewCell") {
+            cell = reusableCell
+        } else {
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
+                                   reuseIdentifier: "MyCardsTableViewCell")
+        }
+        
+//        var cell = tableView.dequeueReusableCell(withIdentifier: "MyCardsTableViewCell")
+//        if cell == nil {
+//            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
+//                                   reuseIdentifier: "MyCardsTableViewCell")
+//        }
+        
+        let card = self.cardsDataSource[indexPath.row]
+        let credentialSubject: [String: Any] = card["credentialSubject"] as! [String: Any]
+        cell.textLabel?.text = "\(credentialSubject["firstName"] as! String) \(credentialSubject["lastName"] as! String)"
+        cell.detailTextLabel?.text = "\(card["issuanceDate"] as! String)"
+        cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate -
+extension MyCardsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vfcCardDetailVC = VFCCardDetailsViewController(nibName: "VFCCardDetailsViewController",
+                                                           bundle: nil)
+        self.navigationController?.pushViewController(vfcCardDetailVC,
+                                                      animated: true)
     }
 }

@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MyCardsViewController" customModule="BlockIDTestApp" customModuleProvider="target">
             <connections>
+                <outlet property="lblNoCards" destination="kDL-zr-RsM" id="X8m-gh-OZI"/>
+                <outlet property="tblCardsView" destination="gQo-iv-MW3" id="HED-3Y-hkk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,25 +21,32 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYd-WR-oU1">
-                    <rect key="frame" x="120" y="103" width="174" height="35"/>
-                    <buttonConfiguration key="configuration" style="filled" title="Add to Apple Wallet">
-                        <backgroundConfiguration key="background">
-                            <color key="backgroundColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </backgroundConfiguration>
-                    </buttonConfiguration>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gQo-iv-MW3">
+                    <rect key="frame" x="0.0" y="48" width="414" height="569"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
-                        <action selector="addToAppleWalletWithSender:" destination="-1" eventType="touchUpInside" id="kF7-r0-pEg"/>
+                        <outlet property="dataSource" destination="-1" id="Qsi-xz-BKy"/>
+                        <outlet property="delegate" destination="-1" id="cRQ-FI-WtM"/>
                     </connections>
-                </button>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cards available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDL-zr-RsM">
+                    <rect key="frame" x="122" y="260" width="171.5" height="24"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                    <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="bYd-WR-oU1" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="55" id="1bv-8x-kCb"/>
-                <constraint firstItem="bYd-WR-oU1" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fDQ-xz-zOW"/>
+                <constraint firstItem="gQo-iv-MW3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4d6-Mr-h6g"/>
+                <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9UM-IY-TR1"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gQo-iv-MW3" secondAttribute="bottom" constant="245" id="EKY-iz-gfe"/>
+                <constraint firstItem="gQo-iv-MW3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="T3L-WN-Myx"/>
+                <constraint firstItem="kDL-zr-RsM" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-176" id="UFw-Mr-UBa"/>
+                <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="kDL-zr-RsM" secondAttribute="centerX" id="r2p-bX-pp8"/>
             </constraints>
-            <point key="canvasLocation" x="74" y="-12"/>
+            <point key="canvasLocation" x="73.913043478260875" y="-12.053571428571429"/>
         </view>
     </objects>
     <resources>

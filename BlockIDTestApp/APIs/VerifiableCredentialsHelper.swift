@@ -51,15 +51,15 @@ class VerifiableCredentialsHelper: NSObject {
                                                        with: communityId)
             }
             
-//            let keyPair = APIKeyPair(privateKey: "ij2Jd6TfidVuRs1R0TNCnSMfOXHJfvFR3QogxvLe2po=",
-//                                     publicKey: BlockIDSDK.sharedInstance.getWalletPublicKey(),
-//                                     serverKey: pbKey!,
-//                                     licenseKey: BlockIDSDK.sharedInstance.getLicenseKey())
+            let keyPair = APIKeyPair(privateKey: BlockIDSDK.sharedInstance.getWalletPrivateKey(),
+                                     publicKey: BlockIDSDK.sharedInstance.getWalletPublicKey(),
+                                     serverKey: pbKey!,
+                                     licenseKey: BlockIDSDK.sharedInstance.getLicenseKey())
             
-            let headers: HTTPHeaders = ["Content-Type": "application/json"]
-//                                        "publickey": BlockIDSDK.sharedInstance.getWalletPublicKey(),
-//                                        "requestid": keyPair.generateRequestID()!,
-//                                        "licensekey": keyPair.getEncryptedLicenseKey()!]
+            let headers: HTTPHeaders = ["Content-Type": "application/json",
+                                        "publickey": BlockIDSDK.sharedInstance.getWalletPublicKey(),
+                                        "requestid": keyPair.generateRequestID()!,
+                                        "licensekey": keyPair.getEncryptedLicenseKey()!]
 
             self.sessionManager?.request(urlPath,
                                          method: HTTPMethod.post,
