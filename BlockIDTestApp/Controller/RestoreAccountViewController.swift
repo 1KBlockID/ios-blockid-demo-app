@@ -54,7 +54,7 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
                 if status {
                     //step-2 : If TEMP WALLET Generated, Begin TENANT REGISTRATION
                     if (self!.isDefaultTenantRegistration) {
-                        self?.bidTenant = Tenant.defaultTenant
+                        self?.bidTenant = AppConsant.defaultTenant
                     }
                     self?.beginRegistration(bidTenant: self!.bidTenant)
                 }

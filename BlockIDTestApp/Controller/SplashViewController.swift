@@ -40,7 +40,7 @@ class SplashViewController: UIViewController {
                                            userName: "skfssubn",
                                            password: "esvgvx488tt3",
                                            isHTPPOnly: true)*/
-        BlockIDSDK.sharedInstance.setLicenseKey(key: Tenant.licenseKey)
+        BlockIDSDK.sharedInstance.setLicenseKey(key: AppConsant.licenseKey)
         BlockIDSDK.sharedInstance.setDvcID(dvcID: AppConsant.dvcID)
         setRegisterButtonTitle()
     }
@@ -69,7 +69,7 @@ class SplashViewController: UIViewController {
                
                 //step-2 : If TEMP WALLET Generated, Begin TENANT REGISTRATION
                 if (self!.isDefaultTenantRegistration) {
-                    self?.bidTenant = Tenant.defaultTenant
+                    self?.bidTenant = AppConsant.defaultTenant
                 }
                 self?.beginRegistration(bidTenant: self!.bidTenant)
             }

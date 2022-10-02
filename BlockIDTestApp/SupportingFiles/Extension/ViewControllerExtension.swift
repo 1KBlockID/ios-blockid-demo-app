@@ -58,7 +58,7 @@ extension UIViewController {
         //If launched using Magic-Link
         //Need to resave magic-link once app is reset
         UserDefaults.removeAllValues()
-        BlockIDSDK.sharedInstance.resetSDK(licenseKey: Tenant.licenseKey)
+        BlockIDSDK.sharedInstance.resetSDK(licenseKey: AppConsant.licenseKey)
     }
     
     func showEnrollmentView() {

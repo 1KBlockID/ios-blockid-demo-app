@@ -23,9 +23,14 @@ end
 post_install do |installer|
  installer.pods_project.targets.each do |target|
   target.build_configurations.each do |config|
+    
     config.build_settings['ONLY_ACTIVE_ARCH'] = 'NO'
-   # set build library for distribution to true
+    
+    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    
+    # set iOS Deployment Target to 13.0
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
 
   end
  end
