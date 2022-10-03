@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Confire firebase for Crashalytics
-        FirebaseApp.configure()
+//        FirebaseApp.configure()
         return true
     }
     
