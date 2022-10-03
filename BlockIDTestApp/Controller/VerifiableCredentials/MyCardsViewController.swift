@@ -261,45 +261,63 @@ extension MyCardsViewController: UITableViewDelegate {
 // MARK: - ScanQRViewDelegate -
 extension MyCardsViewController: ScanQRViewDelegate {
     func scannedData(data: String) {
-        // show progress indicator
-        self.showProgressIndicator()
-        
-        let qrPayload = Data(data.utf8)
-        do {
-            if let document = try JSONSerialization.jsonObject(with: qrPayload) as? [String: Any],
-               let vcPayload = document["vc"] as? [String: Any] {
-                VerifiableCredentialsHelper.shared.verify(vc: vcPayload) { (verifyResult, verifyError) in
-                    if verifyError == nil, let result = verifyResult,
-                       let status = result["status"] as? String, status == "verified" {
-                        // no error, process the result
-                        // add to card datasource
-                        self.cardsDataSource.append(vcPayload)
-                        
-                        // add the entire datasource to user defaults
-                        UserDefaults.standard.set(self.cardsDataSource,
-                                                  forKey: "VFC_CARDS")
-                        
-                        // update the UI; reload the table view
-                        self.lblNoCards.isHidden = true
-                        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                        self.tblCardsView.reloadData()
-                    } else {
-                        // show error message
-                        let alert = UIAlertController(title: "Oh no ...",
-                                                      message: verifyError?.localizedDescription,
-                                                      preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "OK",
-                                                      style: .default,
-                                                      handler: nil))
-                        
-                        self.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            // show progress indicator
+            self.showProgressIndicator()
+            
+            let qrPayload = Data(data.utf8)
+            do {
+                if let document = try JSONSerialization.jsonObject(with: qrPayload) as? [String: Any],
+                   let vcPayload = document["vc"] as? [String: Any] {
+                    VerifiableCredentialsHelper.shared.verify(vc: document) { (verifyResult, verifyError) in
+                        print("Result: ", verifyResult as Any, "\n")
+                        print("Error: ", verifyError as Any, "\n")
+                        if verifyError == nil, let result = verifyResult,
+                           let status = result["status"] as? String, status == "verified" {
+                            // no error, process the result
+                            // add to card datasource
+                            self.cardsDataSource.append(vcPayload)
+                            
+                            // add the entire datasource to user defaults
+                            UserDefaults.standard.set(self.cardsDataSource,
+                                                      forKey: "VFC_CARDS")
+                            
+                            // update the UI; reload the table view
+                            self.lblNoCards.isHidden = true
+                            self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                            self.tblCardsView.reloadData()
+                        } else {
+                            // show error message
+                            let alert = UIAlertController(title: "Oh no ...",
+                                                          message: verifyError?.localizedDescription,
+                                                          preferredStyle: .alert)
+                            
+                            alert.addAction(UIAlertAction(title: "OK",
+                                                          style: .default,
+                                                          handler: nil))
+                            
+                            self.present(alert, animated: true)
+                        }
                     }
+                } else {
+                    // show error message
+                    let alert = UIAlertController(title: "Oh no ...",
+                                                  message: "Invalid QR code. Try again.",
+                                                  preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK",
+                                                  style: .default,
+                                                  handler: nil))
+                    
+                    self.present(alert, animated: true)
                 }
-            } else {
+                
+                // hide progress indicator
+                self.hideProgressIndicator()
+            } catch {
                 // show error message
                 let alert = UIAlertController(title: "Oh no ...",
-                                              message: "Invalid QR code. Try again.",
+                                              message: "some exception when converting JSON to object",
                                               preferredStyle: .alert)
                 
                 alert.addAction(UIAlertAction(title: "OK",
@@ -307,24 +325,10 @@ extension MyCardsViewController: ScanQRViewDelegate {
                                               handler: nil))
                 
                 self.present(alert, animated: true)
+                
+                // hide progress indicator
+                self.hideProgressIndicator()
             }
-            
-            // hide progress indicator
-            self.hideProgressIndicator()
-        } catch {
-            // show error message
-            let alert = UIAlertController(title: "Oh no ...",
-                                          message: "some exception when converting JSON to object",
-                                          preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: .default,
-                                          handler: nil))
-            
-            self.present(alert, animated: true)
-            
-            // hide progress indicator
-            self.hideProgressIndicator()
         }
     }
 }
