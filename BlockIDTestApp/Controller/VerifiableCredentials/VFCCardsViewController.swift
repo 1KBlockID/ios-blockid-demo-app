@@ -8,7 +8,7 @@
 import UIKit
 import BlockIDSDK
 
-class MyCardsViewController: UIViewController {
+class VFCCardsViewController: UIViewController {
     
     // enrolled drivers licenses
     private var registeredDocument: [String: Any]?
@@ -60,7 +60,7 @@ class MyCardsViewController: UIViewController {
 }
 
 // MARK: - Extension: Private Methods -
-extension MyCardsViewController {
+extension VFCCardsViewController {
     private func getRegisteredDocument(type: RegisterDocType.RawValue) -> [String: Any]? {
         var regDocument: [String: Any]?
         if let enrolledDoc = BIDDocumentProvider.shared.getUserDocument(id: nil,
@@ -215,12 +215,13 @@ extension MyCardsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
         scanQRVC.delegate = self
+//        scanQRVC.modalPresentationStyle = .fullScreen
         self.present(scanQRVC, animated: true)
     }
 }
 
 // MARK: - UITableViewDataSource -
-extension MyCardsViewController: UITableViewDataSource {
+extension VFCCardsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.cardsDataSource.count
     }
@@ -246,10 +247,28 @@ extension MyCardsViewController: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // remove the item from datasource
+            self.cardsDataSource.remove(at: indexPath.row)
+            
+            // remove the cell from tableview
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            // update user defaults
+            UserDefaults.standard.set(self.cardsDataSource,
+                                      forKey: "VFC_CARDS")
+            
+            // update the UI
+            self.lblNoCards.isHidden = !(self.cardsDataSource.count == 0)
+            self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+        }
+    }
 }
 
 // MARK: - UITableViewDelegate -
-extension MyCardsViewController: UITableViewDelegate {
+extension VFCCardsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vfcCardDetailVC = VFCCardDetailsViewController(nibName: "VFCCardDetailsViewController",
                                                            bundle: nil)
@@ -259,7 +278,7 @@ extension MyCardsViewController: UITableViewDelegate {
 }
 
 // MARK: - ScanQRViewDelegate -
-extension MyCardsViewController: ScanQRViewDelegate {
+extension VFCCardsViewController: ScanQRViewDelegate {
     func scannedData(data: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             // show progress indicator

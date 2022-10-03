@@ -409,9 +409,9 @@ extension EnrollMentViewController {
 // MARK: - Verifiable Credentials: My Cards -
 extension EnrollMentViewController {
     private func showMyCardsScreen() {
-        let myCardsVC = MyCardsViewController(nibName: "MyCardsViewController",
+        let vfcCardsVC = VFCCardsViewController(nibName: "VFCCardsViewController",
                                               bundle: nil)
-        self.navigationController?.pushViewController(myCardsVC,
+        self.navigationController?.pushViewController(vfcCardsVC,
                                                       animated: true)
     }
 }
