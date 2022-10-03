@@ -631,7 +631,6 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Erro
   public func encryptString(str: Swift.String, rcptKey: Swift.String) -> Swift.String?
   public func decryptString(str: Swift.String, senderKey: Swift.String) -> Swift.String?
   public func getWalletPublicKey() -> Swift.String
-  public func getWalletPrivateKey() -> Swift.String
   public func getServerPublicKey() -> Swift.String
   @discardableResult
   public func generateWalletForRestore(mnemonics: Swift.String) -> Swift.Bool
@@ -1177,10 +1176,8 @@ public class SecurityInfo {
   public func getProtocolOIDString() -> Swift.String
   @objc deinit
 }
-public class APIKeyPair {
-  public init(privateKey: Swift.String, publicKey: Swift.String, serverKey: Swift.String, licenseKey: Swift.String)
+@_hasMissingDesignatedInitializers public class APIKeyPair {
   public func getEncryptedLicenseKey() -> Swift.String?
-  public func generateRequestID() -> Swift.String?
   @objc deinit
 }
 public struct MRZDocumentData : Swift.Codable {

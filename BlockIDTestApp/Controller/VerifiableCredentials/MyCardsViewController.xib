@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gQo-iv-MW3">
-                    <rect key="frame" x="0.0" y="48" width="414" height="569"/>
+                    <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="Qsi-xz-BKy"/>
@@ -30,7 +30,7 @@
                     </connections>
                 </tableView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cards available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDL-zr-RsM">
-                    <rect key="frame" x="122" y="260" width="171.5" height="24"/>
+                    <rect key="frame" x="121.5" y="260" width="171" height="24"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                     <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
             <constraints>
                 <constraint firstItem="gQo-iv-MW3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4d6-Mr-h6g"/>
                 <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9UM-IY-TR1"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gQo-iv-MW3" secondAttribute="bottom" constant="245" id="EKY-iz-gfe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gQo-iv-MW3" secondAttribute="bottom" id="EKY-iz-gfe"/>
                 <constraint firstItem="gQo-iv-MW3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="T3L-WN-Myx"/>
                 <constraint firstItem="kDL-zr-RsM" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-176" id="UFw-Mr-UBa"/>
                 <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="kDL-zr-RsM" secondAttribute="centerX" id="r2p-bX-pp8"/>

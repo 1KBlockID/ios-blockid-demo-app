@@ -235,12 +235,27 @@ extension MyCardsViewController {
                                                                                                    publicKey: publicKey) { (responseResult, responseError) in
                             if responseError == nil {
                                 if let vfcResult = responseResult {
-                                    self.cardsDataSource.append(vfcResult)
-                                    UserDefaults.standard.set(self.cardsDataSource,
-                                                              forKey: "VFC_CARDS")
-                                    self.lblNoCards.isHidden = true
-                                    self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                                    self.tblCardsView.reloadData()
+                                    
+                                    if let code = vfcResult["code"] as? Int,
+                                       let message = vfcResult["message"] as? String {
+                                        // show error message
+                                        let alert = UIAlertController(title: "Oh no ...",
+                                                                      message: message + "\(code).",
+                                                                      preferredStyle: .alert)
+                                        
+                                        alert.addAction(UIAlertAction(title: "OK",
+                                                                      style: .default,
+                                                                      handler: nil))
+                                        
+                                        self.present(alert, animated: true)
+                                    } else {
+                                        self.cardsDataSource.append(vfcResult)
+                                        UserDefaults.standard.set(self.cardsDataSource,
+                                                                  forKey: "VFC_CARDS")
+                                        self.lblNoCards.isHidden = true
+                                        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                                        self.tblCardsView.reloadData()
+                                    }
                                 } else {
                                     // show error message
                                     let alert = UIAlertController(title: "Oh no ...",
@@ -316,18 +331,17 @@ extension MyCardsViewController: UITableViewDataSource {
                                    reuseIdentifier: "MyCardsTableViewCell")
         }
         
-//        var cell = tableView.dequeueReusableCell(withIdentifier: "MyCardsTableViewCell")
-//        if cell == nil {
-//            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
-//                                   reuseIdentifier: "MyCardsTableViewCell")
-//        }
-        
-        let card = self.cardsDataSource[indexPath.row]
-        let credentialSubject: [String: Any] = card["credentialSubject"] as! [String: Any]
-        cell.textLabel?.text = "\(credentialSubject["firstName"] as! String) \(credentialSubject["lastName"] as! String)"
-        cell.detailTextLabel?.text = "\(card["issuanceDate"] as! String)"
         cell.accessoryType = .disclosureIndicator
         cell.selectionStyle = .none
+        
+        let card = self.cardsDataSource[indexPath.row]
+        debugPrint("Card: ", card as Any, "\n")
+        let credentialSubject: [String: Any] = card["credentialSubject"] as! [String: Any]
+        let type: [String] = card["type"] as! [String]
+        
+        cell.textLabel?.text = "\(credentialSubject["firstName"] as! String) \(credentialSubject["lastName"] as! String)"
+        cell.detailTextLabel?.text = "\(type[1] as  String)"
+        
         return cell
     }
 }

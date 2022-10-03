@@ -16791,28 +16791,6 @@
           },
           {
             "kind": "Function",
-            "name": "getWalletPrivateKey",
-            "printedName": "getWalletPrivateKey()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10BlockIDSDKAAC19getWalletPrivateKeySSyF",
-            "mangledName": "$s10BlockIDSDKAAC19getWalletPrivateKeySSyF",
-            "moduleName": "BlockIDSDK",
-            "declAttributes": [
-              "AccessControl",
-              "RawDocComment"
-            ],
-            "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
             "name": "getServerPublicKey",
             "printedName": "getServerPublicKey()",
             "children": [
@@ -34021,51 +33999,6 @@
         "printedName": "APIKeyPair",
         "children": [
           {
-            "kind": "Constructor",
-            "name": "init",
-            "printedName": "init(privateKey:publicKey:serverKey:licenseKey:)",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "APIKeyPair",
-                "printedName": "BlockIDSDK.APIKeyPair",
-                "usr": "s:10BlockIDSDK10APIKeyPairC"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              },
-              {
-                "kind": "TypeNominal",
-                "name": "String",
-                "printedName": "Swift.String",
-                "usr": "s:SS"
-              }
-            ],
-            "declKind": "Constructor",
-            "usr": "s:10BlockIDSDK10APIKeyPairC10privateKey06publicF006serverF007licenseF0ACSS_S3Stcfc",
-            "mangledName": "$s10BlockIDSDK10APIKeyPairC10privateKey06publicF006serverF007licenseF0ACSS_S3Stcfc",
-            "moduleName": "BlockIDSDK",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "init_kind": "Designated"
-          },
-          {
             "kind": "Function",
             "name": "getEncryptedLicenseKey",
             "printedName": "getEncryptedLicenseKey()",
@@ -34093,35 +34026,6 @@
               "AccessControl"
             ],
             "funcSelfKind": "NonMutating"
-          },
-          {
-            "kind": "Function",
-            "name": "generateRequestID",
-            "printedName": "generateRequestID()",
-            "children": [
-              {
-                "kind": "TypeNominal",
-                "name": "Optional",
-                "printedName": "Swift.String?",
-                "children": [
-                  {
-                    "kind": "TypeNominal",
-                    "name": "String",
-                    "printedName": "Swift.String",
-                    "usr": "s:SS"
-                  }
-                ],
-                "usr": "s:Sq"
-              }
-            ],
-            "declKind": "Func",
-            "usr": "s:10BlockIDSDK10APIKeyPairC17generateRequestIDSSSgyF",
-            "mangledName": "$s10BlockIDSDK10APIKeyPairC17generateRequestIDSSSgyF",
-            "moduleName": "BlockIDSDK",
-            "declAttributes": [
-              "AccessControl"
-            ],
-            "funcSelfKind": "NonMutating"
           }
         ],
         "declKind": "Class",
@@ -34130,7 +34034,8 @@
         "moduleName": "BlockIDSDK",
         "declAttributes": [
           "AccessControl"
-        ]
+        ],
+        "hasMissingDesignatedInitializers": true
       },
       {
         "kind": "Import",
@@ -80715,14 +80620,14 @@
     {
       "filePath": "\/Users\/sushiltiwari\/Documents\/01-Projects\/03-BlockID\/iOS\/ios-kernel-sdk\/BlockIDSDK\/Data Models\/BIDLinkedAccount.swift",
       "kind": "StringLiteral",
-      "offset": 472,
+      "offset": 473,
       "length": 2,
       "value": "\"\""
     },
     {
       "filePath": "\/Users\/sushiltiwari\/Documents\/01-Projects\/03-BlockID\/iOS\/ios-kernel-sdk\/BlockIDSDK\/Data Models\/BIDLinkedAccount.swift",
       "kind": "StringLiteral",
-      "offset": 641,
+      "offset": 642,
       "length": 2,
       "value": "\"\""
     },

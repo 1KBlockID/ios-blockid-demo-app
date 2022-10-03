@@ -51,16 +51,34 @@ class VerifiableCredentialsHelper: NSObject {
                                                        with: communityId)
             }
             
-            let keyPair = APIKeyPair(privateKey: BlockIDSDK.sharedInstance.getWalletPrivateKey(),
-                                     publicKey: BlockIDSDK.sharedInstance.getWalletPublicKey(),
-                                     serverKey: pbKey!,
-                                     licenseKey: BlockIDSDK.sharedInstance.getLicenseKey())
+            // encrypt licene key
+            let encryptedLicenseKey = BlockIDSDK.sharedInstance.encryptString(str: AppConsant.licenseKey,
+                                                                              rcptKey: pbKey!)!
             
+            // generate requestID payload
+            let requestIDPayload: [String : Any] = ["ts": Int(Date().timeIntervalSince1970),
+                                             "deviceId": UIDevice.current.identifierForVendor!.uuidString,
+                                        "uuid": UUID().uuidString,
+                                        "appid": Bundle.main.bundleIdentifier!]
+            
+            // convert requestID to json data
+            let requestIDJSONData = try! JSONSerialization.data(withJSONObject: requestIDPayload,
+                                                       options: [])
+            
+            // convert requestID json data to string
+            let requestID = String(data: requestIDJSONData, encoding: .utf8)!
+            
+            // encrypt requestID json string
+            let encryptedRequestID = BlockIDSDK.sharedInstance.encryptString(str: requestID,
+                                                                             rcptKey: pbKey!)!
+            
+            // setup required HTTP headers
             let headers: HTTPHeaders = ["Content-Type": "application/json",
                                         "publickey": BlockIDSDK.sharedInstance.getWalletPublicKey(),
-                                        "requestid": keyPair.generateRequestID()!,
-                                        "licensekey": keyPair.getEncryptedLicenseKey()!]
+                                        "requestid": encryptedRequestID,
+                                        "licensekey": encryptedLicenseKey]
 
+            // trigger APU request
             self.sessionManager?.request(urlPath,
                                          method: HTTPMethod.post,
                                          parameters: document,
@@ -80,58 +98,4 @@ class VerifiableCredentialsHelper: NSObject {
             }
         }
     }
-
-//    public func getServiceDirectoryDetails(forTenant tenant: BIDTenant,
-//                                           completionHandler: @escaping ((result: [String: Any]?,
-//                                                                          error: Error?)) -> Void) {
-//        if let dns = tenant.dns {
-//            let url = dns + kServiceDirectory
-//
-//            let headers: HTTPHeaders = ["Content-Type": "application/json"]
-//
-//            self.sessionManager?.request(url,
-//                                         method: HTTPMethod.get,
-//                                         parameters: nil,
-//                                         encoding: JSONEncoding.default,
-//                                         headers: headers)
-//            .responseJSON { response in
-//                switch response.result {
-//                case .success:
-//                    // return the response received in as if form
-//                    // calling function must handle various status code
-//                    completionHandler((response.result.value as? [String: Any], nil))
-//                case .failure (let error):
-//                    // internet connection error
-//                    // or any other failure
-//                    completionHandler((nil, error))
-//                }
-//            }
-//        }
-//    }
-    
-//    public func getServicePublickey(serviceURL: String,
-//                                    completionHandler: @escaping ((result: [String: Any]?,
-//                                                                   error: Error?)) -> Void) {
-//        let url = serviceURL + kPublicKeys
-//        let headers: HTTPHeaders = ["Content-Type": "application/json"]
-//
-//        self.sessionManager?.request(url,
-//                                     method: HTTPMethod.get,
-//                                     parameters: nil,
-//                                     encoding: JSONEncoding.default,
-//                                     headers: headers)
-//        .responseJSON { response in
-//            switch response.result {
-//            case .success:
-//                // return the response received in as if form
-//                // calling function must handle various status code
-//                completionHandler((response.result.value as? [String: Any], nil))
-//            case .failure (let error):
-//                // internet connection error
-//                // or any other failure
-//                completionHandler((nil, error))
-//            }
-//        }
-//    }
-    
 }
