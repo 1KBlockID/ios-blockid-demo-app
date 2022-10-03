@@ -102,6 +102,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isPinRegistered() ? .checkmark : .none
         case .MyCards:
+            self.textLabel?.text = enrollment.rawValue
             self.accessoryType = .disclosureIndicator
         default:
             self.textLabel?.text = enrollment.rawValue
