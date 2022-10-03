@@ -8,13 +8,6 @@
 import UIKit
 import BlockIDSDK
 
-// define type of document using which the
-// verifiable credentials will be created
-public enum VCType {
-    case document
-    case payload
-}
-
 class MyCardsViewController: UIViewController {
     
     // enrolled drivers licenses
@@ -31,12 +24,11 @@ class MyCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
         // read stored vfc cards
+//        UserDefaults.standard.set([], forKey: "VFC_CARDS")
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
             self.cardsDataSource = cards
         }
@@ -46,7 +38,7 @@ class MyCardsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // set title
-        self.title = "My Cards"
+        self.title = "Verified ID's"
         
         // show navigation bar
         self.showNavigationBar(yorn: true)
@@ -104,6 +96,22 @@ extension MyCardsViewController {
                                               animated: true)
     }
     
+    private func showProgressIndicator() -> Void {
+        // show progress bar
+        self.view.makeToastActivity(.center)
+
+        // disable user interaction
+        self.view.window?.isUserInteractionEnabled = false
+    }
+    
+    private func hideProgressIndicator() -> Void {
+        // hide progress indicator
+        self.view.hideToastActivity()
+
+        // enable user interaction
+        self.view.window?.isUserInteractionEnabled = true
+    }
+    
     @objc private func showOptionsSheet() -> Void {
         // Create An UIAlertController with Action Sheet
         let optionsController = UIAlertController(title: nil,
@@ -115,22 +123,20 @@ extension MyCardsViewController {
         let addIDAction = UIAlertAction(title: "Add ID",
                                         style: .default,
                                         handler: { (alert: UIAlertAction!) -> Void in
-            self.intiateAddIDCardFlow()
+            self.intiateAddIDCardUsingEnrolledDocument()
         })
         
         // Scan QR
         let scanQRAction = UIAlertAction(title: "Scan QR",
                                          style: .default,
                                          handler: { (alert: UIAlertAction!) -> Void in
-            print("Scan QR")
+            self.intiateAddCardUsingQRScan()
         })
         
         // Cancel
         let cancelAction = UIAlertAction(title: "Cancel",
                                          style: .cancel,
-                                         handler: { (alert: UIAlertAction!) -> Void in
-            print("Cancel")
-        })
+                                         handler: nil)
         
         // Add UIAlertAction in UIAlertController
         optionsController.addAction(addIDAction)
@@ -143,62 +149,49 @@ extension MyCardsViewController {
                      completion: nil)
     }
     
-    private func intiateAddIDCardFlow() -> Void {
+    private func intiateAddIDCardUsingEnrolledDocument() -> Void {
         // check is drivers license document is enrolled
         // else show an error message
         if self.registeredDocument != nil {
+            // show progress indicator
+            self.showProgressIndicator()
+            
             // dl document is registered
-            // get verifiable credential for it
-            ServiceDirectory.sharedInstance.getServiceDirectoryDetails(forTenant: AppConsant.defaultTenant) { (result, error) in
-                if error == nil {
-                    if let result = result {
-                        if let code = result["code"] as? Int,
-                           let message = result["message"] as? String {
-                            // show error message
-                            let alert = UIAlertController(title: "Oh no ...",
-                                                          message: message + "\(code).",
-                                                          preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "OK",
-                                                          style: .default,
-                                                          handler: nil))
-                            
-                            self.present(alert, animated: true)
-                            return
-                        }
-                        
-                        if let vcsURL = result["vcs"] as? String {
-                            // service directory details available
-                            // check for 'vcs' url and proceed to
-                            // request verifiable credentials for enrolled dl
-                            self.createVerifiableCredentials(from: VCType.document,
-                                                             withURL: vcsURL)
-                        } else {
-                            // 'vcs' url not found
-                            // show error message
-                            let alert = UIAlertController(title: "Oh no ...",
-                                                          message: "Verifiable credentials service is not available for the requested tenant. Please contact support team.",
-                                                          preferredStyle: .alert)
-                            
-                            alert.addAction(UIAlertAction(title: "OK",
-                                                          style: .default,
-                                                          handler: nil))
-                            
-                            self.present(alert, animated: true)
-                        }
-                    }
+            // prepare verifiable document
+            let vcDocument: [String: Any] = ["did": BlockIDSDK.sharedInstance.getDID(),
+                                             "document": self.registeredDocument!]
+            
+            // and get verifiable credential now
+            VerifiableCredentialsHelper.shared.createVerifiableCredentials(for: VerifiableCredential.document_dl,
+                                                                           with: vcDocument) { (result, error) in
+                if error == nil, let result = result {
+                    // no error, process the result
+                    // add to card datasource
+                    self.cardsDataSource.append(result)
+                    
+                    // add the entire datasource to user defaults
+                    UserDefaults.standard.set(self.cardsDataSource,
+                                              forKey: "VFC_CARDS")
+                    
+                    // update the UI; reload the table view
+                    self.lblNoCards.isHidden = true
+                    self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                    self.tblCardsView.reloadData()
                 } else {
                     // show error message
                     let alert = UIAlertController(title: "Oh no ...",
                                                   message: error?.localizedDescription,
                                                   preferredStyle: .alert)
-                    
+
                     alert.addAction(UIAlertAction(title: "OK",
                                                   style: .default,
                                                   handler: nil))
-                    
+
                     self.present(alert, animated: true)
                 }
+                
+                // hide progress indicator
+                self.hideProgressIndicator()
             }
         } else {
             // dl document is not registered
@@ -214,104 +207,73 @@ extension MyCardsViewController {
         }
     }
     
-    private func createVerifiableCredentials(from type: VCType, withURL vcsURL: String) -> Void {
-        switch type {
-        // create verfiable document from enrolled 'dl'
-        // at this time, only 'dl' document is supported
-        case .document:
-            // get public key for service url
-            ServiceDirectory.sharedInstance.getServicePublickey(serviceURL: vcsURL) { (result, error) in
-                if error == nil {
-                    if let result = result,
-                       let publicKey = result["publicKey"] as? String {
-                        
-                        // prepare verifiable document
-                        let vDocument = ["did": BlockIDSDK.sharedInstance.getDID(),
-                                         "document": self.registeredDocument!]
+    private func intiateAddCardUsingQRScan() -> Void {
+        // show progress indicator
+        self.showProgressIndicator()
+        
+        // verify payload
+        let verifyDoc: [String: Any] = ["@context": ["https://www.w3.org/2018/credentials/v1",
+                                                     ["EmploymentCredential": "https://schema.org#EmploymentCredential",
+                                                      "firstName": "https://schema.org#firstName",
+                                                      "lastName": "https://schema.org#lastName",
+                                                      "companyName": "https://schema.org#companyName",
+                                                      "companyAddress": "https://schema.org#companyAddress",
+                                                      "department": "https://schema.org#department",
+                                                      "employeeId": "https://schema.org#employeeId",
+                                                      "doe": "https://schema.org#doe"],
+                                                     "https://w3id.org/security/suites/ed25519-2020/v1"],
+                                        "id": "did:blockid:1fe1567fd53c18e3720bf0474103b459b84410af",
+                                        "type": ["VerifiableCredential",
+                                                 "EmploymentCredential"],
+                                        "issuer": ["id": "TBD",
+                                                   "name": "1KOSMOS",
+                                                   "address": "Mumbai, India"],
+                                        "issuanceDate": "2022-10-03",
+                                        "expirationDate": "2050-06-12",
+                                        "credentialSubject": ["id": "did:blockid:1fe1567fd53c18e3720bf0474103b459b84410af",
+                                                              "firstName": "Sushil",
+                                                              "lastName": "Tiwari",
+                                                              "companyName": "1KOSMOS",
+                                                              "companyAddress": "Mumbai, India",
+                                                              "department": "Engineering",
+                                                              "employeeId": "1234678",
+                                                              "doe": "2050-06-12"],
+                                        "proof": ["type": "Ed25519Signature2020",
+                                                  "created": "2022-10-03T17:50:14Z",
+                                                  "verificationMethod": "did:key:z6MkkoREMRc69kLhD92EqQkte1K7eks1SvjUzRcULqVQpEhM#z6MkkoREMRc69kLhD92EqQkte1K7eks1SvjUzRcULqVQpEhM",
+                                                  "proofPurpose": "assertionMethod",
+                                                  "proofValue": "z654uQ27jGHLGLeBoZFwFXExwjKJbJ1TSQjosSidjYmQa7LRedGk4XGpptrr78yrA1PXhSSwtHMmjdykvUjL3pm36"]]
+        
+        VerifiableCredentialsHelper.shared.verify(vc: ["vc": verifyDoc]) { (verifyResult, verifyError) in
+            if verifyError == nil, let result = verifyResult,
+                let status = result["status"] as? String, status == "verified" {
+                // no error, process the result
+                // add to card datasource
+                self.cardsDataSource.append(verifyDoc)
+                
+                // add the entire datasource to user defaults
+                UserDefaults.standard.set(self.cardsDataSource,
+                                          forKey: "VFC_CARDS")
+                
+                // update the UI; reload the table view
+                self.lblNoCards.isHidden = true
+                self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                self.tblCardsView.reloadData()
+            } else {
+                // show error message
+                let alert = UIAlertController(title: "Oh no ...",
+                                              message: verifyError?.localizedDescription,
+                                              preferredStyle: .alert)
 
-                        // create verfiable credentials using above verifiable document
-                        VerifiableCredentialsHelper.shared.createVerifiableCredentialsFromDocument(document: vDocument,
-                                                                                                   serviceURL: vcsURL,
-                                                                                                   publicKey: publicKey) { (responseResult, responseError) in
-                            if responseError == nil {
-                                if let vfcResult = responseResult {
-                                    
-                                    if let code = vfcResult["code"] as? Int,
-                                       let message = vfcResult["message"] as? String {
-                                        // show error message
-                                        let alert = UIAlertController(title: "Oh no ...",
-                                                                      message: message + "\(code).",
-                                                                      preferredStyle: .alert)
-                                        
-                                        alert.addAction(UIAlertAction(title: "OK",
-                                                                      style: .default,
-                                                                      handler: nil))
-                                        
-                                        self.present(alert, animated: true)
-                                    } else {
-                                        self.cardsDataSource.append(vfcResult)
-                                        UserDefaults.standard.set(self.cardsDataSource,
-                                                                  forKey: "VFC_CARDS")
-                                        self.lblNoCards.isHidden = true
-                                        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                                        self.tblCardsView.reloadData()
-                                    }
-                                } else {
-                                    // show error message
-                                    let alert = UIAlertController(title: "Oh no ...",
-                                                                  message: "Verifiable credentials could not be created. Try again.",
-                                                                  preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .default,
+                                              handler: nil))
 
-                                    alert.addAction(UIAlertAction(title: "OK",
-                                                                  style: .default,
-                                                                  handler: nil))
-
-                                    self.present(alert, animated: true)
-                                }
-                            } else {
-                                // show error message
-                                let alert = UIAlertController(title: "Oh no ...",
-                                                              message: responseError?.localizedDescription,
-                                                              preferredStyle: .alert)
-
-                                alert.addAction(UIAlertAction(title: "OK",
-                                                              style: .default,
-                                                              handler: nil))
-
-                                self.present(alert, animated: true)
-                            }
-                        }
-                    } else {
-                        // public key not found for 'vcs' url
-                        // probably 'vcs' servie url is missing
-                        // show error message
-                        let alert = UIAlertController(title: "Oh no ...",
-                                                      message: "Verifiable credentials service is not available for the requested tenant. Please contact support team.",
-                                                      preferredStyle: .alert)
-
-                        alert.addAction(UIAlertAction(title: "OK",
-                                                      style: .default,
-                                                      handler: nil))
-
-                        self.present(alert, animated: true)
-                    }
-                } else {
-                    // show error message
-                    let alert = UIAlertController(title: "Oh no ...",
-                                                  message: error?.localizedDescription,
-                                                  preferredStyle: .alert)
-
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default,
-                                                  handler: nil))
-
-                    self.present(alert, animated: true)
-                }
+                self.present(alert, animated: true)
             }
-        // create verfiable document from payload
-        // to be done later
-        case .payload:
-            print("Create VC from payload.")
+            
+            // hide progress indicator
+            self.hideProgressIndicator()
         }
     }
 }
@@ -335,7 +297,6 @@ extension MyCardsViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         let card = self.cardsDataSource[indexPath.row]
-        debugPrint("Card: ", card as Any, "\n")
         let credentialSubject: [String: Any] = card["credentialSubject"] as! [String: Any]
         let type: [String] = card["type"] as! [String]
         
