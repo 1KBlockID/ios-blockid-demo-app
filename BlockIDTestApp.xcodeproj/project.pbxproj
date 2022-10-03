@@ -22,13 +22,13 @@
 		1FBA5C4528E779970024613E /* MyCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FBA5C4328E779970024613E /* MyCardsViewController.xib */; };
 		1FE1038528EA22B800F6BE82 /* VFCCardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1038328EA22B800F6BE82 /* VFCCardDetailsViewController.swift */; };
 		1FE1038628EA22B800F6BE82 /* VFCCardDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1FE1038428EA22B800F6BE82 /* VFCCardDetailsViewController.xib */; };
+		1FFF0D4728EB6E2700882933 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3314264413C2003FDB78 /* Main.storyboard */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
 		3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */; };
 		3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */; };
 		3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE330E264413C2003FDB78 /* AppDelegate.swift */; };
-		3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3314264413C2003FDB78 /* Main.storyboard */; };
 		3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3317264413C2003FDB78 /* Assets.xcassets */; };
 		3CEE331B264413C2003FDB78 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3319264413C2003FDB78 /* LaunchScreen.storyboard */; };
 		3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE333B264414E7003FDB78 /* ViewControllerExtension.swift */; };
@@ -566,7 +566,7 @@
 				3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */,
 				1F582A8728E6386F006053A5 /* BoardingPass.pkpass in Resources */,
 				1F582A8828E6386F006053A5 /* StoreCard.pkpass in Resources */,
-				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
+				1FFF0D4728EB6E2700882933 /* Main.storyboard in Resources */,
 				1F582A8028E62D3E006053A5 /* Coupon.pkpass in Resources */,
 				1FE1038628EA22B800F6BE82 /* VFCCardDetailsViewController.xib in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,

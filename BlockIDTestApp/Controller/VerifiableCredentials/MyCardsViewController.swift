@@ -28,7 +28,7 @@ class MyCardsViewController: UIViewController {
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
         // read stored vfc cards
-//        UserDefaults.standard.set([], forKey: "VFC_CARDS")
+        // UserDefaults.standard.set([], forKey: "VFC_CARDS")
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
             self.cardsDataSource = cards
         }
@@ -99,7 +99,7 @@ extension MyCardsViewController {
     private func showProgressIndicator() -> Void {
         // show progress bar
         self.view.makeToastActivity(.center)
-
+        
         // disable user interaction
         self.view.window?.isUserInteractionEnabled = false
     }
@@ -107,7 +107,7 @@ extension MyCardsViewController {
     private func hideProgressIndicator() -> Void {
         // hide progress indicator
         self.view.hideToastActivity()
-
+        
         // enable user interaction
         self.view.window?.isUserInteractionEnabled = true
     }
@@ -182,11 +182,11 @@ extension MyCardsViewController {
                     let alert = UIAlertController(title: "Oh no ...",
                                                   message: error?.localizedDescription,
                                                   preferredStyle: .alert)
-
+                    
                     alert.addAction(UIAlertAction(title: "OK",
                                                   style: .default,
                                                   handler: nil))
-
+                    
                     self.present(alert, animated: true)
                 }
                 
@@ -208,73 +208,14 @@ extension MyCardsViewController {
     }
     
     private func intiateAddCardUsingQRScan() -> Void {
-        // show progress indicator
-        self.showProgressIndicator()
-        
-        // verify payload
-        let verifyDoc: [String: Any] = ["@context": ["https://www.w3.org/2018/credentials/v1",
-                                                     ["EmploymentCredential": "https://schema.org#EmploymentCredential",
-                                                      "firstName": "https://schema.org#firstName",
-                                                      "lastName": "https://schema.org#lastName",
-                                                      "companyName": "https://schema.org#companyName",
-                                                      "companyAddress": "https://schema.org#companyAddress",
-                                                      "department": "https://schema.org#department",
-                                                      "employeeId": "https://schema.org#employeeId",
-                                                      "doe": "https://schema.org#doe"],
-                                                     "https://w3id.org/security/suites/ed25519-2020/v1"],
-                                        "id": "did:blockid:1fe1567fd53c18e3720bf0474103b459b84410af",
-                                        "type": ["VerifiableCredential",
-                                                 "EmploymentCredential"],
-                                        "issuer": ["id": "TBD",
-                                                   "name": "1KOSMOS",
-                                                   "address": "Mumbai, India"],
-                                        "issuanceDate": "2022-10-03",
-                                        "expirationDate": "2050-06-12",
-                                        "credentialSubject": ["id": "did:blockid:1fe1567fd53c18e3720bf0474103b459b84410af",
-                                                              "firstName": "Sushil",
-                                                              "lastName": "Tiwari",
-                                                              "companyName": "1KOSMOS",
-                                                              "companyAddress": "Mumbai, India",
-                                                              "department": "Engineering",
-                                                              "employeeId": "1234678",
-                                                              "doe": "2050-06-12"],
-                                        "proof": ["type": "Ed25519Signature2020",
-                                                  "created": "2022-10-03T17:50:14Z",
-                                                  "verificationMethod": "did:key:z6MkkoREMRc69kLhD92EqQkte1K7eks1SvjUzRcULqVQpEhM#z6MkkoREMRc69kLhD92EqQkte1K7eks1SvjUzRcULqVQpEhM",
-                                                  "proofPurpose": "assertionMethod",
-                                                  "proofValue": "z654uQ27jGHLGLeBoZFwFXExwjKJbJ1TSQjosSidjYmQa7LRedGk4XGpptrr78yrA1PXhSSwtHMmjdykvUjL3pm36"]]
-        
-        VerifiableCredentialsHelper.shared.verify(vc: ["vc": verifyDoc]) { (verifyResult, verifyError) in
-            if verifyError == nil, let result = verifyResult,
-                let status = result["status"] as? String, status == "verified" {
-                // no error, process the result
-                // add to card datasource
-                self.cardsDataSource.append(verifyDoc)
-                
-                // add the entire datasource to user defaults
-                UserDefaults.standard.set(self.cardsDataSource,
-                                          forKey: "VFC_CARDS")
-                
-                // update the UI; reload the table view
-                self.lblNoCards.isHidden = true
-                self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                self.tblCardsView.reloadData()
-            } else {
-                // show error message
-                let alert = UIAlertController(title: "Oh no ...",
-                                              message: verifyError?.localizedDescription,
-                                              preferredStyle: .alert)
-
-                alert.addAction(UIAlertAction(title: "OK",
-                                              style: .default,
-                                              handler: nil))
-
-                self.present(alert, animated: true)
-            }
-            
-            // hide progress indicator
-            self.hideProgressIndicator()
-        }
+        self.openQRScanner()
+    }
+    
+    private func openQRScanner() -> Void {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
+        scanQRVC.delegate = self
+        self.present(scanQRVC, animated: true)
     }
 }
 
@@ -314,5 +255,76 @@ extension MyCardsViewController: UITableViewDelegate {
                                                            bundle: nil)
         self.navigationController?.pushViewController(vfcCardDetailVC,
                                                       animated: true)
+    }
+}
+
+// MARK: - ScanQRViewDelegate -
+extension MyCardsViewController: ScanQRViewDelegate {
+    func scannedData(data: String) {
+        // show progress indicator
+        self.showProgressIndicator()
+        
+        let qrPayload = Data(data.utf8)
+        do {
+            if let document = try JSONSerialization.jsonObject(with: qrPayload) as? [String: Any],
+               let vcPayload = document["vc"] as? [String: Any] {
+                VerifiableCredentialsHelper.shared.verify(vc: vcPayload) { (verifyResult, verifyError) in
+                    if verifyError == nil, let result = verifyResult,
+                       let status = result["status"] as? String, status == "verified" {
+                        // no error, process the result
+                        // add to card datasource
+                        self.cardsDataSource.append(vcPayload)
+                        
+                        // add the entire datasource to user defaults
+                        UserDefaults.standard.set(self.cardsDataSource,
+                                                  forKey: "VFC_CARDS")
+                        
+                        // update the UI; reload the table view
+                        self.lblNoCards.isHidden = true
+                        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+                        self.tblCardsView.reloadData()
+                    } else {
+                        // show error message
+                        let alert = UIAlertController(title: "Oh no ...",
+                                                      message: verifyError?.localizedDescription,
+                                                      preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK",
+                                                      style: .default,
+                                                      handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    }
+                }
+            } else {
+                // show error message
+                let alert = UIAlertController(title: "Oh no ...",
+                                              message: "Invalid QR code. Try again.",
+                                              preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .default,
+                                              handler: nil))
+                
+                self.present(alert, animated: true)
+            }
+            
+            // hide progress indicator
+            self.hideProgressIndicator()
+        } catch {
+            // show error message
+            let alert = UIAlertController(title: "Oh no ...",
+                                          message: "some exception when converting JSON to object",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .default,
+                                          handler: nil))
+            
+            self.present(alert, animated: true)
+            
+            // hide progress indicator
+            self.hideProgressIndicator()
+        }
     }
 }
