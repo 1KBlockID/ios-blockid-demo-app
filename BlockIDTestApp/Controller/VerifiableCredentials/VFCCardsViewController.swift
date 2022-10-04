@@ -280,7 +280,7 @@ extension VFCCardsViewController: UITableViewDelegate {
 // MARK: - ScanQRViewDelegate -
 extension VFCCardsViewController: ScanQRViewDelegate {
     func scannedData(data: String) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // show progress indicator
             self.showProgressIndicator()
             
