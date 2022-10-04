@@ -20,12 +20,11 @@ class VFCCardDetailsViewController: UIViewController {
     
     // MARK: - IBOutlets -
     @IBOutlet weak var tblCardDetail: UITableView!
+    @IBOutlet weak var cardView: UIView!
 
     // MARK: - View Life cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,14 +37,10 @@ class VFCCardDetailsViewController: UIViewController {
         self.setupNavigationBarButtons()
         
         // setup tableview appearance
-        self.tblCardDetail.layer.cornerRadius = 8.0
-        self.tblCardDetail.layer.borderColor = UIColor(red: 250.0/255.0,
-                                                       green: 238.0/255.0,
-                                                       blue: 239.0/255.0,
-                                                       alpha: 1.0).cgColor
-        self.tblCardDetail.layer.borderWidth = 1.0
-        self.tblCardDetail.layer.shadowOffset = CGSize(width: 1.0,
-                                                       height: 1.0)
+        self.setupCardDetailsViewAppearance()
+        
+        // setup card view appearance
+        self.setupCardViewAppearanceFor(card: self.selectedCard)
     }
 
     // MARK: - IBActions -
@@ -56,6 +51,53 @@ class VFCCardDetailsViewController: UIViewController {
 
 // MARK: - Extension: Private Methods -
 extension VFCCardDetailsViewController {
+    
+    private func setupCardDetailsViewAppearance() -> Void {
+        self.tblCardDetail.contentInset = UIEdgeInsets(top: -38.0,
+                                                       left: 0.0,
+                                                       bottom: -38.0,
+                                                       right: 0.0)
+        self.tblCardDetail.layer.cornerRadius = 10.0
+        self.tblCardDetail.layer.borderColor = UIColor(red: 0.980,
+                                                       green: 0.933,
+                                                       blue: 0.937,
+                                                       alpha: 1.0).cgColor
+        self.tblCardDetail.layer.borderWidth = 1.0
+        self.tblCardDetail.layer.backgroundColor = UIColor(red: 1.0,
+                                                           green: 1.0,
+                                                           blue: 1.0,
+                                                           alpha: 1.0).cgColor
+    }
+    
+    private func setupCardViewAppearanceFor(card: [String: Any]?) -> Void {
+        let type: [String] = self.selectedCard!["type"] as! [String]
+        if type.last == "DriversLicenseCredential" {
+            self.cardView.layer.backgroundColor = UIColor(red: 0.933,
+                                                          green: 0.0,
+                                                          blue: 0.0,
+                                                          alpha: 1.0).cgColor
+            self.cardView.layer.borderColor = UIColor(red: 0.827,
+                                                      green: 0.094,
+                                                      blue: 0.047,
+                                                      alpha: 1).cgColor
+        } else {
+            self.cardView.layer.backgroundColor = UIColor(red: 0.447,
+                                                          green: 0.506,
+                                                          blue: 0.91,
+                                                          alpha: 1).cgColor
+            self.cardView.layer.borderColor = UIColor(red: 0.275,
+                                                      green: 0.227,
+                                                      blue: 0.565,
+                                                      alpha: 1).cgColor
+        }
+        
+        self.cardView.layer.cornerRadius = 10.0
+        self.cardView.layer.borderWidth = 4.0
+        self.cardView.layer.shadowColor = UIColor.gray.cgColor
+        self.cardView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        self.cardView.layer.shadowRadius = 6.0
+        self.cardView.layer.shadowOpacity = 0.5
+    }
 
     private func showNavigationBar(yorn: Bool) -> Void {
         self.navigationController?.setNavigationBarHidden(!yorn,
@@ -218,20 +260,19 @@ extension VFCCardDetailsViewController: UITableViewDataSource {
         cell.textLabel?.text = "Document Scanned"
         cell.textLabel?.font = UIFont.systemFont(ofSize: 12.0,
                                                  weight: UIFont.Weight.semibold)
-        cell.textLabel?.textColor = UIColor(red: 172.0/255.0,
-                                            green: 172.0/255.0,
-                                            blue: 172.0/255.0,
+        cell.textLabel?.textColor = UIColor(red: 0.675,
+                                            green: 0.675,
+                                            blue: 0.675,
                                             alpha: 1.0)
         
         let type: [String] = self.selectedCard!["type"] as! [String]
         cell.detailTextLabel?.text = "\(type[1] as String)"
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14.0,
                                                        weight: UIFont.Weight.semibold)
-        cell.detailTextLabel?.textColor = UIColor(red: 65.0/255.0,
-                                                  green: 65.0/255.0,
-                                                  blue: 65.0/255.0,
+        cell.detailTextLabel?.textColor = UIColor(red: 0.255,
+                                                  green: 0.255,
+                                                  blue: 0.255,
                                                   alpha: 1.0)
-        
         return cell
     }
 }
