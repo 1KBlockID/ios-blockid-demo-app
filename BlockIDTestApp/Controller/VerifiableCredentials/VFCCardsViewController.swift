@@ -28,7 +28,6 @@ class VFCCardsViewController: UIViewController {
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
         // read stored vfc cards
-        // UserDefaults.standard.set([], forKey: "VFC_CARDS")
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
             self.cardsDataSource = cards
         }
@@ -46,10 +45,22 @@ class VFCCardsViewController: UIViewController {
         // add button items
         self.setupNavigationBarButtons()
         
+        // read stored vfc cards
+        if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+            self.cardsDataSource = cards
+            self.tblCardsView.reloadData()
+        }
+        
         //
         self.lblNoCards.isHidden = (self.cardsDataSource.count == 0) ? false : true
         self.tblCardsView.isHidden = !self.lblNoCards.isHidden
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//
+//
+//    }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -215,7 +226,6 @@ extension VFCCardsViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
         scanQRVC.delegate = self
-//        scanQRVC.modalPresentationStyle = .fullScreen
         self.present(scanQRVC, animated: true)
     }
 }
@@ -228,11 +238,11 @@ extension VFCCardsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "MyCardsTableViewCell") {
+        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "VFCCardsTableViewCell") {
             cell = reusableCell
         } else {
             cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
-                                   reuseIdentifier: "MyCardsTableViewCell")
+                                   reuseIdentifier: "VFCCardsTableViewCell")
         }
         
         cell.accessoryType = .disclosureIndicator
@@ -243,7 +253,7 @@ extension VFCCardsViewController: UITableViewDataSource {
         let type: [String] = card["type"] as! [String]
         
         cell.textLabel?.text = "\(credentialSubject["firstName"] as! String) \(credentialSubject["lastName"] as! String)"
-        cell.detailTextLabel?.text = "\(type[1] as  String)"
+        cell.detailTextLabel?.text = "\(type[1] as String)"
         
         return cell
     }
@@ -272,6 +282,8 @@ extension VFCCardsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vfcCardDetailVC = VFCCardDetailsViewController(nibName: "VFCCardDetailsViewController",
                                                            bundle: nil)
+        vfcCardDetailVC.selectedCard = self.cardsDataSource[indexPath.row]
+        vfcCardDetailVC.selectedCardIndex = indexPath.row
         self.navigationController?.pushViewController(vfcCardDetailVC,
                                                       animated: true)
     }
@@ -289,8 +301,8 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                 if let document = try JSONSerialization.jsonObject(with: qrPayload) as? [String: Any],
                    let vcPayload = document["vc"] as? [String: Any] {
                     VerifiableCredentialsHelper.shared.verify(vc: document) { (verifyResult, verifyError) in
-                        print("Result: ", verifyResult as Any, "\n")
-                        print("Error: ", verifyError as Any, "\n")
+//                        print("Result: ", verifyResult as Any, "\n")
+//                        print("Error: ", verifyError as Any, "\n")
                         if verifyError == nil, let result = verifyResult,
                            let status = result["status"] as? String, status == "verified" {
                             // no error, process the result

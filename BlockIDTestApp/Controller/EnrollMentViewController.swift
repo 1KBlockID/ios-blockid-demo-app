@@ -410,7 +410,7 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     private func showMyCardsScreen() {
         let vfcCardsVC = VFCCardsViewController(nibName: "VFCCardsViewController",
-                                              bundle: nil)
+                                                bundle: Bundle.main)
         self.navigationController?.pushViewController(vfcCardsVC,
                                                       animated: true)
     }
