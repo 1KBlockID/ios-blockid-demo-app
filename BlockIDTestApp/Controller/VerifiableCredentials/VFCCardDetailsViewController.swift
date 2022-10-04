@@ -9,11 +9,19 @@ import UIKit
 import PassKit
 
 class VFCCardDetailsViewController: UIViewController {
+
+    // selected card
+    var selectedCard: [String: Any]?
+    var selectedCardIndex: Int = -1
     
     // define list of pass
     // to be removed later
     let passes = ["BoardingPass", "Event", "Generic", "StoreCard", "Coupon"]
+    
+    // MARK: - IBOutlets -
+    @IBOutlet weak var tblCardDetail: UITableView!
 
+    // MARK: - View Life cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,11 +31,21 @@ class VFCCardDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // set title
-        self.title = "Card Details"
-        
         // show navigation bar
         self.showNavigationBar(yorn: true)
+        
+        // add button items
+        self.setupNavigationBarButtons()
+        
+        // setup tableview appearance
+        self.tblCardDetail.layer.cornerRadius = 8.0
+        self.tblCardDetail.layer.borderColor = UIColor(red: 250.0/255.0,
+                                                       green: 238.0/255.0,
+                                                       blue: 239.0/255.0,
+                                                       alpha: 1.0).cgColor
+        self.tblCardDetail.layer.borderWidth = 1.0
+        self.tblCardDetail.layer.shadowOffset = CGSize(width: 1.0,
+                                                       height: 1.0)
     }
 
     // MARK: - IBActions -
@@ -42,6 +60,64 @@ extension VFCCardDetailsViewController {
     private func showNavigationBar(yorn: Bool) -> Void {
         self.navigationController?.setNavigationBarHidden(!yorn,
                                                           animated: false)
+    }
+    
+    private func setupNavigationBarButtons() -> Void {
+        // create left bar button item
+        let leftButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                          target: self,
+                                          action: #selector(self.done))
+        
+        // set left bar button item
+        self.navigationItem.setLeftBarButton(leftButton,
+                                              animated: true)
+        
+        
+        // create right bar button item
+        let rightButton = UIBarButtonItem(barButtonSystemItem: .trash,
+                                          target: self,
+                                          action: #selector(self.deleteCard))
+        
+        // set right bar button item
+        self.navigationItem.setRightBarButton(rightButton,
+                                              animated: true)
+    }
+    
+    @objc private func done() -> Void {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func deleteCard() -> Void {
+        // Create An UIAlertController with Action Sheet
+        let optionsController = UIAlertController(title: nil,
+                                                  message: "Are you sure you want to delete the card?",
+                                                  preferredStyle: .actionSheet)
+        
+        // Create UIAlertAction for UIAlertController
+        // Delete
+        let deleteAction = UIAlertAction(title: "Delete",
+                                        style: .destructive,
+                                        handler: { (alert: UIAlertAction!) -> Void in
+            if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+                cards.remove(at: self.selectedCardIndex)
+                UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
+        
+        // Cancel
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: nil)
+        
+        // Add UIAlertAction in UIAlertController
+        optionsController.addAction(deleteAction)
+        optionsController.addAction(cancelAction)
+        
+        // Present UIAlertController with Action Sheet
+        self.present(optionsController,
+                     animated: true,
+                     completion: nil)
     }
     
     private func addCardToAppleWallet() -> Void {
@@ -117,5 +193,52 @@ extension VFCCardDetailsViewController {
 extension VFCCardDetailsViewController: PKAddPassesViewControllerDelegate {
     func addPassesViewControllerDidFinish(_ controller: PKAddPassesViewController) {
         self.dismiss(animated: true)
+    }
+}
+
+// MARK: - UITableViewDataSource -
+extension VFCCardDetailsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: UITableViewCell
+        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "VFCCardDetailTableViewCell") {
+            cell = reusableCell
+        } else {
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
+                                   reuseIdentifier: "VFCCardDetailTableViewCell")
+        }
+        
+        cell.selectionStyle = .none
+        
+        // FIXME: - Hardcoded data for now -
+        // will fix it as part of another ticket
+        cell.textLabel?.text = "Document Scanned"
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 12.0,
+                                                 weight: UIFont.Weight.semibold)
+        cell.textLabel?.textColor = UIColor(red: 172.0/255.0,
+                                            green: 172.0/255.0,
+                                            blue: 172.0/255.0,
+                                            alpha: 1.0)
+        
+        let type: [String] = self.selectedCard!["type"] as! [String]
+        cell.detailTextLabel?.text = "\(type[1] as String)"
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14.0,
+                                                       weight: UIFont.Weight.semibold)
+        cell.detailTextLabel?.textColor = UIColor(red: 65.0/255.0,
+                                                  green: 65.0/255.0,
+                                                  blue: 65.0/255.0,
+                                                  alpha: 1.0)
+        
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate -
+extension VFCCardDetailsViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //
     }
 }

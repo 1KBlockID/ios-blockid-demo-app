@@ -28,7 +28,7 @@ public enum Enrollments: String {
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
     case WalletConnect = "WalletConnect"
-    case MyCards = "My Cards"
+    case MyCards = "Verified ID's"
     case resetApp  = "Reset App"
 }
 
@@ -409,9 +409,9 @@ extension EnrollMentViewController {
 // MARK: - Verifiable Credentials: My Cards -
 extension EnrollMentViewController {
     private func showMyCardsScreen() {
-        let myCardsVC = MyCardsViewController(nibName: "MyCardsViewController",
-                                              bundle: nil)
-        self.navigationController?.pushViewController(myCardsVC,
+        let vfcCardsVC = VFCCardsViewController(nibName: "VFCCardsViewController",
+                                                bundle: Bundle.main)
+        self.navigationController?.pushViewController(vfcCardsVC,
                                                       animated: true)
     }
 }
