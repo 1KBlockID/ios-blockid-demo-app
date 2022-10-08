@@ -21,6 +21,13 @@
 		1F1AA84B28EF37E2007261AF /* VFCCardsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1AA84028EF37E2007261AF /* VFCCardsViewController.xib */; };
 		1F1AA84D28EF3803007261AF /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1AA84C28EF3803007261AF /* CardView.swift */; };
 		1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F29F9A12804AAA700BF2456 /* SafariServices.framework */; };
+		1F6FEDA228F0BCD500EBE2AD /* CardsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F6FEDA128F0BCD500EBE2AD /* CardsCollectionViewCell.swift */; };
+		1F6FEDAA28F1DF5F00EBE2AD /* imgCompanyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDA428F1DF5F00EBE2AD /* imgCompanyLogo.png */; };
+		1F6FEDAB28F1DF5F00EBE2AD /* imgCompanyLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDA528F1DF5F00EBE2AD /* imgCompanyLogo@2x.png */; };
+		1F6FEDAE28F1DF5F00EBE2AD /* imgCompanyLogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDA828F1DF5F00EBE2AD /* imgCompanyLogo@3x.png */; };
+		1F6FEDB328F1E09700EBE2AD /* imgIidentityLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDB028F1E09700EBE2AD /* imgIidentityLogo@2x.png */; };
+		1F6FEDB428F1E09700EBE2AD /* imgIidentityLogo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDB128F1E09700EBE2AD /* imgIidentityLogo@3x.png */; };
+		1F6FEDB528F1E09700EBE2AD /* imgIidentityLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 1F6FEDB228F1E09700EBE2AD /* imgIidentityLogo.png */; };
 		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
 		1FFF0D4728EB6E2700882933 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE3314264413C2003FDB78 /* Main.storyboard */; };
@@ -125,6 +132,13 @@
 		1F1AA84028EF37E2007261AF /* VFCCardsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VFCCardsViewController.xib; sourceTree = "<group>"; };
 		1F1AA84C28EF3803007261AF /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1F29F9A12804AAA700BF2456 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		1F6FEDA128F0BCD500EBE2AD /* CardsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsCollectionViewCell.swift; sourceTree = "<group>"; };
+		1F6FEDA428F1DF5F00EBE2AD /* imgCompanyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgCompanyLogo.png; sourceTree = "<group>"; };
+		1F6FEDA528F1DF5F00EBE2AD /* imgCompanyLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgCompanyLogo@2x.png"; sourceTree = "<group>"; };
+		1F6FEDA828F1DF5F00EBE2AD /* imgCompanyLogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgCompanyLogo@3x.png"; sourceTree = "<group>"; };
+		1F6FEDB028F1E09700EBE2AD /* imgIidentityLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgIidentityLogo@2x.png"; sourceTree = "<group>"; };
+		1F6FEDB128F1E09700EBE2AD /* imgIidentityLogo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgIidentityLogo@3x.png"; sourceTree = "<group>"; };
+		1F6FEDB228F1E09700EBE2AD /* imgIidentityLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgIidentityLogo.png; sourceTree = "<group>"; };
 		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
 		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
@@ -234,6 +248,7 @@
 			children = (
 				1F1AA83928EF37E2007261AF /* API */,
 				1F1AA83C28EF37E2007261AF /* Controllers */,
+				1F6FEDA328F1DF5F00EBE2AD /* Images */,
 				1F1AA83228EF37E2007261AF /* SamplePasses */,
 				1F1AA83828EF37E2007261AF /* View */,
 			);
@@ -256,6 +271,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1AA84C28EF3803007261AF /* CardView.swift */,
+				1F6FEDA128F0BCD500EBE2AD /* CardsCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -279,6 +295,20 @@
 			);
 			path = Controllers;
 			sourceTree = "<group>";
+		};
+		1F6FEDA328F1DF5F00EBE2AD /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				1F6FEDA428F1DF5F00EBE2AD /* imgCompanyLogo.png */,
+				1F6FEDA528F1DF5F00EBE2AD /* imgCompanyLogo@2x.png */,
+				1F6FEDA828F1DF5F00EBE2AD /* imgCompanyLogo@3x.png */,
+				1F6FEDB228F1E09700EBE2AD /* imgIidentityLogo.png */,
+				1F6FEDB028F1E09700EBE2AD /* imgIidentityLogo@2x.png */,
+				1F6FEDB128F1E09700EBE2AD /* imgIidentityLogo@3x.png */,
+			);
+			name = Images;
+			path = BlockIDTestApp/VerifiableCredentials/Images;
+			sourceTree = SOURCE_ROOT;
 		};
 		1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */ = {
 			isa = PBXGroup;
@@ -587,16 +617,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F6FEDAB28F1DF5F00EBE2AD /* imgCompanyLogo@2x.png in Resources */,
 				3CEE331B264413C2003FDB78 /* LaunchScreen.storyboard in Resources */,
 				1F1AA84528EF37E2007261AF /* Coupon.pkpass in Resources */,
+				1F6FEDAE28F1DF5F00EBE2AD /* imgCompanyLogo@3x.png in Resources */,
 				E6B95077287D84CB0015E759 /* Localizable.strings in Resources */,
 				3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */,
+				1F6FEDB428F1E09700EBE2AD /* imgIidentityLogo@3x.png in Resources */,
 				1FFF0D4728EB6E2700882933 /* Main.storyboard in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
+				1F6FEDB328F1E09700EBE2AD /* imgIidentityLogo@2x.png in Resources */,
 				1F1AA84928EF37E2007261AF /* VFCCardDetailsViewController.xib in Resources */,
 				1F1AA84328EF37E2007261AF /* Generic.pkpass in Resources */,
+				1F6FEDB528F1E09700EBE2AD /* imgIidentityLogo.png in Resources */,
 				1F1AA84428EF37E2007261AF /* Event.pkpass in Resources */,
 				5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */,
+				1F6FEDAA28F1DF5F00EBE2AD /* imgCompanyLogo.png in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 				1F1AA84228EF37E2007261AF /* StoreCard.pkpass in Resources */,
 				B64453412893C71900597497 /* GoogleService-Info.plist in Resources */,
@@ -701,6 +737,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CEE3359264414E7003FDB78 /* NFCDisabledViewController.swift in Sources */,
+				1F6FEDA228F0BCD500EBE2AD /* CardsCollectionViewCell.swift in Sources */,
 				3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */,
 				3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */,
 				E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */,

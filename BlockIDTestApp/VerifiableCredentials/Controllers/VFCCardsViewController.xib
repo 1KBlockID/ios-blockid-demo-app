@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="VFCCardsViewController" customModule="BlockIDTestApp" customModuleProvider="target">
             <connections>
                 <outlet property="lblNoCards" destination="kDL-zr-RsM" id="X8m-gh-OZI"/>
-                <outlet property="tblCardsView" destination="gQo-iv-MW3" id="HED-3Y-hkk"/>
+                <outlet property="ucvCardsView" destination="9FZ-j2-pwN" id="TTH-tK-eRg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -21,14 +21,20 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="gQo-iv-MW3">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="9FZ-j2-pwN">
+                    <rect key="frame" x="0.0" y="48" width="414" height="800"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="sU2-sS-41Y">
+                        <size key="itemSize" width="128" height="128"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
                     <connections>
-                        <outlet property="dataSource" destination="-1" id="Qsi-xz-BKy"/>
-                        <outlet property="delegate" destination="-1" id="cRQ-FI-WtM"/>
+                        <outlet property="dataSource" destination="-1" id="KJh-q3-Tyd"/>
+                        <outlet property="delegate" destination="-1" id="LwP-tb-lJn"/>
                     </connections>
-                </tableView>
+                </collectionView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No cards available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDL-zr-RsM">
                     <rect key="frame" x="121.5" y="260" width="171" height="24"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -39,12 +45,12 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="gQo-iv-MW3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="4d6-Mr-h6g"/>
-                <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="9UM-IY-TR1"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="gQo-iv-MW3" secondAttribute="bottom" id="EKY-iz-gfe"/>
-                <constraint firstItem="gQo-iv-MW3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="T3L-WN-Myx"/>
+                <constraint firstItem="9FZ-j2-pwN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="7FB-kl-eU4"/>
+                <constraint firstItem="9FZ-j2-pwN" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="CX4-uo-TzE"/>
+                <constraint firstItem="9FZ-j2-pwN" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="Etb-wM-b7P"/>
+                <constraint firstItem="9FZ-j2-pwN" firstAttribute="centerX" secondItem="kDL-zr-RsM" secondAttribute="centerX" id="Lr0-hw-N2x"/>
                 <constraint firstItem="kDL-zr-RsM" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="-176" id="UFw-Mr-UBa"/>
-                <constraint firstItem="gQo-iv-MW3" firstAttribute="centerX" secondItem="kDL-zr-RsM" secondAttribute="centerX" id="r2p-bX-pp8"/>
+                <constraint firstItem="9FZ-j2-pwN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="aFo-bU-TgO"/>
             </constraints>
             <point key="canvasLocation" x="73.913043478260875" y="-12.053571428571429"/>
         </view>

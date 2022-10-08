@@ -28,7 +28,7 @@ public enum Enrollments: String {
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
     case WalletConnect = "WalletConnect"
-    case MyCards = "Verified ID's"
+    case MyCards = "Verified IDs"
     case resetApp  = "Reset App"
 }
 

@@ -10,9 +10,134 @@ import PassKit
 
 class VFCCardDetailsViewController: UIViewController {
     
-    // selected card
-    var selectedCard: [String: Any]?
+    // selected card index
     var selectedCardIndex: Int = -1
+    
+    // selected card
+    var selectedCard: [String: Any] = [:] {
+        didSet {
+            self.prepareCardDatasource(with: selectedCard)
+        }
+    }
+    
+    // holds card details data in tableview
+    private var cardDetails: [[String: Any]] = []
+    
+    // prepare card view details datasource
+    func prepareCardDatasource(with details: [String: Any]) {
+        // get docType
+        let type: String = details["docType"] as! String
+        
+        // get vfc details
+        let vfc: [String: Any] = details["vfc"] as! [String: Any]
+        
+        // get credentialSubject
+        let credentialSubject: [String: Any] = vfc["credentialSubject"] as! [String: Any]
+        
+        // based on card type, update card datasource
+        // to be presented in tableview
+        if type == CardType.identity_dl.rawValue {
+            // get issuer
+            if let issuer: String = vfc["issuer"] as? String {
+                self.cardDetails.append(["Issued by": issuer])
+            } else {
+                self.cardDetails.append(["Issued by": ""])
+            }
+                       
+            self.cardDetails.append(["Credential Type": "Verified Identity"])
+            self.cardDetails.append(["Document Scanned": "Driver’s License"])
+            
+            if let firstName = credentialSubject["firstName"] as? String {
+                self.cardDetails.append(["First Name": firstName])
+            } else {
+                self.cardDetails.append(["First Name": ""])
+            }
+            
+            if let lastName = credentialSubject["lastName"] as? String {
+                self.cardDetails.append(["Last Name": lastName])
+            } else {
+                self.cardDetails.append(["Last Name": ""])
+            }
+            
+            if let dob = credentialSubject["dob"] as? String,
+               let formattedDoB = self.formatDateForDisplay(date: dob) {
+                self.cardDetails.append(["Date of Birth": formattedDoB])
+            } else {
+                self.cardDetails.append(["Date of Birth": ""])
+            }
+            
+            // prepare address: street, city, state zipcode
+            if let street = credentialSubject["street"] as? String,
+               let city = credentialSubject["city"] as? String,
+               let state = credentialSubject["state"] as? String,
+               let zipcode = credentialSubject["zipCode"] as? String {
+                self.cardDetails.append(["Address": "\(street), \(city), \(state) \(zipcode)"])
+            } else {
+                self.cardDetails.append(["Address": ""])
+            }
+            
+            // AAMVA verificaiton to be done
+            self.cardDetails.append(["Verified By": "AAMVA"])
+        } else if type == CardType.employee_card.rawValue {
+            // get issuer
+            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
+            if let name: String = issuer["name"] as? String {
+                self.cardDetails.append(["Issued by": name])
+            } else {
+                self.cardDetails.append(["Issued by": ""])
+            }
+            
+            self.cardDetails.append(["Credential Type": "Verfied Employee"])
+            
+            if let firstName = credentialSubject["firstName"] as? String {
+                self.cardDetails.append(["First Name": firstName])
+            } else {
+                self.cardDetails.append(["First Name": ""])
+            }
+            
+            if let lastName = credentialSubject["lastName"] as? String {
+                self.cardDetails.append(["Last Name": lastName])
+            } else {
+                self.cardDetails.append(["Last Name": ""])
+            }
+            
+            if let employeeId = credentialSubject["employeeId"] as? String {
+                self.cardDetails.append(["Employee ID": employeeId])
+            } else {
+                self.cardDetails.append(["Employee ID": ""])
+            }
+
+            if let companyName = credentialSubject["companyName"] as? String {
+                self.cardDetails.append(["Company Name": companyName])
+            } else {
+                self.cardDetails.append(["Company Name": ""])
+            }
+
+            if let department = credentialSubject["department"] as? String {
+                self.cardDetails.append(["Department": department])
+            } else {
+                self.cardDetails.append(["Department": ""])
+            }
+
+            if let address: String = issuer["address"] as? String {
+                self.cardDetails.append(["Company Address": address])
+            } else {
+                self.cardDetails.append(["Company Address": ""])
+            }
+        }
+    }
+    
+    private func formatDateForDisplay(date: String) -> String? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        if let fromDate = formatter.date(from: date) {
+            formatter.dateFormat = "MMM dd, yyyy"
+            return formatter.string(from: fromDate)
+        }
+        
+        return nil
+    }
     
     // define list of pass
     // to be removed later
@@ -39,8 +164,8 @@ class VFCCardDetailsViewController: UIViewController {
         // setup tableview appearance
         self.setupCardDetailsViewAppearance()
         
-        // setup card view appearance
-        self.setupCardViewAppearanceFor(card: self.selectedCard)
+        // update card view details
+        self.updateCardView(with: self.selectedCard)
     }
     
     // MARK: - IBActions -
@@ -52,7 +177,7 @@ class VFCCardDetailsViewController: UIViewController {
 // MARK: - Extension: Private Methods -
 extension VFCCardDetailsViewController {
     
-    private func setupCardDetailsViewAppearance() -> Void {
+    private func setupCardDetailsViewAppearance() {
         self.tblCardDetail.contentInset = UIEdgeInsets(top: -38.0,
                                                        left: 0.0,
                                                        bottom: -38.0,
@@ -69,17 +194,76 @@ extension VFCCardDetailsViewController {
                                                            alpha: 1.0).cgColor
     }
     
-    private func setupCardViewAppearanceFor(card: [String: Any]?) -> Void {
-        let type: [String] = self.selectedCard!["type"] as! [String]
-        cardView.type = (type.last == "DriversLicenseCredential") ? .identity : .employee
+    private func updateCardView(with details: [String: Any]?) {
+        if let details = details {
+            // get docType
+            let type: String = details["docType"] as! String
+            
+            // get vfc details
+            let vfc: [String: Any] = details["vfc"] as! [String: Any]
+            
+            switch type {
+            case CardType.identity_dl.rawValue:
+                // set card type
+                cardView.type = .identity_dl
+                
+                // set as per FIGMA UI
+                cardView.imageView?.image = UIImage(named: "imgIidentityLogo.png")
+                
+                // set as per FIGMA UI
+                cardView.typeText?.text = "Verified Identity"
+                
+                // set from response object
+                let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
+                cardView.issuerText?.text = issuer["name"] as? String
+            case CardType.employee_card.rawValue:
+                // set card type
+                cardView.type = .employee_card
+                
+                // set as per FIGMA UI
+                cardView.imageView?.image = UIImage(named: "imgCompanyLogo.png")
+                
+                // set as per FIGMA UI
+                cardView.typeText?.text = "Verified Employee"
+                // set from response object
+                let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
+                cardView.issuerText?.text = issuer["companyName"] as? String
+            default:
+                // Any unsupported type
+                // set default values
+                cardView.type = .none
+                cardView.imageView?.image = nil
+                cardView.typeText?.text = ""
+                cardView.issuerText?.text = ""
+            }
+        }
     }
     
-    private func showNavigationBar(yorn: Bool) -> Void {
+    private func updateCardViewDetails(for cell: UITableViewCell, at indexPath: IndexPath) {
+        cell.selectionStyle = .none
+        cell.textLabel?.text = self.cardDetails[indexPath.row].keys.first
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 12.0,
+                                                 weight: UIFont.Weight.semibold)
+        cell.textLabel?.textColor = UIColor(red: 0.675,
+                                            green: 0.675,
+                                            blue: 0.675,
+                                            alpha: 1.0)
+        
+        cell.detailTextLabel?.text = (self.cardDetails[indexPath.row].values.first as? String)
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14.0,
+                                                       weight: UIFont.Weight.semibold)
+        cell.detailTextLabel?.textColor = UIColor(red: 0.255,
+                                                  green: 0.255,
+                                                  blue: 0.255,
+                                                  alpha: 1.0)
+    }
+    
+    private func showNavigationBar(yorn: Bool) {
         self.navigationController?.setNavigationBarHidden(!yorn,
                                                           animated: false)
     }
     
-    private func setupNavigationBarButtons() -> Void {
+    private func setupNavigationBarButtons() {
         // create left bar button item
         let leftButton = UIBarButtonItem(barButtonSystemItem: .done,
                                          target: self,
@@ -100,11 +284,11 @@ extension VFCCardDetailsViewController {
                                               animated: true)
     }
     
-    @objc private func done() -> Void {
+    @objc private func done() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func deleteCard() -> Void {
+    @objc private func deleteCard() {
         // Create An UIAlertController with Action Sheet
         let optionsController = UIAlertController(title: nil,
                                                   message: "Are you sure you want to delete the card?",
@@ -114,7 +298,7 @@ extension VFCCardDetailsViewController {
         // Delete
         let deleteAction = UIAlertAction(title: "Delete",
                                          style: .destructive,
-                                         handler: { (alert: UIAlertAction!) -> Void in
+                                         handler: { (alert: UIAlertAction!) in
             if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
                 cards.remove(at: self.selectedCardIndex)
                 UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
@@ -137,7 +321,7 @@ extension VFCCardDetailsViewController {
                      completion: nil)
     }
     
-    private func addCardToAppleWallet() -> Void {
+    private func addCardToAppleWallet() {
         // reading pass file data from local file;
         // the data should come from API
         if let path = Bundle.main.url(forResource: passes.randomElement(),
@@ -216,7 +400,7 @@ extension VFCCardDetailsViewController: PKAddPassesViewControllerDelegate {
 // MARK: - UITableViewDataSource -
 extension VFCCardDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return self.cardDetails.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -228,26 +412,9 @@ extension VFCCardDetailsViewController: UITableViewDataSource {
                                    reuseIdentifier: "VFCCardDetailTableViewCell")
         }
         
-        cell.selectionStyle = .none
+        // update card details
+        self.updateCardViewDetails(for: cell, at: indexPath)
         
-        // FIXME: - Hardcoded data for now -
-        // will fix it as part of another ticket
-        cell.textLabel?.text = "Document Scanned"
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 12.0,
-                                                 weight: UIFont.Weight.semibold)
-        cell.textLabel?.textColor = UIColor(red: 0.675,
-                                            green: 0.675,
-                                            blue: 0.675,
-                                            alpha: 1.0)
-        
-        let type: [String] = self.selectedCard!["type"] as! [String]
-        cell.detailTextLabel?.text = "\(type[1] as String)"
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14.0,
-                                                       weight: UIFont.Weight.semibold)
-        cell.detailTextLabel?.textColor = UIColor(red: 0.255,
-                                                  green: 0.255,
-                                                  blue: 0.255,
-                                                  alpha: 1.0)
         return cell
     }
 }

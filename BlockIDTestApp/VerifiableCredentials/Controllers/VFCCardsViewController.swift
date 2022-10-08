@@ -18,23 +18,26 @@ class VFCCardsViewController: UIViewController {
     
     // MARK: - IBOutlets -
     @IBOutlet weak var lblNoCards: UILabel!
-    @IBOutlet weak var tblCardsView: UITableView!
+    @IBOutlet weak var ucvCardsView: UICollectionView!
     
     // MARK: - View Life cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let empCard: [String: Any] = ["type": ["VerifiableCredential", "EmploymentCredential"],
-                                      "credentialSubject": ["firstName": "Sushil",
-                                                            "lastName": "Tiwari"]]
-        let docCard: [String: Any] = ["type": ["VerifiableCredential", "DriversLicenseCredential"],
-                                      "credentialSubject": ["firstName": "IDINSTATE",
-                                                            "lastName": "ADAMS"]]
-        self.cardsDataSource.append(docCard)
-        self.cardsDataSource.append(empCard)
+        //        let empCard: [String: Any] = ["type": ["VerifiableCredential", "EmploymentCredential"],
+        //                                      "credentialSubject": ["firstName": "Sushil",
+        //                                                            "lastName": "Tiwari"]]
+        //        let docCard: [String: Any] = ["type": ["VerifiableCredential", "DriversLicenseCredential"],
+        //                                      "credentialSubject": ["firstName": "IDINSTATE",
+        //                                                            "lastName": "ADAMS"]]
+        //        self.cardsDataSource.append(docCard)
+        //        self.cardsDataSource.append(empCard)
         
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
+        
+        // register UICollectionView
+        self.ucvCardsView.register(CardsCollectionViewCell.self, forCellWithReuseIdentifier: "CardsCollectionViewCell")
         
         // read stored vfc cards
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
@@ -46,7 +49,7 @@ class VFCCardsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // set title
-        self.title = "Verified ID's"
+        self.title = "Verified IDs"
         
         // show navigation bar
         self.showNavigationBar(yorn: true)
@@ -57,12 +60,12 @@ class VFCCardsViewController: UIViewController {
         // read stored vfc cards
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
             self.cardsDataSource = cards
-            self.tblCardsView.reloadData()
+            self.ucvCardsView.reloadData()
         }
         
         //
         self.lblNoCards.isHidden = (self.cardsDataSource.count == 0) ? false : true
-        self.tblCardsView.isHidden = !self.lblNoCards.isHidden
+        self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,13 +96,12 @@ extension VFCCardsViewController {
         return regDocument
     }
     
-    private func showNavigationBar(yorn: Bool) -> Void {
+    private func showNavigationBar(yorn: Bool) {
         self.navigationController?.setNavigationBarHidden(!yorn,
                                                           animated: false)
     }
     
-    private func setupNavigationBarButtons() -> Void {
-        
+    private func setupNavigationBarButtons() {
         // create right bar button item
         let rightButton = UIBarButtonItem(barButtonSystemItem: .add,
                                           target: self,
@@ -110,7 +112,7 @@ extension VFCCardsViewController {
                                               animated: true)
     }
     
-    private func showProgressIndicator() -> Void {
+    private func showProgressIndicator() {
         // show progress bar
         self.view.makeToastActivity(.center)
         
@@ -118,7 +120,7 @@ extension VFCCardsViewController {
         self.view.window?.isUserInteractionEnabled = false
     }
     
-    private func hideProgressIndicator() -> Void {
+    private func hideProgressIndicator() {
         // hide progress indicator
         self.view.hideToastActivity()
         
@@ -126,7 +128,7 @@ extension VFCCardsViewController {
         self.view.window?.isUserInteractionEnabled = true
     }
     
-    @objc private func showOptionsSheet() -> Void {
+    @objc private func showOptionsSheet() {
         // Create An UIAlertController with Action Sheet
         let optionsController = UIAlertController(title: nil,
                                                   message: "Choose Option",
@@ -136,14 +138,14 @@ extension VFCCardsViewController {
         // Add ID
         let addIDAction = UIAlertAction(title: "Add ID",
                                         style: .default,
-                                        handler: { (alert: UIAlertAction!) -> Void in
+                                        handler: { (alert: UIAlertAction!) in
             self.intiateAddIDCardUsingEnrolledDocument()
         })
         
         // Scan QR
         let scanQRAction = UIAlertAction(title: "Scan QR",
                                          style: .default,
-                                         handler: { (alert: UIAlertAction!) -> Void in
+                                         handler: { (alert: UIAlertAction!) in
             self.intiateAddCardUsingQRScan()
         })
         
@@ -163,7 +165,7 @@ extension VFCCardsViewController {
                      completion: nil)
     }
     
-    private func intiateAddIDCardUsingEnrolledDocument() -> Void {
+    private func intiateAddIDCardUsingEnrolledDocument() {
         // check is drivers license document is enrolled
         // else show an error message
         if self.registeredDocument != nil {
@@ -181,7 +183,8 @@ extension VFCCardsViewController {
                 if error == nil, let result = result {
                     // no error, process the result
                     // add to card datasource
-                    self.cardsDataSource.append(result)
+                    self.cardsDataSource.append(["docType": CardType.identity_dl.rawValue,
+                                                 "vfc": result])
                     
                     // add the entire datasource to user defaults
                     UserDefaults.standard.set(self.cardsDataSource,
@@ -189,8 +192,9 @@ extension VFCCardsViewController {
                     
                     // update the UI; reload the table view
                     self.lblNoCards.isHidden = true
-                    self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                    self.tblCardsView.reloadData()
+                    self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
+                    self.ucvCardsView.reloadData()
+                    
                 } else {
                     // show error message
                     let alert = UIAlertController(title: "Oh no ...",
@@ -221,80 +225,57 @@ extension VFCCardsViewController {
         }
     }
     
-    private func intiateAddCardUsingQRScan() -> Void {
+    private func intiateAddCardUsingQRScan() {
         self.openQRScanner()
     }
     
-    private func openQRScanner() -> Void {
+    private func openQRScanner() {
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
         scanQRVC.delegate = self
         self.present(scanQRVC, animated: true)
     }
-}
-
-// MARK: - UITableViewDataSource -
-extension VFCCardsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.cardsDataSource.count
-    }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell: UITableViewCell
-        if let reusableCell = tableView.dequeueReusableCell(withIdentifier: "VFCCardsTableViewCell") {
-            cell = reusableCell
+    private func updateCardView(cardView: CardView, with details: [String: Any]) {
+        // get docType
+        let type: String = details["docType"] as! String
+        
+        // get vfc details
+        let vfc: [String: Any] = details["vfc"] as! [String: Any]
+        
+        if type == CardType.identity_dl.rawValue {
+            // set card type
+            cardView.type = .identity_dl
+            
+            // set as per FIGMA UI
+            cardView.imageView?.image = UIImage(named: "imgIidentityLogo.png")
+
+            // set as per FIGMA UI
+            cardView.typeText?.text = "Verified Identity"
+            
+            // set from response object
+            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
+            cardView.issuerText?.text = issuer["name"] as? String
+        } else if type == CardType.employee_card.rawValue {
+            // set card type
+            cardView.type = .employee_card
+            
+            // set as per FIGMA UI
+            cardView.imageView?.image = UIImage(named: "imgCompanyLogo.png")
+
+            // set as per FIGMA UI
+            cardView.typeText?.text = "Verified Employee"
+            // set from response object
+            let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
+            cardView.issuerText?.text = issuer["companyName"] as? String
         } else {
-            cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle,
-                                   reuseIdentifier: "VFCCardsTableViewCell")
+            // Any unsupported type
+            // set default values
+            cardView.type = .none
+            cardView.imageView?.image = nil
+            cardView.typeText?.text = ""
+            cardView.issuerText?.text = ""
         }
-        
-//        cell.accessoryType = .disclosureIndicator
-        cell.selectionStyle = .none
-        
-        let card = self.cardsDataSource[indexPath.row]
-        let credentialSubject: [String: Any] = card["credentialSubject"] as! [String: Any]
-        let type: [String] = card["type"] as! [String]
-        
-        cell.textLabel?.text = "\(credentialSubject["firstName"] as! String) \(credentialSubject["lastName"] as! String)"
-        cell.detailTextLabel?.text = "\(type[1] as String)"
-        
-//        let cardView = CardView()
-//        cardView.type = (type.last == "DriversLicenseCredential") ? .identity : .employee
-//        cell.contentView.addSubview(cardView)
-        
-//        cardView.center = cell.contentView.center
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // remove the item from datasource
-            self.cardsDataSource.remove(at: indexPath.row)
-            
-            // remove the cell from tableview
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            
-            // update user defaults
-            UserDefaults.standard.set(self.cardsDataSource,
-                                      forKey: "VFC_CARDS")
-            
-            // update the UI
-            self.lblNoCards.isHidden = !(self.cardsDataSource.count == 0)
-            self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-        }
-    }
-}
-
-// MARK: - UITableViewDelegate -
-extension VFCCardsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vfcCardDetailVC = VFCCardDetailsViewController(nibName: "VFCCardDetailsViewController",
-                                                           bundle: nil)
-        vfcCardDetailVC.selectedCard = self.cardsDataSource[indexPath.row]
-        vfcCardDetailVC.selectedCardIndex = indexPath.row
-        self.navigationController?.pushViewController(vfcCardDetailVC,
-                                                      animated: true)
     }
 }
 
@@ -316,7 +297,8 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                            let status = result["status"] as? String, status == "verified" {
                             // no error, process the result
                             // add to card datasource
-                            self.cardsDataSource.append(vcPayload)
+                            self.cardsDataSource.append(["docType": CardType.employee_card.rawValue,
+                                                         "vfc": vcPayload])
                             
                             // add the entire datasource to user defaults
                             UserDefaults.standard.set(self.cardsDataSource,
@@ -324,8 +306,11 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                             
                             // update the UI; reload the table view
                             self.lblNoCards.isHidden = true
-                            self.tblCardsView.isHidden = !self.lblNoCards.isHidden
-                            self.tblCardsView.reloadData()
+                            self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
+                            self.ucvCardsView.reloadData()
+                            
+                            // hide progress indicator
+                            self.hideProgressIndicator()
                         } else {
                             // show error message
                             let alert = UIAlertController(title: "Oh no ...",
@@ -337,6 +322,9 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                                                           handler: nil))
                             
                             self.present(alert, animated: true)
+                            
+                            // hide progress indicator
+                            self.hideProgressIndicator()
                         }
                     }
                 } else {
@@ -350,10 +338,10 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                                                   handler: nil))
                     
                     self.present(alert, animated: true)
+                    
+                    // hide progress indicator
+                    self.hideProgressIndicator()
                 }
-                
-                // hide progress indicator
-                self.hideProgressIndicator()
             } catch {
                 // show error message
                 let alert = UIAlertController(title: "Oh no ...",
@@ -370,5 +358,53 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                 self.hideProgressIndicator()
             }
         }
+    }
+}
+
+// MARK: - UICollectionViewDataSource -
+extension VFCCardsViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.cardsDataSource.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardsCollectionViewCell",
+                                                      for: indexPath)
+        
+        if let cardView = cell.viewWithTag(101) as? CardView {
+            let currentCard: [String: Any] = self.cardsDataSource[indexPath.section]
+            self.updateCardView(cardView: cardView,
+                                with: currentCard)
+        }
+        
+        return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate -
+extension VFCCardsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
+        let vfcCardDetailVC = VFCCardDetailsViewController(nibName: "VFCCardDetailsViewController",
+                                                           bundle: nil)
+        vfcCardDetailVC.selectedCard = self.cardsDataSource[indexPath.section]
+        vfcCardDetailVC.selectedCardIndex = indexPath.section
+        self.navigationController?.pushViewController(vfcCardDetailVC,
+                                                      animated: true)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout -
+extension VFCCardsViewController: UICollectionViewDelegateFlowLayout  {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width,
+                      height: 220.0)
     }
 }
