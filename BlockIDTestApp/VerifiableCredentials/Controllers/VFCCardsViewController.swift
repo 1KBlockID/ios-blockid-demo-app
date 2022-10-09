@@ -162,7 +162,7 @@ extension VFCCardsViewController {
                 debugPrint("some exception when converting JSON to object",error)
             }
         }
-        
+//        print("Reg Document: ", regDocument as Any, "\n")
         return regDocument
     }
     
