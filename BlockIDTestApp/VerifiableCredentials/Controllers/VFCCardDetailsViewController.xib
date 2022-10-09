@@ -61,7 +61,6 @@
                     <color key="separatorColor" red="0.92156862745098034" green="0.92156862745098034" blue="0.92156862745098034" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="atq-Hj-5MO"/>
-                        <outlet property="delegate" destination="-1" id="dvh-co-Qza"/>
                     </connections>
                 </tableView>
             </subviews>

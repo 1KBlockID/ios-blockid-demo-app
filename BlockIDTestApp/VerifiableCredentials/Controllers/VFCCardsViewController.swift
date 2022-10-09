@@ -24,15 +24,6 @@ class VFCCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //        let empCard: [String: Any] = ["type": ["VerifiableCredential", "EmploymentCredential"],
-        //                                      "credentialSubject": ["firstName": "Sushil",
-        //                                                            "lastName": "Tiwari"]]
-        //        let docCard: [String: Any] = ["type": ["VerifiableCredential", "DriversLicenseCredential"],
-        //                                      "credentialSubject": ["firstName": "IDINSTATE",
-        //                                                            "lastName": "ADAMS"]]
-        //        self.cardsDataSource.append(docCard)
-        //        self.cardsDataSource.append(empCard)
-        
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
@@ -76,26 +67,8 @@ class VFCCardsViewController: UIViewController {
     }
 }
 
-// MARK: - Extension: Private Methods -
+// MARK: - Extension: UI Update -
 extension VFCCardsViewController {
-    private func getRegisteredDocument(type: RegisterDocType.RawValue) -> [String: Any]? {
-        var regDocument: [String: Any]?
-        if let enrolledDoc = BIDDocumentProvider.shared.getUserDocument(id: nil,
-                                                                        type: type,
-                                                                        category: RegisterDocCategory.Identity_Document.rawValue) {
-            let data = Data(enrolledDoc.utf8)
-            do {
-                if let document = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
-                    regDocument = document.first
-                }
-            } catch {
-                debugPrint("some exception when converting JSON to object",error)
-            }
-        }
-        
-        return regDocument
-    }
-    
     private func showNavigationBar(yorn: Bool) {
         self.navigationController?.setNavigationBarHidden(!yorn,
                                                           animated: false)
@@ -131,7 +104,7 @@ extension VFCCardsViewController {
     @objc private func showOptionsSheet() {
         // Create An UIAlertController with Action Sheet
         let optionsController = UIAlertController(title: nil,
-                                                  message: "Choose Option",
+                                                  message: "Select card option",
                                                   preferredStyle: .actionSheet)
         
         // Create UIAlertAction for UIAlertController
@@ -139,14 +112,14 @@ extension VFCCardsViewController {
         let addIDAction = UIAlertAction(title: "Add ID",
                                         style: .default,
                                         handler: { (alert: UIAlertAction!) in
-            self.intiateAddIDCardUsingEnrolledDocument()
+            self.addCardUsingEnrolledDocument()
         })
         
         // Scan QR
         let scanQRAction = UIAlertAction(title: "Scan QR",
                                          style: .default,
                                          handler: { (alert: UIAlertAction!) in
-            self.intiateAddCardUsingQRScan()
+            self.addCardUsingQRScan()
         })
         
         // Cancel
@@ -165,7 +138,35 @@ extension VFCCardsViewController {
                      completion: nil)
     }
     
-    private func intiateAddIDCardUsingEnrolledDocument() {
+    private func addCardUsingQRScan() {
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
+        scanQRVC.delegate = self
+        self.present(scanQRVC, animated: true)
+    }
+}
+
+// MARK: - Extension: Business Logic -
+extension VFCCardsViewController {
+    private func getRegisteredDocument(type: RegisterDocType.RawValue) -> [String: Any]? {
+        var regDocument: [String: Any]?
+        if let enrolledDoc = BIDDocumentProvider.shared.getUserDocument(id: nil,
+                                                                        type: type,
+                                                                        category: RegisterDocCategory.Identity_Document.rawValue) {
+            let data = Data(enrolledDoc.utf8)
+            do {
+                if let document = try JSONSerialization.jsonObject(with: data) as? [[String: Any]] {
+                    regDocument = document.first
+                }
+            } catch {
+                debugPrint("some exception when converting JSON to object",error)
+            }
+        }
+        
+        return regDocument
+    }
+    
+    private func addCardUsingEnrolledDocument() {
         // check is drivers license document is enrolled
         // else show an error message
         if self.registeredDocument != nil {
@@ -225,17 +226,6 @@ extension VFCCardsViewController {
         }
     }
     
-    private func intiateAddCardUsingQRScan() {
-        self.openQRScanner()
-    }
-    
-    private func openQRScanner() {
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let scanQRVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
-        scanQRVC.delegate = self
-        self.present(scanQRVC, animated: true)
-    }
-    
     private func updateCardView(cardView: CardView, with details: [String: Any]) {
         // get docType
         let type: String = details["docType"] as! String
@@ -255,7 +245,7 @@ extension VFCCardsViewController {
             
             // set from response object
             let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-            cardView.issuerText?.text = issuer["name"] as? String
+            cardView.issuerText?.text = issuer["id"] as? String
         } else if type == CardType.employee_card.rawValue {
             // set card type
             cardView.type = .employee_card

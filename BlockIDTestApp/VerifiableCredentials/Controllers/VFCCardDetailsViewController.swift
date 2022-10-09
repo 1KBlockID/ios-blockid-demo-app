@@ -10,6 +10,13 @@ import PassKit
 
 class VFCCardDetailsViewController: UIViewController {
     
+    // define list of pass
+    // to be removed later
+    let passes = ["BoardingPass", "Event", "Generic", "StoreCard", "Coupon"]
+    
+    // holds card details data in tableview
+    private var cardDetails: [[String: Any]] = []
+    
     // selected card index
     var selectedCardIndex: Int = -1
     
@@ -20,9 +27,173 @@ class VFCCardDetailsViewController: UIViewController {
         }
     }
     
-    // holds card details data in tableview
-    private var cardDetails: [[String: Any]] = []
+    // MARK: - IBOutlets -
+    @IBOutlet weak var tblCardDetail: UITableView!
+    @IBOutlet weak var cardView: CardView!
     
+    // MARK: - View Life cycle -
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // show navigation bar
+        self.showNavigationBar(yorn: true)
+        
+        // add button items
+        self.setupNavigationBarButtons()
+        
+        // setup tableview appearance
+        self.setupCardDetailsViewAppearance()
+        
+        // update card view details
+        self.updateCardView(with: self.selectedCard)
+    }
+    
+    // MARK: - IBActions -
+    @IBAction func addToAppleWallet(sender: Any) {
+        self.addCardToAppleWallet()
+    }
+}
+
+// MARK: - Extension: UI Update -
+extension VFCCardDetailsViewController {
+    private func showNavigationBar(yorn: Bool) {
+        self.navigationController?.setNavigationBarHidden(!yorn,
+                                                          animated: false)
+    }
+    
+    private func setupNavigationBarButtons() {
+        // create left bar button item
+        let leftButton = UIBarButtonItem(barButtonSystemItem: .done,
+                                         target: self,
+                                         action: #selector(self.done))
+        
+        // set left bar button item
+        self.navigationItem.setLeftBarButton(leftButton,
+                                             animated: true)
+        
+        
+        // create right bar button item
+        let rightButton = UIBarButtonItem(barButtonSystemItem: .trash,
+                                          target: self,
+                                          action: #selector(self.deleteCard))
+        
+        // set right bar button item
+        self.navigationItem.setRightBarButton(rightButton,
+                                              animated: true)
+    }
+    
+    @objc private func done() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func deleteCard() {
+        // Create An UIAlertController with Action Sheet
+        let optionsController = UIAlertController(title: nil,
+                                                  message: "Are you sure you want to delete this card?",
+                                                  preferredStyle: .actionSheet)
+        
+        // Create UIAlertAction for UIAlertController
+        // Delete
+        let deleteAction = UIAlertAction(title: "Delete",
+                                         style: .destructive,
+                                         handler: { (alert: UIAlertAction!) in
+            if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+                cards.remove(at: self.selectedCardIndex)
+                UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
+                self.navigationController?.popViewController(animated: true)
+            }
+        })
+        
+        // Cancel
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel,
+                                         handler: nil)
+        
+        // Add UIAlertAction in UIAlertController
+        optionsController.addAction(deleteAction)
+        optionsController.addAction(cancelAction)
+        
+        // Present UIAlertController with Action Sheet
+        self.present(optionsController,
+                     animated: true,
+                     completion: nil)
+    }
+    
+    private func addCardToAppleWallet() {
+        // reading pass file data from local file;
+        // the data should come from API
+        if let path = Bundle.main.url(forResource: passes.randomElement(),
+                                      withExtension: "pkpass") {
+            do {
+                let passData = try Data(contentsOf: path)
+                
+                do {
+                    // Create Pass Object
+                    let pass = try PKPass(data: passData)
+                    
+                    // Access Pass Library
+                    let passLibrary = PKPassLibrary()
+                    
+                    // check is pass exists
+                    if (passLibrary.containsPass(pass)) {
+                        let alert = UIAlertController(title: "Pass Exists",
+                                                      message: "Pass is already in Passbook.",
+                                                      preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK",
+                                                      style: .default,
+                                                      handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    } else {
+                        if let passVC = PKAddPassesViewController(pass: pass) {
+                            passVC.delegate = self
+                            self.present(passVC, animated: true)
+                        }
+                    }
+                } catch {
+                    let alert = UIAlertController(title: "Invalid Pass",
+                                                  message: error.localizedDescription + ".",
+                                                  preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "OK",
+                                                  style: .default,
+                                                  handler: nil))
+                    
+                    self.present(alert, animated: true)
+                    
+                }
+            } catch {
+                let alert = UIAlertController(title: "Error",
+                                              message: "Unable to ready pass file.",
+                                              preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "OK",
+                                              style: .default,
+                                              handler: nil))
+                
+                self.present(alert, animated: true)
+            }
+        } else {
+            let alert = UIAlertController(title: "Error",
+                                          message: "Pass file not found.",
+                                          preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .default,
+                                          handler: nil))
+            
+            self.present(alert, animated: true)
+        }
+    }
+}
+
+// MARK: - Extension: Business Logic -
+extension VFCCardDetailsViewController {
     // prepare card view details datasource
     func prepareCardDatasource(with details: [String: Any]) {
         // get docType
@@ -38,8 +209,9 @@ class VFCCardDetailsViewController: UIViewController {
         // to be presented in tableview
         if type == CardType.identity_dl.rawValue {
             // get issuer
-            if let issuer: String = vfc["issuer"] as? String {
-                self.cardDetails.append(["Issued by": issuer])
+            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
+            if let name: String = issuer["id"] as? String {
+                self.cardDetails.append(["Issued by": name])
             } else {
                 self.cardDetails.append(["Issued by": ""])
             }
@@ -139,44 +311,6 @@ class VFCCardDetailsViewController: UIViewController {
         return nil
     }
     
-    // define list of pass
-    // to be removed later
-    let passes = ["BoardingPass", "Event", "Generic", "StoreCard", "Coupon"]
-    
-    // MARK: - IBOutlets -
-    @IBOutlet weak var tblCardDetail: UITableView!
-    @IBOutlet weak var cardView: CardView!
-    
-    // MARK: - View Life cycle -
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        // show navigation bar
-        self.showNavigationBar(yorn: true)
-        
-        // add button items
-        self.setupNavigationBarButtons()
-        
-        // setup tableview appearance
-        self.setupCardDetailsViewAppearance()
-        
-        // update card view details
-        self.updateCardView(with: self.selectedCard)
-    }
-    
-    // MARK: - IBActions -
-    @IBAction func addToAppleWallet(sender: Any) {
-        self.addCardToAppleWallet()
-    }
-}
-
-// MARK: - Extension: Private Methods -
-extension VFCCardDetailsViewController {
-    
     private func setupCardDetailsViewAppearance() {
         self.tblCardDetail.contentInset = UIEdgeInsets(top: -38.0,
                                                        left: 0.0,
@@ -215,7 +349,7 @@ extension VFCCardDetailsViewController {
                 
                 // set from response object
                 let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-                cardView.issuerText?.text = issuer["name"] as? String
+                cardView.issuerText?.text = issuer["id"] as? String
             case CardType.employee_card.rawValue:
                 // set card type
                 cardView.type = .employee_card
@@ -257,137 +391,6 @@ extension VFCCardDetailsViewController {
                                                   blue: 0.255,
                                                   alpha: 1.0)
     }
-    
-    private func showNavigationBar(yorn: Bool) {
-        self.navigationController?.setNavigationBarHidden(!yorn,
-                                                          animated: false)
-    }
-    
-    private func setupNavigationBarButtons() {
-        // create left bar button item
-        let leftButton = UIBarButtonItem(barButtonSystemItem: .done,
-                                         target: self,
-                                         action: #selector(self.done))
-        
-        // set left bar button item
-        self.navigationItem.setLeftBarButton(leftButton,
-                                             animated: true)
-        
-        
-        // create right bar button item
-        let rightButton = UIBarButtonItem(barButtonSystemItem: .trash,
-                                          target: self,
-                                          action: #selector(self.deleteCard))
-        
-        // set right bar button item
-        self.navigationItem.setRightBarButton(rightButton,
-                                              animated: true)
-    }
-    
-    @objc private func done() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc private func deleteCard() {
-        // Create An UIAlertController with Action Sheet
-        let optionsController = UIAlertController(title: nil,
-                                                  message: "Are you sure you want to delete the card?",
-                                                  preferredStyle: .actionSheet)
-        
-        // Create UIAlertAction for UIAlertController
-        // Delete
-        let deleteAction = UIAlertAction(title: "Delete",
-                                         style: .destructive,
-                                         handler: { (alert: UIAlertAction!) in
-            if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
-                cards.remove(at: self.selectedCardIndex)
-                UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
-                self.navigationController?.popViewController(animated: true)
-            }
-        })
-        
-        // Cancel
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .cancel,
-                                         handler: nil)
-        
-        // Add UIAlertAction in UIAlertController
-        optionsController.addAction(deleteAction)
-        optionsController.addAction(cancelAction)
-        
-        // Present UIAlertController with Action Sheet
-        self.present(optionsController,
-                     animated: true,
-                     completion: nil)
-    }
-    
-    private func addCardToAppleWallet() {
-        // reading pass file data from local file;
-        // the data should come from API
-        if let path = Bundle.main.url(forResource: passes.randomElement(),
-                                      withExtension: "pkpass") {
-            do {
-                let passData = try Data(contentsOf: path)
-                
-                do {
-                    // Create Pass Object
-                    let pass = try PKPass(data: passData)
-                    
-                    // Access Pass Library
-                    let passLibrary = PKPassLibrary()
-                    
-                    // check is pass exists
-                    if (passLibrary.containsPass(pass)) {
-                        let alert = UIAlertController(title: "Pass Exists",
-                                                      message: "Pass is already in Passbook.",
-                                                      preferredStyle: .alert)
-                        
-                        alert.addAction(UIAlertAction(title: "OK",
-                                                      style: .default,
-                                                      handler: nil))
-                        
-                        self.present(alert, animated: true)
-                    } else {
-                        if let passVC = PKAddPassesViewController(pass: pass) {
-                            passVC.delegate = self
-                            self.present(passVC, animated: true)
-                        }
-                    }
-                } catch {
-                    let alert = UIAlertController(title: "Invalid Pass",
-                                                  message: error.localizedDescription + ".",
-                                                  preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default,
-                                                  handler: nil))
-                    
-                    self.present(alert, animated: true)
-                    
-                }
-            } catch {
-                let alert = UIAlertController(title: "Error",
-                                              message: "Unable to ready pass file.",
-                                              preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: "OK",
-                                              style: .default,
-                                              handler: nil))
-                
-                self.present(alert, animated: true)
-            }
-        } else {
-            let alert = UIAlertController(title: "Error",
-                                          message: "Pass file not found.",
-                                          preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "OK",
-                                          style: .default,
-                                          handler: nil))
-            
-            self.present(alert, animated: true)
-        }
-    }
 }
 
 // MARK: - PKAddPassesViewControllerDelegate -
@@ -416,12 +419,5 @@ extension VFCCardDetailsViewController: UITableViewDataSource {
         self.updateCardViewDetails(for: cell, at: indexPath)
         
         return cell
-    }
-}
-
-// MARK: - UITableViewDelegate -
-extension VFCCardDetailsViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
     }
 }
