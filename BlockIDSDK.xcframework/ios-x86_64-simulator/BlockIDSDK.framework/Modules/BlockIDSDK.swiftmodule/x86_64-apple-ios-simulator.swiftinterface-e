@@ -86,6 +86,36 @@ open class KeychainWrapper {
   open class func wipeKeychain()
   @objc deinit
 }
+public struct BIDVCEmployee : Swift.Codable {
+  public let issuanceDate: Swift.String?
+  public let credentialSubject: BlockIDSDK.CredentialSubject?
+  public let id: Swift.String?
+  public let proof: BlockIDSDK.Proof?
+  public let type: [Swift.String]?
+  public let context: [BlockIDSDK.Context]?
+  public let issuer: BlockIDSDK.Issuer?
+  public let expirationDate: Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum Context : Swift.Codable {
+  case credentialSubject(BlockIDSDK.CredentialSubject)
+  case string(Swift.String)
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct CredentialSubject : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Issuer : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct Proof : Swift.Codable {
+  public func encode(to encoder: Swift.Encoder) throws
+  public init(from decoder: Swift.Decoder) throws
+}
 @available(iOS 13, macOS 10.15, *)
 public struct DataGroupHash {
   public var id: Swift.String
@@ -1058,6 +1088,7 @@ extension BlockIDSDK.NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegat
   public var isLinked: Swift.Bool?
   public var origin: BlockIDSDK.BIDOrigin!
   public var account: BlockIDSDK.BIDAccount?
+  public var vc_employee: BlockIDSDK.BIDVCEmployee?
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws

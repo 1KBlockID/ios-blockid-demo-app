@@ -366,6 +366,31 @@ extension AddUserViewController {
 //                    })
 //                }
                 
+                if let user = user, let vcEmployeeObj = user.vc_employee {
+                    //
+                    // IF vc_employee EXISTS
+                    var vcEmployeeDic = [String : Any]()
+                    let strJson = CommonFunctions.objectToJSONString(vcEmployeeObj)
+                    if let vcDic = CommonFunctions.jsonStringToDic(from: strJson) {
+                        vcEmployeeDic = vcDic
+                    }
+                    
+                    if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+                        //
+                        // IF_ALREADY VC CARDS EXISTS
+                        cards.append(["docType": CardType.employee_card.rawValue,
+                                                     "vfc": vcEmployeeDic])
+                        UserDefaults.standard.set(cards,
+                                                  forKey: "VFC_CARDS")
+
+                    } else {
+                        UserDefaults.standard.set([["docType": CardType.employee_card.rawValue,
+                                                   "vfc": vcEmployeeDic]],
+                                                  forKey: "VFC_CARDS")
+                    }
+                    
+                }
+                
                 self.view.makeToast("User registration successful.",
                                     duration: 3.0,
                                     position: .center,
