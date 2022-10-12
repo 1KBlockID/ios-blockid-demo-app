@@ -49,6 +49,9 @@ class ServiceDirectory: NSObject {
                     // internet connection error
                     // or any other failure
                     completionHandler((nil, error))
+                @unknown default:
+                    // unknown failure
+                    completionHandler((nil, nil))
                 }
             }
         }
@@ -75,6 +78,9 @@ class ServiceDirectory: NSObject {
                 // internet connection error
                 // or any other failure
                 completionHandler((nil, error))
+            @unknown default:
+                // unknown failure
+                completionHandler((nil, nil))
             }
         }
     }
