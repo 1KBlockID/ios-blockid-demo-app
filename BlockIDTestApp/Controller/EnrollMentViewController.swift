@@ -220,6 +220,30 @@ extension EnrollMentViewController {
             guard let weakSelf = self else {return}
             weakSelf.view.hideToastActivity()
             if success {
+                
+                // Remove VC card of the user
+                //
+                // 1. Get Saved VC Cards
+                if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+                    var vcEmployeeDic = [String : Any]()
+                    let strJson = CommonFunctions.objectToJSONString(linkedAccount.vc_employee)
+                    if let vcDic = CommonFunctions.jsonStringToDic(from: strJson) {
+                        vcEmployeeDic = vcDic
+                    }
+                    var index = 0
+                    
+                    // 2. Check for saved VC's and compare ID with the linked User's VC details
+                    for card in cards {
+                        if let vcDic = card["vfc"] as? [String: Any],
+                            vcDic["id"] as! String == vcEmployeeDic["id"] as! String {
+                            // 3. Remove if ID matches
+                            cards.remove(at: index)
+                        }
+                        index += 1
+                    }
+                    // 4. Set rest of the cards
+                    UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
+                }
                 weakSelf.view.makeToast("Your account is removed.", duration: 3.0, position: .center)
                 weakSelf.tableEnrollments.reloadData()
             } else {
