@@ -126,6 +126,9 @@ extension VerifiableCredentialsHelper {
                                 // internet connection error
                                 // or any other failure
                                 completionHandler((nil, responseError))
+                            @unknown default:
+                                // unknown failure
+                                completionHandler((nil, nil))
                             }
                         }
                     } else {
@@ -190,6 +193,9 @@ extension VerifiableCredentialsHelper {
                                 // internet connection error
                                 // or any other failure
                                 completionHandler((nil, responseError))
+                            @unknown default:
+                                // unknown failure
+                                completionHandler((nil, nil))
                             }
                         }
                     } else {
@@ -247,7 +253,7 @@ extension VerifiableCredentialsHelper {
             let jSONData = try JSONSerialization.data(withJSONObject: payload,
                                                                 options: [])
             // convert requestID json data to string
-            if let requestid = String(data: jSONData, encoding: .utf8) as? String {
+            if let requestid = String(data: jSONData, encoding: .utf8) {
                 requestID = requestid
             }
         } catch {
