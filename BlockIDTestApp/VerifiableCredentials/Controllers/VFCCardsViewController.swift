@@ -24,8 +24,6 @@ class VFCCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        UserDefaults.standard.set([], forKey: "VFC_CARDS")
-        
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
@@ -178,7 +176,7 @@ extension VFCCardsViewController {
             // dl document is registered
             // prepare verifiable document
             let vcDocument: [String: Any] = ["did": BlockIDSDK.sharedInstance.getDID(),
-                                             "documents": self.registeredDocument!]
+                                             "document": self.registeredDocument!]
             
             // and get verifiable credential now
             VerifiableCredentialsHelper.shared.createVerifiableCredentials(for: VerifiableCredential.document_dl,
@@ -305,11 +303,8 @@ extension VFCCardsViewController {
             cardView.issuerText?.text = ""
         }
     }
-}
-
-// MARK: - ScanQRViewDelegate -
-extension VFCCardsViewController: ScanQRViewDelegate {
-    func scannedData(data: String) {
+    
+    private func processQR(data: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // show progress indicator
             self.showProgressIndicator()
@@ -421,6 +416,13 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                 self.hideProgressIndicator()
             }
         }
+    }
+}
+
+// MARK: - ScanQRViewDelegate -
+extension VFCCardsViewController: ScanQRViewDelegate {
+    func scannedData(data: String) {
+        self.processQR(data: data)
     }
 }
 
