@@ -162,7 +162,7 @@ extension VFCCardsViewController {
                 debugPrint("some exception when converting JSON to object",error)
             }
         }
-//        print("Reg Document: ", regDocument as Any, "\n")
+        
         return regDocument
     }
     
@@ -182,24 +182,60 @@ extension VFCCardsViewController {
             VerifiableCredentialsHelper.shared.createVerifiableCredentials(for: VerifiableCredential.document_dl,
                                                                            with: vcDocument) { (result, error) in
                 if error == nil, let result = result {
-                    // no error, process the result
-                    // add to card datasource
-                    self.cardsDataSource.append(["docType": CardType.identity_dl.rawValue,
-                                                 "vfc": result])
-                    
-                    // add the entire datasource to user defaults
-                    UserDefaults.standard.set(self.cardsDataSource,
-                                              forKey: "VFC_CARDS")
-                    
-                    // update the UI; reload the table view
-                    self.lblNoCards.isHidden = true
-                    self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
-                    self.ucvCardsView.reloadData()
-                    
+                    // check if result contains error
+                    if let code = result["code"],
+                       var message = result["message"] {
+                        
+                        if code as! Int == 404 {
+                            message = "Verifiable credentials service is not available for the requested tenant. Please contact support team."
+                        } else if code as! Int == 400 {
+                            message = "We are unable to create verifiable credentials for the given identity document. Please try again."
+                        }
+                        
+                        // show error message
+                        let alert = UIAlertController(title: "Oh no ...",
+                                                      message: "\(message) \n(Error Code: \(code))",
+                                                      preferredStyle: .alert)
+                        
+                        alert.addAction(UIAlertAction(title: "OK",
+                                                      style: .default,
+                                                      handler: nil))
+                        
+                        self.present(alert, animated: true)
+                    } else {
+                        // no error, process the result
+                        // add to card datasource
+                        self.cardsDataSource.append(["docType": CardType.identity_dl.rawValue,
+                                                     "vfc": result])
+                        
+                        // add the entire datasource to user defaults
+                        UserDefaults.standard.set(self.cardsDataSource,
+                                                  forKey: "VFC_CARDS")
+                        
+                        // update the UI; reload the table view
+                        self.lblNoCards.isHidden = true
+                        self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
+                        self.ucvCardsView.reloadData()
+                    }
                 } else {
+                    var message = ""
+                    if let err = error as? NSError {
+                        if err.code == 4 || err.code == -1002 {
+                            // JSON serialization error
+                            message = "Verifiable credentials service is not available for the requested tenant. Please contact support team.\n(Error Code: \(err.code))"
+                        } else {
+                            // network error
+                            // or any other error
+                            message = "\(err.localizedDescription) \n(Error Code: \(err.code))"
+                        }
+                        
+                    } else {
+                        message = error!.localizedDescription
+                    }
+                    
                     // show error message
                     let alert = UIAlertController(title: "Oh no ...",
-                                                  message: error?.localizedDescription,
+                                                  message: message,
                                                   preferredStyle: .alert)
                     
                     alert.addAction(UIAlertAction(title: "OK",
@@ -267,11 +303,8 @@ extension VFCCardsViewController {
             cardView.issuerText?.text = ""
         }
     }
-}
-
-// MARK: - ScanQRViewDelegate -
-extension VFCCardsViewController: ScanQRViewDelegate {
-    func scannedData(data: String) {
+    
+    private func processQR(data: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // show progress indicator
             self.showProgressIndicator()
@@ -281,30 +314,65 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                 if let document = try JSONSerialization.jsonObject(with: qrPayload) as? [String: Any],
                    let vcPayload = document["vc"] as? [String: Any] {
                     VerifiableCredentialsHelper.shared.verify(vc: document) { (verifyResult, verifyError) in
-//                        print("Result: ", verifyResult as Any, "\n")
-//                        print("Error: ", verifyError as Any, "\n")
-                        if verifyError == nil, let result = verifyResult,
-                           let status = result["status"] as? String, status == "verified" {
-                            // no error, process the result
-                            // add to card datasource
-                            self.cardsDataSource.append(["docType": CardType.employee_card.rawValue,
-                                                         "vfc": vcPayload])
-                            
-                            // add the entire datasource to user defaults
-                            UserDefaults.standard.set(self.cardsDataSource,
-                                                      forKey: "VFC_CARDS")
-                            
-                            // update the UI; reload the table view
-                            self.lblNoCards.isHidden = true
-                            self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
-                            self.ucvCardsView.reloadData()
+                        if verifyError == nil, let result = verifyResult {
+                            if let status = result["status"] as? String,
+                                status == "verified" {
+                                // no error, process the result
+                                // add to card datasource
+                                self.cardsDataSource.append(["docType": CardType.employee_card.rawValue,
+                                                             "vfc": vcPayload])
+                                
+                                // add the entire datasource to user defaults
+                                UserDefaults.standard.set(self.cardsDataSource,
+                                                          forKey: "VFC_CARDS")
+                                
+                                // update the UI; reload the table view
+                                self.lblNoCards.isHidden = true
+                                self.ucvCardsView.isHidden = !self.lblNoCards.isHidden
+                                self.ucvCardsView.reloadData()
+                            } else if let code = result["code"],
+                                      var message = result["message"] {
+                                
+                                if code as! Int == 404 {
+                                    message = "Verifiable credentials service is not available for the requested tenant. Please contact support team"
+                                } else if code as! Int == 400 {
+                                    message = "We are unable to create verifiable credentials for the given identity document. Please try again."
+                                } else if code as! Int == 417 {
+                                    message = "We are unable to verify the credentials. Please try again."
+                                }
+                                
+                                // show error message
+                                let alert = UIAlertController(title: "Oh no ...",
+                                                              message: "\(message) \n(Error Code: \(code))",
+                                                              preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK",
+                                                              style: .default,
+                                                              handler: nil))
+                                    
+                                self.present(alert, animated: true)
+                            }
                             
                             // hide progress indicator
                             self.hideProgressIndicator()
                         } else {
+                            var message = ""
+                            if let err = verifyError as? NSError {
+                                if err.code == 4 || err.code == -1002 {
+                                    // JSON serialization error
+                                    message = "Verifiable credentials service is not available for the requested tenant. Please contact support team.\n(Error Code: \(err.code))"
+                                } else {
+                                    // network error
+                                    // or any other error
+                                    message = "\(err.localizedDescription) \n(Error Code: \(err.code))"
+                                }
+                                
+                            } else {
+                                message = verifyError!.localizedDescription
+                            }
+                            
                             // show error message
                             let alert = UIAlertController(title: "Oh no ...",
-                                                          message: verifyError?.localizedDescription,
+                                                          message: message,
                                                           preferredStyle: .alert)
                             
                             alert.addAction(UIAlertAction(title: "OK",
@@ -348,6 +416,13 @@ extension VFCCardsViewController: ScanQRViewDelegate {
                 self.hideProgressIndicator()
             }
         }
+    }
+}
+
+// MARK: - ScanQRViewDelegate -
+extension VFCCardsViewController: ScanQRViewDelegate {
+    func scannedData(data: String) {
+        self.processQR(data: data)
     }
 }
 
