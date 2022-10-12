@@ -647,7 +647,7 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Bloc
   public func getTOTP() -> (totp: BlockIDSDK.TOTP?, error: BlockIDSDK.ErrorResponse?)
   public func getOfflineTOTP(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount) -> (totp: BlockIDSDK.TOTP?, error: BlockIDSDK.ErrorResponse?)
   public func checkUserExist(userId: Swift.String, origin: BlockIDSDK.BIDOrigin) -> Swift.Bool
-  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BlockIDSDK.BIDOrigin, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
+  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BlockIDSDK.BIDOrigin, account: BlockIDSDK.BIDAccount?, vc_employee: BlockIDSDK.BIDVCEmployee? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
   public func restoreUserDataFromWallet(completion: @escaping BlockIDSDK.UserAPICallback)
   public func addNativeAccount(method: Swift.String!, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
   public func unLinkAccount(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount, deviceToken: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
@@ -1727,6 +1727,7 @@ public class BACHandler {
   public var sceptoken: Swift.String?
   public var scep_expiry: Swift.String?
   public var account: BlockIDSDK.BIDAccount?
+  public var vc_employee: BlockIDSDK.BIDVCEmployee?
   public static func == (lhs: BlockIDSDK.BIDLinkedAccount, rhs: BlockIDSDK.BIDLinkedAccount) -> Swift.Bool
   public func isOfflineAuthSupported() -> Swift.Bool
   @objc deinit

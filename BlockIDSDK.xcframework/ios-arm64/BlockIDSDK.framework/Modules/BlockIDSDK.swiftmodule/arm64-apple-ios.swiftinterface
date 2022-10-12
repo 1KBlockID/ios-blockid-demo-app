@@ -647,7 +647,7 @@ public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: Erro
   public func getTOTP() -> (totp: TOTP?, error: ErrorResponse?)
   public func getOfflineTOTP(bidLinkedAccount: BIDLinkedAccount) -> (totp: TOTP?, error: ErrorResponse?)
   public func checkUserExist(userId: Swift.String, origin: BIDOrigin) -> Swift.Bool
-  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BIDOrigin, account: BIDAccount?, completion: @escaping UserAPICallback)
+  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BIDOrigin, account: BIDAccount?, vc_employee: BIDVCEmployee? = nil, completion: @escaping UserAPICallback)
   public func restoreUserDataFromWallet(completion: @escaping UserAPICallback)
   public func addNativeAccount(method: Swift.String!, userId: Swift.String, password: Swift.String, origin: BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, completion: @escaping UserAPICallback)
   public func unLinkAccount(bidLinkedAccount: BIDLinkedAccount, deviceToken: Swift.String? = nil, completion: @escaping UserAPICallback)
@@ -1727,6 +1727,7 @@ public class BACHandler {
   public var sceptoken: Swift.String?
   public var scep_expiry: Swift.String?
   public var account: BIDAccount?
+  public var vc_employee: BIDVCEmployee?
   public static func == (lhs: BIDLinkedAccount, rhs: BIDLinkedAccount) -> Swift.Bool
   public func isOfflineAuthSupported() -> Swift.Bool
   @objc deinit

@@ -349,7 +349,8 @@ extension AddUserViewController {
                               scep_privatekey: user?.scep_privatekey ?? "",
                               scep_expiry: user?.scep_expiry ?? "",
                               origin: originUW,
-                              account: user?.account) { (status, error) in
+                              account: user?.account,
+                              vc_employee: user?.vc_employee) { (status, error) in
             if status {
                 //FIXME: - Uncomment below code for FIDO2 registration
 //                let response = BlockIDSDK.sharedInstance.getLinkedUserAccounts()
