@@ -62,6 +62,9 @@
 		E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */; };
 		E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */; };
 		E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6734C3C2816B5E900658171 /* GetSessionData.swift */; };
+		E673A37A28F6DAAA008995A9 /* VerifiedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37928F6DAAA008995A9 /* VerifiedPerson.swift */; };
+		E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37B28F6F3C1008995A9 /* UIImageExtension.swift */; };
+		E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37D28F7EC6C008995A9 /* DateExtension.swift */; };
 		E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */; };
 		E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */; };
 		E6B95077287D84CB0015E759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B95076287D84CB0015E759 /* Localizable.strings */; };
@@ -156,6 +159,9 @@
 		E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkPayload.swift; sourceTree = "<group>"; };
 		E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLinkUrlData.swift; sourceTree = "<group>"; };
 		E6734C3C2816B5E900658171 /* GetSessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSessionData.swift; sourceTree = "<group>"; };
+		E673A37928F6DAAA008995A9 /* VerifiedPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedPerson.swift; sourceTree = "<group>"; };
+		E673A37B28F6F3C1008995A9 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		E673A37D28F7EC6C008995A9 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV2.swift; sourceTree = "<group>"; };
 		E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV1.swift; sourceTree = "<group>"; };
 		E6B95076287D84CB0015E759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -220,6 +226,7 @@
 				E666409E282A863600E78498 /* MagicLinkModel.swift */,
 				E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */,
 				E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */,
+				E673A37928F6DAAA008995A9 /* VerifiedPerson.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -376,6 +383,8 @@
 				3CEE338826443199003FDB78 /* IntExtension.swift */,
 				3CEE338926443199003FDB78 /* StringExtension.swift */,
 				E6FFD666278702C5004CBB62 /* StringValidation.swift */,
+				E673A37B28F6F3C1008995A9 /* UIImageExtension.swift */,
+				E673A37D28F7EC6C008995A9 /* DateExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -624,6 +633,7 @@
 				E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */,
 				E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */,
 				5D85693E28B80706000D0B05 /* WalletConsentViewController.swift in Sources */,
+				E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */,
 				3CEE3351264414E7003FDB78 /* CommonFunctions.swift in Sources */,
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
 				3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */,
@@ -649,6 +659,7 @@
 				E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
 				3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */,
+				E673A37A28F6DAAA008995A9 /* VerifiedPerson.swift in Sources */,
 				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,
 				3CEE335C264414E7003FDB78 /* EnrollmentTableViewCell.swift in Sources */,
 				3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */,
@@ -656,6 +667,7 @@
 				E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				E66640A1282A9E9000E78498 /* AddUserViewController.swift in Sources */,
+				E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */,
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
 				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,

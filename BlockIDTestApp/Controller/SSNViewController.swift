@@ -13,70 +13,21 @@ class SSNViewController: UIViewController {
     
     // MARK: - IBOutlets -
     @IBOutlet weak var txtFieldSSN: UITextField!
-    @IBOutlet weak var txtFieldFirstName: UITextField!
-    @IBOutlet weak var txtFieldMiddleName: UITextField!
-    @IBOutlet weak var txtFieldLastName: UITextField!
     @IBOutlet weak var txtFieldDob: UITextField!
-    @IBOutlet weak var txtFieldCountry: UITextField!
-    @IBOutlet weak var txtFieldStreet: UITextField!
-    @IBOutlet weak var txtFieldZipCode: UITextField!
-    @IBOutlet weak var txtFieldEmail: UITextField!
-    @IBOutlet weak var txtFieldPhoneNo: UITextField!
-    @IBOutlet weak var txtFieldState: UITextField!
-    @IBOutlet weak var txtFieldCity: UITextField!
     @IBOutlet weak var btnUserConsent: UIButton!
     @IBOutlet weak var btnContinue: UIButton!
+    @IBOutlet weak var userConsetTxtVw: UITextView!
     
     // MARK: - Private Properties -
     // to store the current active textfield
     private var activeTextField : UITextField? = nil
     private var maskedData = "XXXXXX"
-    private var ssnPayload: [String: Any] {
-        var ssnDict: [String: Any] = [ "type": RegisterDocType.SSN.rawValue,
-                                       "category": RegisterDocCategory.Misc_Document.rawValue,
-                                       "userConsent": btnContinue.isSelected ]
-        
-        if let ssnText = txtFieldSSN.text, !ssnText.trim().isEmpty {
-            ssnDict["id"] = ssnText
-            ssnDict["ssn"] = ssnText
-        }
-        if let firstName = txtFieldFirstName.text, !firstName.isEmpty {
-            ssnDict["firstName"] = firstName.condenseWhitespace()
-        }
-        if let middleName = txtFieldMiddleName.text, !middleName.isEmpty {
-            ssnDict["middleName"] = middleName.condenseWhitespace()
-        }
-        if let lastName = txtFieldLastName.text, !lastName.isEmpty {
-            ssnDict["lastName"] = lastName.condenseWhitespace()
-        }
-        if let dob = self.dateYYYmmDD, !dob.isEmpty {
-            ssnDict["dob"] = dob
-        }
-        if let street = txtFieldStreet.text, !street.isEmpty {
-            ssnDict["street"] = street.condenseWhitespace()
-        }
-        if let city = txtFieldCity.text, !city.isEmpty {
-            ssnDict["city"] = city.condenseWhitespace()
-        }
-        if let state = txtFieldState.text, !state.isEmpty {
-            ssnDict["state"] = state.condenseWhitespace()
-        }
-        if let zipCode = txtFieldZipCode.text, !zipCode.isEmpty {
-            ssnDict["zipCode"] = zipCode
-        }
-        if let country = txtFieldCountry.text, !country.isEmpty {
-            ssnDict["country"] = country.condenseWhitespace()
-        }
-        if let emailAddress = txtFieldEmail.text, !emailAddress.isEmpty {
-            ssnDict["email"] = emailAddress
-        }
-        if let phoneNo = txtFieldPhoneNo.text, !phoneNo.isEmpty {
-            ssnDict["phone"] = phoneNo
-        }
-        return ssnDict
-    }
-    
-    private var dateYYYmmDD: String?
+    private let hyperLinkText: String = "Fair Credit Reporting Act"
+    private let hyperLinkURL: String = "https://www.ftc.gov/legal-library/browse/statutes/fair-credit-reporting-act"
+    private var verifiedPerson = VerifiedPerson()
+    private var certification = [String: Any]()
+    private let expectedDateFormat: String = "yyyyMMdd"
+    private let displayDateFormat: String = "MMM, dd yyyy"
     private var isAllFieldsValid: Bool = false
     
     // MARK: - View LifeCycle -
@@ -85,8 +36,19 @@ class SSNViewController: UIViewController {
         btnContinue.isEnabled = false
         self.btnContinue.backgroundColor = .darkGray
         self.btnContinue.layer.cornerRadius = self.btnContinue.frame.height/2
+        displayAsHyperLink()
         setupObservers()
+        addDoneButtonOnKeyboard()
         setupDataSource()
+    }
+    
+    // Manage hyper link clicking...
+    private func displayAsHyperLink() {
+        let attributedString = NSMutableAttributedString(string: userConsetTxtVw.text)
+        if let mutatedString = attributedString.createHyperLink(textToFind: hyperLinkText,
+                                                                linkURL: hyperLinkURL) {
+            userConsetTxtVw.attributedText = mutatedString
+        }
     }
     
     
@@ -114,12 +76,8 @@ class SSNViewController: UIViewController {
 extension SSNViewController {
     
     private func setupObservers() {
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        [txtFieldCity, txtFieldSSN, txtFieldDob,
-         txtFieldStreet, txtFieldZipCode, txtFieldState,
-         txtFieldCountry, txtFieldLastName, txtFieldFirstName].forEach({ $0.addTarget(self, action: #selector(editingChanged), for: .editingChanged) })
+        [txtFieldSSN].forEach({ $0.addTarget(self, action: #selector(editingChanged),
+                                             for: .editingChanged) })
     }
     
     private func setupDataSource() {
@@ -130,68 +88,78 @@ extension SSNViewController {
             guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]], arrDocuments.count > 0 else {
                 return
             }
-            txtFieldFirstName.text = arrDocuments[0]["firstName"] as? String
-            txtFieldLastName.text = arrDocuments[0]["lastName"] as? String
-            txtFieldDob.text = arrDocuments[0]["dob"] as? String
-            txtFieldStreet.text = arrDocuments[0]["street"] as? String
-            txtFieldCity.text = arrDocuments[0]["city"] as? String
-            txtFieldState.text = arrDocuments[0]["state"] as? String
-            txtFieldZipCode.text = arrDocuments[0]["zipCode"] as? String
-            txtFieldCountry.text = arrDocuments[0]["country"] as? String
-            
+            txtFieldDob.text = self.getFormattedDate(date: arrDocuments[0]["dob"] as? String ?? "",
+                                                     fromFormat: expectedDateFormat,
+                                                     toFormat: displayDateFormat) ?? ""
+
         }
+    }
+    
+    private func verifySSN() {
+        var identityDocument = [String: Any]()
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+            let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
+                                                                          type: RegisterDocType.DL.rawValue,
+                                                                          category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
+            guard let documents = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String: Any]], !documents.isEmpty else {
+                return
+            }
+            identityDocument = documents.first ?? [:]
+        } else if BlockIDSDK.sharedInstance.isPassportEnrolled() {
+            let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
+                                                                          type: RegisterDocType.PPT.rawValue,
+                                                                          category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
+            guard let documents = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String: Any]], !documents.isEmpty else {
+                return
+            }
+            identityDocument = documents.first ?? [:]
+        }
+        // Verify SSN
+        verifySSN(identityDocument)
     }
     
     @objc func editingChanged(textField: UITextField) {
         
         guard
-            let firstName = txtFieldFirstName.text, !firstName.isEmpty,
-            let lastName = txtFieldLastName.text, !lastName.isEmpty,
-            let state = txtFieldState.text, !state.isEmpty,
-            let zipCode = txtFieldZipCode.text, !zipCode.isEmpty,
-            let city = txtFieldCity.text, !city.isEmpty,
             let ssn = txtFieldSSN.text, !ssn.isEmpty,
-            let dob = txtFieldDob.text, !dob.isEmpty,
-            let country = txtFieldCountry.text, !country.isEmpty,
-            let street = txtFieldStreet.text, !street.isEmpty
+            let dob = txtFieldDob.text, !dob.isEmpty
         else
         {
-            isAllFieldsValid = false
+            self.isAllFieldsValid = false
             self.btnContinue.isEnabled = false
             self.btnContinue.backgroundColor = .darkGray
             return
         }
         // enable continue if all conditions are met
-        isAllFieldsValid = true
+        self.isAllFieldsValid = true
         if btnUserConsent.isSelected {
             continueBtnStateConfig()
         }
     }
     
-    @objc func keyboardWillShow(notification: NSNotification) {
-        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
-           // if keyboard size is not available for some reason, dont do anything
-           return
-        }
-        var shouldMoveViewUp = false
-        // if active text field is not nil
-        if let activeTextField = activeTextField {
-            
-            let bottomOfTextField = activeTextField.convert(activeTextField.bounds, to: self.view).maxY;
-            let topOfKeyboard = self.view.frame.height - keyboardSize.height
-            // if the bottom of Textfield is below the top of keyboard, move up
-            if bottomOfTextField > topOfKeyboard {
-                shouldMoveViewUp = true
-            }
-        }
-        if(shouldMoveViewUp) {
-            self.view.frame.origin.y = 0 - keyboardSize.height
-        }
+    // Add Done button on UITextfields of type NUMPAD
+    private func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0.0,
+                                                             y: 0.0,
+                                                             width: UIScreen.main.bounds.width,
+                                                             height: 50.0))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                        target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "Done",
+                                                    style: .done, target: self,
+                                                    action: #selector(self.doneButtonAction))
+        
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        txtFieldSSN.inputAccessoryView = doneToolbar
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
-      // move back the root view origin to zero
-      self.view.frame.origin.y = 0
+    @objc func doneButtonAction() {
+        txtFieldSSN.resignFirstResponder()
     }
     
     // TextField Validations
@@ -200,30 +168,8 @@ extension SSNViewController {
           return "SSN can not be empty"
         } else if !txtFieldSSN.text!.isValid(type: .SSN) {
             return "Invalid SSN"
-        } else if txtFieldFirstName.text!.trim().isEmpty {
-            return "First Name can not be empty"
-        } else if !txtFieldFirstName.text!.isValid(type: .firstName) {
-            return "Invalid First Name"
-        } else if txtFieldLastName.text!.trim().isEmpty {
-            return "Last Name can not be empty"
-        } else if !txtFieldLastName.text!.isValid(type: .lastName) {
-            return "Invalid Last Name"
         } else if txtFieldDob.text!.trim().isEmpty {
             return "Date of birth can not be empty"
-        } else if !txtFieldDob.text!.isValid(type: .DOB) {
-            return "Invalid Date of Birth"
-        } else if txtFieldStreet.text!.trim().isEmpty {
-            return "Street can not be empty"
-        } else if txtFieldZipCode.text!.trim().isEmpty {
-            return "Zip Code can not be empty"
-        } else if txtFieldCity.text!.trim().isEmpty {
-            return "City can not be empty"
-        } else if txtFieldState.text!.trim().isEmpty {
-            return "State can not be empty"
-        } else if !txtFieldZipCode.text!.isValid(type: .zipCode) {
-            return "Invalid Zip code"
-        } else if txtFieldCountry.text!.trim().isEmpty {
-            return "Country can not be empty"
         } else if !btnUserConsent.isSelected {
             return "Consent is not given"
         }
@@ -241,32 +187,101 @@ extension SSNViewController {
         }
     }
     
-    private func verifySSN() {
+    // Formatting date from expectedDate to displayDate..
+    private func getFormattedDate(date: String, fromFormat: String, toFormat: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = fromFormat
+        guard let paramDate = dateFormatter.date(from: date) else { return  nil}
+        let resultDateFormatter = DateFormatter()
+        resultDateFormatter.dateFormat = toFormat
+        let strDate = resultDateFormatter.string(from: paramDate)
+        return strDate
+    }
+    
+    private func getVerifySSNPayload(_ docData: [String: Any]) -> [String: Any] {
+        let ssn = self.txtFieldSSN.text ?? ""
+        var dictPayload = [String: Any]()
+        dictPayload["type"] = "ssn"
+        dictPayload["id"] = ssn.sha256()
+        
+        // set date of birth
+        let dateOfBirth = (docData["dob"] as? String) ?? ""
+        dictPayload["dob"] = getFormattedDateOfBirth(dateOfBirth: dateOfBirth)
+       
+        dictPayload["ssn"] = ssn
+        return dictPayload
+    }
+    
+    private func getFormattedDateOfBirth(dateOfBirth: String) -> String {
+        // set date of birth
+        let reqDateFormat = "yyyyMMdd"
+        if dateOfBirth.isValidDate(dateFormat: reqDateFormat) {
+            // use existing date
+            return dateOfBirth
+        } else {
+            // convert date format
+            let date = dateOfBirth.toDateFormat(with: "MMddyyyy")
+            return date?.toStringDate(with: reqDateFormat) ?? dateOfBirth
+        }
+    }
+    
+    private func verifySSN(_ dictDocumentObj: [String: Any]) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: ssnPayload, verifications: ["ssn_verify"])
-        { status, dataDic, errorResponse in
-            self.view.hideToastActivity()
+        
+        let dictPayload = getVerifySSNPayload(dictDocumentObj)
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID,
+                                                 dic: dictPayload,
+                                                 verifications: ["ssn_verify"])
+        { [weak self] (status, dataDic, errorResponse) in
+            guard let weakSelf = self else {return}
+            weakSelf.view.hideToastActivity()
             var title: String = ""
             var message: String = ""
             var alertTag: Int = 0
             if status {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
-                    
-                    if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 {
+                    weakSelf.certification = certifications[0]
+                    if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 ||
+                        certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
                         title = "Error"
-                        message = "There is some error in the request data"
+                        message = "The information you provided does not match the records."
                         alertTag = 1001
                     } else {
-                        if certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
-                            title = "Error"
-                            message = "The information you provided does not match the records. Please try again."
-                            alertTag = 1001
-                        } else {
                             title = "Success"
-                            message = "Your Social Security Number has been verified."
+                            message = "Do you want to register your verified SSN?"
+                            //"Your Social Security Number has been verified."
                             alertTag = 1002
-                        }
+                            
+                            // Get certification verified
+                            let verified = weakSelf.certification["verified"] as? Bool
+                            
+                            // Get verifiedPeople array
+                            let metadata = weakSelf.certification["metadata"] as? [String: Any] ?? [:]
+                            let arrVerifiedPeople  = metadata["verifiedPeople"] as? [[String: Any]] ?? []
+                            
+                            if let isVerified = verified, isVerified == true && arrVerifiedPeople.count == 1 {
+                                // Create model class for verified person
+                                if let verifiedPersonObj = self?.parseJsonWith(dictVerifiedPerson: arrVerifiedPeople[0]) {
+                                    // get details from response
+                                    let responseFirstName = verifiedPersonObj.firstName?.lowercased()
+                                    let responseLastName = verifiedPersonObj.lastName?.lowercased()
+                                    // get details from document
+                                    let docFirstName = (dictDocumentObj["firstName"] as? String ?? "").lowercased()
+                                    let docLastName = (dictDocumentObj["lastName"] as? String ?? "").lowercased()
+                                    // Triangulate data after valid SSN
+                                    if (responseFirstName == docFirstName && responseLastName == docLastName) ||
+                                        (responseLastName == docFirstName && responseFirstName == docLastName) {
+                                        // Enroll SSN
+                                        weakSelf.verifiedPerson = verifiedPersonObj
+                                    } else {
+                                        // verification failed
+                                        weakSelf.view.makeToast("There is some error in the request data", duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                                            weakSelf.navigationController?.popViewController(animated: true)
+                                        })
+                                    }
+                                }
+                            }
                     }
                 }
             } else {
@@ -279,38 +294,226 @@ extension SSNViewController {
                                           message: message,
                                           preferredStyle: .alert)
             if alertTag == 1002 {
-                alert.addAction(UIAlertAction(title: "OK",
+                alert.addAction(UIAlertAction(title: "No",
+                                              style: .default,
+                                              handler: nil))
+                alert.addAction(UIAlertAction(title: "Yes",
                                               style: .default,
                                               handler: {_ in
-                        self.navigationController?.popViewController(animated: true)
+                    weakSelf.enrollSSN(weakSelf.verifiedPerson, weakSelf.certification)
                 }))
             } else if alertTag == 1001 {
                 alert.addAction(UIAlertAction(title: "Retry",
                                               style: .default,
                                               handler: nil))
-                alert.addAction(UIAlertAction(title: "Details", style: .default, handler: { action in
+                alert.addAction(UIAlertAction(title: "Details", style: .default,
+                                              handler: { action in
                     // navigate to next screen
                     if var dataDic = dataDic {
-                        if let payload = self.handleFailedSSNResponse(payload: &dataDic) {
+                        if let payload = weakSelf.handleFailedSSNResponse(payload: &dataDic) {
                             
                             if let theJSONData = try? JSONSerialization.data(
                                 withJSONObject: payload,
                                 options: []) {
                                 let theJSONText = String(data: theJSONData,
                                                            encoding: .ascii)
-                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                                let storyBoard : UIStoryboard = UIStoryboard(name: "Main",
+                                                                             bundle:nil)
                                 if let ssnResponseVc = storyBoard.instantiateViewController(withIdentifier: "SSNVerifyResponseViewController") as? SSNVerifyResponseViewController {
                                     ssnResponseVc.markedJSONpayload = theJSONText
-                                    self.navigationController?.pushViewController(ssnResponseVc, animated: true)
+                                    weakSelf.navigationController?.pushViewController(ssnResponseVc,
+                                                                                      animated: true)
                                 }
                             }
                         }
                     }
                 }))
             }
-            self.present(alert, animated: true)
+            weakSelf.present(alert, animated: true)
         }
-    }    
+    }
+    
+    func parseJsonWith(dictVerifiedPerson: [String: Any]) -> VerifiedPerson {
+        var dateOfBirth: String {
+            if let dob = dictVerifiedPerson["dateOfBirth"] as? [String: Any], !dob.isEmpty {
+                let year = (dob["year"] as? [String: Any])?["value"] as? String ?? "0000"
+                let month = (dob["month"] as? [String: Any])?["value"] as? String ?? "0"
+                let day = (dob["day"] as? [String: Any])?["value"] as? String ?? "0"
+                let modifiedMonth = month.count == 1 ? ("0" + month) : month
+                let modifiedDay = day.count == 1 ? ("0" + day) : day
+                return year+modifiedMonth+modifiedDay
+            } else {
+                return ""
+            }
+        }
+        var dateOfExpiry: String {
+            if let dob = dictVerifiedPerson["dateOfBirth"] as? [String: Any], !dob.isEmpty {
+                let year = (dob["year"] as? [String: Any])?["value"] as? String ?? "0000"
+                let yearOfDoe = (Int(year) ?? 0) + 150
+                let month = (dob["month"] as? [String: Any])?["value"] as? String ?? "0"
+                let day = (dob["day"] as? [String: Any])?["value"] as? String ?? "0"
+                let modifiedMonth = month.count == 1 ? ("0" + month) : month
+                let modifiedDay = day.count == 1 ? ("0" + day) : day
+                return String(yearOfDoe)+modifiedMonth+modifiedDay
+            } else {
+                return ""
+            }
+        }
+        var verifiedPerson = VerifiedPerson()
+        // First Name
+        let dictFirstName = dictVerifiedPerson["firstName"] as? [String: Any] ?? [:]
+        if let firstNameOfPerson = dictFirstName["value"] as? String, !firstNameOfPerson.isEmpty {
+            verifiedPerson.firstName = firstNameOfPerson.condenseWhitespace()
+        }
+        // Middle name
+        let dictMiddleName = dictVerifiedPerson["middleName"] as? [String: Any] ?? [:]
+        if let middleNameOfPerson = dictMiddleName["value"] as? String, !middleNameOfPerson.isEmpty {
+            verifiedPerson.middleName = middleNameOfPerson.condenseWhitespace()
+        }
+        // Last name
+        let dictLastName = dictVerifiedPerson["lastName"] as? [String: Any] ?? [:]
+        if let lastNameOfPerson = dictLastName["value"] as? String, !lastNameOfPerson.isEmpty {
+            verifiedPerson.lastName = lastNameOfPerson.condenseWhitespace()
+        }
+        // Date of birth
+        verifiedPerson.dob = dateOfBirth
+        // Date of Expiry
+        verifiedPerson.doe = dateOfExpiry
+        // Addresses
+        if let addresses = dictVerifiedPerson["addresses"] as? [[String: Any]], !addresses.isEmpty {
+            var ssnAddresses: [String] = []
+            for address in addresses {
+                if let addressValue = address["value"] as? String, !addressValue.isEmpty {
+                    ssnAddresses.append(addressValue)
+                }
+            }
+            verifiedPerson.addresses = ssnAddresses
+        }
+        // Email
+        if let emailAddress = dictVerifiedPerson["emails"] as? [[String: Any]], !emailAddress.isEmpty {
+            for email in emailAddress {
+                if let emailAddressValue = email["value"] as? String, !emailAddressValue.isEmpty {
+                    verifiedPerson.email = emailAddressValue
+                    break
+                }
+            }
+        }
+        // Phone
+        if let phoneNumbers = dictVerifiedPerson["phones"] as? [[String: Any]], !phoneNumbers.isEmpty {
+            for phone in phoneNumbers {
+                if let phoneNumberValue = phone["value"] as? String, !phoneNumberValue.isEmpty {
+                    verifiedPerson.phoneNumber = phoneNumberValue
+                    break
+                }
+            }
+        }
+        return verifiedPerson
+    }
+    
+    func prepareSSNPayload(verifiedPersonObj: VerifiedPerson, certification: [String: Any]) -> [String: Any] {
+        var ssnData: [String: Any] = [ "type": RegisterDocType.SSN.rawValue.lowercased(),
+                                       "documentType": RegisterDocType.SSN.rawValue.uppercased(),
+                                       "category": RegisterDocCategory.Identity_Document.rawValue,
+                                       "verifiedScan": true]
+        
+        // Get certifications token
+        if let certificateToken = certification["token"] as? String {
+            ssnData["certificate_token"] = certificateToken
+        }
+
+        // Get certifications proofed by
+        if let proofedBy = certification["authority"] as? String {
+            ssnData["proofedBy"] = proofedBy
+        }
+        
+        let ssn = txtFieldSSN.text ?? ""
+        ssnData["id"] = ssn.sha256()
+        ssnData["ssn"] = ssn
+        ssnData["documentId"] = ssn.sha256()
+        
+        if let firstName = verifiedPersonObj.firstName {
+            ssnData["firstName"] = firstName
+        }
+        
+        if let middleName = verifiedPersonObj.middleName {
+            ssnData["middleName"] = middleName
+        }
+        
+        if let lastName = verifiedPersonObj.lastName {
+            ssnData["lastName"] = lastName
+        }
+        
+        if let dob = verifiedPersonObj.dob {
+            ssnData["dob"] = dob
+            ssnData["doi"] = dob
+        }
+        
+        if let doe = verifiedPersonObj.doe {
+            ssnData["doe"] = doe
+        }
+        
+        if let addresses = verifiedPersonObj.addresses {
+            ssnData["addresses"] = addresses
+        }
+        
+        if let email = verifiedPersonObj.email {
+            ssnData["email"] = email
+        }
+        
+        if let phoneNumber = verifiedPersonObj.phoneNumber {
+            ssnData["phoneNumber"] = phoneNumber
+        }
+        
+        ssnData["face"] = getUserImage()
+        
+        if let bitMapImg = UIImage.getBitMapImage(with: UIColor.clear) {
+            ssnData["image"] = CommonFunctions.convertImageToBase64String(img: bitMapImg)
+        }
+        return ssnData
+    }
+    
+    // Fetch base64 UserImage
+    private func getUserImage() -> String? {
+        if let image = BlockIDSDK.sharedInstance.getLiveIDImage() {
+            return CommonFunctions.convertImageToBase64String(img: image)
+        }
+        return nil
+    }
+    
+    // Registering SSN.....
+    private func enrollSSN(_ verifiedPersonObj: VerifiedPerson, _ certification: [String: Any]) {
+        let ssnPayload = prepareSSNPayload(verifiedPersonObj: verifiedPersonObj,
+                                           certification: certification)
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerDocument(obj: ssnPayload,
+                                                   sigToken: nil)
+        { (status, error) in
+            DispatchQueue.main.async {
+                // Hide loader
+                self.view.hideToastActivity()
+                
+                if !status {
+                    // FAILED
+                    self.view.makeToast(error?.message,
+                                        duration: 3.0,
+                                        position: .center,
+                                        title: "Error!",
+                                        completion: {_ in
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                    return
+                }
+                // SUCCESS
+                self.view.makeToast("SSN enrolled successfully.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!",
+                                    completion: {_ in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
+        }
+    }
     
     private func handleFailedSSNResponse(payload: inout [String: Any]) -> [String: Any]? {
         
@@ -411,15 +614,6 @@ extension SSNViewController {
         
         func textFieldDidBeginEditing(_ textField: UITextField) {
             self.activeTextField = textField
-            if textField == txtFieldDob {
-                let picker = UIDatePicker()
-                picker.datePickerMode = .date
-                picker.addTarget(self, action: #selector(updateDateField(sender:)), for: .valueChanged)
-                // If the date field has focus, display a date picker instead of keyboard.
-                // Set the text to the date currently displayed by the picker.
-                textField.inputView = picker
-                textField.text = formatDateForDisplay(date: picker.date)
-            }
         }
         
         func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -436,8 +630,6 @@ extension SSNViewController {
             let newString = NSString(string: textField.text!).replacingCharacters(in: range, with: string)
             if textField == txtFieldSSN {
                 return newString.count <= 9
-            } else if textField == txtFieldZipCode {
-                return newString.count <= 5
             }
             return true
         }
@@ -450,18 +642,5 @@ extension SSNViewController {
             textField.resignFirstResponder()
             return true
         }
-        
-        @objc func updateDateField(sender: UIDatePicker) {
-            txtFieldDob?.text = formatDateForDisplay(date: sender.date)
-        }
-        
-        // Formats the date chosen with the date picker.
-        fileprivate func formatDateForDisplay(date: Date) -> String {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "MM/dd/yyyy"
-            let formatter2 = DateFormatter()
-            formatter2.dateFormat = "yyyy/MM/dd"
-            dateYYYmmDD = formatter2.string(from: date)
-            return formatter.string(from: date)
-        }
+
     }
