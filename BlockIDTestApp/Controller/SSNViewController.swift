@@ -245,7 +245,7 @@ extension SSNViewController {
                     if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 ||
                         certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
                         title = "Error"
-                        message = "The information you provided does not match the records. Please try again."
+                        message = "The information you provided does not match the records."
                         alertTag = 1001
                     } else {
                             title = "Success"
