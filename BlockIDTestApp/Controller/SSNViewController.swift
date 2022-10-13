@@ -229,8 +229,7 @@ extension SSNViewController {
         self.view.makeToastActivity(.center)
         
         let dictPayload = getVerifySSNPayload(dictDocumentObj)
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID,
-                                                 dic: dictPayload,
+        BlockIDSDK.sharedInstance.verifyDocument(dic: dictPayload,
                                                  verifications: ["ssn_verify"])
         { [weak self] (status, dataDic, errorResponse) in
             guard let weakSelf = self else {return}
@@ -242,23 +241,18 @@ extension SSNViewController {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
-                    if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 ||
-                        certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
-                        title = "Error"
-                        message = "The information you provided does not match the records."
-                        alertTag = 1001
-                    } else {
+                    
+                    // Get certification verified
+                    let verified = weakSelf.certification["verified"] as? Bool
+                    
+                    // Get verifiedPeople array
+                    let metadata = weakSelf.certification["metadata"] as? [String: Any] ?? [:]
+                    let arrVerifiedPeople = metadata["verifiedPeople"] as? [[String: Any]] ?? []
+                    if let isVerified = verified, isVerified == true && arrVerifiedPeople.count == 1 {
                             title = "Success"
                             message = "Do you want to register your verified SSN?"
                             //"Your Social Security Number has been verified."
                             alertTag = 1002
-                            
-                            // Get certification verified
-                            let verified = weakSelf.certification["verified"] as? Bool
-                            
-                            // Get verifiedPeople array
-                            let metadata = weakSelf.certification["metadata"] as? [String: Any] ?? [:]
-                            let arrVerifiedPeople  = metadata["verifiedPeople"] as? [[String: Any]] ?? []
                             
                             if let isVerified = verified, isVerified == true && arrVerifiedPeople.count == 1 {
                                 // Create model class for verified person
@@ -282,6 +276,13 @@ extension SSNViewController {
                                     }
                                 }
                             }
+                    } else {
+                        if certifications.filter({ $0["status"] as? Int == 400 }).count >= 1 ||
+                            certifications.filter({ $0["verified"] as? Bool == false }).count >= 1 {
+                            title = "Error"
+                            message = "The information you provided does not match the records."
+                            alertTag = 1001
+                        }
                     }
                 }
             } else {
