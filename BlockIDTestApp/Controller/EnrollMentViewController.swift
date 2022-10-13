@@ -189,6 +189,8 @@ extension EnrollMentViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unenrollDocument(registerDocType: .SSN, id: docID)
             }))
+            
+            self.present(alert, animated: true)
             return
         }
         self.showSSNVerificationView()
