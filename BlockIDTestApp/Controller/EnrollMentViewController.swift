@@ -15,6 +15,7 @@ import WalletConnectSign
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
+    case KYCHash = "KYC Hash"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -35,6 +36,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
+                           Enrollments.KYCHash,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
@@ -118,6 +120,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
+        case Enrollments.KYCHash.rawValue:
+            getKYCHash()
         case Enrollments.DriverLicense_Liveness.rawValue:
             documentLivenessVC()
         case Enrollments.Passport1.rawValue:
@@ -170,6 +174,12 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    private func getKYCHash() {
+        BlockIDSDK.sharedInstance.KYCHash(completion: { (status, kycHash, error) in
+            print("<<<<<<<<<  kycHash "kycHash)
+        })
     }
     
     private func enrollSSN() {
