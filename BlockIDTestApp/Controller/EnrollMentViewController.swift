@@ -15,7 +15,7 @@ import WalletConnectSign
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
-    case KYCHash = "KYC Hash"
+    case MyKYC = "My KYC"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -36,7 +36,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.KYCHash,
+                           Enrollments.MyKYC,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
@@ -120,8 +120,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
-        case Enrollments.KYCHash.rawValue:
-            getKYCHash()
+        case Enrollments.MyKYC.rawValue:
+            getKYC()
         case Enrollments.DriverLicense_Liveness.rawValue:
             documentLivenessVC()
         case Enrollments.Passport1.rawValue:
@@ -176,10 +176,15 @@ extension EnrollMentViewController {
         showDLView()
     }
     
-    private func getKYCHash() {
-        BlockIDSDK.sharedInstance.KYCHash(completion: { (status, kycHash, error) in
-            print("<<<<<<<<<  kycHash "kycHash)
-        })
+    private func getKYC() {
+        let dateOfBirth = "19801127"
+        if dateOfBirth.isValidDate(dateFormat: "yyyyMMdd") {
+            BlockIDSDK.sharedInstance.getKYC(dateOfBirth: dateOfBirth, completion: { (status, kycHash, error) in
+                print("<<<<<<<<<  kycHash ", kycHash as Any)
+            })
+        } else {
+            print("Invalid date format given.")
+        }
     }
     
     private func enrollSSN() {

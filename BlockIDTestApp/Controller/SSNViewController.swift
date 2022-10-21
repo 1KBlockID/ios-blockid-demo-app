@@ -241,13 +241,14 @@ extension SSNViewController {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
-                    
+                    print(weakSelf.certification)
                     // Get certification verified
                     let verified = weakSelf.certification["verified"] as? Bool
                     
                     // Get verifiedPeople array
                     let metadata = weakSelf.certification["metadata"] as? [String: Any] ?? [:]
                     let arrVerifiedPeople = metadata["verifiedPeople"] as? [[String: Any]] ?? []
+                    print(arrVerifiedPeople)
                     if let isVerified = verified, isVerified == true && arrVerifiedPeople.count == 1 {
                             title = "Success"
                             message = "Do you want to register your verified SSN?"
