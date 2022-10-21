@@ -428,6 +428,11 @@ extension SSNViewController {
             ssnData["proofedBy"] = proofedBy
         }
         
+        // Get certifications proof_jwt token
+        if let proofJWT = certification["proof_jwt"] as? String {
+            ssnData["proof_of_verification"] = [proofJWT]
+        }
+        
         let ssn = txtFieldSSN.text ?? ""
         ssnData["id"] = ssn.sha256()
         ssnData["ssn"] = ssn
