@@ -24,8 +24,6 @@ class VFCCardsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        UserDefaults.standard.set(nil, forKey: "VFC_CARDS")
-        
         // get enrolled drivers license
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
