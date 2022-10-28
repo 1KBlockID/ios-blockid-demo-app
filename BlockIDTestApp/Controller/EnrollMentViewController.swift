@@ -231,18 +231,20 @@ extension EnrollMentViewController {
                         vcEmployeeDic = vcDic
                     }
                     var index = 0
-                    
-                    // 2. Check for saved VC's and compare ID with the linked User's VC details
-                    for card in cards {
-                        if let vcDic = card["vfc"] as? [String: Any],
-                            vcDic["id"] as! String == vcEmployeeDic["id"] as! String {
-                            // 3. Remove if ID matches
-                            cards.remove(at: index)
+                    if vcEmployeeDic.count > 0 {
+                        // 2. Check for saved VC's and compare ID with the linked User's VC details
+                        for card in cards {
+                            if let vcDic = card["vfc"] as? [String: Any],
+                                vcDic["id"] as! String == vcEmployeeDic["id"] as! String {
+                                // 3. Remove if ID matches
+                                cards.remove(at: index)
+                            }
+                            index += 1
                         }
-                        index += 1
+                        // 4. Set rest of the cards
+                        UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
                     }
-                    // 4. Set rest of the cards
-                    UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
+                    
                 }
                 weakSelf.view.makeToast("Your account is removed.", duration: 3.0, position: .center)
                 weakSelf.tableEnrollments.reloadData()

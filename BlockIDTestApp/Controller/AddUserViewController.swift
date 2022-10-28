@@ -328,7 +328,7 @@ extension AddUserViewController {
     //  addPrelink user API call...
     private func addUser(_ user: BIDOnboardedUserAccount?) {
         self.view.hideToastActivity()
-        
+        print("User: ", user?.vc_employee as Any, "\n")
         guard let userIdUW = user?.userId,
                 let originUW = user?.origin,
                 let isLinkedUW = user?.isLinked,
@@ -376,20 +376,20 @@ extension AddUserViewController {
                         vcEmployeeDic = vcDic
                     }
                     
-                    if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
-                        //
-                        // IF_ALREADY VC CARDS EXISTS
-                        cards.append(["docType": CardType.employee_card.rawValue,
-                                                     "vfc": vcEmployeeDic])
-                        UserDefaults.standard.set(cards,
-                                                  forKey: "VFC_CARDS")
+                    if vcEmployeeDic.count > 0 {
+                        if var cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
+                            //
+                            // IF_ALREADY VC CARDS EXISTS
+                            cards.append(["docType": CardType.employee_card.rawValue,
+                                          "vfc": vcEmployeeDic])
+                            UserDefaults.standard.set(cards, forKey: "VFC_CARDS")
 
-                    } else {
-                        UserDefaults.standard.set([["docType": CardType.employee_card.rawValue,
-                                                   "vfc": vcEmployeeDic]],
-                                                  forKey: "VFC_CARDS")
+                        } else {
+                            UserDefaults.standard.set([["docType": CardType.employee_card.rawValue,
+                                                       "vfc": vcEmployeeDic]],
+                                                      forKey: "VFC_CARDS")
+                        }
                     }
-                    
                 }
                 
                 self.view.makeToast("User registration successful.",
