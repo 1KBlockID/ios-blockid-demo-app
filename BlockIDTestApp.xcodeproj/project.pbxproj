@@ -43,6 +43,8 @@
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
+		5D4CA8B9290AF5A900830C70 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; };
+		5D4CA8BA290AF5A900830C70 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
 		5D85693C28B80191000D0B05 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 5D85693B28B80191000D0B05 /* Starscream */; };
@@ -52,8 +54,6 @@
 		720C4D260E7C100C0B3CC8EA /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F19ADA37D3DF3FFFA3D3632E /* Pods_BlockIDTestApp.framework */; };
 		B64453412893C71900597497 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B64453402893C71900597497 /* GoogleService-Info.plist */; };
 		B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB861328BE043100C488A1 /* WalletConnectListner.swift */; };
-		B6BB892A2902ACA500C7CFFF /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D59A1E528BE1B8C00A5D921 /* BlockIDSDK.xcframework */; };
-		B6BB892B2902ACA500C7CFFF /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D59A1E528BE1B8C00A5D921 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
@@ -92,7 +92,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B6BB892B2902ACA500C7CFFF /* BlockIDSDK.xcframework in Embed Frameworks */,
+				5D4CA8BA290AF5A900830C70 /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,7 +143,7 @@
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
-		5D59A1E528BE1B8C00A5D921 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
+		5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
 		5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConsentViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewController.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */,
-				B6BB892A2902ACA500C7CFFF /* BlockIDSDK.xcframework in Frameworks */,
+				5D4CA8B9290AF5A900830C70 /* BlockIDSDK.xcframework in Frameworks */,
 				5D85693C28B80191000D0B05 /* Starscream in Frameworks */,
 				720C4D260E7C100C0B3CC8EA /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
@@ -199,7 +199,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5D59A1E528BE1B8C00A5D921 /* BlockIDSDK.xcframework */,
+				5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */,
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				F19ADA37D3DF3FFFA3D3632E /* Pods_BlockIDTestApp.framework */,
@@ -884,7 +884,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.10;
+				MARKETING_VERSION = 1.8.20;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -944,7 +944,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.10;
+				MARKETING_VERSION = 1.8.20;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
