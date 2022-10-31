@@ -15,7 +15,6 @@ import WalletConnectSign
 public enum Enrollments: String {
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
-    case MyKYC = "My KYC"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
@@ -36,7 +35,6 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.MyKYC,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
@@ -68,6 +66,8 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
+        
+        self.getKYC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,8 +120,6 @@ extension EnrollMentViewController: UITableViewDelegate {
             addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
-        case Enrollments.MyKYC.rawValue:
-            getKYC()
         case Enrollments.DriverLicense_Liveness.rawValue:
             documentLivenessVC()
         case Enrollments.Passport1.rawValue:
@@ -176,14 +174,41 @@ extension EnrollMentViewController {
         showDLView()
     }
     
+    /**
+            name:  getKYC()
+            Required: (DL || PPT || National ID) && SSN
+     **/
     private func getKYC() {
-        let dateOfBirth = "19801127"
+        let currentDocType = BlockIDSDK.sharedInstance.isDLEnrolled() ? RegisterDocType.DL.rawValue
+        : BlockIDSDK.sharedInstance.isPassportEnrolled() ? RegisterDocType.PPT.rawValue
+        : BlockIDSDK.sharedInstance.isNationalIdEnrolled() ? RegisterDocType.NATIONAL_ID.rawValue
+        : nil
+        let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
+                                                                      type: currentDocType,
+                                                                      category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
+        guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
+            return
+        }
+        
+        var dictDoc: [String: Any]?
+        if arrDocuments.count > 0 {
+            dictDoc = arrDocuments.first
+        }
+        
+        guard let dateOfBirth = dictDoc?["dob"] as? String else {
+            return
+        }
+        
+        if !BlockIDSDK.sharedInstance.isSSNEnrolled() {
+            return
+        }
+        
         if dateOfBirth.isValidDate(dateFormat: "yyyyMMdd") {
             BlockIDSDK.sharedInstance.getKYC(dateOfBirth: dateOfBirth, completion: { (status, kycHash, error) in
-                print("<<<<<<<<<  kycHash ", kycHash as Any)
+                debugPrint("kycHash -> ", kycHash as Any)
             })
         } else {
-            print("Invalid date format given.")
+            debugPrint("Invalid date given for KYC.")
         }
     }
     
