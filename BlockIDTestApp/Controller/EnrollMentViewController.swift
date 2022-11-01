@@ -205,7 +205,7 @@ extension EnrollMentViewController {
         
         if dateOfBirth.isValidDate(dateFormat: "yyyyMMdd") {
             BlockIDSDK.sharedInstance.getKYC(dateOfBirth: dateOfBirth, completion: { (status, kycHash, error) in
-                debugPrint("kycHash -> ", kycHash as Any)
+                debugPrint("KYC ->", kycHash as Any)
             })
         } else {
             debugPrint("Invalid date given for KYC.")
