@@ -175,7 +175,7 @@ extension EnrollMentViewController {
     }
     
     /**
-            name:  getKYC()
+            Name:  getKYC()
             Required: (DL || PPT || National ID) && SSN
      **/
     private func getKYC() {
