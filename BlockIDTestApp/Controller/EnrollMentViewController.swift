@@ -35,7 +35,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.DriverLicense_Liveness,
+                           /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -43,7 +43,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
-                           Enrollments.LiveID_liveness,
+                           /*Enrollments.LiveID_liveness,*/
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
