@@ -174,14 +174,20 @@ extension EnrollMentViewController {
     
     private func enrollSSN() {
         
-        guard BlockIDSDK.sharedInstance.isDLEnrolled() else {
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isSSNEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.SSN.rawValue, category: nil) != nil
+        
+        guard isDLEnrolled else {
             self.view.makeToast("Please enroll your drivers license first.",
                                 duration: 3.0,
                                 position: .center)
             return
         }
         
-        if BlockIDSDK.sharedInstance.isSSNEnrolled() {
+        if isSSNEnrolled {
             let docID = self.getDocumentID(docIndex: 1, type: .SSN, category: .Identity_Document) ?? ""
             let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to remove SSN?", preferredStyle: .alert)
             
