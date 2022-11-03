@@ -676,7 +676,7 @@ extension BlockIDSDK {
   public func redeemAccessCode(code: Swift.String, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping UserAPICallback)
 }
 extension BlockIDSDK {
-  public func getKYC(dateOfBirth: Swift.String, completion: @escaping KYCCallback)
+  public func getKYC(completion: @escaping KYCCallback)
 }
 extension BlockIDSDK {
   public func getMessageGateways(tenant: BIDTenant, completion: @escaping MessageGatewaysCallback)
@@ -1418,6 +1418,7 @@ public struct CustomErrors {
   public static let kLiveIDMismatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentDataMismatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentPhotoComparisionFailed: (code: Swift.Int, msg: Swift.String)
+  public static let kKYCProcessFailed: (code: Swift.Int, msg: Swift.String)
   public static let kDLBackFrontDataNotMatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentAboutToExpire: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentExpired: (code: Swift.Int, msg: Swift.String)
