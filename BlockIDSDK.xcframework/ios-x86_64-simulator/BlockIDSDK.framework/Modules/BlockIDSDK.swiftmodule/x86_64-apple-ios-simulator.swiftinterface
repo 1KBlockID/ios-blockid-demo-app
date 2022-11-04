@@ -1400,8 +1400,8 @@ public struct CustomErrors {
   public struct PublicKey {
     public static let NOT_FOUND: (code: Swift.Int, message: Swift.String)
   }
-  public struct KYCHash {
-    public static let K_KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
+  public struct KYC {
+    public static let KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
   }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)
