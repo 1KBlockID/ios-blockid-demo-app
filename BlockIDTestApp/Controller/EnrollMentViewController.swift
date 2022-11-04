@@ -66,6 +66,7 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
+        self.getKYC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -181,7 +182,8 @@ extension EnrollMentViewController {
             if status {
                 debugPrint("KYC ->", kycHash as Any)
             } else {
-                debugPrint("error ->", error?.message as Any)
+                debugPrint("error message ->", error?.message as Any)
+                debugPrint("error code ->", error?.code as Any)
             }
         })
     }

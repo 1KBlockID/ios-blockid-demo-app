@@ -1400,6 +1400,9 @@ public struct CustomErrors {
   public struct PublicKey {
     public static let NOT_FOUND: (code: Swift.Int, message: Swift.String)
   }
+  public struct KYCHash {
+    public static let K_KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
+  }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)
   public static let kSomethingWentWrong: (code: Swift.Int, msg: Swift.String)
@@ -1418,7 +1421,6 @@ public struct CustomErrors {
   public static let kLiveIDMismatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentDataMismatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentPhotoComparisionFailed: (code: Swift.Int, msg: Swift.String)
-  public static let kKYCProcessFailed: (code: Swift.Int, msg: Swift.String)
   public static let kDLBackFrontDataNotMatch: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentAboutToExpire: (code: Swift.Int, msg: Swift.String)
   public static let kDocumentExpired: (code: Swift.Int, msg: Swift.String)
