@@ -676,7 +676,7 @@ extension BlockIDSDK.BlockIDSDK {
   public func redeemAccessCode(code: Swift.String, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
 }
 extension BlockIDSDK.BlockIDSDK {
-  public func getKYC(dateOfBirth: Swift.String, completion: @escaping BlockIDSDK.KYCCallback)
+  public func getKYC(completion: @escaping BlockIDSDK.KYCCallback)
 }
 extension BlockIDSDK.BlockIDSDK {
   public func getMessageGateways(tenant: BlockIDSDK.BIDTenant, completion: @escaping BlockIDSDK.MessageGatewaysCallback)
@@ -1399,6 +1399,9 @@ public struct CustomErrors {
   }
   public struct PublicKey {
     public static let NOT_FOUND: (code: Swift.Int, message: Swift.String)
+  }
+  public struct KYC {
+    public static let KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
   }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)

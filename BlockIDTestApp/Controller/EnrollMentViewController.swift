@@ -66,7 +66,6 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
-        
         self.getKYC()
     }
     
@@ -176,40 +175,17 @@ extension EnrollMentViewController {
     
     /**
             Name:  getKYC()
-            Required: (DL || PPT || National ID) && SSN
+            Parameter: completion: KYCCallback type returns (status, kycHash 512 string, error)
      **/
     private func getKYC() {
-        let currentDocType = BlockIDSDK.sharedInstance.isDLEnrolled() ? RegisterDocType.DL.rawValue
-        : BlockIDSDK.sharedInstance.isPassportEnrolled() ? RegisterDocType.PPT.rawValue
-        : BlockIDSDK.sharedInstance.isNationalIdEnrolled() ? RegisterDocType.NATIONAL_ID.rawValue
-        : nil
-        let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
-                                                                      type: currentDocType,
-                                                                      category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
-        guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
-            return
-        }
-        
-        var dictDoc: [String: Any]?
-        if arrDocuments.count > 0 {
-            dictDoc = arrDocuments.first
-        }
-        
-        guard let dateOfBirth = dictDoc?["dob"] as? String else {
-            return
-        }
-        
-        if !BlockIDSDK.sharedInstance.isSSNEnrolled() {
-            return
-        }
-        
-        if dateOfBirth.isValidDate(dateFormat: "yyyyMMdd") {
-            BlockIDSDK.sharedInstance.getKYC(dateOfBirth: dateOfBirth, completion: { (status, kycHash, error) in
+        BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
+            if status {
                 debugPrint("KYC ->", kycHash as Any)
-            })
-        } else {
-            debugPrint("Invalid date given for KYC.")
-        }
+            } else {
+                debugPrint("error message ->", error?.message as Any)
+                debugPrint("error code ->", error?.code as Any)
+            }
+        })
     }
     
     private func enrollSSN() {
