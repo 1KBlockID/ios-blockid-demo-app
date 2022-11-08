@@ -275,6 +275,7 @@ SWIFT_CLASS("_TtC10BlockIDSDK10BlockIDSDK")
 
 
 
+
 SWIFT_CLASS("_TtC10BlockIDSDK10DeviceAuth")
 @interface DeviceAuth : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -345,6 +346,12 @@ SWIFT_CLASS("_TtC10BlockIDSDK18PassportScanHelper")
 @end
 
 
+
+
+SWIFT_CLASS("_TtC10BlockIDSDK14PersonalAssets")
+@interface PersonalAssets : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 
 SWIFT_CLASS("_TtC10BlockIDSDK11QRGenerator")
