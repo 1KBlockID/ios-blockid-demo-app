@@ -127,7 +127,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.SSN.rawValue:
-            showSSNVerificationView()
+            enrollSSN()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -170,6 +170,36 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    private func enrollSSN() {
+        
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isSSNEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.SSN.rawValue, category: nil) != nil
+        
+        guard isDLEnrolled else {
+            self.view.makeToast("Please enroll your drivers license first.",
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if isSSNEnrolled {
+            let docID = self.getDocumentID(docIndex: 1, type: .SSN, category: .Identity_Document) ?? ""
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to remove SSN?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .SSN, id: docID)
+            }))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        self.showSSNVerificationView()
     }
     
     private func documentLivenessVC() {
