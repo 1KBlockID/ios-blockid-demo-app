@@ -183,7 +183,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="237-XF-GB2">
-                                <rect key="frame" x="81.5" y="488" width="157" height="50"/>
+                                <rect key="frame" x="48" y="488" width="224" height="50"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title="Restore Account">
@@ -210,7 +210,7 @@
                             <constraint firstItem="STR-Ad-lcw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cuA-nC-wYb"/>
                             <constraint firstItem="STR-Ad-lcw" firstAttribute="top" secondItem="cwW-oY-kfl" secondAttribute="bottom" constant="49" id="gW4-LT-MEk"/>
                             <constraint firstItem="smB-B9-rAh" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iLi-L0-F7B"/>
-                            <constraint firstItem="237-XF-GB2" firstAttribute="width" secondItem="zFb-cA-P6q" secondAttribute="width" multiplier="0.7" id="iVF-zs-cwx"/>
+                            <constraint firstItem="237-XF-GB2" firstAttribute="width" secondItem="zFb-cA-P6q" secondAttribute="width" id="iVF-zs-cwx"/>
                             <constraint firstItem="smB-B9-rAh" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.57971" id="maV-OT-wKj"/>
                             <constraint firstItem="cwW-oY-kfl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mgu-Wc-sjS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="zFb-cA-P6q" secondAttribute="bottom" constant="100" id="t3n-my-0Ty"/>
@@ -1336,23 +1336,12 @@
                                     <outlet property="delegate" destination="nB2-Yy-qc6" id="TxV-c8-x7x"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jw-KK-v3S">
-                                <rect key="frame" x="141.5" y="134.5" width="37" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="72f-TF-ApG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jl9-zU-xm7"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="5jw-KK-v3S" firstAttribute="centerX" secondItem="vv9-rh-9ex" secondAttribute="centerX" id="9i9-Ue-Yc6"/>
                             <constraint firstItem="55K-g0-ODv" firstAttribute="width" secondItem="55K-g0-ODv" secondAttribute="height" multiplier="15:8" id="HSf-mv-CYB"/>
                             <constraint firstItem="55K-g0-ODv" firstAttribute="width" secondItem="55K-g0-ODv" secondAttribute="height" multiplier="15:8" id="Htk-tC-EPI"/>
-                            <constraint firstItem="vv9-rh-9ex" firstAttribute="top" secondItem="5jw-KK-v3S" secondAttribute="bottom" constant="8" symbolic="YES" id="Smy-h6-21j"/>
                             <constraint firstItem="55K-g0-ODv" firstAttribute="centerX" secondItem="M2B-g6-owQ" secondAttribute="centerX" id="Vim-hV-wPG"/>
                             <constraint firstItem="vv9-rh-9ex" firstAttribute="trailing" secondItem="jl9-zU-xm7" secondAttribute="trailing" id="e3H-P1-qt2"/>
                             <constraint firstItem="55K-g0-ODv" firstAttribute="top" secondItem="jl9-zU-xm7" secondAttribute="top" constant="15" id="h9a-q6-SR0"/>
@@ -1363,7 +1352,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="vY8-H3-qgq"/>
                     <connections>
-                        <outlet property="lblSDKVersion" destination="5jw-KK-v3S" id="Bte-dj-37T"/>
                         <outlet property="tableEnrollments" destination="vv9-rh-9ex" id="xIa-S2-hOG"/>
                     </connections>
                 </viewController>

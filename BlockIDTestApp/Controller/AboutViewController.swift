@@ -60,17 +60,16 @@ class AboutViewController: UIViewController {
                 }
             case .licenseKey:
                 let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
-                copiedTxt += $0.rawValue
-                copiedTxt += licenseKey
+                copiedTxt += $0.rawValue + ": " +  licenseKey + "\n"
             case .did:
-                copiedTxt += $0.rawValue
-                copiedTxt += BlockIDSDK.sharedInstance.getDID()
+                copiedTxt += $0.rawValue + ": " + BlockIDSDK.sharedInstance.getDID() + "\n"
             case .publicKey:
-                copiedTxt += $0.rawValue
-                copiedTxt += BlockIDSDK.sharedInstance.getWalletPublicKey()
-            case .sdkVersion, .appVersion:
-                copiedTxt += $0.rawValue
-                copiedTxt += fetchSDKVersion() ?? ""
+                copiedTxt += $0.rawValue + ": " + BlockIDSDK.sharedInstance.getWalletPublicKey() + "\n"
+            case .sdkVersion:
+                copiedTxt += $0.rawValue + ": " + (fetchSDKVersion() ?? "")
+            case .appVersion:
+                let version = CommonFunctions.getAppBundleVersion().0 + " \( "(" + CommonFunctions.getAppBundleVersion().1 + ")"  )"
+                copiedTxt += $0.rawValue + ": " + version
             }
         }
         return copiedTxt
@@ -132,8 +131,11 @@ extension AboutViewController: UITableViewDataSource {
             cell.detailTextLabel?.text = BlockIDSDK.sharedInstance.getDID()
         case .publicKey:
             cell.detailTextLabel?.text = BlockIDSDK.sharedInstance.getWalletPublicKey()
-        case .sdkVersion, .appVersion:
+        case .sdkVersion:
             cell.detailTextLabel?.text = fetchSDKVersion() ?? "-"
+        case .appVersion:
+            let version = CommonFunctions.getAppBundleVersion().0 + " \( "(" + CommonFunctions.getAppBundleVersion().1 + ")"  )"
+            cell.detailTextLabel?.text = version
         }
         return cell
     }
