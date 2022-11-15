@@ -92,7 +92,7 @@ class AboutViewController: UIViewController {
                     }
                 }
                 
-                return "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
+                return sdkVersion + " \( "(" + buildNo + ")"  )"
             }
         }
         return nil
