@@ -13,6 +13,7 @@ import UIKit
 import WalletConnectSign
 
 public enum Enrollments: String {
+    case About  = "About"
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
@@ -33,7 +34,8 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.AddUser,
+    var enrollmentArray = [Enrollments.About,
+                           Enrollments.AddUser,
                            Enrollments.DriverLicense,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
@@ -70,23 +72,6 @@ class EnrollMentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let version = BlockIDSDK.sharedInstance.getVersion() {
-            if let buildNo = version.components(separatedBy: ".").max(by: {$1.count > $0.count}) {
-                let versionArr = version.components(separatedBy: ".")
-                var sdkVersion = ""
-                for index in 0...versionArr.count - 1 {
-                    if versionArr[index] != buildNo {
-                        if index < versionArr.count - 2 {
-                            sdkVersion += versionArr[index] + "."
-                        } else {
-                            sdkVersion += versionArr[index]
-                        }
-                    }
-                }
-        
-                lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
-            }
-        }
      
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
@@ -146,6 +131,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
+        case Enrollments.About.rawValue:
+            showAboutScreen()
         default:
             return
         }
