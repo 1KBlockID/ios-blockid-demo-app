@@ -40,7 +40,6 @@ class AboutViewController: UIViewController {
     @IBAction func doCopy(_ sender: Any) {
         let pasteboard = UIPasteboard.general
         pasteboard.string = getPasteBoardString()
-        print("GET <<<<<<", getPasteBoardString())
     }
     
     // MARK: - Private methods -
