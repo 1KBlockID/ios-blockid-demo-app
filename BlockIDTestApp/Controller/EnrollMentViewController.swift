@@ -174,7 +174,7 @@ extension EnrollMentViewController {
             if status {
                 debugPrint("KYC ->", kycHash as Any)
                 if let kycHash = kycHash {
-                    self.showAlertView(title: title, message: kycHash)
+                    self.showAlertView(title: title, message: "{\"kyc_hash\": \"\(kycHash)\"}")
                 }
             } else {
                 if let error = error {
