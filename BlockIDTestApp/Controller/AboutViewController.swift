@@ -59,7 +59,7 @@ class AboutViewController: UIViewController {
                     copiedTxt += subTitle
                 }
             case .licenseKey:
-                let licenseKey = Tenant.licenseKey.prefix(4) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
+                let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
                 copiedTxt += $0.rawValue
                 copiedTxt += licenseKey
             case .did:
@@ -102,13 +102,17 @@ class AboutViewController: UIViewController {
 // MARK: - Extension UITableViewDataSource -
 extension AboutViewController: UITableViewDataSource {
  
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         return InfoType.allCases.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: tablewViewCellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier:
+                                                    tablewViewCellId,
+                                                 for: indexPath)
         
         cell.textLabel?.text = InfoType.allCases[indexPath.row].rawValue
         switch InfoType.allCases[indexPath.row] {
@@ -122,7 +126,7 @@ extension AboutViewController: UITableViewDataSource {
                 cell.detailTextLabel?.text = subTitle
             }
         case .licenseKey:
-           let licenseKey = Tenant.licenseKey.prefix(4) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
+           let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
             cell.detailTextLabel?.text = String(licenseKey)
         case .did:
             cell.detailTextLabel?.text = BlockIDSDK.sharedInstance.getDID()
@@ -138,7 +142,8 @@ extension AboutViewController: UITableViewDataSource {
 // MARK: - Extension UITableViewDelegate -
 extension AboutViewController: UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView,
+                   heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
