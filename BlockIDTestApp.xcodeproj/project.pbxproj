@@ -68,6 +68,7 @@
 		E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */; };
 		E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */; };
 		E6B95077287D84CB0015E759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B95076287D84CB0015E759 /* Localizable.strings */; };
+		E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC5F702923761100BB4E04 /* AboutViewController.swift */; };
 		E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */; };
 		E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */; };
 		E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */; };
@@ -164,6 +165,7 @@
 		E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV2.swift; sourceTree = "<group>"; };
 		E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV1.swift; sourceTree = "<group>"; };
 		E6B95076287D84CB0015E759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E6EC5F702923761100BB4E04 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLiveness.swift; sourceTree = "<group>"; };
 		E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLivenessViewController.swift; sourceTree = "<group>"; };
 		E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivenessCheck.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 				E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */,
 				5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */,
 				5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */,
+				E6EC5F702923761100BB4E04 /* AboutViewController.swift */,
 				5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */,
 			);
 			path = Controller;
@@ -631,6 +634,7 @@
 				B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
 				E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */,
+				E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */,
 				E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */,
 				5D85693E28B80706000D0B05 /* WalletConsentViewController.swift in Sources */,
 				E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */,
