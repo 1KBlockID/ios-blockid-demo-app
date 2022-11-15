@@ -10,12 +10,12 @@ import BlockIDSDK
 
 // MARK: - Enums -
 enum InfoType: String, CaseIterable {
-    case tenantInformation = "Tenant Information:"
-    case licenseKey = "License Key:"
-    case did = "DID:"
-    case publicKey = "Public Key:"
-    case sdkVersion = "SDK Version:"
-    case appVersion = "APP Version:"
+    case tenantInformation = "Tenant Information: "
+    case licenseKey = "License Key: "
+    case did = "DID: "
+    case publicKey = "Public Key: "
+    case sdkVersion = "SDK Version: "
+    case appVersion = "APP Version: "
 }
 
 class AboutViewController: UIViewController {
@@ -52,21 +52,21 @@ class AboutViewController: UIViewController {
             case .tenantInformation:
                 copiedTxt += $0.rawValue
                 if let tenant = BlockIDSDK.sharedInstance.getTenant() {
-                    let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
-                    let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")" + "\n"
-                    let community = "Community: " + (tenant.community ?? "-") + " (" + "\(tenant.communityId ?? "-")" + ")" + "\n"
-                    let subTitle = dns + tag + community
+                    let dns = "DNS: " + (tenant.dns ?? "-")
+                    let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")"
+                    let community = "Community: " + (tenant.community ?? "-") + " (" + "\(tenant.communityId ?? "-")" + ")"
+                    let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
                     copiedTxt += subTitle
                 }
             case .licenseKey:
                 let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
-                copiedTxt += $0.rawValue + ": " +  licenseKey + "\n"
+                copiedTxt += $0.rawValue +  licenseKey + "\n\n"
             case .did:
-                copiedTxt += $0.rawValue + ": " + BlockIDSDK.sharedInstance.getDID() + "\n"
+                copiedTxt += $0.rawValue + BlockIDSDK.sharedInstance.getDID() + "\n\n"
             case .publicKey:
-                copiedTxt += $0.rawValue + ": " + BlockIDSDK.sharedInstance.getWalletPublicKey() + "\n"
+                copiedTxt += $0.rawValue + BlockIDSDK.sharedInstance.getWalletPublicKey() + "\n\n"
             case .sdkVersion:
-                copiedTxt += $0.rawValue + ": " + (fetchSDKVersion() ?? "")
+                copiedTxt += $0.rawValue + (fetchSDKVersion() ?? "") + "\n\n"
             case .appVersion:
                 let version = CommonFunctions.getAppBundleVersion().0 + " \( "(" + CommonFunctions.getAppBundleVersion().1 + ")"  )"
                 copiedTxt += $0.rawValue + ": " + version
