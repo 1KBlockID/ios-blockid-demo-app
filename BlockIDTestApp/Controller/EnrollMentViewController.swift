@@ -21,6 +21,7 @@ public enum Enrollments: String {
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
     case SSN = "Verify SSN"
+    case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "Live ID"
@@ -42,6 +43,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Passport2,
                            Enrollments.NationalID,
                            Enrollments.SSN,
+                           Enrollments.KYC,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
@@ -68,7 +70,7 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
-        self.getKYC()
+       // self.getKYC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -114,6 +116,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollNationalID()
         case Enrollments.SSN.rawValue:
             enrollSSN()
+        case Enrollments.KYC.rawValue:
+            getKYC()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -166,9 +170,17 @@ extension EnrollMentViewController {
      **/
     private func getKYC() {
         BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
+            let title = "My KYC"
             if status {
                 debugPrint("KYC ->", kycHash as Any)
+                if let kycHash = kycHash {
+                    self.showAlertView(title: title, message: kycHash)
+                }
             } else {
+                if let error = error {
+                    let msg = "(" + "\(error.code)" + ") " + error.message
+                    self.showAlertView(title: title, message: msg)
+                }
                 debugPrint("error message ->", error?.message as Any)
                 debugPrint("error code ->", error?.code as Any)
             }

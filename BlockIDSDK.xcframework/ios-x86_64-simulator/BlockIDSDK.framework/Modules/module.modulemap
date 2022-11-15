@@ -6,6 +6,6 @@ framework module BlockIDSDK {
 }
 
 module BlockIDSDK.Swift {
-  header "BlockIDSDK-Swift.h"
-  requires objc
+    header "BlockIDSDK-Swift.h"
+    requires objc
 }
