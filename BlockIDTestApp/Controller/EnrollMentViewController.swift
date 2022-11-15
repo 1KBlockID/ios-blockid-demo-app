@@ -13,6 +13,7 @@ import UIKit
 import WalletConnectSign
 
 public enum Enrollments: String {
+    case About  = "About"
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
@@ -33,7 +34,8 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.AddUser,
+    var enrollmentArray = [Enrollments.About,
+                           Enrollments.AddUser,
                            Enrollments.DriverLicense,
                            Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
@@ -146,6 +148,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
+        case Enrollments.About.rawValue:
+            showAboutScreen()
         default:
             return
         }

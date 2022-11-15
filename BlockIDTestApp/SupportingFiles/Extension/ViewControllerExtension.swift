@@ -164,6 +164,13 @@ extension UIViewController {
         self.navigationController?.pushViewController(qrScanVC, animated: true)
     }
     
+    /// About VC
+    public func showAboutScreen() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let aboutVC = storyBoard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
+        self.navigationController?.pushViewController(aboutVC, animated: true)
+    }
+    
     /// Wallet Connect VC
     func showWalletConnectVC() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
