@@ -1211,10 +1211,10 @@
             </objects>
             <point key="canvasLocation" x="1526.25" y="808.09859154929575"/>
         </scene>
-        <!--Native PlatformVC-->
+        <!--NativeVC-->
         <scene sceneID="bcC-5K-P2B">
             <objects>
-                <viewController storyboardIdentifier="FIDOViewController" id="VOU-Md-Ear" customClass="FIDONativePlatformVC" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FIDOViewController" id="VOU-Md-Ear" customClass="FIDONativeVC" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pXH-Wr-KKf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

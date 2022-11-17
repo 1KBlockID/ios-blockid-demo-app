@@ -306,7 +306,7 @@ extension EnrollMentViewController {
     }
 
     private func launchForFIDO2Native() {
-        let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDONativePlatformVC
+        let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDONativeVC
         self.navigationController?.pushViewController(fido2VC, animated: true)
     }
 }
