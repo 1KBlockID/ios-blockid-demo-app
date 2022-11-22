@@ -94,7 +94,9 @@ class EnrollmentTableViewCell: UITableViewCell {
             }
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .SSN:
+            let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .SSN ,category: .Identity_Document)
             self.textLabel?.text = enrollment.rawValue
+            self.accessoryType = (docId != nil) ? .checkmark : .none
         case .LiveID, .LiveID_liveness:
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none

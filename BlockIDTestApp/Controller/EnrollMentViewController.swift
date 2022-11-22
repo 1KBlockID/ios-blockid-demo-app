@@ -13,6 +13,7 @@ import UIKit
 import WalletConnectSign
 
 public enum Enrollments: String {
+    case About  = "About"
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
@@ -34,7 +35,8 @@ public enum Enrollments: String {
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.MyCards,
+    var enrollmentArray = [Enrollments.About,
+                           Enrollments.MyCards,
                            Enrollments.AddUser,
                            Enrollments.DriverLicense,
                            Enrollments.DriverLicense_Liveness,
@@ -72,23 +74,6 @@ class EnrollMentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let version = BlockIDSDK.sharedInstance.getVersion() {
-            if let buildNo = version.components(separatedBy: ".").max(by: {$1.count > $0.count}) {
-                let versionArr = version.components(separatedBy: ".")
-                var sdkVersion = ""
-                for index in 0...versionArr.count - 1 {
-                    if versionArr[index] != buildNo {
-                        if index < versionArr.count - 2 {
-                            sdkVersion += versionArr[index] + "."
-                        } else {
-                            sdkVersion += versionArr[index]
-                        }
-                    }
-                }
-        
-                lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
-            }
-        }
      
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
@@ -129,7 +114,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.SSN.rawValue:
-            showSSNVerificationView()
+            enrollSSN()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -151,6 +136,8 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.MyCards.rawValue:
             // open MyCards Screen
             showMyCardsScreen()
+        case Enrollments.About.rawValue:
+            showAboutScreen()
         default:
             return
         }
@@ -175,6 +162,36 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    private func enrollSSN() {
+        
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isSSNEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.SSN.rawValue, category: nil) != nil
+        
+        guard isDLEnrolled else {
+            self.view.makeToast("Please enroll your drivers license first.",
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if isSSNEnrolled {
+            let docID = self.getDocumentID(docIndex: 1, type: .SSN, category: .Identity_Document) ?? ""
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to remove SSN?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .SSN, id: docID)
+            }))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        self.showSSNVerificationView()
     }
     
     private func documentLivenessVC() {
