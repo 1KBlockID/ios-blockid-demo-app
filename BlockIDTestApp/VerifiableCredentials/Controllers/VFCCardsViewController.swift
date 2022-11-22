@@ -28,7 +28,8 @@ class VFCCardsViewController: UIViewController {
         self.registeredDocument = self.getRegisteredDocument(type: RegisterDocType.DL.rawValue)
         
         // register UICollectionView
-        self.ucvCardsView.register(CardsCollectionViewCell.self, forCellWithReuseIdentifier: "CardsCollectionViewCell")
+        self.ucvCardsView.register(CardsCollectionViewCell.self,
+                                   forCellWithReuseIdentifier: "CardsCollectionViewCell")
         
         // read stored vfc cards
         if let cards = UserDefaults.standard.value(forKey: "VFC_CARDS") as? [[String: Any]] {
@@ -268,7 +269,6 @@ extension VFCCardsViewController {
         
         // get vfc details
         let vfc: [String: Any] = details["vfc"] as! [String: Any]
-        
         if type == CardType.identity_dl.rawValue {
             // set card type
             cardView.type = .identity_dl
@@ -280,8 +280,11 @@ extension VFCCardsViewController {
             cardView.typeText?.text = "Verified Identity"
             
             // set from response object
-            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-            cardView.issuerText?.text = issuer["id"] as? String
+            if let issuer: String = vfc["issuer"] as? String {
+                cardView.issuerText?.text = issuer
+            } else {
+                cardView.issuerText?.text = "N.A."
+            }
         } else if type == CardType.employee_card.rawValue {
             // set card type
             cardView.type = .employee_card
@@ -291,9 +294,16 @@ extension VFCCardsViewController {
 
             // set as per FIGMA UI
             cardView.typeText?.text = "Verified Employee"
+//            // set from response object
+//            let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
+//            cardView.issuerText?.text = issuer["companyName"] as? String
+            
             // set from response object
-            let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
-            cardView.issuerText?.text = issuer["companyName"] as? String
+            if let issuer: String = vfc["issuer"] as? String {
+                cardView.issuerText?.text = issuer
+            } else {
+                cardView.issuerText?.text = "N.A."
+            }
         } else {
             // Any unsupported type
             // set default values
@@ -315,8 +325,8 @@ extension VFCCardsViewController {
                    let vcPayload = document["vc"] as? [String: Any] {
                     VerifiableCredentialsHelper.shared.verify(vc: document) { (verifyResult, verifyError) in
                         if verifyError == nil, let result = verifyResult {
-                            if let status = result["status"] as? String,
-                                status == "verified" {
+                            if let status = result["status"] as? Bool,
+                                status == true {
                                 // no error, process the result
                                 // add to card datasource
                                 self.cardsDataSource.append(["docType": CardType.employee_card.rawValue,
