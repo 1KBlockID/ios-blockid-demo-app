@@ -209,9 +209,8 @@ extension VFCCardDetailsViewController {
         // to be presented in tableview
         if type == CardType.identity_dl.rawValue {
             // get issuer
-            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-            if let name: String = issuer["id"] as? String {
-                self.cardDetails.append(["Issued by": name])
+            if let issuer: String = vfc["issuer"] as? String {
+                self.cardDetails.append(["Issued by": issuer])
             } else {
                 self.cardDetails.append(["Issued by": ""])
             }
@@ -251,10 +250,16 @@ extension VFCCardDetailsViewController {
             // AAMVA verificaiton to be done
             self.cardDetails.append(["Verified By": "AAMVA"])
         } else if type == CardType.employee_card.rawValue {
+//            // get issuer
+//            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
+//            if let name: String = issuer["name"] as? String {
+//                self.cardDetails.append(["Issued by": name])
+//            } else {
+//                self.cardDetails.append(["Issued by": ""])
+//            }
             // get issuer
-            let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-            if let name: String = issuer["name"] as? String {
-                self.cardDetails.append(["Issued by": name])
+            if let issuer: String = vfc["issuer"] as? String {
+                self.cardDetails.append(["Issued by": issuer])
             } else {
                 self.cardDetails.append(["Issued by": ""])
             }
@@ -291,7 +296,7 @@ extension VFCCardDetailsViewController {
                 self.cardDetails.append(["Department": ""])
             }
 
-            if let address: String = issuer["address"] as? String {
+            if let address: String = credentialSubject["companyAddress"] as? String {
                 self.cardDetails.append(["Company Address": address])
             } else {
                 self.cardDetails.append(["Company Address": ""])
@@ -348,8 +353,11 @@ extension VFCCardDetailsViewController {
                 cardView.typeText?.text = "Verified Identity"
                 
                 // set from response object
-                let issuer: [String: Any] = vfc["issuer"] as! [String: Any]
-                cardView.issuerText?.text = issuer["id"] as? String
+                if let issuer: String = vfc["issuer"] as? String {
+                    cardView.issuerText?.text = issuer
+                } else {
+                    cardView.issuerText?.text = "N.A."
+                }
             case CardType.employee_card.rawValue:
                 // set card type
                 cardView.type = .employee_card
@@ -359,9 +367,16 @@ extension VFCCardDetailsViewController {
                 
                 // set as per FIGMA UI
                 cardView.typeText?.text = "Verified Employee"
+//                // set from response object
+//                let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
+//                cardView.issuerText?.text = issuer["companyName"] as? String
+                
                 // set from response object
-                let issuer: [String: Any] = vfc["credentialSubject"] as! [String: Any]
-                cardView.issuerText?.text = issuer["companyName"] as? String
+                if let issuer: String = vfc["issuer"] as? String {
+                    cardView.issuerText?.text = issuer
+                } else {
+                    cardView.issuerText?.text = "N.A."
+                }
             default:
                 // Any unsupported type
                 // set default values

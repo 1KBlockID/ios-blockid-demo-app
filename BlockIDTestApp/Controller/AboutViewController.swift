@@ -59,7 +59,7 @@ class AboutViewController: UIViewController {
                     copiedTxt += subTitle
                 }
             case .licenseKey:
-                let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
+                let licenseKey = AppConsant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + AppConsant.licenseKey.suffix(4)
                 copiedTxt += $0.rawValue +  licenseKey + "\n\n"
             case .did:
                 copiedTxt += $0.rawValue + BlockIDSDK.sharedInstance.getDID() + "\n\n"
@@ -125,7 +125,7 @@ extension AboutViewController: UITableViewDataSource {
                 cell.detailTextLabel?.text = subTitle
             }
         case .licenseKey:
-           let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
+           let licenseKey = AppConsant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + AppConsant.licenseKey.suffix(4)
             cell.detailTextLabel?.text = String(licenseKey)
         case .did:
             cell.detailTextLabel?.text = BlockIDSDK.sharedInstance.getDID()

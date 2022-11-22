@@ -39,7 +39,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.MyCards,
                            Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.DriverLicense_Liveness,
+                           /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -74,7 +74,6 @@ class EnrollMentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-     
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
     }
@@ -263,7 +262,9 @@ extension EnrollMentViewController {
                     }
                     
                 }
-                weakSelf.view.makeToast("Your account is removed.", duration: 3.0, position: .center)
+                weakSelf.view.makeToast("Your account is removed.",
+                                        duration: 3.0,
+                                        position: .center)
                 weakSelf.tableEnrollments.reloadData()
             } else {
                 // failure

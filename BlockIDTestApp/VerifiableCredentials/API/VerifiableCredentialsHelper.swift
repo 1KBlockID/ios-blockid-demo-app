@@ -36,7 +36,8 @@ class VerifiableCredentialsHelper: NSObject {
     // private variables to hold vcs's api path
     private let kCreateVCFromDocument = "/tenant/{tenantId}/community/{communityId}/vc/from/document/{type}"
     private let kCreateVCFromPayload = "/tenant/{tenantId}/community/{communityId}/vc/from/payload/{type}"
-    private let kVerifyVC = "/tenant/{tenantId}/community/{communityId}/verify/vc"
+    //private let kVerifyVC = "/tenant/{tenantId}/community/{communityId}/verify/vc"
+    private let kVerifyVC = "/tenant/{tenantId}/community/{communityId}/vc/verify"
     
     private var sessionManager: SessionManager?
     private var serviceURL: String?
