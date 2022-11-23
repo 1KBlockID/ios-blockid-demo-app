@@ -26,7 +26,7 @@ public class WebAuthnService {
     private let TENANT_ID = "5f3d8d0cd866fa61019cf968";
     private let COMMUNITY_ID = "5f3d8d0cd866fa61019cf969";
     private let DNS = "1k-dev.1kosmos.net";
-    private let LICENSE_KEY = "3f2282e9-3d46-4961-b103-a9319ad4560c";
+    private let LICENSE_KEY = "5809b7b7-886f-4c88-9061-59a2baf485be";
     
     private let USER_NAME: String
     private let DISPLAY_NAME: String
