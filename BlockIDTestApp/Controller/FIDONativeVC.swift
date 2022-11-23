@@ -67,7 +67,10 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
             connection.fido2Session { session, error in
                 self.session = session
                 session?.delegate = self
-                completion(session, error)
+//                FIXME: Handle Pin needs to be handled on the session that create/read Fiido Key
+//                session?.verifyPin("21411") { error in
+                    completion(session, error)
+//                }
             }
         }
     }
@@ -78,7 +81,7 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
         if YubiKitDeviceCapabilities.supportsMFIAccessoryKey {
             YubiKitManager.shared.startAccessoryConnection()
         }
-        let localizedAlertMessage = NSLocalizedString("Scan your SecurityKey", comment: "Scan your SecurityKey.")
+        let localizedAlertMessage = NSLocalizedString("Tap your Arculus card", comment: "Tap your arculus card.")
         YubiKitExternalLocalization.nfcScanAlertMessage = localizedAlertMessage
 
         WebAuthnService().updateSession() {
@@ -120,6 +123,17 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
                         WebAuthnService(username).authResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/assertion/result",
                                                          sessionID: self.sessionId!, response: response)
                             {response, message, isSuccess in
+                                var alertMessage: String?
+                                if isSuccess {
+                                    alertMessage = "User authentication success\n" + (message ?? "")
+                                } else {
+                                    alertMessage = "Failed to authenticate, please try again later"
+                                }
+                                let alert = UIAlertController(title: "Authentication", message: alertMessage, preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                   // do nothing
+                                }))
+                                self.present(alert, animated: true, completion: nil)
                         }
                     }
 //                    self.statusView?.state = .message("Finalising registration...")
@@ -162,7 +176,18 @@ class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeySt
                         WebAuthnService(username).registerResult(url: "https://1k-dev.1kosmos.net/webauthn/u1/attestation/result",
                                                          sessionID: self.sessionId!, response: response)
                             {response, message, isSuccess in
-                            
+                                var alertMessage: String?
+                                if isSuccess {
+                                    alertMessage = "User registration success\n" + (message ?? "")
+                                } else {
+                                    alertMessage = "Failed to register, please try again later"
+                                }
+                                let alert = UIAlertController(title: "Registration", message: alertMessage, preferredStyle: .alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                                   // do nothing
+                                }))
+                                self.present(alert, animated: true, completion: nil)
+
                         }
                     }
 //                    self.statusView?.state = .message("Finalising registration...")
@@ -189,6 +214,7 @@ extension FIDONativeVC {
                     }
                     session.verifyPin(pin) { error in
                         guard error == nil else {
+//                            completion()
                             return
                         }
                         completion()
@@ -231,8 +257,8 @@ extension FIDONativeVC {
                                    options: options)  { [self] keyResponse, error in
                 guard error == nil else {
                     if let error = error as NSError?, error.code == YKFFIDO2ErrorCode.PIN_REQUIRED.rawValue {
-                        handlePINCode() {
-                            makeCredentialOnKey(response: response, completion: completion)
+                        handlePINCode() { [self] in
+                            self.makeCredentialOnKey(response: response, completion: completion)
                         }
                         return
                     }

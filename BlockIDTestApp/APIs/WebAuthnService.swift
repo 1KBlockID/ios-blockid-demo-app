@@ -24,6 +24,7 @@ public class WebAuthnService {
 //    public let DNS = "asf";
 //    private let LICENSE_KEY = "123";
     private let TENANT_ID = "5f3d8d0cd866fa61019cf968";
+    
     private let COMMUNITY_ID = "5f3d8d0cd866fa61019cf969";
     private let DNS = "1k-dev.1kosmos.net";
     private let LICENSE_KEY = "5809b7b7-886f-4c88-9061-59a2baf485be";
@@ -137,7 +138,7 @@ public class WebAuthnService {
 //                        completion(nil, "Error reading attestation option", true)
 //                        return
 //                    }
-                    completion(nil, "error", true)
+                    completion(nil, response.data?.prettyJson() ?? "", true)
 
                 case .failure(let error):
                     print(error)
@@ -282,6 +283,10 @@ public class WebAuthnService {
             .responseJSON { [self] response in
                 switch response.result {
                 case .success:
+                    if let data = response.data {
+                        completion(nil, data.prettyJson(), true)
+                        return
+                    }
 //                    if let data = response.data {
 //                        print (data.prettyJson())
 //                    }
@@ -289,7 +294,7 @@ public class WebAuthnService {
 //                        completion(nil, "Error reading attestation option", true)
 //                        return
 //                    }
-                    completion(nil, "", true)
+                    completion(nil, "error reading the response", true)
 
                 case .failure(let error):
                     print(error)
