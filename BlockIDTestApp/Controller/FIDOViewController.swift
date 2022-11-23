@@ -37,7 +37,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             return
         }
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.registerFIDOKey(userName: username,
+        BlockIDSDK.sharedInstance.registerFIDO2Key(userName: username,
                                                   tenantDNS: Tenant.defaultTenant.dns!,
                                                   communityName: Tenant.defaultTenant.community!)
         { status, error in
@@ -78,7 +78,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         
         self.view.makeToastActivity(.center)
         
-        BlockIDSDK.sharedInstance.authenticateFIDOKey(userName: username,
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(userName: username,
                                                   tenantDNS: Tenant.defaultTenant.dns!,
                                                   communityName: Tenant.defaultTenant.community!)
         { status, error in

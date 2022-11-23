@@ -12,5 +12,5 @@
 //#endif /* BlockIDTestApp_Bridging_Header_h */
 
 
-#import <YubiKit/YubiKit.h>
+//#import <YubiKit/YubiKit.h>
 #import <CommonCrypto/CommonCrypto.h>

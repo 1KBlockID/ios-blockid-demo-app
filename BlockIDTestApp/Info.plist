@@ -19,11 +19,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1654090790</string>
+	<string>1669197415</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NFCReaderUsageDescription</key>
-	<string>Allow permission in order to scan your passport or to communicate with yubikeys</string>
+	<string>Allow permission in order to scan your passport</string>
 	<key>NFCUserMessageDuringRFIDScan</key>
 	<string>Hold your iPhone near an NFC enabled passport.</string>
 	<key>NSAppTransportSecurity</key>
@@ -56,8 +56,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -71,10 +69,6 @@
 	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
 	<array>
 		<string>A0000002471001</string>
-		<string>A000000308</string>
-		<string>A0000005272101</string>
-		<string>A000000527471117</string>
-		<string>A0000006472F0001</string>
 	</array>
 </dict>
 </plist>

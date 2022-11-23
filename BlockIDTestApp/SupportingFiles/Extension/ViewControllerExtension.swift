@@ -10,6 +10,24 @@ import UIKit
 import BlockIDSDK
 
 extension UIViewController {
+    
+    // Mark: - Fix me -
+    public func getDriverLicenseData(docIndex: Int, category: RegisterDocCategory) -> (docId: String?, islivenessNeeded: Bool?) {
+        let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
+                                                                      type: RegisterDocType.DL.rawValue,
+                                                                  category: category.rawValue) ?? ""
+        guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
+            return (nil, nil)
+        }
+        
+        let index = (docIndex-1)
+        if arrDocuments.count > index{
+            let dictDoc = arrDocuments[index]
+            return (dictDoc["id"] as? String, dictDoc["isLivenessRequired"] as? Bool)
+        }
+        return (nil, nil)
+    }
+    
     public func getDocumentID(docIndex: Int , type: RegisterDocType ,category: RegisterDocCategory) -> String? {
         let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
                                                                   type: type.rawValue,
@@ -56,6 +74,13 @@ extension UIViewController {
         }
     }
     
+    func showDocumentLivenessVC() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+            self.navigationController?.pushViewController(documentLivenessVC, animated: false)
+        }
+    }
+    
     func showSSNVerificationView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
@@ -74,6 +99,13 @@ extension UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
             self.navigationController?.pushViewController(nidVC, animated: true)
+        }
+    }
+    
+    func showAddUserViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let addUserVC = storyBoard.instantiateViewController(withIdentifier: "AddUserViewController") as? AddUserViewController {
+            self.navigationController?.pushViewController(addUserVC, animated: true)
         }
     }
     
@@ -130,6 +162,21 @@ extension UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let qrScanVC = storyBoard.instantiateViewController(withIdentifier: "QRScanViewController") as! QRScanViewController
         self.navigationController?.pushViewController(qrScanVC, animated: true)
+    }
+    
+    /// About VC
+    public func showAboutScreen() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let aboutVC = storyBoard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
+        self.navigationController?.pushViewController(aboutVC, animated: true)
+    }
+    
+    /// Wallet Connect VC
+    func showWalletConnectVC() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let walletConnectVC = storyBoard.instantiateViewController(withIdentifier: "WalletConnectViewController") as? WalletConnectViewController {
+            self.navigationController?.pushViewController(walletConnectVC, animated: false)
+        }
     }
     
     public func loginWithDeviceAuth() {
@@ -197,6 +244,40 @@ extension UIViewController {
     
     public func alertForCameraAccess() {
         self.openSettings(title: "Camera Inaccessible", message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
+    }
+    
+    // MARK: - Topmost View Controller
+    func topMostViewController() -> UIViewController? {
+        // if root view is Navigation
+        if let navigationController = self as? UINavigationController {
+            return navigationController.visibleViewController?.topMostViewController()
+        }
+        // if root view is Tab
+        if let tabController = self as? UITabBarController {
+            if let selectedTab = tabController.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabController.topMostViewController()
+        }
+        // otherwise
+        if self.presentedViewController == nil {
+            return self
+        }
+        // Navigation
+        if let navigationCon = self.presentedViewController as? UINavigationController {
+            if let visibleController = navigationCon.visibleViewController {
+                return visibleController.topMostViewController()
+            }
+        }
+        // Tab
+        if let tabCon = self.presentedViewController as? UITabBarController {
+            if let selectedTab = tabCon.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabCon.topMostViewController()
+        }
+        // otherwise
+        return self.presentedViewController?.topMostViewController()
     }
 }
 

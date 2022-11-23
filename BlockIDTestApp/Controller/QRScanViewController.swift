@@ -17,18 +17,17 @@ public enum QROptions {
 }
 
 class QRScanViewController: UIViewController {
-    private var qrOption = QROptions.withScopeData
-    @IBOutlet weak var btnQr1: UIButton!
     
+    @IBOutlet weak var btnQr1: UIButton!
     @IBOutlet weak var btnQr2: UIButton!
     @IBOutlet weak var _viewQRScan: BIDScannerView!
-    
     @IBOutlet weak var _qrView: UIView!
     @IBOutlet weak var _viewBtn: UIView!
-    private var qrScannerHelper: QRScannerHelper?
+    
     // MARK: - selectedMode Scanning Mode
     private let selectedMode: ScanningMode = .SCAN_LIVE
-    
+    private var qrOption = QROptions.withScopeData
+    private var qrScannerHelper: QRScannerHelper?
     
     @IBAction func qrOptionButtonClicked(_ sender: UIButton) {
         qrOption = (sender.tag == 0) ? QROptions.withScopeData : QROptions.withPresetData

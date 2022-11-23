@@ -63,7 +63,9 @@ enum Vibration {
             case .selection:
                 UISelectionFeedbackGenerator().selectionChanged()
             case .oldSchool:
-                AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+                //FIXME: - Need to be fixed
+                print("old school----->")
+                //AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
             }
         }
     }
@@ -102,14 +104,14 @@ class LiveIDViewController: UIViewController {
         super.viewDidAppear(animated)
         
         if isLivenessNeeded {
-            _lblPageTitle.text = "Enroll LiveID (with liveness check)"
+            _lblPageTitle.text = "Enroll Live ID (with Liveness Check)"
         } else {
-            _lblPageTitle.text = "Enroll LiveID"
+            _lblPageTitle.text = "Enroll Live ID"
         }
         
         if isForVerification {
             //For LiveID Verification
-            _lblPageTitle.text = "LiveID Authentication"
+            _lblPageTitle.text = "Live ID Authentication"
         }
         startLiveIDScanning()
     }
@@ -144,11 +146,7 @@ class LiveIDViewController: UIViewController {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    if self.isLivenessNeeded {
-                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-                    } else {
-                        self.liveIdScannerHelper?.startLiveIDScanning()
-                    }
+                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
                 }
             }
         }
@@ -156,6 +154,14 @@ class LiveIDViewController: UIViewController {
     }
         
     private func goBack() {
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: EnrollMentViewController.self) {
+                    self.navigationController?.popToViewController(viewController, animated: true)
+                }
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -184,7 +190,7 @@ class LiveIDViewController: UIViewController {
             }
             // SUCCESS
             self.stopLiveIDScanning()
-            self.view.makeToast("LiveID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+            self.view.makeToast("Live ID enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                 self.goBack()
             })
 
@@ -253,9 +259,10 @@ class LiveIDViewController: UIViewController {
     private func showErrorDialog(_ error: ErrorResponse?) {
         var title: String? = nil
         var msg: String? = nil
-        if error?.code == NSURLErrorNotConnectedToInternet {
+        if error?.code == NSURLErrorNotConnectedToInternet ||
+            error?.code == CustomErrors.Network.OFFLINE.code {
+            msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
-            msg = ErrorConfig.noInternet.message
         }
         else if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
             self.showAppLogin()
@@ -291,9 +298,12 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         if isLoaderHidden {
             self.view.hideToastActivity()
         }
-        if error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center, title: ErrorConfig.error.title, completion: {_ in
-                
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center,
+                                title: ErrorConfig.error.title, completion: {_ in
                 self.goBack()
             })
             return
@@ -356,6 +366,8 @@ extension LiveIDViewController: LiveIDResponseDelegate {
                 self._lblInformation.text = DetectionMsg.up
             case .MOVE_DOWN:
                 self._lblInformation.text = DetectionMsg.down*/
+            @unknown default:
+                return
             }
             self.imgOverlay.tintColor = .green
         }

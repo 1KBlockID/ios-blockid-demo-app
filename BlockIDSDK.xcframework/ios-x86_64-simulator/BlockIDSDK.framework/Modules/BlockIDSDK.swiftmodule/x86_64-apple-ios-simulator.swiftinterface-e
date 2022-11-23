@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.5 (swiftlang-1300.0.31.1 clang-1300.0.29.1)
-// swift-module-flags: -target x86_64-apple-ios11.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
+// swift-compiler-version: Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)
+// swift-module-flags: -target x86_64-apple-ios13.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name BlockIDSDK
 import ARKit
 import AVFoundation
 import Accelerate
@@ -19,13 +19,20 @@ import LocalAuthentication
 import Metal
 import MetalKit
 import OpenSSL
+import PromiseKit
 import SafariServices
+import Starscream
 import Swift
 import SwiftUI
 import SwiftyTesseract
 import UIKit
 import Vision
+import WalletConnectRelay
+import WalletConnectSign
+import WalletConnectUtils
 import WalletCore
+import Web3
+import WebAuthnKit
 import WebKit
 import _Concurrency
 @objc @_inheritsConvenienceInitializers public class BIDServiceDirectory : ObjectiveC.NSObject, Swift.Decodable {
@@ -216,12 +223,24 @@ public class BIDOrigin : Swift.Codable, Swift.Equatable {
   public var publicKey: Swift.String?
   public var session: Swift.String?
   public var authPage: Swift.String?
+  public var communityName: Swift.String?
+  public var communityId: Swift.String?
+  public var url: Swift.String?
   public init()
   public func getAuthMethod() -> Swift.String?
   public static func == (lhs: BlockIDSDK.BIDOrigin, rhs: BlockIDSDK.BIDOrigin) -> Swift.Bool
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
+}
+public enum AccessCodeType : Swift.String {
+  case VERIFICATION
+  case INVITATION
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
 }
 public enum ScanningMode {
   case SCAN_DEMO
@@ -277,6 +296,8 @@ public struct DTHStruct {
   public func setLiveIDRegistered(_ value: Swift.Bool)
   public func isLiveIDRegistered() -> Swift.Bool
   public func setPINRegistered(_ value: Swift.Bool)
+  public func setEmailRegistered(_ value: Swift.Bool)
+  public func setPhoneRegistered(_ value: Swift.Bool)
   public func isPINRegistered() -> Swift.Bool
   public func setAuthAsset(value: Swift.String, forKey key: Swift.String)
   public func getAuthAssetValue(forKey key: Swift.String) -> Swift.String?
@@ -307,12 +328,19 @@ public struct DTHStruct {
   public static let sharedInstance: BlockIDSDK.Enrollments
   public func isDigitalAssetsEnabled() -> Swift.Bool
   public func isBiometricAssetsEnabled() -> Swift.Bool
+  public func isPersonalAssetsEnabled() -> Swift.Bool
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class BiometricAssets : ObjectiveC.NSObject {
   final public let LiveIDEnabled: Swift.Bool
   final public let PinEnabled: Swift.Bool
   final public let BiometricEnabled: Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class PersonalAssets : ObjectiveC.NSObject {
+  final public let EmaiEnabled: Swift.Bool
+  final public let PhoneEnabled: Swift.Bool
   @objc override dynamic public init()
   @objc deinit
 }
@@ -547,6 +575,9 @@ public typealias BIDMigrationCallback = ((_ status: Swift.Bool, _ error: BlockID
 public typealias AccessCodeValidationAPICallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?, _ object: BlockIDSDK.AccessCodeValidationResponseDecryptedData?) -> Swift.Void)
 public typealias AuthenticateUserCallback = ((_ status: Swift.Bool, _ sessionId: Swift.String?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: BlockIDSDK.SessionResponseData?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+public typealias SCEPCertificateCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+public typealias KYCCallback = ((_ status: Swift.Bool, _ kycHash: Swift.String?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [BlockIDSDK.MessageGateway]?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BlockIDSDK : ObjectiveC.NSObject {
   public static let sharedInstance: BlockIDSDK.BlockIDSDK
   public func isReady() -> Swift.Bool
@@ -579,12 +610,6 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Blo
   public func isPinRegistered() -> Swift.Bool
   public func isDeviceAuthRegisterd() -> Swift.Bool
   public func isLiveIDRegisterd() -> Swift.Bool
-  public func isVoiceIDRegisterd() -> Swift.Bool
-  public func isPassportEnrolled() -> Swift.Bool
-  public func isDLEnrolled() -> Swift.Bool
-  public func isSSNEnrolled() -> Swift.Bool
-  public func isNationalIdEnrolled() -> Swift.Bool
-  public func isAddressVerificationDone() -> Swift.Bool
   public func getTenant() -> BlockIDSDK.BIDTenant?
   public func getDeviceAuth() -> BlockIDSDK.DeviceAuth
   public func checkDeviceTrust() -> Swift.Bool
@@ -594,15 +619,13 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Blo
   public func getTOTP() -> (totp: BlockIDSDK.TOTP?, error: BlockIDSDK.ErrorResponse?)
   public func getOfflineTOTP(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount) -> (totp: BlockIDSDK.TOTP?, error: BlockIDSDK.ErrorResponse?)
   public func checkUserExist(userId: Swift.String, origin: BlockIDSDK.BIDOrigin) -> Swift.Bool
-  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, origin: BlockIDSDK.BIDOrigin, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func linkUser(userId: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
+  public func addPreLinkedUser(userId: Swift.String, scep_hash: Swift.String, scep_privatekey: Swift.String, scep_expiry: Swift.String, origin: BlockIDSDK.BIDOrigin, account: BlockIDSDK.BIDAccount?, completion: @escaping BlockIDSDK.UserAPICallback)
   public func restoreUserDataFromWallet(completion: @escaping BlockIDSDK.UserAPICallback)
   public func addNativeAccount(method: Swift.String!, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lon: Swift.Double, lat: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
   public func unLinkAccount(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount, deviceToken: Swift.String? = nil, completion: @escaping BlockIDSDK.UserAPICallback)
   public func validateAccessCode(code: Swift.String, origin: BlockIDSDK.BIDOrigin, completion: @escaping BlockIDSDK.AccessCodeValidationAPICallback)
-  public func generateSession(origin: BlockIDSDK.BIDOrigin, acrData: BlockIDSDK.AccessCodeValidationResponseDecryptedData, completion: @escaping ((sessionId: Swift.String?, sessionUrl: Swift.String?), _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+  public func generateSession(origin: BlockIDSDK.BIDOrigin, completion: @escaping ((sessionId: Swift.String?, sessionUrl: Swift.String?), _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
   public func getSessionResponse(completion: @escaping BlockIDSDK.SessionResponseCallback)
-  public func redeemAccessCode(phoneNumber: Swift.String? = nil, code: Swift.String, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
   public func resetPassword(userId: Swift.String, password: Swift.String, account: BlockIDSDK.BIDAccount?, origin: BlockIDSDK.BIDOrigin, completion: @escaping BlockIDSDK.UserAPICallback)
   public func resetSDK(licenseKey: Swift.String)
   public func encryptString(str: Swift.String, rcptKey: Swift.String) -> Swift.String?
@@ -622,21 +645,38 @@ public typealias SessionResponseCallback = ((_ status: Swift.Bool, _ object: Blo
   public func authenticateUser(sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, dictScopes: [Swift.String : Any], lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.AuthenticateUserCallback)
   public func authenticateUser(sessionId: Swift.String?, creds: Swift.String, dictScopes: [Swift.String : Any], lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.AuthenticateUserCallback)
   public func authenticateUser(sessionId: Swift.String?, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.AuthenticateUserCallback)
-  public func authenticateUser(sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, completion: @escaping BlockIDSDK.AuthenticateUserCallback)
+  public func authenticateUser(controller: UIKit.UIViewController? = nil, sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, metaData: [Swift.String : Any]? = nil, completion: @escaping BlockIDSDK.AuthenticateUserCallback)
   public func isTrustedSessionSources(sessionUrl: Swift.String) -> Swift.Bool
   public func getOfflineAuthPayload(bidLinkedAccount: BlockIDSDK.BIDLinkedAccount) -> Swift.String?
   public func getLicense() -> (license: BlockIDSDK.BIDLicense?, error: BlockIDSDK.ErrorResponse?)
   public func getBiometricAssetEnrollments() -> BlockIDSDK.BiometricAssets?
   public func getDigitalAssetEnrollments() -> BlockIDSDK.DigitalAssets?
+  public func getPersonalAssetEnrollments() -> BlockIDSDK.PersonalAssets?
   public func setData(dataStr: Swift.String) -> Swift.String
   public func getData(forKey key: Swift.String) -> Swift.String?
   public func purgeData(forKey key: Swift.String)
   public func migrateData(bidTenant: BlockIDSDK.BIDTenant, clientTenant: BlockIDSDK.BIDTenant, completion: @escaping BlockIDSDK.BIDMigrationCallback)
   public func getVersion() -> Swift.String?
-  public func verifyDocument(dvcID: Swift.String, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, BlockIDSDK.ErrorResponse?) -> Swift.Void))
-  public func registerFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.Fido2Callback)
-  public func authenticateFIDOKey(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.Fido2Callback)
+  public func verifyDocument(dvcID: Swift.String? = nil, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, BlockIDSDK.ErrorResponse?) -> Swift.Void))
+  public func generateNewSession(tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping (_ status: Swift.Bool, _ msg: Swift.String, _ errorResponse: BlockIDSDK.ErrorResponse?, _ sessionId: Swift.String?) -> Swift.Void)
+  public func getRequestID() -> Swift.String?
+  public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.FIDO2Callback)
+  public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, completion: @escaping BlockIDSDK.FIDO2Callback)
+  public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BlockIDSDK.BIDLinkedAccount?, type: BlockIDSDK.FIDO2KeyType, completion: @escaping BlockIDSDK.FIDO2Callback)
+  public func checkSCEPCertificate(requestedAccount: BlockIDSDK.BIDLinkedAccount, completion: @escaping BlockIDSDK.SCEPCertificateCallback)
   @objc deinit
+}
+extension BlockIDSDK.BlockIDSDK {
+  public func createAccessCode(payload: BlockIDSDK.CreateAccessCodePayload, completion: @escaping BlockIDSDK.AccessCodeAPIsCallback)
+  public func validateAccessCode(code: Swift.String, completion: @escaping BlockIDSDK.AccessCodeValidationAPICallback)
+  public func redeemAccessCode(phoneNumber: Swift.String? = nil, code: Swift.String, userId: Swift.String, password: Swift.String, origin: BlockIDSDK.BIDOrigin, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
+  public func redeemAccessCode(code: Swift.String, deviceToken: Swift.String? = nil, lat: Swift.Double, lon: Swift.Double, completion: @escaping BlockIDSDK.UserAPICallback)
+}
+extension BlockIDSDK.BlockIDSDK {
+  public func getKYC(completion: @escaping BlockIDSDK.KYCCallback)
+}
+extension BlockIDSDK.BlockIDSDK {
+  public func getMessageGateways(tenant: BlockIDSDK.BIDTenant, completion: @escaping BlockIDSDK.MessageGatewaysCallback)
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: BlockIDSDK.TOTPUtils
@@ -717,7 +757,6 @@ public enum ScannerType {
 public typealias VerifyLiveIDCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 public enum AuthAssetType : Swift.String {
   case pin
-  case voiceID
   case device
   case liveID
   public init?(rawValue: Swift.String)
@@ -739,14 +778,10 @@ public enum AuthAssetType : Swift.String {
   public func enrollPin(pin: Swift.String, proofedBy: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
   public func verifyPin(pin: Swift.String) -> Swift.Bool
   public func unEnrollPin(pin: Swift.String, tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func enrollVoiceID()
-  public func unenrollVoiceID()
-  public func verifyVoiceID()
   public func enrollDeviceAuth(completion: @escaping (Swift.Bool, Any?, Swift.String?) -> Swift.Void)
   public func unenrollDeviceAuth(completion: @escaping (Swift.Bool, Any?, Swift.String?) -> Swift.Void)
   public func verifyDeviceAuth(completion: @escaping (Swift.Bool, BlockIDSDK.BiometricError?, Swift.String?) -> Swift.Void)
   public func enrollLiveID(dictLiveID: [Swift.String : Any], tenant: BlockIDSDK.BIDTenant, keyPair: BlockIDSDK.APIKeyPair, did: Swift.String, completion: @escaping BlockIDSDK.UserAPICallback)
-  public func unenrollLiveID()
   public func verifyLiveID(image: UIKit.UIImage, keyPair: BlockIDSDK.APIKeyPair, tenant: BlockIDSDK.BIDTenant, did: Swift.String, completion: @escaping BlockIDSDK.VerifyLiveIDCallback)
   public func verifyFace(image: UIKit.UIImage, keyPair: BlockIDSDK.APIKeyPair, tenant: BlockIDSDK.BIDTenant, did: Swift.String, completion: @escaping (_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
   @objc deinit
@@ -768,7 +803,8 @@ public enum AuthAssetType : Swift.String {
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
 }
-@_hasMissingDesignatedInitializers public class BIDCreateSession : Swift.Codable {
+public class BIDCreateSession : Swift.Codable {
+  public init(tag: Swift.String, url: Swift.String, communityName: Swift.String, communityId: Swift.String, authPage: Swift.String)
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
@@ -818,6 +854,32 @@ public enum SecureMessagingSupportedAlgorithms {
 public class SecureMessaging {
   public init(encryptionAlgorithm: BlockIDSDK.SecureMessagingSupportedAlgorithms = .DES, ksenc: [Swift.UInt8], ksmac: [Swift.UInt8], ssc: [Swift.UInt8])
   @objc deinit
+}
+extension Starscream.WebSocket : WalletConnectRelay.WebSocketConnecting {
+}
+public protocol WalletConnectDelegate : AnyObject {
+  func onSessionProposal(sessionProposal: WalletConnectSign.Session.Proposal?)
+  func onSessionRequest(request: WalletConnectSign.Request)
+  func onSessionSettleResponse(sessions: [BlockIDSDK.ActiveSessionItem])
+  func onSessionDisconnect(remainingSession: [BlockIDSDK.ActiveSessionItem])
+  func onError(error: Swift.Error)
+}
+@objc public class WalletConnectHelper : ObjectiveC.NSObject {
+  public init(projectID: Swift.String, metadata: WalletConnectSign.AppMetadata, delegate: BlockIDSDK.WalletConnectDelegate)
+  public func connect(uri: Swift.String)
+  public func disconnect(session: BlockIDSDK.ActiveSessionItem)
+  public func approveSession(request: WalletConnectSign.Request)
+  public func rejectSession(request: WalletConnectSign.Request)
+  public func getActiveSessions() -> [BlockIDSDK.ActiveSessionItem]
+  public func approveConnection(sessionProposal: WalletConnectSign.Session.Proposal)
+  public func rejectConnection(sessionProposal: WalletConnectSign.Session.Proposal)
+  @objc deinit
+}
+public struct ActiveSessionItem {
+  public let dappName: Swift.String
+  public let dappURL: Swift.String
+  public let iconURL: Swift.String
+  public let topic: Swift.String
 }
 @available(iOS 13, macOS 10.15, *)
 public enum NFCPassportReaderError : Swift.Error {
@@ -978,6 +1040,9 @@ extension BlockIDSDK.NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegat
   required public init(from decoder: Swift.Decoder) throws
 }
 @_hasMissingDesignatedInitializers public class AccessCodeValidationResponseDecryptedData : Swift.Codable {
+  public var uuid: Swift.String!
+  public var tenantId: Swift.String!
+  public var communityId: Swift.String!
   public var accesscodepayload: BlockIDSDK.AccessCodeResponseDataPayload!
   public var phoneRequired: Swift.Bool?
   public var smsServiceNumber: Swift.String?
@@ -996,6 +1061,7 @@ extension BlockIDSDK.NationalIDScanHelper : BlockIDSDK.NationalIDResponseDelegat
   public var userId: Swift.String?
   public var scep_hash: Swift.String?
   public var scep_privatekey: Swift.String?
+  public var scep_expiry: Swift.String?
   public var isLinked: Swift.Bool?
   public var origin: BlockIDSDK.BIDOrigin!
   public var account: BlockIDSDK.BIDAccount?
@@ -1053,6 +1119,11 @@ extension Swift.KeyedEncodingContainerProtocol {
 extension Swift.UnkeyedEncodingContainer {
   public mutating func encode(_ value: Swift.Array<Any>) throws
   public mutating func encode(_ value: Swift.Dictionary<Swift.String, Any>) throws
+}
+@_hasMissingDesignatedInitializers public class KYCHashData : Swift.Codable {
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
 }
 @available(iOS 13, macOS 10.15, *)
 public enum CertificateType {
@@ -1264,6 +1335,10 @@ extension BlockIDSDK.DriverLicenseScanHelper : BlockIDSDK.DriverLicenseResponseD
   public func scanFrontSide()
   public func scanBackSide()
 }
+public class CreateAccessCodePayload {
+  public init(version: BlockIDSDK.Version, type: BlockIDSDK.AccessCodeType, emailID: Swift.String, emailSubject: Swift.String, emailTemplate: Swift.String)
+  @objc deinit
+}
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BIDDriverLicense : BlockIDSDK.BIDDocumentData {
   public class func makeDriverLicenseObj(dlData: BlockIDSDK.DriverLicenseData?, dlOcr: Swift.String?, dlFrontImage: Swift.String?, dlBackImage: Swift.String?, userPhoto: Swift.String?, dlBarcodeInfo: Swift.String?) -> BlockIDSDK.BIDDriverLicense
   override public func encode(to encoder: Swift.Encoder) throws
@@ -1287,14 +1362,51 @@ public class DataGroup15 : BlockIDSDK.DataGroup {
   }
   @objc deinit
 }
+public enum FIDO2KeyType : Swift.String {
+  case PLATFORM
+  case CROSS_PLATFORM
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public struct CustomErrors {
-  public static let kLicenseyKeyExpired: (code: Swift.Int, msg: Swift.String)
+  public struct Network {
+    public static let OFFLINE: (code: Swift.Int, message: Swift.String)
+  }
+  public struct License {
+    public static let UNAUTHORIZED: (code: Swift.Int, message: Swift.String)
+    public static let EXPIRED: (code: Swift.Int, message: Swift.String)
+    public static let MODULES_EMPTY: (code: Swift.Int, message: Swift.String)
+    public static let MODULE_NOT_ENABLED: (code: Swift.Int, message: Swift.String)
+    public static let BAD_REQUEST: (code: Swift.Int, message: Swift.String)
+    public static let INVALID: (code: Swift.Int, message: Swift.String)
+  }
+  public struct FIDO2 {
+    public static let USER_NOT_LINKED: (code: Swift.Int, message: Swift.String)
+    public static let UNSUPPORTED_AUTHENTICATOR: (code: Swift.Int, message: Swift.String)
+    public static let SERVICE_URL_NOT_SET: (code: Swift.Int, message: Swift.String)
+    public static let ATTESTATION_OPTIONS_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let ATTESTATION_RESULT_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let LINKING_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let UNLINKING_FAILED: (code: Swift.Int, message: Swift.String)
+  }
+  public struct SCEPCheck {
+    public static let INVALID: (code: Swift.Int, message: Swift.String)
+    public static let NOT_LINKED: (code: Swift.Int, message: Swift.String)
+  }
+  public struct PublicKey {
+    public static let NOT_FOUND: (code: Swift.Int, message: Swift.String)
+  }
+  public struct KYC {
+    public static let KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
+  }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)
   public static let kSomethingWentWrong: (code: Swift.Int, msg: Swift.String)
   public static let kSomeProblemWhileFaceFinding: (code: Swift.Int, msg: Swift.String)
   public static let kUnauthorizedAccess: (code: Swift.Int, msg: Swift.String)
-  public static let kLicenseyKeyNotEnabled: (code: Swift.Int, msg: Swift.String)
   public static let kPublicKeyRequired: (code: Swift.Int, msg: Swift.String)
   public static let kEncryption: (code: Swift.Int, msg: Swift.String)
   public static let kDecryption: (code: Swift.Int, msg: Swift.String)
@@ -1332,7 +1444,6 @@ public struct CustomErrors {
   public static let kMagicLinkExpired: (code: Swift.Int, msg: Swift.String)
   public static let kMagicLinkCodeRedeemed: (code: Swift.Int, msg: Swift.String)
   public static let kTenantRegisterFailed: (code: Swift.Int, msg: Swift.String)
-  public static let kUnauthorizedLicenseKey: (code: Swift.Int, msg: Swift.String)
   public static let kUserNameIsMandatory: (code: Swift.Int, msg: Swift.String)
   public static let kTenantTagIsMandatory: (code: Swift.Int, msg: Swift.String)
   public static let kCommunityIsMandatory: (code: Swift.Int, msg: Swift.String)
@@ -1348,7 +1459,7 @@ public struct CustomErrors {
   public init(code: Swift.Int, msg: Swift.String, responseObj: [Swift.String : Any])
   @objc deinit
 }
-public typealias Fido2Callback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+public typealias FIDO2Callback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @available(iOS 13, macOS 10.15, *)
 public func AESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8]) -> [Swift.UInt8]
 @available(iOS 13, macOS 10.15, *)
@@ -1408,6 +1519,7 @@ extension BlockIDSDK.NFCViewDisplayMessage {
     get
   }
 }
+public typealias AccessCodeAPIsCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
 public class NotImplementedDG : BlockIDSDK.DataGroup {
   @objc deinit
@@ -1419,6 +1531,7 @@ public enum RegisterDocType : Swift.String {
   case PIN
   case LIVE_ID
   case SSN
+  case PHONE
   public init?(rawValue: Swift.String)
   public typealias RawValue = Swift.String
   public var rawValue: Swift.String {
@@ -1438,6 +1551,7 @@ public typealias DocumentEnrollmentCallback = ((_ status: Swift.Bool, _ error: B
 @_hasMissingDesignatedInitializers public class BIDDocumentProvider {
   public static let shared: BlockIDSDK.BIDDocumentProvider
   public func getUserDocument(id: Swift.String?, type: Swift.String?, category: Swift.String?) -> Swift.String?
+  public func getDocument(id: Swift.String?, type: Swift.String?, category: Swift.String?) -> Swift.Array<Any>?
   @objc deinit
 }
 @available(iOS 13, *)
@@ -1582,6 +1696,14 @@ public class BACHandler {
   public func sessionKeys(data: [Swift.UInt8]) throws -> ([Swift.UInt8], [Swift.UInt8], [Swift.UInt8])
   @objc deinit
 }
+@_hasMissingDesignatedInitializers public class MessageGateway : Swift.Codable {
+  public var name: Swift.String?
+  public var active: Swift.Bool?
+  public var smsServiceNumber: Swift.String?
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
 @_hasMissingDesignatedInitializers public class BIDDocumentData : Swift.Codable {
   public var id: Swift.String?
   public var type: Swift.String?
@@ -1593,6 +1715,9 @@ public class BACHandler {
 @_hasMissingDesignatedInitializers public class BIDLinkedAccount : Swift.Codable, Swift.Equatable {
   public var origin: BlockIDSDK.BIDOrigin!
   public var userId: Swift.String
+  public var smartcardhash: Swift.String?
+  public var sceptoken: Swift.String?
+  public var scep_expiry: Swift.String?
   public var account: BlockIDSDK.BIDAccount?
   public static func == (lhs: BlockIDSDK.BIDLinkedAccount, rhs: BlockIDSDK.BIDLinkedAccount) -> Swift.Bool
   public func isOfflineAuthSupported() -> Swift.Bool
@@ -1982,6 +2107,15 @@ public enum DataGroupId : Swift.Int, Swift.CaseIterable {
     get
   }
 }
+public enum Version : Swift.String {
+  case DEFAULT
+  case ATHENA
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public typealias RequestBody = [Swift.String : Swift.AnyObject]
 public typealias NetworkResponseCallback<T> = (statusCode: Swift.Int?, error: Swift.Error?, result: T?) where T : Swift.Decodable
 public typealias APIResponseCallback<T> = (status: Swift.Bool, message: Swift.String, error: BlockIDSDK.ErrorResponse?, result: T?) where T : Swift.Decodable
@@ -2161,6 +2295,9 @@ extension BlockIDSDK.APIFailedError : Foundation.LocalizedError {
 }
 extension BlockIDSDK.KeychainItemAccessibility : Swift.Equatable {}
 extension BlockIDSDK.KeychainItemAccessibility : Swift.Hashable {}
+extension BlockIDSDK.AccessCodeType : Swift.Equatable {}
+extension BlockIDSDK.AccessCodeType : Swift.Hashable {}
+extension BlockIDSDK.AccessCodeType : Swift.RawRepresentable {}
 extension BlockIDSDK.ScanningMode : Swift.Equatable {}
 extension BlockIDSDK.ScanningMode : Swift.Hashable {}
 extension BlockIDSDK.PassportAuthenticationStatus : Swift.Equatable {}
@@ -2204,6 +2341,9 @@ extension BlockIDSDK.DocTypeEnum : Swift.Hashable {}
 extension BlockIDSDK.DocTypeEnum : Swift.RawRepresentable {}
 extension BlockIDSDK.DLScanningSide : Swift.Equatable {}
 extension BlockIDSDK.DLScanningSide : Swift.Hashable {}
+extension BlockIDSDK.FIDO2KeyType : Swift.Equatable {}
+extension BlockIDSDK.FIDO2KeyType : Swift.Hashable {}
+extension BlockIDSDK.FIDO2KeyType : Swift.RawRepresentable {}
 extension BlockIDSDK.RegisterDocType : Swift.Equatable {}
 extension BlockIDSDK.RegisterDocType : Swift.Hashable {}
 extension BlockIDSDK.RegisterDocType : Swift.RawRepresentable {}
@@ -2226,3 +2366,6 @@ extension BlockIDSDK.DataGroupId : Swift.Equatable {}
 extension BlockIDSDK.DataGroupId : Swift.Hashable {}
 @available(iOS 13, macOS 10.15, *)
 extension BlockIDSDK.DataGroupId : Swift.RawRepresentable {}
+extension BlockIDSDK.Version : Swift.Equatable {}
+extension BlockIDSDK.Version : Swift.Hashable {}
+extension BlockIDSDK.Version : Swift.RawRepresentable {}

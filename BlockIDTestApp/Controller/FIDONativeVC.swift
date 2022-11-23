@@ -1,5 +1,6 @@
 
 import Foundation
+import YubiKit
 
 class FIDONativeVC: FIDOViewController, YKFManagerDelegate, YKFFIDO2SessionKeyStateDelegate {
     var nfcConnection: YKFNFCConnection?

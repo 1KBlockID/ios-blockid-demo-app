@@ -10,6 +10,7 @@ import Foundation
 import AVFoundation
 import BlockIDSDK
 import Toast_Swift
+import UIKit
   
 class DriverLicenseViewController: UIViewController {
 
@@ -18,6 +19,9 @@ class DriverLicenseViewController: UIViewController {
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
+    private var manualCaptureImg: UIImage?
+    
+    var isLivenessNeeded: Bool = false
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -93,7 +97,7 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
-        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Driver License?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Drivers License?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
@@ -142,6 +146,7 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
+        
         self.view.makeToastActivity(.center)
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
@@ -165,7 +170,7 @@ class DriverLicenseViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Driver License enrolled successfully", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Drivers License enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }
@@ -184,20 +189,61 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
-        //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code || error?.code == CustomErrors.kLicenseyKeyNotEnabled.code {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center)
+        // Check if DL is Expired...
+        if error?.code == CustomErrors.kDocumentExpired.code {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        // DL Module not enabled...
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center)
             return
         }
         
         scanCompleteUIUpdates()
         
-        guard let dl = dictDriveLicense, let token = signToken else {
-            self.view.makeToast(error?.message, duration: 3.0, position: .center)
+        guard var dl = dictDriveLicense, let token = signToken else {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
             return
             
         }
-        
+            dl["isLivenessRequired"] = false
+        if isLivenessNeeded {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+                documentLivenessVC.onLivenessFinished = { (sender) in
+                    if let sender = sender {
+                        sender.navigationController?.popViewController(animated: false)
+                        dl["isLivenessRequired"] = true 
+                        if error?.code == CustomErrors.kDocumentAboutToExpire.code {
+                            //About to Expire, Show Alert
+                            let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                                self.setDriverLicense(withDLData: dl, token: token)
+                            }))
+                            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                            return
+                        }
+                        self.setDriverLicense(withDLData: dl, token: token)
+                    }
+                }
+                self.navigationController?.pushViewController(documentLivenessVC, animated: false)
+                return
+            }
+        }
+        showVerificationAlert(dl: dl, token: token, error: error)
+    }
+    
+    private func showVerificationAlert(dl: [String: Any], token: String, error: ErrorResponse?) {
         //Check if Not to Expiring Soon
         if error?.code != CustomErrors.kDocumentAboutToExpire.code {
             self.wantToVerifyAlert(withDLData: dl, token: token)
@@ -206,12 +252,10 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         
         //About to Expire, Show Alert
         let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
-        
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
             self.wantToVerifyAlert(withDLData: dl, token: token)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        
         self.present(alert, animated: true)
     }
     

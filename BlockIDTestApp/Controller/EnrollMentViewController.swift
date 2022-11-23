@@ -10,27 +10,35 @@ import Foundation
 import BlockIDSDK
 import Toast_Swift
 import UIKit
+import WalletConnectSign
 
 public enum Enrollments: String {
-    case DriverLicense = "Driver License 1"
+    case About  = "About"
+    case AddUser = "Add User"
+    case DriverLicense = "Drivers License 1"
+    case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
     case SSN = "Verify SSN"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
-    case LiveID  = "LiveID"
-    case LiveID_liveness = "LiveID (with liveness check)"
+    case LiveID  = "Live ID"
+    case LiveID_liveness = "Live ID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_NATIVE = "FIDO2 Native"
     case RecoverMnemonics  = "Recover Mnemonics"
+    case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
 }
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.DriverLicense,
+    var enrollmentArray = [Enrollments.About,
+                           Enrollments.AddUser,
+                           Enrollments.DriverLicense,
+                           Enrollments.DriverLicense_Liveness,
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -43,31 +51,29 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_NATIVE,
                            Enrollments.RecoverMnemonics,
+                           Enrollments.WalletConnect,
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let appDelegate = appDelegate {
+            let metadata = AppMetadata(
+                name: "BlockID Demo",
+                description: "1Kosmos WalletConenct Demo",
+                url: "example.wallet",
+                icons: ["https://www.1kosmos.com/favicon.ico"])
+            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
+                                                                       metadata: metadata,
+                                                                       delegate: appDelegate)
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let version = BlockIDSDK.sharedInstance.getVersion() {
-            if let buildNo = version.components(separatedBy: ".").max(by: {$1.count > $0.count}) {
-                let versionArr = version.components(separatedBy: ".")
-                var sdkVersion = ""
-                for index in 0...versionArr.count - 1 {
-                    if versionArr[index] != buildNo {
-                        if index < versionArr.count - 2 {
-                            sdkVersion += versionArr[index] + "."
-                        } else {
-                            sdkVersion += versionArr[index]
-                        }
-                    }
-                }
-        
-                lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
-            }
-        }
      
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
@@ -95,8 +101,12 @@ extension EnrollMentViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let enrolmentObj = enrollmentArray[indexPath.row].rawValue
         switch enrolmentObj {
+        case Enrollments.AddUser.rawValue:
+            addUser()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
+        case Enrollments.DriverLicense_Liveness.rawValue:
+            documentLivenessVC()
         case Enrollments.Passport1.rawValue:
             enrollPassport(index: 1)
         case Enrollments.Passport2.rawValue:
@@ -104,7 +114,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.SSN.rawValue:
-            showSSNVerificationView()
+            enrollSSN()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -119,10 +129,14 @@ extension EnrollMentViewController: UITableViewDelegate {
             launchForFIDO2()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
+        case Enrollments.WalletConnect.rawValue:
+            self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
         case Enrollments.FIDO2_NATIVE.rawValue:
             launchForFIDO2Native()
+        case Enrollments.About.rawValue:
+            showAboutScreen()
         default:
             return
         }
@@ -131,20 +145,121 @@ extension EnrollMentViewController: UITableViewDelegate {
 
 extension EnrollMentViewController {
     private func enrollDL() {
-        let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
-        if  !docID.isEmpty {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Driver License", preferredStyle: .alert)
+        let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+        if let docId = document.docId,
+            !docId.isEmpty,
+            let isLivenessReq = document.islivenessNeeded, !isLivenessReq {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unenrollDocument(registerDocType: .DL, id: docID)
+                self.unenrollDocument(registerDocType: .DL, id: docId)
             }))
         
             self.present(alert, animated: true)
             return
         }
-        
         showDLView()
+    }
+    
+    private func enrollSSN() {
+        
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isSSNEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.SSN.rawValue, category: nil) != nil
+        
+        guard isDLEnrolled else {
+            self.view.makeToast("Please enroll your drivers license first.",
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if isSSNEnrolled {
+            let docID = self.getDocumentID(docIndex: 1, type: .SSN, category: .Identity_Document) ?? ""
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to remove SSN?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .SSN, id: docID)
+            }))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        self.showSSNVerificationView()
+    }
+    
+    private func documentLivenessVC() {
+        let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+        if let docId = document.docId,
+            !docId.isEmpty,
+            let isLivenessReq = document.islivenessNeeded, isLivenessReq {
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Drivers License?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .DL, id: docId)
+            }))
+        
+            self.present(alert, animated: true)
+            return
+        }
+        showDocumentLivenessVC()
+    }
+    
+    private func addUser() {
+        
+        // need to discuss ...
+        if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
+            let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unlinkUser(linkedAccount: linkedUserAccounts[0])
+            }))
+        
+            self.present(alert, animated: true)
+            return
+        }
+        showAddUserViewController()
+    }
+    
+    private func unlinkUser(linkedAccount: BIDLinkedAccount) {
+        
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.unLinkAccount(bidLinkedAccount: linkedAccount,
+                                                deviceToken: nil) { [weak self] (success, error) in
+            guard let weakSelf = self else {return}
+            weakSelf.view.hideToastActivity()
+            if success {
+                weakSelf.view.makeToast("Your account is removed.", duration: 3.0, position: .center)
+                weakSelf.tableEnrollments.reloadData()
+            } else {
+                // failure
+                if error?.code == NSURLErrorNotConnectedToInternet ||
+                    error?.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self?.showAlertView(title: "Error", message: localizedMessage)
+                    weakSelf.view.makeToast(localizedMessage,
+                                            duration: 3.0,
+                                            position: .center,
+                                            title: ErrorConfig.noInternet.title,
+                                            completion: nil)
+                } else {
+                    weakSelf.view.makeToast(error?.message,
+                                            duration: 3.0,
+                                            position: .center,
+                                            title: ErrorConfig.error.title,
+                                            completion: nil)
+                }
+
+            }
+            
+        }
+        
     }
     
     private func unenrollDocument(registerDocType: RegisterDocType, id: String) {
@@ -170,7 +285,7 @@ extension EnrollMentViewController {
     private func enrollPassport(index: Int) {
         let docID = getDocumentID(docIndex: index ,type: .PPT ,category: .Identity_Document) ?? ""
         if (docID != "") {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll Passport?", preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -189,7 +304,7 @@ extension EnrollMentViewController {
     private func enrollNationalID() {
         let docID = getDocumentID(docIndex: 1 ,type: .NATIONAL_ID ,category: .Identity_Document) ?? ""
         if (docID != "") {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll NationalID?", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -207,7 +322,7 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     private func enrollPin() {
         if BlockIDSDK.sharedInstance.isPinRegistered() {
-            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to unenroll App Pin?", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -230,7 +345,7 @@ extension EnrollMentViewController {
             BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
                 if success {
                     self.tableEnrollments.reloadData()
-                    self.view.makeToast("TouchID / FaceID is now enabled", duration: 3.0, position: .center)
+                    self.view.makeToast("Touch ID / Face ID is now enabled.", duration: 3.0, position: .center)
                     
                 } else {
                     if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -251,7 +366,7 @@ extension EnrollMentViewController {
     private func unEnrollDeviceAuth() {
         BIDAuthProvider.shared.unenrollDeviceAuth(completion: { (success, error, message) in
             if success {
-                self.view.makeToast("TouchID / FaceID is now unenrolled from App", duration: 3.0, position: .center)
+                self.view.makeToast("Touch ID / Face ID is now unenrolled from App.", duration: 3.0, position: .center)
                 self.tableEnrollments.reloadData()
             } else {
                 if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -286,7 +401,7 @@ extension EnrollMentViewController {
     }
     
     private func resetApp() {
-        let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application?", preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
