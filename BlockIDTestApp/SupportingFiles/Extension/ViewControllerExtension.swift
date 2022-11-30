@@ -281,3 +281,13 @@ extension UIViewController {
     }
 }
 
+// MARK: - New Selfie Scanner -
+extension UIViewController {
+    func showSelfieScannerView() {
+        // no xib or storyboard required from app
+        let selfieVC = SelfieScannerViewController()
+        selfieVC.view.backgroundColor = .white
+        self.navigationController?.pushViewController(selfieVC,
+                                                      animated: true)
+    }
+}

@@ -1,0 +1,11 @@
+framework module IDMetricsSelfieCapture {
+  umbrella header "IDMetricsSelfieCapture.h"
+
+  export *
+  module * { export * }
+}
+
+module IDMetricsSelfieCapture.Swift {
+    header "IDMetricsSelfieCapture-Swift.h"
+    requires objc
+}
