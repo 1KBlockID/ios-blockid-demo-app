@@ -111,7 +111,8 @@ extension SelfieScannerViewController {
         liveidDataDic["type"] = "liveid"
 
         BlockIDSDK.sharedInstance.verifyDocument(dic: liveidDataDic,
-                                                 verifications: ["face_liveness"]) { [weak self] (status, dataDic, error) in
+                                                 verifications: ["face_liveness"])
+        { [weak self] (status, dataDic, error) in
             if !status {
                 // Verification failed
                 DispatchQueue.main.async {
@@ -126,12 +127,14 @@ extension SelfieScannerViewController {
                     return
                 }
             } else {
-                if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]] {
+                if let dataDict = dataDic,
+                    let certifications = dataDict["certifications"] as? [[String: Any]] {
                     if let isVerified = certifications[0]["verified"] as? Bool, isVerified {
 
                         guard let imgdataB64 = liveidDataDic["liveId"] as? String else { return }
 
-                        guard let imgdata = Data(base64Encoded: imgdataB64, options: .ignoreUnknownCharacters),
+                        guard let imgdata = Data(base64Encoded: imgdataB64,
+                                                 options: .ignoreUnknownCharacters),
                               let img = UIImage(data: imgdata) else { return }
 
                         self?.setLiveID(withPhoto: img, token: nil)
@@ -203,7 +206,9 @@ extension SelfieScannerViewController {
         else {
             msg = error!.message
         }
-        self.view.makeToast(msg, duration: 3.0, position: .center, title: title, completion: {_ in
+        self.view.makeToast(msg, duration: 3.0,
+                            position: .center,
+                            title: title, completion: {_ in
             self.goBack()
         })
     }
