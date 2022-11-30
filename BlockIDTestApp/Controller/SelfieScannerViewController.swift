@@ -57,7 +57,8 @@ extension SelfieScannerViewController {
                                                              options: .ignoreUnknownCharacters),
                                           let photo = UIImage(data: imgdata) else { return }
                                     // Verify LiveID
-                                    self.verifyLiveID(withPhoto: photo, token: nil)
+                                    self.verifyLiveID(withPhoto: photo,
+                                                      token: nil)
                                 } else {
                                     // Set LiveID
                                     self.checkLiveness(liveidImgDic: liveidDataDic)
@@ -73,7 +74,8 @@ extension SelfieScannerViewController {
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String? = nil) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.verifyLiveID(image: photo, sigToken: token) { (status, error) in
+        BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
+                                               sigToken: token) { (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // If verification is for User Consent
