@@ -203,7 +203,7 @@ extension SelfieScannerViewController {
             error?.code == CustomErrors.Network.OFFLINE.code {
             msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
-        } else else {
+        } else {
             msg = error!.message
         }
         self.view.makeToast(msg, duration: 3.0,
