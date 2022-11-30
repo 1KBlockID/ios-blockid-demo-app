@@ -1,0 +1,39 @@
+//
+//  CatfishAir-Prefix.pch
+//  CatfishAir
+//
+//  Created by Sathish on 19/04/16.
+//  Copyright © 2016 CloudMint. All rights reserved.
+//
+
+#ifndef CatfishAir_Prefix_pch
+#define CatfishAir_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* CatfishAir_Prefix_pch */
+
+ #import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __cplusplus
+#import <opencv2/opencv.hpp>
+#endif
+
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "Constants.h"
+#endif
+
+
+#define IDIOM UI_USER_INTERFACE_IDIOM()
+#define IPAD UIUserInterfaceIdiomPad
+#define IPHONE UIUserInterfaceIdiomPhone

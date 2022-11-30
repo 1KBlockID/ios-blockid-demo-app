@@ -134,12 +134,20 @@ extension UIViewController {
         self.navigationController?.pushViewController(disableRFIDVC, animated: true)
     }
     
-    
     func showLiveIDView(isLivenessNeeded: Bool = false) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
             liveIDVC.isLivenessNeeded = isLivenessNeeded
             self.navigationController?.pushViewController(liveIDVC, animated: true)
+        }
+    }
+    
+    func showSelfieScannerView() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let selfieVC = storyBoard.instantiateViewController(withIdentifier: "SelfieScannerViewController")
+            as? SelfieScannerViewController {
+            self.navigationController?.pushViewController(selfieVC,
+                                                          animated: true)
         }
     }
     
