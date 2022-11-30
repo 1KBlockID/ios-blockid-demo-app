@@ -1566,21 +1566,6 @@
             </objects>
             <point key="canvasLocation" x="1204" y="95"/>
         </scene>
-        <!--Document Scanner View Controller-->
-        <scene sceneID="muJ-W0-tub">
-            <objects>
-                <viewController storyboardIdentifier="DocumentScannerViewController" id="dAY-sT-K32" customClass="DocumentScannerViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="tEh-mX-qGf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="pFV-cS-PBz"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SZL-uD-1xm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1193" y="-563"/>
-        </scene>
         <!--NationalID View Controller-->
         <scene sceneID="NCZ-9Q-ncd">
             <objects>

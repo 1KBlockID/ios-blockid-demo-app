@@ -291,3 +291,13 @@ extension UIViewController {
                                                       animated: true)
     }
 }
+
+
+extension UIViewController {
+    func showDLDocumentScannerView() {
+        // no xib or storyboard required from app
+        let docScannerVC = DocumentScannerViewController()
+        docScannerVC.view.backgroundColor = .white
+        self.navigationController?.pushViewController(docScannerVC, animated: true)
+    }
+}

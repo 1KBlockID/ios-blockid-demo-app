@@ -17,14 +17,13 @@ class DocumentScannerViewController: UIViewController {
     // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.startDLScanning()
     }
+}
+
+// MARK: - Private Methods -
+extension DocumentScannerViewController {
     
-    private func goBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
-
     private func startDLScanning() {
         // 1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
@@ -36,25 +35,77 @@ class DocumentScannerViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     // Check for AuthenticID scanning
-                    DriverLicenseScanner.shared.startDLScan(from: self) { status, data, error in
+                    DocumentScannerHelper.shared.startDLScan(from: self) { status, data, error in
                         if status {
                             guard let dic = data else { return }
                             // Got DL Scan data, go for LiveID Scan
                             self.scanLiveID(dlDataDic: dic)
                         } else {
                             if let err = error {
-//                                self.showErrorDialog(err)
+                                self.showErrorDialog(err)
                                 return
                             }
-                            self.onFinishCallback?(self, false)
+                            self.goBack()
+//                            self.onFinishCallback?(self, false)
                         }
                     }
                 }
             }
         }
-        
+    }
+    
+    
+    private func setDriverLicense(withDLData driverLicense: [String: Any]?, token: String?) {
+//        viewActivityIndicator.isHidden = false
+//        activityIndicator.startAnimating()
+//        self.lblActivityIndicator.text = "Completing your registration"
+        self.view.makeToastActivity(.center)
+        var dic = driverLicense
+        dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dic?["type"] = RegisterDocType.DL.rawValue
+        dic?["id"] = driverLicense?["id"]
+
+        if let dic = dic {
+            BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+//                    self.activityIndicator.stopAnimating()
+                    if !status {
+                        // FAILED
+                        self.showErrorDialog(error)
+                        return
+                    }
+                    // SUCCESS
+                    self.goBack()
+//                    self.onFinishCallback?(self, true)
+                }
+
+            }
+        }
+    }
+    
+    private func goBack() {
+        self.navigationController?.popViewController(animated: true)
     }
 
+    private func showErrorDialog(_ error: ErrorResponse?) {
+        var title: String? = nil
+        var msg: String? = nil
+        if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
+            self.showAppLogin()
+        } else if error?.code == NSURLErrorNotConnectedToInternet ||
+            error?.code == CustomErrors.Network.OFFLINE.code {
+            msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+            title = ErrorConfig.noInternet.title
+        } else {
+            msg = error!.message
+        }
+        self.view.makeToast(msg, duration: 3.0,
+                            position: .center,
+                            title: title, completion: {_ in
+            self.goBack()
+        })
+    }
 }
 
 
@@ -83,10 +134,10 @@ extension DocumentScannerViewController {
                     self.showErrorDialog(err)
                     return
                 }
-                self.onFinishCallback?(self, false)
+                self.goBack()
+//                self.onFinishCallback?(self, false)
             }
         }
-
     }
     
     /// Verifies DL data before registration
@@ -141,7 +192,7 @@ extension DocumentScannerViewController {
     ///
     private func compareFace() {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Matching selfie"
+//            self.lblActivityIndicator.text = "Matching selfie"
         }
         let liveIdBase64 = selfiePayload["liveId"] as? String
         let documentFaceBase64 = dlDataDic["face"] as? String
@@ -157,13 +208,13 @@ extension DocumentScannerViewController {
         VerifyDocumentHelper.shared.compareFace(base64Image1: liveIdBase64, base64Image2: documentFaceBase64) { status, error in
             if !status {
                 DispatchQueue.main.async {
-                    self.activityIndicator.stopAnimating()
+//                    self.activityIndicator.stopAnimating()
                     self.showErrorDialog(error)
                 }
                 return
             }
             // Register DL
-            self.setDriverLicense(withDLData: self.dlDataDic, token: nil)
+            self.setDriverLicense(withDLData: self.dlDataDic, token: "")
         }
         
     }
@@ -175,12 +226,12 @@ extension DocumentScannerViewController {
     private func checkLiveness() {
         let liveIdBase64 = selfiePayload["liveId"] as? String
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Validating liveness"
+//            self.lblActivityIndicator.text = "Validating liveness"
         }
         guard let liveIdBase64 = liveIdBase64 else { return }
         VerifyDocumentHelper.shared.checkLiveness(liveIDBase64: liveIdBase64) { status, error in
             if !status {
-                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.stopAnimating()
                 self.showErrorDialog(error)
                 return
             }
@@ -199,7 +250,7 @@ extension DocumentScannerViewController {
                 return
               }
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Completing your registration"
+//            self.lblActivityIndicator.text = "Completing your registration"
         }
         BlockIDSDK.sharedInstance.registerDocument(obj: dlDataDic,
                                                    liveIdProofedBy: "blockid",
@@ -207,13 +258,14 @@ extension DocumentScannerViewController {
                                                    faceImage: img,
                                                    liveIDSignToken: nil) { status, error in
             DispatchQueue.main.async {
-                self.activityIndicator.stopAnimating()
+//                self.activityIndicator.stopAnimating()
                 if !status {
                     self.showErrorDialog(error)
                     return
                 }
                 // SUCCESS
-                self.onFinishCallback?(self, true)
+                self.goBack()
+//                self.onFinishCallback?(self, true)
             }
         }
     }

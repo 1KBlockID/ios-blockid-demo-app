@@ -1,5 +1,5 @@
 //
-//  DriverLicenseScanner.swift
+//  DocumentScannerHelper.swift
 //  ios-kernel
 //
 //  Created by Prasanna Gupta on 30/11/22.
@@ -13,9 +13,9 @@ import BlockIDSDK
 
 public typealias DLScanCallback = ((_ status: Bool, _ data: [String: Any]?, _ error: ErrorResponse?) -> Void)
 
-class DriverLicenseScanner {
+class DocumentScannerHelper {
     
-    static let shared = DriverLicenseScanner()
+    static let shared = DocumentScannerHelper()
     var scanCompletionHandler: DLScanCallback?
 
     private lazy var scanHandler = DSHandler(delegate: self)
@@ -121,7 +121,7 @@ class DriverLicenseScanner {
     }
 }
 
-extension DriverLicenseScanner: DSHandlerDelegate {
+extension DocumentScannerHelper: DSHandlerDelegate {
     // Handle scan result
     func handleScan(result: DSResult) {
         if documentDic.isEmpty {
