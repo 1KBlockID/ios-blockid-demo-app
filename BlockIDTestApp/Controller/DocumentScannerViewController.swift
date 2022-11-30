@@ -14,6 +14,7 @@ class DocumentScannerViewController: UIViewController {
     private lazy var dlDataDic = [String: Any]()
     private lazy var selfiePayload = [String: Any]()
 
+    // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -107,11 +108,11 @@ extension DocumentScannerViewController {
                                                  verifications: verifications) { [weak self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
+                    self?.view.hideToastActivity()
                     if !status {
                         // Verification failed
-                        self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
-                            self.goBack()
+                        self?.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            self?.goBack()
                         })
                         return
                     }
@@ -147,7 +148,7 @@ extension DocumentScannerViewController {
 
         guard let liveIdBase64 = liveIdBase64,
               let documentFaceBase64 = documentFaceBase64 else {
-            let msg = "FACE_COMPARISON_FAILED".localizedMessage()
+            let msg = "FACE_COMPARISON_FAILED".localizedMessage(0)
             let error = ErrorResponse(code: 1007, msg: msg)
             self.showErrorDialog(error)
             return

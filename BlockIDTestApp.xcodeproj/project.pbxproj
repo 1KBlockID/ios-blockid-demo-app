@@ -49,6 +49,8 @@
 		4C013BCD2937C8D00036F5D0 /* selfie-scanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C013BD02937C90E0036F5D0 /* document-scanner.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BCF2937C90E0036F5D0 /* document-scanner.xcframework */; };
 		4C013BD12937C90F0036F5D0 /* document-scanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BCF2937C90E0036F5D0 /* document-scanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C013BD32937C9990036F5D0 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BD22937C9990036F5D0 /* DocumentScannerViewController.swift */; };
+		4C013BD52937C9A60036F5D0 /* DriverLicenseScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BD42937C9A60036F5D0 /* DriverLicenseScanner.swift */; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
@@ -156,6 +158,8 @@
 		4C013BB92937891B0036F5D0 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = BlockIDSDK.xcframework; path = Frameworks/BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "selfie-scanner.xcframework"; path = "Frameworks/selfie-scanner.xcframework"; sourceTree = "<group>"; };
 		4C013BCF2937C90E0036F5D0 /* document-scanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "document-scanner.xcframework"; path = "Frameworks/document-scanner.xcframework"; sourceTree = "<group>"; };
+		4C013BD22937C9990036F5D0 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
+		4C013BD42937C9A60036F5D0 /* DriverLicenseScanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverLicenseScanner.swift; sourceTree = "<group>"; };
 		55DB52F2F3E9457E093FF0B5 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 		3CEE3343264414E7003FDB78 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4C013BD22937C9990036F5D0 /* DocumentScannerViewController.swift */,
 				3CEE3344264414E7003FDB78 /* EnrollMentViewController.swift */,
 				B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */,
 				B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */,
@@ -417,6 +422,7 @@
 		4C013BA5293775FA0036F5D0 /* ScannerHelpers */ = {
 			isa = PBXGroup;
 			children = (
+				4C013BD42937C9A60036F5D0 /* DriverLicenseScanner.swift */,
 				4C013BA6293775FA0036F5D0 /* SelfieScannerHelper.swift */,
 			);
 			path = ScannerHelpers;
@@ -681,6 +687,7 @@
 				E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */,
 				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */,
+				4C013BD32937C9990036F5D0 /* DocumentScannerViewController.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
@@ -707,6 +714,7 @@
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
 				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
+				4C013BD52937C9A60036F5D0 /* DriverLicenseScanner.swift in Sources */,
 				3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

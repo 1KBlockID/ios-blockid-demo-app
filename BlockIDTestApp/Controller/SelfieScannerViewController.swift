@@ -184,7 +184,7 @@ extension SelfieScannerViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Live ID enrolled successfully",
+                self.view.makeToast("LIVEID_ENROLLED".localizedMessage(CustomErrors.Network.OFFLINE.code),
                                     duration: 3.0,
                                     position: .center,
                                     title: "Thank you!",

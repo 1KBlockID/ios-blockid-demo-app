@@ -16,3 +16,9 @@
 "MODULE_NOT_ENABLED" = "The license key is not enabled with required modules (%d).";
 "BAD_REQUEST" = "Bad request (%d).";
 "INVALID" = "The license key is invalid (%d).";
+
+// MARK: - Driver license scan Errors -
+"FACE_COMPARISON_FAILED" = "Face comparison failed.";
+
+// MARK: - LiveID success -
+"LIVEID_ENROLLED" = "Live ID enrolled successfully";
