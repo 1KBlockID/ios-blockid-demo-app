@@ -23,7 +23,7 @@ class SelfieScannerViewController: UIViewController {
     }
 }
 
-// MARK: - Private function -
+// MARK: - Private Methods -
 extension SelfieScannerViewController {
     private func goBack() {
         if let viewControllers = navigationController?.viewControllers {
