@@ -54,13 +54,13 @@ class SelfieScannerViewController: UIViewController {
                                           let photo = UIImage(data: imgdata) else { return }
                                     // Verify LiveID
                                     self.verifyLiveID(withPhoto: photo, token: nil)
-                                    return
+                                } else {
+                                    // Set LiveID
+                                    self.checkLiveness(liveidImgDic: liveidDataDic)
                                 }
-                                // Set LiveID
-                                self.checkLiveness(liveidImgDic: liveidDataDic)
-                                return
+                            } else {
+                                self.goBack()
                             }
-                            self.goBack()
                         }
                 }
             }

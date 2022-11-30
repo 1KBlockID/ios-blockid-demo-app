@@ -19,7 +19,7 @@ class SelfieScannerHelper: NSObject {
 
     static let shared = SelfieScannerHelper()
     private var scanCompletionHandler: SelfieScanCallback?
-
+    let kLiveID = "liveId"
     private lazy var selfieHandler = CFASelfieController.sharedInstance() as? CFASelfieController
     
     // set default image compression quality
@@ -72,16 +72,26 @@ extension SelfieScannerHelper: CFASelfieScanDelegate {
     
     func onFinishSelfieScan(_ selfieScanData: CFASelfieScanData!) {        
         if let selfieData = selfieScanData.selfieData {
-            selfiePayload["liveId"] = selfieData.base64EncodedString()
+            selfiePayload[kLiveID] = selfieData.base64EncodedString()
+            self.scanCompletionHandler!(true,
+                                        selfiePayload,
+                                        nil)
+        } else {
+            self.scanCompletionHandler!(false,
+                                        nil,
+                                        nil)
         }
-        self.scanCompletionHandler!(true, selfiePayload, nil)
+       
     }
     
     func onCancelSelfieScan() {
-        self.scanCompletionHandler!(false, nil, nil)
+        self.scanCompletionHandler!(false,
+                                    nil,
+                                    nil)
     }
     
-    func onFinishSelfieScanWithError(_ errorCode: Int32, errorMessage: String!) {
+    func onFinishSelfieScanWithError(_ errorCode: Int32,
+                                     errorMessage: String!) {
         self.scanCompletionHandler!(false,
                                     nil,
                                     ErrorResponse(code: Int(errorCode),
