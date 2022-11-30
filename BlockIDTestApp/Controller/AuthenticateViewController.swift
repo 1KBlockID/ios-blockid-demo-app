@@ -151,7 +151,6 @@ class AuthenticateViewController: UIViewController {
             })
             return
         }
-         
          // Authenticate liveID on SelfieScannerViewController screen...
         let selfieScannerVC = SelfieScannerViewController()
         selfieScannerVC.view.backgroundColor = .white
