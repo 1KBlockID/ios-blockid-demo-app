@@ -421,11 +421,17 @@ extension EnrollMentViewController {
 extension EnrollMentViewController {
     private func enrollLiveID(isLivenessNeeded: Bool) {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            
+            // Commenting old live id scanner
 //            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
+            
+            // New live id(selfie) scanner
             showSelfieScannerView()
         }
     }
-    
+}
+
+extension EnrollMentViewController {
     private func resetApp() {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to reset application?", preferredStyle: .alert)
 
