@@ -425,7 +425,7 @@ extension EnrollMentViewController {
             // Commenting old live id scanner
 //            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
             
-            // New live id(selfie) scanner
+            // launch new live id(selfie) scanner
             showSelfieScannerView()
         }
     }
