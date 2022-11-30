@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var currentProposal: Session.Proposal?
     var walletConnectHelper: WalletConnectHelper?
     var sessionItems: [ActiveSessionItem] = []
-    var orientationLock = UIInterfaceOrientationMask.portrait
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -25,10 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Confire firebase for Crashalytics
         FirebaseApp.configure()
         return true
-    }
-    
-    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
-        return self.orientationLock
     }
     
 }

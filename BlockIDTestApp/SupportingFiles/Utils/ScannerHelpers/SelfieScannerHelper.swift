@@ -2,7 +2,7 @@
 //  SelfieScannerHelper.swift
 //  ios-kernel
 //
-//  Created by Kuldeep Choudhary on 11/04/22.
+//  Created by Prasanna Gupta on 30/11/22.
 //  Copyright © 2022 1Kosmos. All rights reserved.
 //
 
@@ -11,7 +11,9 @@ import IDMetricsSelfieCapture
 import UIKit
 import BlockIDSDK
 
-public typealias SelfieScanCallback = ((_ status: Bool, _ data: [String: Any]?, _ error: ErrorResponse?) -> Void)
+public typealias SelfieScanCallback = ((_ status: Bool,
+                                        _ data: [String: Any]?,
+                                        _ error: ErrorResponse?) -> Void)
 
 class SelfieScannerHelper: NSObject {
 
@@ -19,10 +21,15 @@ class SelfieScannerHelper: NSObject {
     private var scanCompletionHandler: SelfieScanCallback?
 
     private lazy var selfieHandler = CFASelfieController.sharedInstance() as? CFASelfieController
+    
+    // set default image compression quality
     private lazy var imageCompressionQuality: Int32 = 90
+    
+    // set default capture mode to Manual
     private lazy var captureMode: CFASelfieCaptureMode = .ManualCapture
+    
     private lazy var scanVC: UIViewController = SelfieScannerViewController()
-    private var liveIDImgDic = [String: Any]()
+    private var selfiePayload = [String: Any]()
 
     private override init() {}
     
@@ -33,18 +40,25 @@ class SelfieScannerHelper: NSObject {
     /// - Parameter viewController: A parent view controller to present scan
     /// - Parameter completion: SelfieScanCallback which will send response on scan completion
     ///
-    func startLiveIDScan(from viewController: UIViewController, completion: SelfieScanCallback?) {
+    func startLiveIDScan(from viewController: UIViewController,
+                         completion: SelfieScanCallback?) {
+        // create and configure selfie settings
         let selfieSettings = CFASelfieSettings()
+        
+        // capture mode is set to Manual mode
+        // can change to auto mode
         selfieSettings?.captureMode = captureMode
+        
+        // disable far-selfie option
         selfieSettings?.enableFarSelfie = false
+        
+        // set compression quality for selfie image
         selfieSettings?.compressionQuality = imageCompressionQuality
+        
+        // do not show an option to switch camera for taking selfie
         selfieSettings?.enableSwitchCamera = false
         
         scanCompletionHandler = completion
-        
-        if appDelegate?.orientationLock != UIInterfaceOrientationMask.portrait {
-            CommonFunctions.rotateDeviceWithOrientationMode(.portrait)
-        }
         
         selfieHandler?.scanSelfie(viewController,
                                   selfieSettings: selfieSettings,
@@ -58,9 +72,9 @@ extension SelfieScannerHelper: CFASelfieScanDelegate {
     
     func onFinishSelfieScan(_ selfieScanData: CFASelfieScanData!) {        
         if let selfieData = selfieScanData.selfieData {
-            liveIDImgDic["liveId"] = selfieData.base64EncodedString()
+            selfiePayload["liveId"] = selfieData.base64EncodedString()
         }
-        self.scanCompletionHandler!(true, liveIDImgDic, nil)
+        self.scanCompletionHandler!(true, selfiePayload, nil)
     }
     
     func onCancelSelfieScan() {
@@ -68,7 +82,10 @@ extension SelfieScannerHelper: CFASelfieScanDelegate {
     }
     
     func onFinishSelfieScanWithError(_ errorCode: Int32, errorMessage: String!) {
-        self.scanCompletionHandler!(false, nil, ErrorResponse(code: Int(errorCode), msg: errorMessage))
+        self.scanCompletionHandler!(false,
+                                    nil,
+                                    ErrorResponse(code: Int(errorCode),
+                                                  msg: errorMessage))
     }
 
 }

@@ -43,10 +43,10 @@
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		4C013BA7293775FA0036F5D0 /* SelfieScannerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BA6293775FA0036F5D0 /* SelfieScannerHelper.swift */; };
 		4C013BA92937765D0036F5D0 /* SelfieScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BA82937765D0036F5D0 /* SelfieScannerViewController.swift */; };
-		4C013BAA2937789D0036F5D0 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013B9E293775C40036F5D0 /* BlockIDSDK.xcframework */; };
-		4C013BAB2937789D0036F5D0 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013B9E293775C40036F5D0 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4C013BAD293778A90036F5D0 /* selfie-scanner.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BA2293775D00036F5D0 /* selfie-scanner.xcframework */; };
-		4C013BAE293778A90036F5D0 /* selfie-scanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BA2293775D00036F5D0 /* selfie-scanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C013BBB2937891B0036F5D0 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BB92937891B0036F5D0 /* BlockIDSDK.xcframework */; };
+		4C013BBC2937891C0036F5D0 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BB92937891B0036F5D0 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C013BBD2937891C0036F5D0 /* selfie-scanner.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */; };
+		4C013BBE2937891C0036F5D0 /* selfie-scanner.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
@@ -91,14 +91,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4C013BAC2937789D0036F5D0 /* Embed Frameworks */ = {
+		4C013BBF2937891C0036F5D0 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C013BAE293778A90036F5D0 /* selfie-scanner.xcframework in Embed Frameworks */,
-				4C013BAB2937789D0036F5D0 /* BlockIDSDK.xcframework in Embed Frameworks */,
+				4C013BBE2937891C0036F5D0 /* selfie-scanner.xcframework in Embed Frameworks */,
+				4C013BBC2937891C0036F5D0 /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,6 +150,8 @@
 		4C013BA2293775D00036F5D0 /* selfie-scanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "selfie-scanner.xcframework"; path = "Frameworks/documentscanner/selfie-scanner.xcframework"; sourceTree = "<group>"; };
 		4C013BA6293775FA0036F5D0 /* SelfieScannerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfieScannerHelper.swift; sourceTree = "<group>"; };
 		4C013BA82937765D0036F5D0 /* SelfieScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfieScannerViewController.swift; sourceTree = "<group>"; };
+		4C013BB92937891B0036F5D0 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = BlockIDSDK.xcframework; path = Frameworks/BlockIDSDK.xcframework; sourceTree = "<group>"; };
+		4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "selfie-scanner.xcframework"; path = "Frameworks/selfie-scanner.xcframework"; sourceTree = "<group>"; };
 		55DB52F2F3E9457E093FF0B5 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
@@ -197,9 +199,9 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */,
-				4C013BAA2937789D0036F5D0 /* BlockIDSDK.xcframework in Frameworks */,
+				4C013BBB2937891B0036F5D0 /* BlockIDSDK.xcframework in Frameworks */,
 				5D85693C28B80191000D0B05 /* Starscream in Frameworks */,
-				4C013BAD293778A90036F5D0 /* selfie-scanner.xcframework in Frameworks */,
+				4C013BBD2937891C0036F5D0 /* selfie-scanner.xcframework in Frameworks */,
 				7D747EF588BA3429B56BB8AD /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +214,8 @@
 			children = (
 				4C013BA2293775D00036F5D0 /* selfie-scanner.xcframework */,
 				4C013B9E293775C40036F5D0 /* BlockIDSDK.xcframework */,
+				4C013BB92937891B0036F5D0 /* BlockIDSDK.xcframework */,
+				4C013BBA2937891B0036F5D0 /* selfie-scanner.xcframework */,
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				612902287EADCB804C242EBA /* Pods_BlockIDTestApp.framework */,
@@ -278,7 +282,6 @@
 				3CEE3342264414E7003FDB78 /* BlockIDTestApp.entitlements */,
 				E6734C3B2816B5AB00658171 /* APIs */,
 				3C78FA06264AA1C9001576DF /* Model */,
-				4C013BA5293775FA0036F5D0 /* DocumentScanHelper */,
 				3CEE3343264414E7003FDB78 /* Controller */,
 				3CEE3339264414E7003FDB78 /* SupportingFiles */,
 				3CEE334B264414E7003FDB78 /* View */,
@@ -295,10 +298,10 @@
 		3CEE3339264414E7003FDB78 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				B6AB861328BE043100C488A1 /* WalletConnectListner.swift */,
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
 				3CEE333F264414E7003FDB78 /* CommonFunctions.swift */,
+				B6AB861328BE043100C488A1 /* WalletConnectListner.swift */,
 				3CEE3340264414E7003FDB78 /* AppConstants.swift */,
 				3CEE3341264414E7003FDB78 /* ErrorConfig.swift */,
 				3C2C96C526551EC100323172 /* DocumentMapUtil.swift */,
@@ -319,6 +322,7 @@
 		3CEE333D264414E7003FDB78 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4C013BA5293775FA0036F5D0 /* ScannerHelpers */,
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
 			path = Utils;
@@ -404,12 +408,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		4C013BA5293775FA0036F5D0 /* DocumentScanHelper */ = {
+		4C013BA5293775FA0036F5D0 /* ScannerHelpers */ = {
 			isa = PBXGroup;
 			children = (
 				4C013BA6293775FA0036F5D0 /* SelfieScannerHelper.swift */,
 			);
-			path = DocumentScanHelper;
+			path = ScannerHelpers;
 			sourceTree = "<group>";
 		};
 		5D4281C928B75183009E87A0 /* WalletConnectCell */ = {
@@ -470,8 +474,8 @@
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				4C013BAC2937789D0036F5D0 /* Embed Frameworks */,
 				1CC64D6C4824A47DA483EBC1 /* [CP] Embed Pods Frameworks */,
+				4C013BBF2937891C0036F5D0 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
