@@ -1,0 +1,202 @@
+{
+    "action_icons": {
+        "retake": {
+            "border_width": 1,
+            "border_color": {"R":112,"G":112,"B":112,"A":1.0},
+            "background_color": {"R":0,"G":0,"B":0,"A":1.0},
+            "textSizeLarge": 24,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":119,"G":119,"B":119,"A":1.0},
+            "corner_radius": 10
+        },
+        "accept": {
+            "background_color": {"R":0,"G":131,"B":184,"A":1.0},
+            "textSizeLarge": 24,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":249,"G":249,"B":249,"A":1.0},
+            "corner_radius": 10
+        },
+        "icon_help": {
+            "icon_name": "assetname",
+            "border_width": 1,
+            "border_color": {"R":68,"G":68,"B":68,"A":1.0},
+            "background_color": {"R":0,"G":0,"B":0,"A":0},
+            "backCamera_icon_name": "assetname",
+            "backCamera_border_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "icon_close": {
+            "icon_name": "assetname",
+            "border_width": 1,
+            "border_color":  {"R":68,"G":68,"B":68,"A":1.0},
+            "background_color": {"R":0,"G":0,"B":0,"A":0},
+            "backCamera_icon_name": "assetname",
+            "backCamera_border_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "icon_back": {
+            "icon_name": "assetname",
+            "backCamera_icon_name": "assetname"
+        },
+        "icon_switch": {
+            "icon_name": "assetname",
+            "border_width": 1,
+            "border_color": {"R":68,"G":68,"B":68,"A":1.0},
+            "background_color": {"R":0,"G":0,"B":0,"A":0},
+            "backCamera_icon_name": "assetname",
+            "backCamera_border_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "icon_got_it": {
+            "textSizeLarge": 22,
+            "textSizeNormal":16,
+            "textFont": "San Francisco",
+            "textColor": {"R":249,"G":249,"B":249,"A":1.0},
+            "background_color": {"R":0,"G":131,"B":184,"A":1.0},
+            "corner_radius": 21
+        }
+    },
+    "instruction_overlay": {
+        "textSizeLarge": 22,
+        "textSizeNormal": 20,
+        "textFont": "San Francisco",
+        "textColor": {"R":249,"G":249,"B":249,"A":1.0},
+        "background_color": {"R":0,"G":0,"B":0,"A":0.9},
+        "border_width": 1,
+        "border_color": {"R":112,"G":112,"B":112,"A":1.0}
+    },
+    "live_overlay": {
+        "textSizeLarge": 21,
+        "textSizeNormal": 21,
+        "textFont": "San Francisco",
+        "textColor": {"R":255,"G":255,"B":255,"A":1.0},
+        "background_color": {"R":0,"G":154,"B":217,"A":0.7}
+    },
+    "backCamera": {
+        "background_color": {"R":0,"G":0,"B":0,"A":0.8}
+    },
+    "oval": {
+        "border_failure_color": {"R":255,"G":255,"B":255,"A":1.0},
+        "border_success_color": {"R":208,"G":255,"B":0,"A":1.0},
+        "border_width": 5
+    },
+    "display_text": {
+        "live": {
+            "textSizeLarge": 30,
+            "textSizeNormal": 28,
+            "textFont": "San Francisco",
+            "textColor": {"R":67,"G":67,"B":67,"A":1.0},
+            "backCamera_textColor": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "confirm": {
+            "textSizeLarge": 30,
+            "textSizeNormal": 24,
+            "textFont": "San Francisco",
+            "textColor": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "tap_to_capture": {
+            "near_selfie":{
+                "textSizeLarge": 40,
+                "textSizeNormal": 32,
+                "textFont": "San Francisco",
+                "textColor": {"R":208,"G":255,"B":0,"A":1.0}
+            },
+            "far_selfie":{
+            "textSizeLarge": 34,
+            "textSizeNormal": 24,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":0,"B":0,"A":1.0}
+            }
+        },
+        "far_selfie_info": {
+            "textSizeLarge": 22,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":112,"G":112,"B":112,"A":1.0}
+        }
+    },
+    "confirmation":{
+        "actionbar": {
+              "background_color": {"R":0,"G":0,"B":0,"A":1.0}
+            },
+        "background_color": {"R":68,"G":68,"B":68,"A":1.0}
+    },
+    "auto_manual_overlay": {
+        "icon_rescan": {
+            "icon_name": "assetname"
+        },
+        "icon_switch": {
+            "icon_name": "assetname"
+        },
+        "text_rescan": {
+            "textSizeLarge": 20,
+            "textSizeNormal": 20,
+            "textFont": "San Francisco",
+            "textColor": {"R":249,"G":249,"B":249,"A":1.0}
+        },
+        "text_switch": {
+            "textSizeLarge": 20,
+            "textSizeNormal": 20,
+            "textFont": "San Francisco",
+            "textColor": {"R":249,"G":249,"B":249,"A":1.0}
+        },
+        "background_color": {"R":0,"G":0,"B":0,"A":0.8},
+        "border_width": 1,
+        "border_color": {"R":112,"G":112,"B":112,"A":1.0}
+    },
+    "far_selfie":{
+        "avatar":{
+            "icon_name": "assetname"
+        },
+        "overlay":{
+            "gif_image":{
+                "image_name":"assetname"
+            },
+            "text_arms_length":{
+                "textSizeLarge": 18,
+                "textSizeNormal": 16,
+                "textFont": "San Francisco",
+                "textColor": {"R":249,"G":249,"B":249,"A":1.0}
+            },
+            "text_hold_steady":{
+                "textSizeLarge": 20,
+                "textSizeNormal": 18,
+                "textFont": "San Francisco",
+                "textColor": {"R":249,"G":249,"B":249,"A":1.0}
+            },
+        "background_color": {"R":0,"G":0,"B":0,"A":0.9},
+        "border_width": 1,
+        "border_color": {"R":112,"G":112,"B":112,"A":1.0}
+        }
+    },
+    "alert_overlay": {
+        "text_title": {
+            "textSizeLarge": 18,
+            "textSizeNormal": 18,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":0,"B":0,"A":1.0}
+        },
+        "text_Message": {
+            "textSizeLarge": 16,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":0,"B":0,"A":1.0}
+        },
+        "positive_action": {
+            "textSizeLarge": 16,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":111,"B":255,"A":1.0},
+            "background_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "negative_action": {
+            "textSizeLarge": 16,
+            "textSizeNormal": 16,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":111,"B":255,"A":1.0},
+            "background_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "background_color": {"R":255,"G":255,"B":255,"A":1.0},
+        "horizontal_line_color" : {"R":170,"G":170,"B":170,"A":1.0},
+        "vertical_line_color" : {"R":170,"G":170,"B":170,"A":1.0}
+    }
+}

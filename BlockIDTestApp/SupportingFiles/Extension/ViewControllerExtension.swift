@@ -143,6 +143,15 @@ extension UIViewController {
         }
     }
     
+    func showSelfieScannerView() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let selfieVC = storyBoard.instantiateViewController(withIdentifier: "SelfieScannerViewController")
+            as? SelfieScannerViewController {
+            self.navigationController?.pushViewController(selfieVC,
+                                                          animated: true)
+        }
+    }
+    
     func showPinView(pinActivity : PinActivity) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let pinVC = storyBoard.instantiateViewController(withIdentifier: "PinViewController") as! PinViewController

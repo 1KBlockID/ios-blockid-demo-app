@@ -152,17 +152,29 @@ class AuthenticateViewController: UIViewController {
             return
         }
         
-        // Authenticate liveID on liveIDcontroller screen...
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
-            liveIDVC.isForVerification = true
-            liveIDVC.onFinishCallback = { (status) -> Void in
-                if status {
-                    self.doAuthenticate(data: data)
-                }
-            }
-            self.navigationController?.pushViewController(liveIDVC, animated: true)
-        }
+        /* // Authenticate liveID on liveIDcontroller screen...
+         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+         if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+             liveIDVC.isForVerification = true
+             liveIDVC.onFinishCallback = { (status) -> Void in
+                 if status {
+                     self.doAuthenticate(data: data)
+                 }
+             }
+             self.navigationController?.pushViewController(liveIDVC, animated: true)
+         }*/
+         
+         // Authenticate liveID on SelfieScannerViewController screen...
+         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+         if let selfieScannerVC = storyBoard.instantiateViewController(withIdentifier: "SelfieScannerViewController") as? SelfieScannerViewController {
+             selfieScannerVC.isForVerification = true
+             selfieScannerVC.onFinishCallback = { (status) -> Void in
+                 if status {
+                     self.doAuthenticate(data: data)
+                 }
+             }
+             self.navigationController?.pushViewController(selfieScannerVC, animated: true)
+         }
     }
     
     private func askForPin(data: AuthenticationPayloadV1) {
