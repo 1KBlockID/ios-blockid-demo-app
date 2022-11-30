@@ -15,19 +15,22 @@ class SelfieScannerViewController: UIViewController {
     private var attemptCounts = 0
     var onFinishCallback: ((_ status: Bool) -> Void)?
     
-    // MARK: - View life cycle -
+    // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.startLiveIDScanning()
     }
-    
-    // MARK: - Private function -
+}
+
+// MARK: - Private function -
+extension SelfieScannerViewController {
     private func goBack() {
         if let viewControllers = navigationController?.viewControllers {
             for viewController in viewControllers {
                 if viewController.isKind(of: EnrollMentViewController.self) {
-                    self.navigationController?.popToViewController(viewController, animated: true)
+                    self.navigationController?.popToViewController(viewController,
+                                                                   animated: true)
                 }
             }
             return
@@ -50,7 +53,8 @@ class SelfieScannerViewController: UIViewController {
                                 guard let liveidDataDic = data else { return }
                                 if self.isForVerification {
                                     guard let imgdataB64 = liveidDataDic["liveId"] as? String else { return }
-                                    guard let imgdata = Data(base64Encoded: imgdataB64, options: .ignoreUnknownCharacters),
+                                    guard let imgdata = Data(base64Encoded: imgdataB64,
+                                                             options: .ignoreUnknownCharacters),
                                           let photo = UIImage(data: imgdata) else { return }
                                     // Verify LiveID
                                     self.verifyLiveID(withPhoto: photo, token: nil)
@@ -203,5 +207,4 @@ class SelfieScannerViewController: UIViewController {
             self.goBack()
         })
     }
-
 }

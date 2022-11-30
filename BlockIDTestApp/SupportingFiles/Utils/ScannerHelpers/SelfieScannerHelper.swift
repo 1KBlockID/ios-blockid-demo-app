@@ -37,8 +37,9 @@ class SelfieScannerHelper: NSObject {
     ///
     /// This func will initialize the near and far selfie settings before starting the scan and will initiate scan later.
     ///
-    /// - Parameter viewController: A parent view controller to present scan
-    /// - Parameter completion: SelfieScanCallback which will send response on scan completion
+    /// - Parameters-
+    ///     - viewController: A parent view controller to present scan
+    ///     - completion: SelfieScanCallback which will send response on scan completion
     ///
     func startLiveIDScan(from viewController: UIViewController,
                          completion: SelfieScanCallback?) {
