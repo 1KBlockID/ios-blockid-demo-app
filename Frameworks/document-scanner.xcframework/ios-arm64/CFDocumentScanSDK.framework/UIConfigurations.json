@@ -1,0 +1,62 @@
+{
+    "action_icons": {
+        "accept_button": {
+            "textSizeLarge": 15,
+            "textSizeNormal": 15,
+            "textFont": "San Francisco",
+            "textColor": {"R":255,"G":255,"B":255,"A":1.0},
+            "background_color": {"R":0,"G":122,"B":255,"A":1.0},
+            "corner_radius": 0
+        },
+        "retake_button": {
+            "textSizeLarge": 15,
+            "textSizeNormal": 15,
+            "textFont": "San Francisco",
+            "textColor": {"R":255,"G":255,"B":255,"A":1.0},
+            "background_color": {"R":0,"G":122,"B":255,"A":1.0},
+            "corner_radius": 0
+        }
+    },
+    "brackets": {
+        "border_color": {"R":255,"G":255,"B":255,"A":1.0}
+    },
+    "text": {
+        "title": {
+            "textSizeLarge": 14,
+            "textSizeNormal": 14,
+            "textFont": "San Francisco",
+            "textColor": {"R":0,"G":0,"B":0,"A":1.0},
+            "background_color": {"R":255,"G":255,"B":255,"A":1.0}
+        },
+        "tap_to_capture": {
+            "textSizeLarge": 38,
+            "textSizeNormal": 32,
+            "textFont": "Helvetica Neue",
+            "textColor": {"R":170,"G":170,"B":170,"A":1.0}
+        },
+       "cancel_button": {
+         "textSizeLarge": 22,
+         "textSizeNormal": 15,
+         "textFont": "San Francisco",
+         "textColor": {"R":255,"G":255,"B":255,"A":1.0}
+       },
+       "review_text": {
+         "textSizeLarge": 24,
+         "textSizeNormal": 17,
+         "textFont": "San Francisco",
+         "textColor": {"R":0,"G":0,"B":0,"A":1.0}
+       }
+    },
+    "loader_overlay": {
+      "gif_image": {
+        "image_name": "assetname"
+      },
+      "loader_text": {
+          "textSizeLarge": 32,
+          "textSizeNormal": 24,
+          "textFont": "San Francisco",
+          "textColor": {"R":255,"G":255,"B":255,"A":1.0}
+      },
+      "background_color": {"R":0,"G":0,"B":0,"A":1.0}
+    }
+}

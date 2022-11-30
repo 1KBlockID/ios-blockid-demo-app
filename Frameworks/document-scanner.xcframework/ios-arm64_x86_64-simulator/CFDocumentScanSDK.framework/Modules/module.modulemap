@@ -1,0 +1,11 @@
+framework module CFDocumentScanSDK {
+  umbrella header "CFDocumentScanSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module CFDocumentScanSDK.Swift {
+    header "CFDocumentScanSDK-Swift.h"
+    requires objc
+}
