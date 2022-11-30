@@ -423,7 +423,7 @@ extension EnrollMentViewController {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             
             // Commenting old live id scanner
-//            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
+           //  showLiveIDView(isLivenessNeeded: isLivenessNeeded)
             
             // launch new live id(selfie) scanner
             showSelfieScannerView()
