@@ -103,6 +103,7 @@ extension SelfieScannerViewController {
             if let onFinishCallback = self.onFinishCallback {
                 onFinishCallback(true)
             }
+            self.goBack()
         }
     }
     
