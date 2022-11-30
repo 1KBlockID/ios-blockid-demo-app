@@ -69,7 +69,7 @@ class SelfieScannerHelper: NSObject {
 
 // MARK: - CFASelfieScanDelegate
 extension SelfieScannerHelper: CFASelfieScanDelegate {
-    
+    // This function will call when scan process will finish
     func onFinishSelfieScan(_ selfieScanData: CFASelfieScanData!) {        
         if let selfieData = selfieScanData.selfieData {
             selfiePayload[kLiveID] = selfieData.base64EncodedString()
@@ -84,12 +84,7 @@ extension SelfieScannerHelper: CFASelfieScanDelegate {
        
     }
     
-    func onCancelSelfieScan() {
-        self.scanCompletionHandler!(false,
-                                    nil,
-                                    nil)
-    }
-    
+   // This function will call when there is some error in the process of scan
     func onFinishSelfieScanWithError(_ errorCode: Int32,
                                      errorMessage: String!) {
         self.scanCompletionHandler!(false,
@@ -97,5 +92,13 @@ extension SelfieScannerHelper: CFASelfieScanDelegate {
                                     ErrorResponse(code: Int(errorCode),
                                                   msg: errorMessage))
     }
+    
+    // This function will be called when cancel button on scanner screen clicked
+    func onCancelSelfieScan() {
+        self.scanCompletionHandler!(false,
+                                    nil,
+                                    nil)
+    }
+    
 
 }
