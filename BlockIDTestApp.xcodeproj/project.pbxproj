@@ -42,6 +42,7 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
+		4C013B9D29376F8A0036F5D0 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013B9C29376F8A0036F5D0 /* DocumentScannerViewController.swift */; };
 		4C6D499D29115AE80041C9A1 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; };
 		4C6D499E29115AE80041C9A1 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
@@ -141,6 +142,7 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		4C013B9C29376F8A0036F5D0 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
 		5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */,
 				3CEE3345264414E7003FDB78 /* PassportViewController.swift */,
 				3CEE3346264414E7003FDB78 /* DriverLicenseViewController.swift */,
+				4C013B9C29376F8A0036F5D0 /* DocumentScannerViewController.swift */,
 				3CEE3347264414E7003FDB78 /* SplashViewController.swift */,
 				3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */,
 				5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */,
@@ -643,6 +646,7 @@
 				3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */,
 				E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */,
 				E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */,
+				4C013B9D29376F8A0036F5D0 /* DocumentScannerViewController.swift in Sources */,
 				E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */,
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
