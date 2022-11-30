@@ -1651,21 +1651,6 @@
             </objects>
             <point key="canvasLocation" x="1204" y="95"/>
         </scene>
-        <!--Selfie Scanner View Controller-->
-        <scene sceneID="4pa-tf-kPT">
-            <objects>
-                <viewController storyboardIdentifier="SelfieScannerViewController" id="RDa-Zd-kYA" customClass="SelfieScannerViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Df2-JZ-HBf">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="J5e-yy-WQ1"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4en-nd-JQX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1864" y="-596"/>
-        </scene>
         <!--LiveID View Controller-->
         <scene sceneID="Jkx-Cr-IGz">
             <objects>

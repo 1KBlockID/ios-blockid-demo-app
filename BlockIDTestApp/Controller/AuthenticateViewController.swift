@@ -165,16 +165,15 @@ class AuthenticateViewController: UIViewController {
          }*/
          
          // Authenticate liveID on SelfieScannerViewController screen...
-         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-         if let selfieScannerVC = storyBoard.instantiateViewController(withIdentifier: "SelfieScannerViewController") as? SelfieScannerViewController {
-             selfieScannerVC.isForVerification = true
-             selfieScannerVC.onFinishCallback = { (status) -> Void in
-                 if status {
-                     self.doAuthenticate(data: data)
-                 }
-             }
-             self.navigationController?.pushViewController(selfieScannerVC, animated: true)
-         }
+        let selfieScannerVC = SelfieScannerViewController()
+        selfieScannerVC.view.backgroundColor = .white
+        selfieScannerVC.isForVerification = true
+        selfieScannerVC.onFinishCallback = { (status) -> Void in
+            if status {
+                self.doAuthenticate(data: data)
+            }
+        }
+        self.navigationController?.pushViewController(selfieScannerVC, animated: true)
     }
     
     private func askForPin(data: AuthenticationPayloadV1) {
