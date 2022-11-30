@@ -422,10 +422,10 @@ extension EnrollMentViewController {
     private func enrollLiveID(isLivenessNeeded: Bool) {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             
-            // Commenting old live id scanner
-           //  showLiveIDView(isLivenessNeeded: isLivenessNeeded)
+            // commenting old liveid scanner
+            // showLiveIDView(isLivenessNeeded: isLivenessNeeded)
             
-            // launch new live id(selfie) scanner
+            //launch new liveid (selfie) scanner
             showSelfieScannerView()
         }
     }
