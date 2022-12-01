@@ -89,7 +89,7 @@ extension DocumentScannerViewController {
     ///
     /// This func will scan the LiveID using SelfieScanner which will give the near selfie and the far selfie data.
     ///
-    /// - Parameter dlDataDic: A DL data dictionary from DocumentScanner which will be passed to verifyDL
+    /// - Parameter dlDataDic: A DL data dictionary from DocumentScanner which will be passed to verifyDriversLicense
     ///
     private func scanLiveID(dlDataDic: [String: Any]) {
         SelfieScannerHelper.shared.startLiveIDScan(from: self)
@@ -100,7 +100,7 @@ extension DocumentScannerViewController {
                 self.selfiePayload = dic
                 
                 // Verify DL
-                self.verifyDL(withDLData: dlDataDic)
+                self.verifyDriversLicense(withDLData: dlDataDic)
                 
             } else {
                 // Abort process
@@ -119,14 +119,14 @@ extension DocumentScannerViewController {
     ///
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
-    private func verifyDL(withDLData driverLicense: [String: Any]?) {
+    private func verifyDriversLicense(withDLData driverLicense: [String: Any]?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.lblActivityIndicator.text = "EXTRACT_DATA".localizedMessage(0)
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         })
         
-        VerifyDocumentHelper.shared.verifyDL(withDLData: driverLicense) { status, dlData ,error in
+        VerifyDocumentHelper.shared.verifyDriversLicense(withDLData: driverLicense) { status, dlData ,error in
             if !status {
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()

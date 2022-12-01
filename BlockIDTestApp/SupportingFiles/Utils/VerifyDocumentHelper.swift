@@ -127,7 +127,7 @@ class VerifyDocumentHelper {
     ///
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
-    func verifyDL(withDLData driverLicense: [String: Any]?,
+    func verifyDriversLicense(withDLData driverLicense: [String: Any]?,
                   completion: @escaping AuthenticateDocumentCallback) {
         var verifications: [String] = []
         guard var dataDictionary = driverLicense else {
