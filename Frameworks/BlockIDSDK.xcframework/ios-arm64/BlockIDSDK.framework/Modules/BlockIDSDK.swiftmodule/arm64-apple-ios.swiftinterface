@@ -610,6 +610,11 @@ public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [Me
   public func isPinRegistered() -> Swift.Bool
   public func isDeviceAuthRegisterd() -> Swift.Bool
   public func isLiveIDRegisterd() -> Swift.Bool
+  public func isPassportEnrolled() -> Swift.Bool
+  public func isDLEnrolled() -> Swift.Bool
+  public func isSSNEnrolled() -> Swift.Bool
+  public func isNationalIdEnrolled() -> Swift.Bool
+  public func isAddressVerificationDone() -> Swift.Bool
   public func getTenant() -> BIDTenant?
   public func getDeviceAuth() -> DeviceAuth
   public func checkDeviceTrust() -> Swift.Bool
@@ -645,7 +650,7 @@ public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [Me
   public func authenticateUser(sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, dictScopes: [Swift.String : Any], lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, completion: @escaping AuthenticateUserCallback)
   public func authenticateUser(sessionId: Swift.String?, creds: Swift.String, dictScopes: [Swift.String : Any], lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, completion: @escaping AuthenticateUserCallback)
   public func authenticateUser(sessionId: Swift.String?, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, completion: @escaping AuthenticateUserCallback)
-  public func authenticateUser(controller: UIKit.UIViewController? = nil, sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, metaData: [Swift.String : Any]? = nil, completion: @escaping AuthenticateUserCallback)
+  public func authenticateUser(sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, completion: @escaping AuthenticateUserCallback)
   public func isTrustedSessionSources(sessionUrl: Swift.String) -> Swift.Bool
   public func getOfflineAuthPayload(bidLinkedAccount: BIDLinkedAccount) -> Swift.String?
   public func getLicense() -> (license: BIDLicense?, error: ErrorResponse?)
@@ -753,6 +758,7 @@ public enum ScannerType {
   }
 }
 public typealias VerifyLiveIDCallback = ((_ status: Swift.Bool, _ error: ErrorResponse?) -> Swift.Void)
+public typealias LivenessCheckCallback = ((_ status: Swift.Bool, _ token: Swift.String?, _ proof: Swift.String?, _ error: ErrorResponse?) -> Swift.Void)
 public enum AuthAssetType : Swift.String {
   case pin
   case device
@@ -1387,7 +1393,6 @@ public struct CustomErrors {
     public static let ATTESTATION_OPTIONS_FAILED: (code: Swift.Int, message: Swift.String)
     public static let ATTESTATION_RESULT_FAILED: (code: Swift.Int, message: Swift.String)
     public static let LINKING_FAILED: (code: Swift.Int, message: Swift.String)
-    public static let UNLINKING_FAILED: (code: Swift.Int, message: Swift.String)
   }
   public struct SCEPCheck {
     public static let INVALID: (code: Swift.Int, message: Swift.String)
