@@ -65,7 +65,11 @@ extension SelfieScannerViewController {
                                                   token: nil)
                             } else {
                                 // Set LiveID
-                                self.checkLiveness(liveidImgDic: liveidDataDic)
+                                guard let imgdataB64 = liveidDataDic["liveId"] as? String else { return }
+                                guard let imgdata = Data(base64Encoded: imgdataB64,
+                                                         options: .ignoreUnknownCharacters),
+                                      let photo = UIImage(data: imgdata) else { return }
+                                self.setLiveID(withPhoto: photo, token: nil)
                             }
                         } else {
                             self.goBack()
