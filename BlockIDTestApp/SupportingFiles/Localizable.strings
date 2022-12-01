@@ -19,15 +19,13 @@
 
 // MARK: - Driver license scan Errors -
 "FACE_COMPARISON_FAILED" = "Face comparison failed.";
+"DL_ENROLLED" = "Drivers License enrolled successfully.";
+"DL_VERIFY" = "Unable to verify drivers license.";
 
 // MARK: - LiveID Enroll success -
 "LIVEID_ENROLLED" = "LiveID enrolled successfully.";
 "LIVEID_VERIFIED" = "LiveID successfully verified.";
 "LIVEID_VERIFICATION_FAILED" = "LiveID verification failed.";
-
-// MARK: - DL Enroll success -
-"DL_ENROLLED" = "Drivers License enrolled successfully.";
-"DL_VERIFY" = "Unable to verify drivers license.";
 
 // MARK: - General -
 "EXTRACT_DATA" = "Extracting identity data";
@@ -35,4 +33,6 @@
 "MATCHING_SELFIE" = "Matching selfie";
 "VALIDATING_LIVENESS" = "Validating liveness";
 "VERIFING_LIVEID" = "Verifing liveid";
-"VERIFICATION_FAILED" = "Verification failed";
+"VERIFICATION_FAILED" = "Verification failed.";
+"COMPARE_FACE_FAILED" = "Failed to match the selfie.";
+"AUTHENTICATE_DOCUMENT_FAILED" = "We are unable to verify your document.";
