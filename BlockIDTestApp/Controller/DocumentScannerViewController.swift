@@ -11,7 +11,7 @@ import BlockIDSDK
 
 class DocumentScannerViewController: UIViewController {
    
-    private lazy var dlPayload = [String: Any]()
+    private lazy var documentPayload = [String: Any]()
     private lazy var selfiePayload = [String: Any]()
     
     @IBOutlet private weak var viewActivityIndicator: UIView!
@@ -21,14 +21,14 @@ class DocumentScannerViewController: UIViewController {
     // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.startDLScanning()
+        self.startDocumentScan()
     }
 }
 
 // MARK: - Private Methods -
 extension DocumentScannerViewController {
     
-    private func startDLScanning() {
+    private func startDocumentScan() {
         // 1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
             if !response {
@@ -38,12 +38,11 @@ extension DocumentScannerViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    DocumentScannerHelper.shared.startDLScan(from: self)
-                    { status, data, error in
+                    DocumentScannerHelper.shared.startDocumentScan(from: self) { status, data, error in
                         if status {
                             guard let dictionary = data else { return }
                             // Got DL Scan data, go for LiveID Scan
-                            self.scanLiveID(dlDataDic: dictionary)
+                            self.startSelfieScan(documentData: dictionary)
                         } else {
                             if let err = error {
                                 self.showErrorDialog(err)
@@ -82,25 +81,24 @@ extension DocumentScannerViewController {
 }
 
 
-// MARK: - DL Enrollment -
+// MARK: - Private Methods -
 extension DocumentScannerViewController {
     
     /// **Scan LiveID**
     ///
     /// This func will scan the LiveID using SelfieScanner which will give the near selfie and the far selfie data.
     ///
-    /// - Parameter dlDataDic: A DL data dictionary from DocumentScanner which will be passed to verifyDriversLicense
+    /// - Parameter documentData: A Document data dictionary from DocumentScanner
     ///
-    private func scanLiveID(dlDataDic: [String: Any]) {
-        SelfieScannerHelper.shared.startLiveIDScan(from: self)
-        { status, data, error in
+    private func startSelfieScan(documentData: [String: Any]) {
+        SelfieScannerHelper.shared.startLiveIDScan(from: self) { status, data, error in
             if status {
                 // Got Data
-                guard let dic = data else { return }
-                self.selfiePayload = dic
+                guard let dictionary = data else { return }
+                self.selfiePayload = dictionary
                 
                 // Verify DL
-                self.authenticateDriversLicense(withDLData: dlDataDic)
+                self.authenticateDriversLicense(withDLData: self.documentPayload)
                 
             } else {
                 // Abort process
@@ -113,15 +111,15 @@ extension DocumentScannerViewController {
         }
     }
     
-    /// Verifies DL data before registration
+    /// Extract document data before registration
     ///
-    /// This func will verify the scanned Driver License against an authenticator
+    /// This func will verify the scanned Drivers License
     ///
-    /// - Parameter driverLicense: A Driver License data dictionary
+    /// - Parameter driverLicense: A Drivers License data
     ///
     private func authenticateDriversLicense(withDLData driverLicense: [String: Any]?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.lblActivityIndicator.text = "EXTRACT_DATA".localizedMessage(0)
+            self.lblActivityIndicator.text = "EXTRACT_DATA".localizedMessage()
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         })
@@ -134,7 +132,7 @@ extension DocumentScannerViewController {
                 }
             } else {
                 guard let dlObjDictionary = dlData else { return }
-                self.dlPayload = dlObjDictionary
+                self.documentPayload = dlObjDictionary
                 
                 // LiveID NOT Enrolled, verify doc with face_liveness
                 if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
@@ -147,21 +145,22 @@ extension DocumentScannerViewController {
         }
     }
 
-    /// Compares faces from Driver License and LiveId.
+    /// Compares faces from Document and Selfie.
     ///
     /// This calls compareFace() func of **VerifyDocumentHelper** and acts on provided response from it.
     ///
     private func compareFace() {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "MATCHING_SELFIE".localizedMessage(0)
+            self.lblActivityIndicator.text = "MATCHING_SELFIE".localizedMessage()
         }
         let liveIdBase64 = selfiePayload[VerifyDocumentHelper.shared.kLiveId] as? String
-        let documentFaceBase64 = dlPayload["face"] as? String
+        let documentFaceBase64 = documentPayload["face"] as? String
 
         guard let liveIdBase64 = liveIdBase64,
               let documentFaceBase64 = documentFaceBase64 else {
-            let msg = "FACE_COMPARISON_FAILED".localizedMessage(0)
-            let error = ErrorResponse(code: 1007, msg: msg)
+            let msg = "FACE_COMPARISON_FAILED".localizedMessage()
+            let error = ErrorResponse(code: VerifyDocumentHelper.shared.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
+                                      msg: msg)
             self.showErrorDialog(error)
             return
         }
@@ -177,7 +176,7 @@ extension DocumentScannerViewController {
                 return
             }
             // Register DL
-            self.setDriverLicense(withDLData: self.dlPayload, token: "")
+            self.setDriverLicense(withDLData: self.documentPayload, token: "")
         }
         
     }
@@ -190,7 +189,7 @@ extension DocumentScannerViewController {
                                   token: String?) {
         viewActivityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
+        self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage()
 
         var dic = driverLicense
         dic?[VerifyDocumentHelper.shared.kCategory] = RegisterDocCategory.Identity_Document.rawValue
@@ -211,7 +210,7 @@ extension DocumentScannerViewController {
                         return
                     }
                     // SUCCESS
-                    self.view.makeToast("DL_ENROLLED".localizedMessage(0),
+                    self.view.makeToast("DL_ENROLLED".localizedMessage(),
                                         duration: 3.0,
                                         position: .center,
                                         title: "Thank you!",
@@ -235,9 +234,9 @@ extension DocumentScannerViewController {
                 return
               }
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
+            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage()
         }
-        BlockIDSDK.sharedInstance.registerDocument(obj: dlPayload,
+        BlockIDSDK.sharedInstance.registerDocument(obj: documentPayload,
                                                    liveIdProofedBy: "blockid",
                                                    docSignToken: nil,
                                                    faceImage: img,
@@ -251,7 +250,7 @@ extension DocumentScannerViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("DL_ENROLLED".localizedMessage(0),
+                self.view.makeToast("DL_ENROLLED".localizedMessage(),
                                     duration: 3.0,
                                     position: .center,
                                     title: "Thank you!",

@@ -56,7 +56,9 @@ class DocumentScannerHelper {
     /// - Parameter documentSide: CFDocumentScanSDK.DSSide type which will decide which side of document will be scanned first
     /// - Parameter completion: DLScanCallback which will send response on scan completion
     ///
-    func startDLScan(from viewController: UIViewController, forSide documentSide: CFDocumentScanSDK.DSSide = .Front, completion: DLScanCallback?) {
+    func startDocumentScan(from viewController: UIViewController,
+                           forSide documentSide: CFDocumentScanSDK.DSSide = .Front,
+                           completion: DLScanCallback?) {
         
         if appDelegate?.orientationLock == UIInterfaceOrientationMask.portrait {
             CommonFunctions.rotateDeviceWithOrientationMode(.landscapeRight)
@@ -89,7 +91,7 @@ class DocumentScannerHelper {
     /// This func will Scan other side of the Driver License which is yet to be scanned
     private func scanOtherSide() {
         scanSide = (scanSide == .Front) ? .Back : .Front
-        startDLScan(from: scanVC, forSide: scanSide, completion: scanCompletionHandler)
+        startDocumentScan(from: scanVC, forSide: scanSide, completion: scanCompletionHandler)
     }
     
     /// Add Scanned data to dic

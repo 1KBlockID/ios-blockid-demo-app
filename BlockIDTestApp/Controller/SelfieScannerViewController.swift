@@ -82,7 +82,7 @@ extension SelfieScannerViewController {
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String? = nil) {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "VERIFING_LIVEID".localizedMessage(0)
+            self.lblActivityIndicator.text = "VERIFING_LIVEID".localizedMessage()
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         }
@@ -98,7 +98,7 @@ extension SelfieScannerViewController {
                         // Failed 3 attempts
                         // Finish Process with false status
                         self.lblActivityIndicator.text = nil
-                        self.view.makeToast("LIVEID_VERIFICATION_FAILED".localizedMessage(0),
+                        self.view.makeToast("LIVEID_VERIFICATION_FAILED".localizedMessage(),
                                             duration: 3.0,
                                             position: .center,
                                             title: "Error",
@@ -118,7 +118,7 @@ extension SelfieScannerViewController {
                 return
             }
             //Verification successful
-            self.view.makeToast("LIVEID_VERIFIED".localizedMessage(0),
+            self.view.makeToast("LIVEID_VERIFIED".localizedMessage(),
                                 duration: 3.0,
                                 position: .center,
                                 title: "Thank you!",
@@ -137,7 +137,7 @@ extension SelfieScannerViewController {
         DispatchQueue.main.async {
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
+            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage()
         }
         
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: photo,
@@ -157,7 +157,7 @@ extension SelfieScannerViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("LIVEID_ENROLLED".localizedMessage(0),
+                self.view.makeToast("LIVEID_ENROLLED".localizedMessage(),
                                     duration: 3.0,
                                     position: .center,
                                     title: "Thank you!",

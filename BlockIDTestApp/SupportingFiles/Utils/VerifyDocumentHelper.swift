@@ -21,8 +21,8 @@ class VerifyDocumentHelper {
     
     // MARK: - Singleton
     static let shared = VerifyDocumentHelper()
-    private  let k_COMPARE_FACE_FAILED_CODE = 101
-    private  let k_AUTHENTICATE_DOCUMENT_FAILED_CODE = 102
+    private let k_COMPARE_FACE_FAILED_CODE = 101
+    let k_AUTHENTICATE_DOCUMENT_FAILED_CODE = 102
     
     private let kFaceLiveness = "face_liveness"
     private let kFaceCompare = "face_compare"
@@ -78,7 +78,7 @@ class VerifyDocumentHelper {
             
             if !verified {
                 completion(false, ErrorResponse(code: self.k_COMPARE_FACE_FAILED_CODE,
-                                                msg: "COMPARE_FACE_FAILED".localizedMessage(0)))
+                                                msg: "COMPARE_FACE_FAILED".localizedMessage()))
                 return
             }
             completion(verified, nil)
@@ -121,7 +121,7 @@ class VerifyDocumentHelper {
                            isVerified == true {
                             guard let dlObjDictionary = certifications[0]["result"] as? [String: Any] else {
                                 completion(false, nil, ErrorResponse(code: self.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
-                                                                     msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage(0)))
+                                                                     msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage()))
                                 return
                             }
                             completion(true, dlObjDictionary, nil)
@@ -130,7 +130,7 @@ class VerifyDocumentHelper {
                     }
                     
                     completion(false, nil, ErrorResponse(code: self.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
-                                                          msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage(0)))
+                                                          msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage()))
                 }
             }
         }
