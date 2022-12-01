@@ -35,3 +35,4 @@
 "MATCHING_SELFIE" = "Matching selfie";
 "VALIDATING_LIVENESS" = "Validating liveness";
 "VERIFING_LIVEID" = "Verifing liveid";
+"VERIFICATION_FAILED" = "Verification failed";

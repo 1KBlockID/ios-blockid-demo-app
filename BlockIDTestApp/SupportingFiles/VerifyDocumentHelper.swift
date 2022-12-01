@@ -9,9 +9,13 @@
 import Foundation
 import BlockIDSDK
 
-public typealias LivenessCheckCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
-public typealias CompareFaceCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
-public typealias VerifyDLCallback = ((_ status: Bool, _ dlData: [String: Any]?,_ error: ErrorResponse?) -> Void)
+public typealias LivenessCheckCallback = ((_ status: Bool,
+                                           _ error: ErrorResponse?) -> Void)
+public typealias CompareFaceCallback = ((_ status: Bool,
+                                         _ error: ErrorResponse?) -> Void)
+public typealias VerifyDLCallback = ((_ status: Bool,
+                                      _ dlData: [String: Any]?,
+                                      _ error: ErrorResponse?) -> Void)
 
 class VerifyDocumentHelper {
     
@@ -42,14 +46,16 @@ class VerifyDocumentHelper {
     ///
     /// - Parameter liveIDBase64: base64 encoded image
     ///
-    func checkLiveness(liveIDBase64: String, completion: @escaping LivenessCheckCallback) {
+    func checkLiveness(liveIDBase64: String,
+                       completion: @escaping LivenessCheckCallback) {
         var livenessCheck = [String: Any]()
         livenessCheck[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kTypeLiveId
         livenessCheck[kType] = kTypeLiveId
         livenessCheck[kLiveId] = liveIDBase64
         
         BlockIDSDK.sharedInstance.verifyDocument(dic: livenessCheck,
-                                                 verifications: [kFaceLiveness]) { status, dataDic, error in
+                                                 verifications: [kFaceLiveness])
+        { status, dataDic, error in
             if !status {
                 completion(status, error)
                 return
@@ -121,7 +127,8 @@ class VerifyDocumentHelper {
     ///
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
-    func verifyDL(withDLData driverLicense: [String: Any]?, completion: @escaping VerifyDLCallback) {
+    func verifyDL(withDLData driverLicense: [String: Any]?,
+                  completion: @escaping VerifyDLCallback) {
         var verifications: [String] = []
         guard var dataDictionary = driverLicense else {
             completion(false, nil, nil)
@@ -159,8 +166,8 @@ class VerifyDocumentHelper {
                     }
                     
                     if !verified {
-                        completion(false, nil, ErrorResponse(code: CustomErrors.kDocumentPhotoComparisionFailed.code,
-                                                          msg: CustomErrors.kDocumentPhotoComparisionFailed.msg))
+                        completion(false, nil, ErrorResponse(code: 4001,
+                                                          msg: "VERIFICATION_FAILED".localizedMessage(0)))
                         completion(verified, nil, nil)
                     }
                 }
