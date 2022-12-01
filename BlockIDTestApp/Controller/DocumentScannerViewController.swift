@@ -100,7 +100,7 @@ extension DocumentScannerViewController {
                 self.selfiePayload = dic
                 
                 // Verify DL
-                self.verifyDriversLicense(withDLData: dlDataDic)
+                self.authenticateDriversLicense(withDLData: dlDataDic)
                 
             } else {
                 // Abort process
@@ -119,14 +119,14 @@ extension DocumentScannerViewController {
     ///
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
-    private func verifyDriversLicense(withDLData driverLicense: [String: Any]?) {
+    private func authenticateDriversLicense(withDLData driverLicense: [String: Any]?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             self.lblActivityIndicator.text = "EXTRACT_DATA".localizedMessage(0)
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         })
         
-        VerifyDocumentHelper.shared.verifyDriversLicense(withDLData: driverLicense) { status, dlData ,error in
+        VerifyDocumentHelper.shared.authenticateDriversLicense(withDLData: driverLicense) { status, dlData ,error in
             if !status {
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()

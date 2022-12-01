@@ -123,13 +123,13 @@ class VerifyDocumentHelper {
         }
     }
     
-    /// Verifies DL data before registration
+    /// Authenticate DL data before registration
     ///
     /// This func will verify the scanned Driver License against an authenticator
     ///
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
-    func verifyDriversLicense(withDLData driverLicense: [String: Any]?,
+    func authenticateDriversLicense(withDLData driverLicense: [String: Any]?,
                   completion: @escaping AuthenticateDocumentCallback) {
         var verifications: [String] = []
         guard var dataDictionary = driverLicense else {
@@ -160,12 +160,12 @@ class VerifyDocumentHelper {
                                 completion(false, nil, nil)
                                 return
                             }
-                            completion(verified, dlObjDictionary, nil)
+                            completion(true, dlObjDictionary, nil)
                             return
                         }
                     }
                     
-                    completion(verified, nil, ErrorResponse(code: 4001,
+                    completion(false, nil, ErrorResponse(code: 4001,
                                                           msg: "VERIFICATION_FAILED".localizedMessage(0)))
                 }
             }
