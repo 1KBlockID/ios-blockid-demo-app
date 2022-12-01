@@ -98,7 +98,7 @@ extension DocumentScannerViewController {
                 self.selfiePayload = dictionary
                 
                 // Verify DL
-                self.authenticateDriversLicense(withDLData: self.documentPayload)
+                self.authenticateDriversLicense(withDLData: documentData)
                 
             } else {
                 // Abort process
