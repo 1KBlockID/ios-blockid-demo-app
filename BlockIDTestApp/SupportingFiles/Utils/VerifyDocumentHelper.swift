@@ -43,45 +43,6 @@ class VerifyDocumentHelper {
     
     private init() { }
     
-    /// Checks liveness of liveid photo
-    ///
-    /// This func will verify the liveid image scanned during any enrollment process
-    ///
-    /// - Parameter liveIDBase64: base64 encoded image
-    ///
-    func checkLiveness(liveIDBase64: String,
-                       completion: @escaping LivenessCheckCallback) {
-        var livenessCheck = [String: Any]()
-        livenessCheck[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kTypeLiveId
-        livenessCheck[kType] = kTypeLiveId
-        livenessCheck[kLiveId] = liveIDBase64
-        
-        BlockIDSDK.sharedInstance.verifyDocument(dic: livenessCheck,
-                                                 verifications: [kFaceLiveness])
-        { status, dataDictionary, error in
-            if !status {
-                completion(status, error)
-                return
-            }
-            
-            var verified = false
-            
-            if let dataDict = dataDictionary,
-               let certifications = dataDict[self.kCertifications] as? [[String: Any]] {
-                if let isVerified = certifications[0][self.kVerified] as? Bool, isVerified {
-                    verified = isVerified
-                }
-            }
-            
-            if !verified {
-                completion(false, ErrorResponse(code: CustomErrors.kFaceLivenessCheckFailed.code,
-                                                msg: CustomErrors.kFaceLivenessCheckFailed.msg))
-                return
-            }
-            completion(verified, nil)
-        }
-    }
-    
     /// Compares scanned face with registered face
     ///
     /// - Parameters

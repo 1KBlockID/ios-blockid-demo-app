@@ -133,30 +133,6 @@ extension SelfieScannerViewController {
         }
     }
     
-    private func checkLiveness(liveidImgDic: [String: Any]) {
-        DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "VALIDATING_LIVENESS".localizedMessage(0)
-            self.viewActivityIndicator.isHidden = false
-            self.activityIndicator.startAnimating()
-        }
-        var liveidDataDic = liveidImgDic
-        liveidDataDic[VerifyDocumentHelper.shared.kID] = BlockIDSDK.sharedInstance.getDID() + ".liveid"
-        liveidDataDic[VerifyDocumentHelper.shared.kType] = VerifyDocumentHelper.shared.kTypeLiveId
-        guard let imgdataB64 = liveidDataDic[VerifyDocumentHelper.shared.kLiveId] as? String else { return }
-        VerifyDocumentHelper.shared.checkLiveness(liveIDBase64: imgdataB64)
-        { status, error in
-            if !status {
-                self.activityIndicator.stopAnimating()
-                self.showErrorDialog(error)
-            } else {
-                guard let imgdata = Data(base64Encoded: imgdataB64,
-                                         options: .ignoreUnknownCharacters),
-                      let img = UIImage(data: imgdata) else { return }
-                self.setLiveID(withPhoto: img, token: nil)
-            }
-        }
-    }
-    
     private func setLiveID(withPhoto photo: UIImage, token: String?) {
         DispatchQueue.main.async {
             self.viewActivityIndicator.isHidden = false

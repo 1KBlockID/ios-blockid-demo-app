@@ -2,7 +2,7 @@
 //  DocumentScannerViewController.swift
 //  BlockIDTestApp
 //
-//  Created by Prasanna gupta on 30/11/22.
+//  Created by Prasanna Gupta on 30/11/22.
 //
 
 import UIKit
@@ -138,7 +138,7 @@ extension DocumentScannerViewController {
                 
                 // LiveID NOT Enrolled, verify doc with face_liveness
                 if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-                    self.checkLiveness()
+                    self.registerDocumentWithLiveid()
                     return
                 }
                 // LiveID Enrolled, verify doc with face_compare
@@ -180,28 +180,6 @@ extension DocumentScannerViewController {
             self.setDriverLicense(withDLData: self.dlPayload, token: "")
         }
         
-    }
-    
-    /// **Checks Face liveness**
-    ///
-    /// This calls checkLiveness() func of **VerifyDocumentHelper** and acts on provided response from it.
-    ///
-    private func checkLiveness() {
-        let liveIdBase64 = selfiePayload[VerifyDocumentHelper.shared.kLiveId] as? String
-        DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "VALIDATING_LIVENESS".localizedMessage(0)
-        }
-        guard let liveIdBase64 = liveIdBase64 else { return }
-        VerifyDocumentHelper.shared.checkLiveness(liveIDBase64: liveIdBase64)
-        { status, error in
-            if !status {
-                self.activityIndicator.stopAnimating()
-                self.showErrorDialog(error)
-                return
-            }
-            // Register DL with LiveId
-            self.registerDocumentWithLiveid()
-        }
     }
     
     /// **Register DL**
