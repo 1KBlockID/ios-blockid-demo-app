@@ -21,8 +21,8 @@ class VerifyDocumentHelper {
     
     // MARK: - Singleton
     static let shared = VerifyDocumentHelper()
-    private static k_COMPARE_FACE_FAILED_CODE = 101
-    private static k_AUTHENTICATE_DOCUMENT_FAILED_CODE = 102
+    private  let k_COMPARE_FACE_FAILED_CODE = 101
+    private  let k_AUTHENTICATE_DOCUMENT_FAILED_CODE = 102
     
     private let kFaceLiveness = "face_liveness"
     private let kFaceCompare = "face_compare"
@@ -116,7 +116,7 @@ class VerifyDocumentHelper {
             }
             
             if !verified {
-                completion(false, ErrorResponse(code: k_COMPARE_FACE_FAILED_CODE,
+                completion(false, ErrorResponse(code: self.k_COMPARE_FACE_FAILED_CODE,
                                                 msg: "COMPARE_FACE_FAILED".localizedMessage(0)))
                 return
             }
@@ -159,8 +159,8 @@ class VerifyDocumentHelper {
                         if let isVerified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
                            isVerified == true {
                             guard let dlObjDictionary = certifications[0]["result"] as? [String: Any] else {
-                                completion(false, nil, ErrorResponse(code: 4001,
-                                                                     msg: "DL_VERIFY".localizedMessage(0))
+                                completion(false, nil, ErrorResponse(code: self.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
+                                                                     msg: "DL_VERIFY".localizedMessage(0)))
                                 return
                             }
                             completion(true, dlObjDictionary, nil)
@@ -168,7 +168,7 @@ class VerifyDocumentHelper {
                         }
                     }
                     
-                    completion(false, nil, ErrorResponse(code: k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
+                    completion(false, nil, ErrorResponse(code: self.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
                                                           msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage(0)))
                 }
             }
