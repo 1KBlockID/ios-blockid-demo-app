@@ -13,8 +13,8 @@ public typealias LivenessCheckCallback = ((_ status: Bool,
                                            _ error: ErrorResponse?) -> Void)
 public typealias CompareFaceCallback = ((_ status: Bool,
                                          _ error: ErrorResponse?) -> Void)
-public typealias VerifyDLCallback = ((_ status: Bool,
-                                      _ dlData: [String: Any]?,
+public typealias AuthenticateDocumentCallback = ((_ status: Bool,
+                                      _ documentData: [String: Any]?,
                                       _ error: ErrorResponse?) -> Void)
 
 class VerifyDocumentHelper {
@@ -128,7 +128,7 @@ class VerifyDocumentHelper {
     /// - Parameter driverLicense: A Driver License data dictionary
     ///
     func verifyDL(withDLData driverLicense: [String: Any]?,
-                  completion: @escaping VerifyDLCallback) {
+                  completion: @escaping AuthenticateDocumentCallback) {
         var verifications: [String] = []
         guard var dataDictionary = driverLicense else {
             completion(false, nil, nil)
