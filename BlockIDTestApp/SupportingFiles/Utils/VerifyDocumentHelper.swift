@@ -160,7 +160,7 @@ class VerifyDocumentHelper {
                            isVerified == true {
                             guard let dlObjDictionary = certifications[0]["result"] as? [String: Any] else {
                                 completion(false, nil, ErrorResponse(code: self.k_AUTHENTICATE_DOCUMENT_FAILED_CODE,
-                                                                     msg: "DL_VERIFY".localizedMessage(0)))
+                                                                     msg: "AUTHENTICATE_DOCUMENT_FAILED".localizedMessage(0)))
                                 return
                             }
                             completion(true, dlObjDictionary, nil)

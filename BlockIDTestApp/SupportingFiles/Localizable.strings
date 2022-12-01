@@ -20,7 +20,6 @@
 // MARK: - Driver license scan Errors -
 "FACE_COMPARISON_FAILED" = "Face comparison failed.";
 "DL_ENROLLED" = "Drivers License enrolled successfully.";
-"DL_VERIFY" = "Unable to verify drivers license.";
 
 // MARK: - LiveID Enroll success -
 "LIVEID_ENROLLED" = "LiveID enrolled successfully.";
