@@ -11,7 +11,7 @@ import BlockIDSDK
 
 class DocumentScannerViewController: UIViewController {
    
-    private lazy var dlDataDic = [String: Any]()
+    private lazy var dlPayload = [String: Any]()
     private lazy var selfiePayload = [String: Any]()
     
     @IBOutlet private weak var viewActivityIndicator: UIView!
@@ -41,9 +41,9 @@ extension DocumentScannerViewController {
                     DocumentScannerHelper.shared.startDLScan(from: self)
                     { status, data, error in
                         if status {
-                            guard let dic = data else { return }
+                            guard let dictionary = data else { return }
                             // Got DL Scan data, go for LiveID Scan
-                            self.scanLiveID(dlDataDic: dic)
+                            self.scanLiveID(dlDataDic: dictionary)
                         } else {
                             if let err = error {
                                 self.showErrorDialog(err)
@@ -82,7 +82,7 @@ extension DocumentScannerViewController {
 }
 
 
-// MARK: - Enrolment Post-Actions -
+// MARK: - Enrolment -
 extension DocumentScannerViewController {
     
     /// **Scan LiveID**
@@ -99,7 +99,7 @@ extension DocumentScannerViewController {
                 guard let dic = data else { return }
                 self.selfiePayload = dic
                 
-                // Authenticate DL
+                // Verify DL
                 self.verifyDL(withDLData: dlDataDic)
                 
             } else {
@@ -109,7 +109,6 @@ extension DocumentScannerViewController {
                     return
                 }
                 self.goBack()
-//                self.onFinishCallback?(self, false)
             }
         }
     }
@@ -150,7 +149,7 @@ extension DocumentScannerViewController {
                         if let verified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
                            verified == true {
                             guard let dlObjDic = certifications[0]["result"] as? [String: Any] else { return }
-                            self?.dlDataDic = dlObjDic
+                            self?.dlPayload = dlObjDic
                             
                             // LiveID NOT Enrolled, verify doc with face_liveness
                             if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
@@ -185,7 +184,7 @@ extension DocumentScannerViewController {
             self.lblActivityIndicator.text = "Matching selfie"
         }
         let liveIdBase64 = selfiePayload[VerifyDocumentHelper.shared.kLiveId] as? String
-        let documentFaceBase64 = dlDataDic["face"] as? String
+        let documentFaceBase64 = dlPayload["face"] as? String
 
         guard let liveIdBase64 = liveIdBase64,
               let documentFaceBase64 = documentFaceBase64 else {
@@ -206,7 +205,7 @@ extension DocumentScannerViewController {
                 return
             }
             // Register DL
-            self.setDriverLicense(withDLData: self.dlDataDic, token: "")
+            self.setDriverLicense(withDLData: self.dlPayload, token: "")
         }
         
     }
@@ -288,7 +287,7 @@ extension DocumentScannerViewController {
         DispatchQueue.main.async {
             self.lblActivityIndicator.text = "Completing your registration"
         }
-        BlockIDSDK.sharedInstance.registerDocument(obj: dlDataDic,
+        BlockIDSDK.sharedInstance.registerDocument(obj: dlPayload,
                                                    liveIdProofedBy: "blockid",
                                                    docSignToken: nil,
                                                    faceImage: img,
