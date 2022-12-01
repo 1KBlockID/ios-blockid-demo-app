@@ -317,7 +317,6 @@
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
 				3CEE333F264414E7003FDB78 /* CommonFunctions.swift */,
-				4C013BD62937DB0F0036F5D0 /* VerifyDocumentHelper.swift */,
 				B6AB861328BE043100C488A1 /* WalletConnectListner.swift */,
 				3CEE3340264414E7003FDB78 /* AppConstants.swift */,
 				3CEE3341264414E7003FDB78 /* ErrorConfig.swift */,
@@ -339,7 +338,7 @@
 		3CEE333D264414E7003FDB78 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				4CDF9D7229389AFC00E1648C /* Activity Indicator */,
+				4C013BD62937DB0F0036F5D0 /* VerifyDocumentHelper.swift */,
 				4C013BA5293775FA0036F5D0 /* ScannerHelpers */,
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
@@ -380,6 +379,7 @@
 		3CEE334B264414E7003FDB78 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CDF9D7229389AFC00E1648C /* Activity Indicator */,
 				5D4281C928B75183009E87A0 /* WalletConnectCell */,
 				3CD35A0E26458C03009D38B0 /* ConsentScreenCell */,
 				3CEE334C264414E7003FDB78 /* EnrollmentCell */,
