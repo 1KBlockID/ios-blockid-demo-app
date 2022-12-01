@@ -55,7 +55,7 @@ class VerifyDocumentHelper {
         
         BlockIDSDK.sharedInstance.verifyDocument(dic: livenessCheck,
                                                  verifications: [kFaceLiveness])
-        { status, dataDic, error in
+        { status, dataDictionary, error in
             if !status {
                 completion(status, error)
                 return
@@ -63,7 +63,7 @@ class VerifyDocumentHelper {
             
             var verified = false
             
-            if let dataDict = dataDic,
+            if let dataDict = dataDictionary,
                let certifications = dataDict[self.kCertifications] as? [[String: Any]] {
                 if let isVerified = certifications[0][self.kVerified] as? Bool, isVerified {
                     verified = isVerified
@@ -87,16 +87,16 @@ class VerifyDocumentHelper {
     ///
     func compareFace(base64Image1: String, base64Image2: String,
                      completion: @escaping CompareFaceCallback) {
-        var faceCompareDic = [String: Any]()
-        faceCompareDic[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kFaceCompare
-        faceCompareDic[kType] = kFaceCompare
-        faceCompareDic[kImage1] = base64Image1
-        faceCompareDic[kImage2] = base64Image2
-        faceCompareDic[kPurpose] = kPurposeDocEnrollment
+        var faceCompareDictionary = [String: Any]()
+        faceCompareDictionary[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kFaceCompare
+        faceCompareDictionary[kType] = kFaceCompare
+        faceCompareDictionary[kImage1] = base64Image1
+        faceCompareDictionary[kImage2] = base64Image2
+        faceCompareDictionary[kPurpose] = kPurposeDocEnrollment
 
-        BlockIDSDK.sharedInstance.verifyDocument(dic: faceCompareDic,
+        BlockIDSDK.sharedInstance.verifyDocument(dic: faceCompareDictionary,
                                                  verifications: [kFaceCompare])
-        { status, dataDic, error in
+        { status, dataDictionary, error in
             if !status {
                 completion(status, error)
                 return
@@ -104,7 +104,7 @@ class VerifyDocumentHelper {
             
             var verified = false
             
-            if let dataDict = dataDic,
+            if let dataDict = dataDictionary,
                let certifications = dataDict[self.kCertifications] as? [[String: Any]] {
                 if let isVerified = certifications[0][self.kVerified] as? Bool, isVerified {
                     verified = isVerified
@@ -140,7 +140,7 @@ class VerifyDocumentHelper {
         
         BlockIDSDK.sharedInstance.verifyDocument(dic: dataDictionary,
                                                  verifications: verifications)
-        { (status, dataDic, error) in
+        { (status, dataDictionary, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
                     if !status {
@@ -151,17 +151,17 @@ class VerifyDocumentHelper {
                     
                     var verified = false
                     
-                    if let dataDict = dataDic,
+                    if let dataDict = dataDictionary,
                        let certifications = dataDict[VerifyDocumentHelper.shared.kCertifications] as? [[String: Any]]
                     {
                         if let isVerified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
                            isVerified == true {
                             verified = isVerified
-                            guard let dlObjDic = certifications[0]["result"] as? [String: Any] else {
+                            guard let dlObjDictionary = certifications[0]["result"] as? [String: Any] else {
                                 completion(false, nil, nil)
                                 return
                             }
-                            completion(verified, dlObjDic, nil)
+                            completion(verified, dlObjDictionary, nil)
                         }
                     }
                     
