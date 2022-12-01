@@ -11,7 +11,7 @@ import BlockIDSDK
 
 public typealias LivenessCheckCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
 public typealias CompareFaceCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
-public typealias VerifyDLCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
+public typealias VerifyDLCallback = ((_ status: Bool, _ dlData: [String: Any]?,_ error: ErrorResponse?) -> Void)
 
 class VerifyDocumentHelper {
     
@@ -123,19 +123,22 @@ class VerifyDocumentHelper {
     ///
     func verifyDL(withDLData driverLicense: [String: Any]?, completion: @escaping VerifyDLCallback) {
         var verifications: [String] = []
-        guard var dataDictionary = driverLicense else { completion(false, nil) return }
+        guard var dataDictionary = driverLicense else {
+            completion(false, nil, nil)
+            return
+        }
         dataDictionary[VerifyDocumentHelper.shared.kType] = kTypeDL
         dataDictionary[VerifyDocumentHelper.shared.kID] = BlockIDSDK.sharedInstance.getDID() + ".dl"
         verifications = [VerifyDocumentHelper.shared.kDLAuthenticate]
         
         BlockIDSDK.sharedInstance.verifyDocument(dic: dataDictionary,
                                                  verifications: verifications)
-        { [weak self] (status, dataDic, error) in
+        { (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
                     if !status {
                         // Verification failed
-                        completion(status, error)
+                        completion(status, nil, error)
                         return
                     }
                     
@@ -144,19 +147,22 @@ class VerifyDocumentHelper {
                     if let dataDict = dataDic,
                        let certifications = dataDict[VerifyDocumentHelper.shared.kCertifications] as? [[String: Any]]
                     {
-                        if let verified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
-                           verified == true {
+                        if let isVerified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
+                           isVerified == true {
                             verified = isVerified
+                            guard let dlObjDic = certifications[0]["result"] as? [String: Any] else {
+                                completion(false, nil, nil)
+                                return
+                            }
+                            completion(verified, dlObjDic, nil)
                         }
-                        
                     }
                     
                     if !verified {
-                        completion(false, ErrorResponse(code: CustomErrors.kDocumentPhotoComparisionFailed.code,
-                                                        msg: CustomErrors.kDocumentPhotoComparisionFailed.msg))
-                        return
+                        completion(false, nil, ErrorResponse(code: CustomErrors.kDocumentPhotoComparisionFailed.code,
+                                                          msg: CustomErrors.kDocumentPhotoComparisionFailed.msg))
+                        completion(verified, nil, nil)
                     }
-                    completion(verified, nil)
                 }
             }
         }

@@ -93,6 +93,7 @@ extension SelfieScannerViewController {
                         self.attemptCounts = 0
                         // Failed 3 attempts
                         // Finish Process with false status
+                        self.lblActivityIndicator.text = nil
                         self.view.makeToast("LIVEID_VERIFICATION_FAILED".localizedMessage(0),
                                             duration: 3.0,
                                             position: .center,

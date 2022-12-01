@@ -126,23 +126,23 @@ extension DocumentScannerViewController {
             self.activityIndicator.startAnimating()
         })
         
-        VerifyDocumentHelper.shared.verifyDL(withDLData: driverLicense) { status, error in
+        VerifyDocumentHelper.shared.verifyDL(withDLData: driverLicense) { status, dlData ,error in
             if !status {
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
                     self.showErrorDialog(error)
                 }
             } else {
-                guard let dlObjDic = certifications[0]["result"] as? [String: Any] else { return }
-                self?.dlPayload = dlObjDic
+                guard let dlObjDictionary = dlData else { return }
+                self.dlPayload = dlObjDictionary
                 
                 // LiveID NOT Enrolled, verify doc with face_liveness
                 if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-                    self?.checkLiveness()
+                    self.checkLiveness()
                     return
                 }
                 // LiveID Enrolled, verify doc with face_compare
-                self?.compareFace()
+                self.compareFace()
             }
         }
     }

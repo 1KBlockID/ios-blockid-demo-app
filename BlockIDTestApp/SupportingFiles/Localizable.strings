@@ -30,8 +30,8 @@
 "DL_VERIFY" = "Unable to verify drivers license.";
 
 // MARK: - General -
-"EXTRACT_DATA" = "Extracting identity data"
-"REGISTER_DATA" = "Completing your registration"
-"MATCHING_SELFIE" = "Matching selfie"
-"VALIDATING_LIVENESS" = "Validating liveness"
-"VERIFING_LIVEID" = "Verifing liveid"
+"EXTRACT_DATA" = "Extracting identity data";
+"REGISTER_DATA" = "Completing your registration";
+"MATCHING_SELFIE" = "Matching selfie";
+"VALIDATING_LIVENESS" = "Validating liveness";
+"VERIFING_LIVEID" = "Verifing liveid";
