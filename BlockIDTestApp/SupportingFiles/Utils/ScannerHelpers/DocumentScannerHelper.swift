@@ -19,9 +19,16 @@ class DocumentScannerHelper {
     var scanCompletionHandler: DLScanCallback?
 
     private lazy var scanHandler = DSHandler(delegate: self)
+    
+    // set default image compression quality
     private lazy var imageCompressionQuality: Double = 0.5
+    
+    // set default capture mode to Manual
     private lazy var captureMode: CFDocumentScanSDK.DSCaptureMode = .Manual
+    
+    // set default document capture side to Front
     private lazy var scanSide: CFDocumentScanSDK.DSSide = .Front
+    
     private lazy var scanVC: UIViewController = DocumentScannerViewController()
     private lazy var options = DSID1Options()
     private var documentDic = [String: Any]()
