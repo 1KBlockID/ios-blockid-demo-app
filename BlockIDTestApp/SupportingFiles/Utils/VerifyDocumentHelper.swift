@@ -24,19 +24,20 @@ class VerifyDocumentHelper {
     
     private let kFaceLiveness = "face_liveness"
     private let kFaceCompare = "face_compare"
+    private let kDLAuthenticate = "dl_authenticate"
+    
     let kID = "id"
     let kType = "type"
     let kTypeLiveId = "liveid"
     let kTypeDL = "dl"
     let kLiveId = "liveId"
-    private let kImage1 = "image1"
-    private let kImage2 = "image2"
+    let kImage1 = "image1"
+    let kImage2 = "image2"
     let kPurpose = "purpose"
-    let kPurposeDocEnrollment = "doc_enrollment"
+    let kPurposeValue = "doc_enrollment"
     let kCertifications = "certifications"
     let kVerified = "verified"
     let kCategory = "category"
-    private let kDLAuthenticate = "dl_authenticate"
     
     private init() { }
     
@@ -85,14 +86,15 @@ class VerifyDocumentHelper {
     ///    - base64Image1: base64 encoded image1
     ///    - base64Image2: base64 encoded image2
     ///
-    func compareFace(base64Image1: String, base64Image2: String,
+    func compareFace(base64Image1: String,
+                     base64Image2: String,
                      completion: @escaping CompareFaceCallback) {
         var faceCompareDictionary = [String: Any]()
         faceCompareDictionary[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kFaceCompare
         faceCompareDictionary[kType] = kFaceCompare
         faceCompareDictionary[kImage1] = base64Image1
         faceCompareDictionary[kImage2] = base64Image2
-        faceCompareDictionary[kPurpose] = kPurposeDocEnrollment
+        faceCompareDictionary[kPurpose] = kPurposeValue
 
         BlockIDSDK.sharedInstance.verifyDocument(dic: faceCompareDictionary,
                                                  verifications: [kFaceCompare])
@@ -149,27 +151,22 @@ class VerifyDocumentHelper {
                         return
                     }
                     
-                    var verified = false
-                    
                     if let dataDict = dataDictionary,
                        let certifications = dataDict[VerifyDocumentHelper.shared.kCertifications] as? [[String: Any]]
                     {
                         if let isVerified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
                            isVerified == true {
-                            verified = isVerified
                             guard let dlObjDictionary = certifications[0]["result"] as? [String: Any] else {
                                 completion(false, nil, nil)
                                 return
                             }
                             completion(verified, dlObjDictionary, nil)
+                            return
                         }
                     }
                     
-                    if !verified {
-                        completion(false, nil, ErrorResponse(code: 4001,
+                    completion(verified, nil, ErrorResponse(code: 4001,
                                                           msg: "VERIFICATION_FAILED".localizedMessage(0)))
-                        completion(verified, nil, nil)
-                    }
                 }
             }
         }
