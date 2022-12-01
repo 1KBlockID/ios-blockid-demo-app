@@ -47,10 +47,11 @@ class EnrollmentTableViewCell: UITableViewCell {
             //let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
             self.textLabel?.text = enrollment.rawValue
             if let controllerObj = controllerObj {
-                let document = controllerObj.getDriverLicenseData(docIndex: 1, category: .Identity_Document)
+                let document = controllerObj.getDriverLicenseData(docIndex: 1,
+                                                                  category: .Identity_Document)
                 if let docId = document.docId,
                     !docId.isEmpty,
-                    let islivenessReq = document.islivenessNeeded, !islivenessReq {
+                   document.islivenessNeeded == nil || !(document.islivenessNeeded ?? false) {
                     self.textLabel?.text = enrollment.rawValue
                     self.detailTextLabel?.text = "(#"+(docId)+")"
                     self.accessoryType = .checkmark

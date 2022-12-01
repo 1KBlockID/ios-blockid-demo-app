@@ -16,3 +16,22 @@
 "MODULE_NOT_ENABLED" = "The license key is not enabled with required modules (%d).";
 "BAD_REQUEST" = "Bad request (%d).";
 "INVALID" = "The license key is invalid (%d).";
+
+// MARK: - Driver license scan Errors -
+"FACE_COMPARISON_FAILED" = "Face comparison failed.";
+"DL_ENROLLED" = "Drivers License enrolled successfully.";
+
+// MARK: - LiveID Enroll success -
+"LIVEID_ENROLLED" = "LiveID enrolled successfully.";
+"LIVEID_VERIFIED" = "LiveID successfully verified.";
+"LIVEID_VERIFICATION_FAILED" = "LiveID verification failed.";
+
+// MARK: - General -
+"EXTRACT_DATA" = "Extracting identity data";
+"REGISTER_DATA" = "Completing your registration";
+"MATCHING_SELFIE" = "Matching selfie";
+"VALIDATING_LIVENESS" = "Validating liveness";
+"VERIFING_LIVEID" = "Verifing liveid";
+"VERIFICATION_FAILED" = "Verification failed.";
+"COMPARE_FACE_FAILED" = "Failed to match the selfie.";
+"AUTHENTICATE_DOCUMENT_FAILED" = "We are unable to verify your document.";

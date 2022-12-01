@@ -1,0 +1,64 @@
+[
+  {
+    "metadataOutputVersion" : "3.0",
+    "storagePrecision" : "Float16",
+    "outputSchema" : [
+      {
+        "hasShapeFlexibility" : "0",
+        "isOptional" : "0",
+        "dataType" : "Float32",
+        "formattedType" : "MultiArray (Float32)",
+        "shortDescription" : "",
+        "shape" : "[]",
+        "name" : "var_946",
+        "type" : "MultiArray"
+      }
+    ],
+    "modelParameters" : [
+
+    ],
+    "specificationVersion" : 4,
+    "computePrecision" : "Float16",
+    "isUpdatable" : "0",
+    "availability" : {
+      "macOS" : "10.15",
+      "tvOS" : "13.0",
+      "watchOS" : "6.0",
+      "iOS" : "13.0",
+      "macCatalyst" : "13.0"
+    },
+    "neuralNetworkLayerTypeHistogram" : {
+      "Concat" : 2,
+      "ActivationReLU" : 49,
+      "Copy" : 13,
+      "ResizeBilinear" : 3,
+      "Add" : 13,
+      "PoolingAverage" : 1,
+      "Convolution" : 59,
+      "ActivationSigmoid" : 1
+    },
+    "modelType" : {
+      "name" : "MLModelType_neuralNetwork"
+    },
+    "userDefinedMetadata" : {
+      "com.github.apple.coremltools.version" : "5.1.0",
+      "com.github.apple.coremltools.source" : "torch==1.10.2"
+    },
+    "generatedClassName" : "RegNetX002Quantized021122",
+    "inputSchema" : [
+      {
+        "height" : "320",
+        "colorspace" : "RGB",
+        "isOptional" : "0",
+        "width" : "320",
+        "isColor" : "1",
+        "formattedType" : "Image (Color 320 × 320)",
+        "hasSizeFlexibility" : "0",
+        "type" : "Image",
+        "shortDescription" : "",
+        "name" : "input_1"
+      }
+    ],
+    "method" : "predict"
+  }
+]

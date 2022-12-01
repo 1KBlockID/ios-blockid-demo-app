@@ -28,6 +28,10 @@ extension String {
         return String(format: NSLocalizedString(self, comment: ""), code)
     }
     
+    func localizedMessage() -> String {
+        return NSLocalizedString(self, comment: "")
+    }
+    
     func isValidDate(dateFormat: String) -> Bool {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat

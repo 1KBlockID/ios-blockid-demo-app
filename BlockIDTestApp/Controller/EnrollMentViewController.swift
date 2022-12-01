@@ -165,7 +165,11 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
-        showDLView()
+        // Comment old DL scanner view
+       // showDLView()
+        
+        // show new DL scanner view
+        showDriversLicenseScannerView()
     }
     
     /**

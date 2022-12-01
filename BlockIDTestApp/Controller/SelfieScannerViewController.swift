@@ -15,6 +15,10 @@ class SelfieScannerViewController: UIViewController {
     private var attemptCounts = 0
     var onFinishCallback: ((_ status: Bool) -> Void)?
     
+    @IBOutlet private weak var viewActivityIndicator: UIView!
+    @IBOutlet private weak var activityIndicator: CustomActivityIndicator!
+    @IBOutlet private weak var lblActivityIndicator: UILabel!
+    
     // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +56,7 @@ extension SelfieScannerViewController {
                         if status {
                             guard let liveidDataDic = data else { return }
                             if self.isForVerification {
-                                guard let imgdataB64 = liveidDataDic["liveId"] as? String else { return }
+                                guard let imgdataB64 = liveidDataDic[VerifyDocumentHelper.shared.kLiveId] as? String else { return }
                                 guard let imgdata = Data(base64Encoded: imgdataB64,
                                                          options: .ignoreUnknownCharacters),
                                       let photo = UIImage(data: imgdata) else { return }
@@ -77,23 +81,33 @@ extension SelfieScannerViewController {
     }
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String? = nil) {
-        self.view.makeToastActivity(.center)
+        DispatchQueue.main.async {
+            self.lblActivityIndicator.text = "VERIFING_LIVEID".localizedMessage()
+            self.viewActivityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+        }
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
                                                sigToken: token) { (status, error) in
-            self.view.hideToastActivity()
+            self.activityIndicator.stopAnimating()
             if !status {
                 // If verification is for User Consent
                 if self.isForConsent {
                     self.attemptCounts += 1
-                    debugPrint("LiveID: Current attempts = \(self.attemptCounts)")
                     if self.attemptCounts == 3 {
                         self.attemptCounts = 0
                         // Failed 3 attempts
                         // Finish Process with false status
-                        if let onFinishCallback = self.onFinishCallback {
-                            onFinishCallback(true)
-                        }
-                        self.goBack()
+                        self.lblActivityIndicator.text = nil
+                        self.view.makeToast("LIVEID_VERIFICATION_FAILED".localizedMessage(),
+                                            duration: 3.0,
+                                            position: .center,
+                                            title: "Error",
+                                            completion: {_ in
+                            if let onFinishCallback = self.onFinishCallback {
+                                onFinishCallback(true)
+                            }
+                            self.goBack()
+                        })
                         return
                     }
                     self.startLiveIDScanning()
@@ -104,78 +118,33 @@ extension SelfieScannerViewController {
                 return
             }
             //Verification successful
-            if let onFinishCallback = self.onFinishCallback {
-                onFinishCallback(true)
-            }
-            self.goBack()
-        }
-    }
-    
-    private func checkLiveness(liveidImgDic: [String: Any]) {
-        self.view.makeToastActivity(.center)
-        var liveidDataDic = liveidImgDic
-        liveidDataDic["id"] = BlockIDSDK.sharedInstance.getDID() + ".liveid"
-        liveidDataDic["type"] = "liveid"
-        
-        BlockIDSDK.sharedInstance.verifyDocument(dic: liveidDataDic,
-                                                 verifications: ["face_liveness"])
-        { [weak self] (status, dataDic, error) in
-            if !status {
-                // Verification failed
-                DispatchQueue.main.async {
-                    self?.view.hideToastActivity()
-                    self?.view.makeToast(error?.message,
-                                         duration: 3.0,
-                                         position: .center,
-                                         title: "Error!",
-                                         completion: {_ in
-                        self?.goBack()
-                    })
-                    return
+            self.view.makeToast("LIVEID_VERIFIED".localizedMessage(),
+                                duration: 3.0,
+                                position: .center,
+                                title: "Thank you!",
+                                completion: {_ in
+                if let onFinishCallback = self.onFinishCallback {
+                    onFinishCallback(true)
                 }
-            } else {
-                if let dataDict = dataDic,
-                   let certifications = dataDict["certifications"] as? [[String: Any]] {
-                    if let isVerified = certifications[0]["verified"] as? Bool, isVerified {
-                        
-                        guard let imgdataB64 = liveidDataDic["liveId"] as? String else { return }
-                        
-                        guard let imgdata = Data(base64Encoded: imgdataB64,
-                                                 options: .ignoreUnknownCharacters),
-                              let img = UIImage(data: imgdata) else { return }
-                        
-                        self?.setLiveID(withPhoto: img, token: nil)
-                    } else {
-                        let errorVerificationFailed = ErrorResponse(code: CustomErrors.kFaceLivenessCheckFailed.code,
-                                                                    msg: CustomErrors.kFaceLivenessCheckFailed.msg)
-                        // Verification failed
-                        DispatchQueue.main.async {
-                            self?.view.hideToastActivity()
-                            self?.view.makeToast(errorVerificationFailed.message,
-                                                 duration: 3.0,
-                                                 position: .center,
-                                                 title: "Error!",
-                                                 completion: {_ in
-                                self?.goBack()
-                            })
-                            return
-                        }
-                    }
-                }
-            }
+                self.goBack()
+            })
+            
+            
         }
     }
     
     private func setLiveID(withPhoto photo: UIImage, token: String?) {
         DispatchQueue.main.async {
-            self.view.makeToastActivity(.center)
+            self.viewActivityIndicator.isHidden = false
+            self.activityIndicator.startAnimating()
+            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage()
         }
         
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: photo,
                                             liveIdProofedBy: "blockid",
                                             sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
+                self.activityIndicator.stopAnimating()
                 if !status {
                     // FAILED
                     self.view.makeToast(error?.message,
@@ -188,7 +157,7 @@ extension SelfieScannerViewController {
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Live ID enrolled successfully",
+                self.view.makeToast("LIVEID_ENROLLED".localizedMessage(),
                                     duration: 3.0,
                                     position: .center,
                                     title: "Thank you!",

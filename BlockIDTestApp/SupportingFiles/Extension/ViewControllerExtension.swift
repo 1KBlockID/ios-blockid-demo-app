@@ -284,10 +284,16 @@ extension UIViewController {
 // MARK: - New Selfie Scanner -
 extension UIViewController {
     func showSelfieScannerView() {
-        // no xib or storyboard required from app
-        let selfieVC = SelfieScannerViewController()
-        selfieVC.view.backgroundColor = .white
+        let selfieVC = self.storyboard?.instantiateViewController(withIdentifier: "SelfieScannerViewController") as! SelfieScannerViewController
         self.navigationController?.pushViewController(selfieVC,
                                                       animated: true)
+    }
+}
+
+
+extension UIViewController {
+    func showDriversLicenseScannerView() {
+        let docScannerVC = self.storyboard?.instantiateViewController(withIdentifier: "DocumentScannerViewController") as! DocumentScannerViewController
+        self.navigationController?.pushViewController(docScannerVC, animated: true)
     }
 }

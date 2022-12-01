@@ -61,6 +61,11 @@ class SelfieScannerHelper: NSObject {
         
         scanCompletionHandler = completion
         
+        // This is used when doocument scan is verifing liveid as well
+        if appDelegate?.orientationLock != UIInterfaceOrientationMask.portrait {
+            CommonFunctions.rotateDeviceWithOrientationMode(.portrait)
+        }
+        
         selfieHandler?.scanSelfie(viewController,
                                   selfieSettings: selfieSettings,
                                   selfieScanDelegate: self)

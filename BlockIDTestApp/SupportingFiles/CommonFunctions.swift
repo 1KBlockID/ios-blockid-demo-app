@@ -105,4 +105,12 @@ class CommonFunctions {
         let anyResult = try? JSONSerialization.jsonObject(with: data, options: [])
         return anyResult as? [String: Any]
     }
+    
+    static func rotateDeviceWithOrientationMode(_ orientationType: UIInterfaceOrientationMask) {
+        appDelegate?.orientationLock = orientationType
+        let value = orientationType.rawValue
+        DispatchQueue.main.async {
+            UIDevice.current.setValue(value, forKey: "orientation")
+        }
+    }
 }

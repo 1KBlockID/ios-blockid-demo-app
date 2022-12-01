@@ -255,22 +255,23 @@ class LiveIDViewController: UIViewController {
             self.goBack()
         }
     }
-    
+   
     private func showErrorDialog(_ error: ErrorResponse?) {
         var title: String? = nil
         var msg: String? = nil
-        if error?.code == NSURLErrorNotConnectedToInternet ||
+        if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
+            self.showAppLogin()
+        } else if error?.code == NSURLErrorNotConnectedToInternet ||
             error?.code == CustomErrors.Network.OFFLINE.code {
             msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
-        }
-        else if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
-            self.showAppLogin()
-        }
-        else {
+        } else {
             msg = error!.message
         }
-        self.view.makeToast(msg, duration: 3.0, position: .center, title: title, completion: {_ in
+        self.view.makeToast(msg,
+                            duration: 3.0,
+                            position: .center,
+                            title: title, completion: {_ in
             self.goBack()
         })
     }
