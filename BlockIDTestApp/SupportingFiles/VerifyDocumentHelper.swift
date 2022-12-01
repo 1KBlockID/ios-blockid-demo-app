@@ -19,16 +19,17 @@ class VerifyDocumentHelper {
     
     private let kFaceLiveness = "face_liveness"
     private let kFaceCompare = "face_compare"
-    private let kID = "id"
-    private let kType = "type"
-    private let kTypeLiveId = "liveid"
-    private let kLiveId = "liveId"
+    let kID = "id"
+    let kType = "type"
+    let kTypeLiveId = "liveid"
+    let kLiveId = "liveId"
     private let kImage1 = "image1"
     private let kImage2 = "image2"
     let kPurpose = "purpose"
     let kPurposeDocEnrollment = "doc_enrollment"
-    private let kCertifications = "certifications"
-    private let kVerified = "verified"
+    let kCertifications = "certifications"
+    let kVerified = "verified"
+    let kCategory = "category"
     
     private init() { }
     

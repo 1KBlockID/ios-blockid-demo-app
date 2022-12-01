@@ -20,5 +20,11 @@
 // MARK: - Driver license scan Errors -
 "FACE_COMPARISON_FAILED" = "Face comparison failed.";
 
-// MARK: - LiveID success -
-"LIVEID_ENROLLED" = "Live ID enrolled successfully";
+// MARK: - LiveID Enroll success -
+"LIVEID_ENROLLED" = "LiveID enrolled successfully.";
+"LIVEID_VERIFIED" = "LiveID successfully verified.";
+"LIVEID_VERIFICATION_FAILED" = "LiveID verification failed.";
+
+// MARK: - DL Enroll success -
+"DL_ENROLLED" = "Drivers License enrolled successfully.";
+"DL_VERIFY" = "Unable to verify divers license.";

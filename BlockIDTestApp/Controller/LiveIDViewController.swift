@@ -268,7 +268,8 @@ class LiveIDViewController: UIViewController {
         } else {
             msg = error!.message
         }
-        self.view.makeToast(msg, duration: 3.0,
+        self.view.makeToast(msg,
+                            duration: 3.0,
                             position: .center,
                             title: title, completion: {_ in
             self.goBack()

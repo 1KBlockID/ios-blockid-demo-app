@@ -152,8 +152,7 @@ class AuthenticateViewController: UIViewController {
             return
         }
          // Authenticate liveID on SelfieScannerViewController screen...
-        let selfieScannerVC = SelfieScannerViewController()
-        selfieScannerVC.view.backgroundColor = .white
+        let selfieScannerVC = self.storyboard?.instantiateViewController(withIdentifier: "SelfieScannerViewController") as! SelfieScannerViewController
         selfieScannerVC.isForVerification = true
         selfieScannerVC.onFinishCallback = { (status) -> Void in
             if status {

@@ -52,6 +52,8 @@
 		4C013BD32937C9990036F5D0 /* DocumentScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BD22937C9990036F5D0 /* DocumentScannerViewController.swift */; };
 		4C013BD52937C9A60036F5D0 /* DocumentScannerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BD42937C9A60036F5D0 /* DocumentScannerHelper.swift */; };
 		4C013BD72937DB0F0036F5D0 /* VerifyDocumentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C013BD62937DB0F0036F5D0 /* VerifyDocumentHelper.swift */; };
+		4CDF9D7529389AFC00E1648C /* CustomActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF9D7329389AFC00E1648C /* CustomActivityIndicator.swift */; };
+		4CDF9D7629389AFC00E1648C /* CustomActivityIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CDF9D7429389AFC00E1648C /* CustomActivityIndicator.xib */; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
@@ -162,6 +164,8 @@
 		4C013BD22937C9990036F5D0 /* DocumentScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentScannerViewController.swift; sourceTree = "<group>"; };
 		4C013BD42937C9A60036F5D0 /* DocumentScannerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentScannerHelper.swift; sourceTree = "<group>"; };
 		4C013BD62937DB0F0036F5D0 /* VerifyDocumentHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyDocumentHelper.swift; sourceTree = "<group>"; };
+		4CDF9D7329389AFC00E1648C /* CustomActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicator.swift; sourceTree = "<group>"; };
+		4CDF9D7429389AFC00E1648C /* CustomActivityIndicator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomActivityIndicator.xib; sourceTree = "<group>"; };
 		55DB52F2F3E9457E093FF0B5 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
@@ -335,6 +339,7 @@
 		3CEE333D264414E7003FDB78 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4CDF9D7229389AFC00E1648C /* Activity Indicator */,
 				4C013BA5293775FA0036F5D0 /* ScannerHelpers */,
 				3CEE338226443199003FDB78 /* PinCodeTextField */,
 			);
@@ -429,6 +434,15 @@
 				4C013BA6293775FA0036F5D0 /* SelfieScannerHelper.swift */,
 			);
 			path = ScannerHelpers;
+			sourceTree = "<group>";
+		};
+		4CDF9D7229389AFC00E1648C /* Activity Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				4CDF9D7329389AFC00E1648C /* CustomActivityIndicator.swift */,
+				4CDF9D7429389AFC00E1648C /* CustomActivityIndicator.xib */,
+			);
+			path = "Activity Indicator";
 			sourceTree = "<group>";
 		};
 		5D4281C928B75183009E87A0 /* WalletConnectCell */ = {
@@ -564,6 +578,7 @@
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
 				5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */,
+				4CDF9D7629389AFC00E1648C /* CustomActivityIndicator.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 				B64453412893C71900597497 /* GoogleService-Info.plist in Resources */,
 			);
@@ -681,6 +696,7 @@
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
 				4C013BA92937765D0036F5D0 /* SelfieScannerViewController.swift in Sources */,
 				3CEE338C26443199003FDB78 /* TextHelper.swift in Sources */,
+				4CDF9D7529389AFC00E1648C /* CustomActivityIndicator.swift in Sources */,
 				E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */,
 				E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */,
 				E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */,
@@ -932,7 +948,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.20;
+				MARKETING_VERSION = 1.8.30;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -992,7 +1008,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.8.20;
+				MARKETING_VERSION = 1.8.30;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
