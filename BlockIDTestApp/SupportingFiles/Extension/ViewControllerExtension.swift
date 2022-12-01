@@ -292,7 +292,7 @@ extension UIViewController {
 
 
 extension UIViewController {
-    func showDLDocumentScannerView() {
+    func showDriversLicenseScannerView() {
         let docScannerVC = self.storyboard?.instantiateViewController(withIdentifier: "DocumentScannerViewController") as! DocumentScannerViewController
         self.navigationController?.pushViewController(docScannerVC, animated: true)
     }

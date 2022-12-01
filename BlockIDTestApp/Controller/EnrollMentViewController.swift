@@ -169,7 +169,7 @@ extension EnrollMentViewController {
        // showDLView()
         
         // show new DL scanner view
-        showDLDocumentScannerView()
+        showDriversLicenseScannerView()
     }
     
     /**

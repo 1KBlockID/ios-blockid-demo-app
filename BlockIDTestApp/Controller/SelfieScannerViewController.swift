@@ -78,7 +78,7 @@ extension SelfieScannerViewController {
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String? = nil) {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Verifing liveid"
+            self.lblActivityIndicator.text = "VERIFING_LIVEID".localizedMessage(0)
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         }
@@ -130,7 +130,7 @@ extension SelfieScannerViewController {
     
     private func checkLiveness(liveidImgDic: [String: Any]) {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Validating liveness"
+            self.lblActivityIndicator.text = "VALIDATING_LIVENESS".localizedMessage(0)
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         }
@@ -156,7 +156,7 @@ extension SelfieScannerViewController {
         DispatchQueue.main.async {
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
-            self.lblActivityIndicator.text = "Completing your registration"
+            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
         }
         
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: photo,

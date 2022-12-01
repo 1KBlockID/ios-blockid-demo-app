@@ -11,6 +11,7 @@ import BlockIDSDK
 
 public typealias LivenessCheckCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
 public typealias CompareFaceCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
+public typealias VerifyDLCallback = ((_ status: Bool, _ error: ErrorResponse?) -> Void)
 
 class VerifyDocumentHelper {
     
@@ -22,6 +23,7 @@ class VerifyDocumentHelper {
     let kID = "id"
     let kType = "type"
     let kTypeLiveId = "liveid"
+    let kTypeDL = "dl"
     let kLiveId = "liveId"
     private let kImage1 = "image1"
     private let kImage2 = "image2"
@@ -30,16 +32,23 @@ class VerifyDocumentHelper {
     let kCertifications = "certifications"
     let kVerified = "verified"
     let kCategory = "category"
+    private let kDLAuthenticate = "dl_authenticate"
     
     private init() { }
     
+    /// Checks liveness of liveid photo
+    ///
+    /// This func will verify the liveid image scanned during any enrollment process
+    ///
+    /// - Parameter liveIDBase64: base64 encoded image
+    ///
     func checkLiveness(liveIDBase64: String, completion: @escaping LivenessCheckCallback) {
-        var livenessCheckDic = [String: Any]()
-        livenessCheckDic[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kTypeLiveId
-        livenessCheckDic[kType] = kTypeLiveId
-        livenessCheckDic[kLiveId] = liveIDBase64
+        var livenessCheck = [String: Any]()
+        livenessCheck[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kTypeLiveId
+        livenessCheck[kType] = kTypeLiveId
+        livenessCheck[kLiveId] = liveIDBase64
         
-        BlockIDSDK.sharedInstance.verifyDocument(dic: livenessCheckDic,
+        BlockIDSDK.sharedInstance.verifyDocument(dic: livenessCheck,
                                                  verifications: [kFaceLiveness]) { status, dataDic, error in
             if !status {
                 completion(status, error)
@@ -56,14 +65,22 @@ class VerifyDocumentHelper {
             }
             
             if !verified {
-                completion(false, ErrorResponse(code: CustomErrors.kFaceLivenessCheckFailed.code, msg: CustomErrors.kFaceLivenessCheckFailed.msg))
+                completion(false, ErrorResponse(code: CustomErrors.kFaceLivenessCheckFailed.code,
+                                                msg: CustomErrors.kFaceLivenessCheckFailed.msg))
                 return
             }
-            completion(true, nil)
+            completion(verified, nil)
         }
     }
     
-    func compareFace(base64Image1: String, base64Image2: String, completion: @escaping CompareFaceCallback) {
+    /// Compares scanned liveid with registered liveid
+    ///
+    /// - Parameters
+    ///    - base64Image1: base64 encoded image1
+    ///    - base64Image2: base64 encoded image2
+    ///
+    func compareFace(base64Image1: String, base64Image2: String,
+                     completion: @escaping CompareFaceCallback) {
         var faceCompareDic = [String: Any]()
         faceCompareDic[kID] = BlockIDSDK.sharedInstance.getDID() + "." + kFaceCompare
         faceCompareDic[kType] = kFaceCompare
@@ -72,7 +89,8 @@ class VerifyDocumentHelper {
         faceCompareDic[kPurpose] = kPurposeDocEnrollment
 
         BlockIDSDK.sharedInstance.verifyDocument(dic: faceCompareDic,
-                                                 verifications: [kFaceCompare]) { status, dataDic, error in
+                                                 verifications: [kFaceCompare])
+        { status, dataDic, error in
             if !status {
                 completion(status, error)
                 return
@@ -92,8 +110,55 @@ class VerifyDocumentHelper {
                                                 msg: CustomErrors.kDocumentPhotoComparisionFailed.msg))
                 return
             }
-            completion(true, nil)
+            completion(verified, nil)
             
+        }
+    }
+    
+    /// Verifies DL data before registration
+    ///
+    /// This func will verify the scanned Driver License against an authenticator
+    ///
+    /// - Parameter driverLicense: A Driver License data dictionary
+    ///
+    func verifyDL(withDLData driverLicense: [String: Any]?, completion: @escaping VerifyDLCallback) {
+        var verifications: [String] = []
+        guard var dataDictionary = driverLicense else { completion(false, nil) return }
+        dataDictionary[VerifyDocumentHelper.shared.kType] = kTypeDL
+        dataDictionary[VerifyDocumentHelper.shared.kID] = BlockIDSDK.sharedInstance.getDID() + ".dl"
+        verifications = [VerifyDocumentHelper.shared.kDLAuthenticate]
+        
+        BlockIDSDK.sharedInstance.verifyDocument(dic: dataDictionary,
+                                                 verifications: verifications)
+        { [weak self] (status, dataDic, error) in
+            DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.main.async {
+                    if !status {
+                        // Verification failed
+                        completion(status, error)
+                        return
+                    }
+                    
+                    var verified = false
+                    
+                    if let dataDict = dataDic,
+                       let certifications = dataDict[VerifyDocumentHelper.shared.kCertifications] as? [[String: Any]]
+                    {
+                        if let verified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
+                           verified == true {
+                            verified = isVerified
+                        }
+                        
+                    }
+                    
+                    if !verified {
+                        completion(false, ErrorResponse(code: CustomErrors.kDocumentPhotoComparisionFailed.code,
+                                                        msg: CustomErrors.kDocumentPhotoComparisionFailed.msg))
+                        return
+                    }
+                    completion(verified, nil)
+                }
+            }
         }
     }
 }

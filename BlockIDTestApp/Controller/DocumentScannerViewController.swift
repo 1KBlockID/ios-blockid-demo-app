@@ -82,7 +82,7 @@ extension DocumentScannerViewController {
 }
 
 
-// MARK: - Enrolment -
+// MARK: - DL Enrollment -
 extension DocumentScannerViewController {
     
     /// **Scan LiveID**
@@ -121,56 +121,28 @@ extension DocumentScannerViewController {
     ///
     private func verifyDL(withDLData driverLicense: [String: Any]?) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-            self.lblActivityIndicator.text = "Extracting identity data"
+            self.lblActivityIndicator.text = "EXTRACT_DATA".localizedMessage(0)
             self.viewActivityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
         })
-        var verifications: [String] = []
-        guard var datadic = driverLicense else { return }
-        datadic[VerifyDocumentHelper.shared.kType] = "dl"
-        datadic[VerifyDocumentHelper.shared.kID] = BlockIDSDK.sharedInstance.getDID() + ".dl"
-        verifications = ["dl_authenticate"]
-        BlockIDSDK.sharedInstance.verifyDocument(dic: datadic,
-                                                 verifications: verifications)
-        { [weak self] (status, dataDic, error) in
-            DispatchQueue.global(qos: .userInitiated).async {
+        
+        VerifyDocumentHelper.shared.verifyDL(withDLData: driverLicense) { status, error in
+            if !status {
                 DispatchQueue.main.async {
-                    if !status {
-                        // Verification failed
-                        self?.activityIndicator.stopAnimating()
-                        self?.showErrorDialog(error)
-                        return
-                    }
-                    
-                    // Verification success, call documentRegistration API
-                    if let dataDict = dataDic,
-                       let certifications = dataDict[VerifyDocumentHelper.shared.kCertifications] as? [[String: Any]]
-                    {
-                        if let verified = certifications[0][VerifyDocumentHelper.shared.kVerified] as? Bool,
-                           verified == true {
-                            guard let dlObjDic = certifications[0]["result"] as? [String: Any] else { return }
-                            self?.dlPayload = dlObjDic
-                            
-                            // LiveID NOT Enrolled, verify doc with face_liveness
-                            if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-                                self?.checkLiveness()
-                                return
-                            }
-                            // LiveID Enrolled, verify doc with face_compare
-                            self?.compareFace()
-                        } else {
-                            // Verification failed
-                            self?.view.makeToast("DL_VERIFY".localizedMessage(0),
-                                                duration: 3.0,
-                                                position: .center,
-                                                title: "Error",
-                                                completion: {_ in
-                                self?.goBack()
-                            })
-                        }
-                        
-                    }
+                    self.activityIndicator.stopAnimating()
+                    self.showErrorDialog(error)
                 }
+            } else {
+                guard let dlObjDic = certifications[0]["result"] as? [String: Any] else { return }
+                self?.dlPayload = dlObjDic
+                
+                // LiveID NOT Enrolled, verify doc with face_liveness
+                if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+                    self?.checkLiveness()
+                    return
+                }
+                // LiveID Enrolled, verify doc with face_compare
+                self?.compareFace()
             }
         }
     }
@@ -181,7 +153,7 @@ extension DocumentScannerViewController {
     ///
     private func compareFace() {
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Matching selfie"
+            self.lblActivityIndicator.text = "MATCHING_SELFIE".localizedMessage(0)
         }
         let liveIdBase64 = selfiePayload[VerifyDocumentHelper.shared.kLiveId] as? String
         let documentFaceBase64 = dlPayload["face"] as? String
@@ -217,7 +189,7 @@ extension DocumentScannerViewController {
     private func checkLiveness() {
         let liveIdBase64 = selfiePayload[VerifyDocumentHelper.shared.kLiveId] as? String
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Validating liveness"
+            self.lblActivityIndicator.text = "VALIDATING_LIVENESS".localizedMessage(0)
         }
         guard let liveIdBase64 = liveIdBase64 else { return }
         VerifyDocumentHelper.shared.checkLiveness(liveIDBase64: liveIdBase64)
@@ -240,7 +212,7 @@ extension DocumentScannerViewController {
                                   token: String?) {
         viewActivityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        self.lblActivityIndicator.text = "Completing your registration"
+        self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
 
         var dic = driverLicense
         dic?[VerifyDocumentHelper.shared.kCategory] = RegisterDocCategory.Identity_Document.rawValue
@@ -285,7 +257,7 @@ extension DocumentScannerViewController {
                 return
               }
         DispatchQueue.main.async {
-            self.lblActivityIndicator.text = "Completing your registration"
+            self.lblActivityIndicator.text = "REGISTER_DATA".localizedMessage(0)
         }
         BlockIDSDK.sharedInstance.registerDocument(obj: dlPayload,
                                                    liveIdProofedBy: "blockid",

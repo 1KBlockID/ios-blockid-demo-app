@@ -27,8 +27,6 @@ class CustomActivityIndicator: UIView {
     func setupView() {
         Bundle.main.loadNibNamed("CustomActivityIndicator", owner: self, options: nil)
         self.contentView.backgroundColor = .clear
-//        self.contentView.translatesAutoresizingMaskIntoConstraints = true
-//        self.contentView.autoresizingMask = .flexibleWidth || .flexibleHeight
         self.addSubview(contentView)
     }
     
