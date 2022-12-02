@@ -296,8 +296,6 @@ public struct DTHStruct {
   public func setLiveIDRegistered(_ value: Swift.Bool)
   public func isLiveIDRegistered() -> Swift.Bool
   public func setPINRegistered(_ value: Swift.Bool)
-  public func setEmailRegistered(_ value: Swift.Bool)
-  public func setPhoneRegistered(_ value: Swift.Bool)
   public func isPINRegistered() -> Swift.Bool
   public func setAuthAsset(value: Swift.String, forKey key: Swift.String)
   public func getAuthAssetValue(forKey key: Swift.String) -> Swift.String?
@@ -324,6 +322,10 @@ public struct DTHStruct {
   public func removeData(_ key: Swift.String)
   @objc deinit
 }
+extension BIDVault {
+  public func setTrustedSessionsSources(info: GlobalConfigResponse)
+  public func getTrustedSessionsSources() -> MobileAppConfigs.TrustedSessions?
+}
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class Enrollments : ObjectiveC.NSObject {
   public static let sharedInstance: Enrollments
   public func isDigitalAssetsEnabled() -> Swift.Bool
@@ -339,7 +341,7 @@ public struct DTHStruct {
   @objc deinit
 }
 @objc @_inheritsConvenienceInitializers public class PersonalAssets : ObjectiveC.NSObject {
-  final public let EmaiEnabled: Swift.Bool
+  final public let EmailEnabled: Swift.Bool
   final public let PhoneEnabled: Swift.Bool
   @objc override dynamic public init()
   @objc deinit
@@ -2274,6 +2276,21 @@ extension PassportReader : CoreNFC.NFCTagReaderSessionDelegate {
 }
 @_hasMissingDesignatedInitializers public class ServerPublicKeyResponse : Swift.Codable {
   public var publicKey: Swift.String?
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+public class GlobalConfigResponse : Swift.Codable {
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class MobileAppConfigs : Swift.Codable {
+  public class TrustedSessions : Swift.Codable {
+    @objc deinit
+    public func encode(to encoder: Swift.Encoder) throws
+    required public init(from decoder: Swift.Decoder) throws
+  }
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws

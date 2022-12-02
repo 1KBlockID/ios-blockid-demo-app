@@ -257,6 +257,7 @@ SWIFT_CLASS("_TtC10BlockIDSDK8BIDVault")
 @end
 
 
+
 SWIFT_CLASS("_TtC10BlockIDSDK15BiometricAssets")
 @interface BiometricAssets : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;

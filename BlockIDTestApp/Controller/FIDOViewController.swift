@@ -11,8 +11,10 @@ import BlockIDSDK
 
 class FIDOViewController: UIViewController, UITextFieldDelegate {
     
+    // MARK: - IBOutlets -
     @IBOutlet weak var txtFieldUsername: UITextField!
     
+    // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()   
         self.txtFieldUsername.delegate = self
@@ -22,6 +24,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.txtFieldUsername.text = registeredUser
     }
     
+    // MARK: - IBActions -
     @IBAction func backTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -37,10 +40,13 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             return
         }
         self.view.makeToastActivity(.center)
+        
+        // fileName parameter is optional
+        // provide filename if customized html is required
         BlockIDSDK.sharedInstance.registerFIDO2Key(userName: username,
                                                    tenantDNS: Tenant.defaultTenant.dns!,
                                                    communityName: Tenant.defaultTenant.community!,
-                                                   fileName: "fido3_legacy_vault.html")
+                                                   fileName: "fido3.html")
         { status, error in
             self.view.hideToastActivity()
             if status {
@@ -79,10 +85,12 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         
         self.view.makeToastActivity(.center)
         
+        // fileName parameter is optional
+        // provide filename if customized html is required
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(userName: username,
                                                        tenantDNS: Tenant.defaultTenant.dns!,
                                                        communityName: Tenant.defaultTenant.community!,
-                                                       fileName: "fido3_legacy_vault.html")
+                                                       fileName: "fido3.html")
         { status, error in
                 self.view.hideToastActivity()
                 if status {
