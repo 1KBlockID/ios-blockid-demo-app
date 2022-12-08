@@ -664,6 +664,7 @@ public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [Me
   public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
   public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
   public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BIDLinkedAccount?, type: FIDO2KeyType, completion: @escaping FIDO2Callback)
+  public func authenticateWithFIDO2Key(type: FIDO2KeyType, controller: UIKit.UIViewController? = nil, sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, metaData: [Swift.String : Any]? = nil, completion: @escaping AuthenticateUserCallback)
   public func checkSCEPCertificate(requestedAccount: BIDLinkedAccount, completion: @escaping SCEPCertificateCallback)
   @objc deinit
 }

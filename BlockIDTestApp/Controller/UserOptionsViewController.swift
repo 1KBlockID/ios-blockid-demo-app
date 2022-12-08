@@ -13,6 +13,7 @@ import Toast_Swift
 class UserOptionsViewController: UIViewController {
     
     var currentUser: BIDLinkedAccount!
+    fileprivate var fidoType: FIDO2KeyType!
     
     @IBOutlet weak var titleLbl: UILabel!
     
@@ -61,7 +62,10 @@ class UserOptionsViewController: UIViewController {
     }
     
     @IBAction func authenticatePlatformKey(_ sender: UIButton) {
+        fidoType = .PLATFORM
+        self.showQRCodeScanner()
     }
+    
     @IBAction func authenticateExtKey(_ sender: UIButton) {
     }
     
@@ -81,6 +85,13 @@ class UserOptionsViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
 
     }
+    
+    private func showQRCodeScanner() {
+        let scanQRVC = self.storyboard?.instantiateViewController(withIdentifier: "ScanQRViewController") as! ScanQRViewController
+        scanQRVC.delegate = self
+        self.present(scanQRVC, animated: true)
+    }
+    
     private func unlinkUser(linkedAccount: BIDLinkedAccount) {
         
         self.view.makeToastActivity(.center)
@@ -113,5 +124,91 @@ class UserOptionsViewController: UIViewController {
                 }
             }
         }
+    }
+    
+    func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV2?) {
+        
+        BlockIDSDK.sharedInstance.authenticateWithFIDO2Key(type: fidoType,
+                                                           controller: self,
+                                                           sessionId: dataModel?.sessionId,
+                                                           sessionURL: sessionUrl,
+                                                           creds: "",
+                                                           scopes: dataModel?.scopes,
+                                                           lat: 0.0,
+                                                           lon: 0.0,
+                                                           origin: dataModel?.origin,
+                                                           metaData: dataModel?.metadata) {(status, _, error) in
+            if status {
+                //if success
+                self?.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
+                    return
+                })
+
+            }
+        }
+    }
+}
+
+extension UserOptionsViewController: ScanQRViewDelegate {
+    func scannedData(data: String) {
+        processQRData(data)
+    }
+    
+    private func processQRData(_ data: String) {
+        
+        // uwl 2.0
+        if data.hasPrefix("https://") && data.contains("/sessions") {
+            handleUWL2(data: data)
+            return
+        }
+        
+        // uwl 1.0
+        //decode the base64 payload data
+        guard let decodedData = Data(base64Encoded: data) else {
+            self.inValidQRCode()
+            return
+        }
+        
+        let decodedString = String(data: decodedData, encoding: .utf8)!
+        let qrModel = CommonFunctions.jsonStringToObject(json: decodedString) as AuthenticationPayloadV1?
+        
+        // 1. Scopes converted to lowercase
+        qrModel?.scopes = qrModel?.scopes?.lowercased()
+        
+        // 2. If scopes has "windows", replace it by "scep_creds"
+        qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
+        
+        
+    }
+
+    private func handleUWL2(data: String) {
+        
+            let arrSplitStrings = data.components(separatedBy: "/session/")
+            let url = arrSplitStrings.first ?? ""
+            if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
+
+                GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
+                    
+                    if isSuccess {
+                        let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
+                        // authenticate user
+                        self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRUWL2)
+                    } else {
+                        // Show toast
+                        self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                            return
+                        })
+                    }
+                }
+            } else {
+                // Show toast
+                self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .center, title: "Error", completion: {_ in
+                    return
+                })
+            }
+    }
+    
+    private func inValidQRCode() {
+        self.showAlertView(title: "Invalid Code", message: "Unsupported QR code detected.")
     }
 }

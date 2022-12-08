@@ -1345,7 +1345,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Ssh-4J-6cr">
-                                <rect key="frame" x="20" y="77" width="280" height="150"/>
+                                <rect key="frame" x="20" y="77" width="280" height="260"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMP-CF-thw">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
@@ -1381,8 +1381,8 @@
                                             <action selector="registerExtKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="MCL-rb-15x"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNh-lX-Sbb">
-                                        <rect key="frame" x="0.0" y="102.5" width="280" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNh-lX-Sbb">
+                                        <rect key="frame" x="0.0" y="110" width="280" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="v7D-pf-qHt"/>
@@ -1398,8 +1398,8 @@
                                             <action selector="authenticatePlatformKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="9ml-Cd-LEn"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnL-mu-Z1A">
-                                        <rect key="frame" x="0.0" y="102.5" width="280" height="40"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnL-mu-Z1A">
+                                        <rect key="frame" x="0.0" y="165" width="280" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="fkk-ff-3qL"/>
@@ -1416,7 +1416,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KX7-es-Ph5">
-                                        <rect key="frame" x="0.0" y="110" width="280" height="40"/>
+                                        <rect key="frame" x="0.0" y="220" width="280" height="40"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="YFx-dO-IO3"/>
