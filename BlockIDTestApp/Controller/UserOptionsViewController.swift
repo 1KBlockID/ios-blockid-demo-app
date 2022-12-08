@@ -48,15 +48,18 @@ class UserOptionsViewController: UIViewController {
     @IBAction func registerExtKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .CROSS_PLATFORM) { status, err in
-            self.view.hideToastActivity()
-            if !status {
-                guard let err = err else { return }
-                self.showAlertView(title: "Error", message: err.message)
-                return
-            }
-            self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
-                _ in
-                self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.async {
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = err else { return }
+                    self.showAlertView(title: "Error", message: err.message)
+                    return
+                }
+                self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
+                    _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+
             }
         }
     }
