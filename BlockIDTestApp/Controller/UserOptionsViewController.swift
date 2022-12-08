@@ -131,7 +131,7 @@ class UserOptionsViewController: UIViewController {
     
     func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV1?) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.authenticateWithFIDO2Key(type: fidoType,
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(type: fidoType,
                                                            controller: self,
                                                            sessionId: dataModel?.session,
                                                            sessionURL: (dataModel?.sessionUrl)!,
@@ -140,7 +140,7 @@ class UserOptionsViewController: UIViewController {
                                                            lat: 0.0,
                                                            lon: 0.0,
                                                            origin: (dataModel?.getBidOrigin())!,
-                                                           metaData: dataModel?.metadata) {(status, _, error) in
+                                                           metaData: dataModel?.metadata) {(status, error) in
             self.view.hideToastActivity()
             if status {
                 //if success
