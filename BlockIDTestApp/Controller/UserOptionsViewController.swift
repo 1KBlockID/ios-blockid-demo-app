@@ -126,21 +126,21 @@ class UserOptionsViewController: UIViewController {
         }
     }
     
-    func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV2?) {
+    func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV1?) {
         
         BlockIDSDK.sharedInstance.authenticateWithFIDO2Key(type: fidoType,
                                                            controller: self,
-                                                           sessionId: dataModel?.sessionId,
-                                                           sessionURL: sessionUrl,
-                                                           creds: "",
-                                                           scopes: dataModel?.scopes,
+                                                           sessionId: dataModel?.session,
+                                                           sessionURL: (dataModel?.sessionUrl)!,
+                                                           creds: (dataModel?.creds)!,
+                                                           scopes: (dataModel?.scopes)!,
                                                            lat: 0.0,
                                                            lon: 0.0,
-                                                           origin: dataModel?.origin,
+                                                           origin: (dataModel?.getBidOrigin())!,
                                                            metaData: dataModel?.metadata) {(status, _, error) in
             if status {
                 //if success
-                self?.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
+                self.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
                     return
                 })
 
@@ -192,7 +192,8 @@ extension UserOptionsViewController: ScanQRViewDelegate {
                     if isSuccess {
                         let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
                         // authenticate user
-                        self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRUWL2)
+                        let authQRModel1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
+                        self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
                     } else {
                         // Show toast
                         self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in

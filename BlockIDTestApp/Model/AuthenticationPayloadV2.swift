@@ -18,8 +18,8 @@ public class AuthenticationPayloadV2: NSObject, Codable {
     public var expiryTS: Int?
     public var expiresDate: String?
     public var version: Int?
-    var metadata: [String: Any]? = [:]
-
+    var metadata: [String: Any]?
+    
     enum CodingKeys: String, CodingKey {
         case scopes
         case authtype
@@ -163,9 +163,11 @@ public class AuthenticationPayloadV2: NSObject, Codable {
         authRequestModel.community = self.origin?.communityName
         authRequestModel.authPage = self.origin?.authPage
         authRequestModel.sessionUrl = sessionUrl
+        authRequestModel.metadata = self.metadata
 
         return authRequestModel
     }
+    
 }
 
 public class Origin: Codable {
