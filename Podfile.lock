@@ -76,24 +76,24 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.10.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.10.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.10.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (7.7.0):
+  - GoogleUtilities/MethodSwizzler (7.10.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.10.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.10.0)"
+  - GoogleUtilities/Reachability (7.10.0):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (7.7.0):
+  - GoogleUtilities/UserDefaults (7.10.0):
     - GoogleUtilities/Logger
   - KeychainAccess (4.2.2)
   - nanopb (2.30908.0):
@@ -136,11 +136,12 @@ PODS:
     - EllipticCurveKeyPair (~> 2.0.2)
     - KeychainAccess (~> 4.2.1)
     - PromiseKit (~> 6.13.1)
+  - YubiKit (4.2.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - BigInt (~> 4.0)
-  - CryptoSwift (~> 1.3.0)
+  - CryptoSwift (~> 1.3.8)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -150,6 +151,7 @@ DEPENDENCIES:
   - TrustWalletCore (~> 2.5.6)
   - Web3 (from `https://github.com/Boilertalk/Web3.swift.git`, tag `0.4.2`)
   - WebAuthnKit (from `https://github.com/1KBlockID/WebAuthnKit-iOS.git`, tag `2.0.2`)
+  - YubiKit (~> 4.2.0)
 
 SPEC REPOS:
   trunk:
@@ -175,6 +177,7 @@ SPEC REPOS:
     - SwiftyTesseract
     - Toast-Swift
     - TrustWalletCore
+    - YubiKit
 
 EXTERNAL SOURCES:
   EllipticCurveKeyPair:
@@ -211,7 +214,7 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
   GoogleAppMeasurement: ae033c3aad67e68294369373056b4d74cc8ae0d6
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: e7311447fd2419f57420c79524b641537387eff2
@@ -224,7 +227,8 @@ SPEC CHECKSUMS:
   TrustWalletCore: 77ed44e6965e5121245d7fafc58c56a03bf13490
   Web3: 7b2c30f98f24cc290bc671ab525d7a30a2afbc73
   WebAuthnKit: ca41198026ba5a44ccf72e079e7737810bb47ca3
+  YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: 88b17e2bb6eb97ee85cbe1712371ce2259ac8433
+PODFILE CHECKSUM: 5c199b9d5684ad161e5862a7599f0b575127e895
 
 COCOAPODS: 1.11.3

@@ -384,6 +384,7 @@ SWIFT_CLASS("_TtC10BlockIDSDK9TOTPUtils")
 
 
 
+
 SWIFT_CLASS("_TtC10BlockIDSDK19WalletConnectHelper")
 @interface WalletConnectHelper : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;

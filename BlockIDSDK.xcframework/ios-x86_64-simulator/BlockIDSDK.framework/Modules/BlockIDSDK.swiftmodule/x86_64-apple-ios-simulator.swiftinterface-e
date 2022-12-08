@@ -34,6 +34,7 @@ import WalletCore
 import Web3
 import WebAuthnKit
 import WebKit
+import YubiKit
 import _Concurrency
 @objc @_inheritsConvenienceInitializers public class BIDServiceDirectory : ObjectiveC.NSObject, Swift.Decodable {
   @objc override dynamic public init()
@@ -324,7 +325,7 @@ public struct DTHStruct {
 }
 extension BlockIDSDK.BIDVault {
   public func setTrustedSessionsSources(info: BlockIDSDK.GlobalConfigResponse)
-  public func getTrustedSessionsSources() -> BlockIDSDK.MobileAppConfigs.TrustedSessions?
+  public func getTrustedSessionsSources() -> [Swift.String]?
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class Enrollments : ObjectiveC.NSObject {
   public static let sharedInstance: BlockIDSDK.Enrollments
@@ -1334,7 +1335,7 @@ extension BlockIDSDK.DriverLicenseScanHelper : BlockIDSDK.DriverLicenseResponseD
   public func scanFrontSide()
   public func scanBackSide()
 }
-public class CreateAccessCodePayload {
+@_hasMissingDesignatedInitializers public class CreateAccessCodePayload {
   public init(version: BlockIDSDK.Version, type: BlockIDSDK.AccessCodeType, emailID: Swift.String, emailSubject: Swift.String, emailTemplate: Swift.String)
   @objc deinit
 }
@@ -1390,6 +1391,7 @@ public struct CustomErrors {
     public static let ATTESTATION_RESULT_FAILED: (code: Swift.Int, message: Swift.String)
     public static let LINKING_FAILED: (code: Swift.Int, message: Swift.String)
     public static let UNLINKING_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let FETCH_MANAGED_WALLET_FAILED: (code: Swift.Int, message: Swift.String)
   }
   public struct SCEPCheck {
     public static let INVALID: (code: Swift.Int, message: Swift.String)
