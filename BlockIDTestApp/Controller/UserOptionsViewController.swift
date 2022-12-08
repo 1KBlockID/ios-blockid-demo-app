@@ -67,6 +67,9 @@ class UserOptionsViewController: UIViewController {
     }
     
     @IBAction func authenticateExtKey(_ sender: UIButton) {
+        fidoType = .CROSS_PLATFORM
+        self.showQRCodeScanner()
+
     }
     
     @IBAction func removeAccount(_ sender: UIButton) {
@@ -127,7 +130,7 @@ class UserOptionsViewController: UIViewController {
     }
     
     func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV1?) {
-        
+        self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.authenticateWithFIDO2Key(type: fidoType,
                                                            controller: self,
                                                            sessionId: dataModel?.session,
@@ -138,6 +141,7 @@ class UserOptionsViewController: UIViewController {
                                                            lon: 0.0,
                                                            origin: (dataModel?.getBidOrigin())!,
                                                            metaData: dataModel?.metadata) {(status, _, error) in
+            self.view.hideToastActivity()
             if status {
                 //if success
                 self.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
