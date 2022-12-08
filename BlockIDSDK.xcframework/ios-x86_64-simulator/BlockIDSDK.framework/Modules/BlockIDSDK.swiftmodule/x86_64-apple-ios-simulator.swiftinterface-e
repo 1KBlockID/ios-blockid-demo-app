@@ -123,6 +123,7 @@ public enum KeychainItemAccessibility {
   }
 }
 @_hasMissingDesignatedInitializers public class BIDAccount : Swift.Codable {
+  public var source: Swift.String?
   @objc deinit
   public func encode(to encoder: Swift.Encoder) throws
   required public init(from decoder: Swift.Decoder) throws
@@ -664,6 +665,7 @@ public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [Bl
   public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BlockIDSDK.BIDLinkedAccount?, type: BlockIDSDK.FIDO2KeyType, completion: @escaping BlockIDSDK.FIDO2Callback)
+  public func authenticateFIDO2Key(type: BlockIDSDK.FIDO2KeyType, controller: UIKit.UIViewController? = nil, sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BlockIDSDK.BIDOrigin, userId: Swift.String? = nil, metaData: [Swift.String : Any]? = nil, completion: @escaping BlockIDSDK.FIDO2Callback)
   public func checkSCEPCertificate(requestedAccount: BlockIDSDK.BIDLinkedAccount, completion: @escaping BlockIDSDK.SCEPCertificateCallback)
   @objc deinit
 }
@@ -678,6 +680,9 @@ extension BlockIDSDK.BlockIDSDK {
 }
 extension BlockIDSDK.BlockIDSDK {
   public func getMessageGateways(tenant: BlockIDSDK.BIDTenant, completion: @escaping BlockIDSDK.MessageGatewaysCallback)
+}
+extension BlockIDSDK.BlockIDSDK {
+  public func getPasswordPolicy(account: BlockIDSDK.BIDLinkedAccount, completion: @escaping BlockIDSDK.PasswordPolicyCallback)
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: BlockIDSDK.TOTPUtils
@@ -1403,6 +1408,9 @@ public struct CustomErrors {
   public struct KYC {
     public static let KYC_NOT_COMPLETE: (code: Swift.Int, msg: Swift.String)
   }
+  public struct Account {
+    public static let INVALID_ACCOUNT: (code: Swift.Int, msg: Swift.String)
+  }
   public static let kWalletCreationFailed: (code: Swift.Int, msg: Swift.String)
   public static let kUserIdAlreadyExists: (code: Swift.Int, msg: Swift.String)
   public static let kSomethingWentWrong: (code: Swift.Int, msg: Swift.String)
@@ -1475,6 +1483,7 @@ public func tripleDESDecrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Sw
 public func DESEncrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8], options: Swift.UInt32 = 0) -> [Swift.UInt8]
 @available(iOS 13, macOS 10.15, *)
 public func DESDecrypt(key: [Swift.UInt8], message: [Swift.UInt8], iv: [Swift.UInt8], options: Swift.UInt32 = 0) -> [Swift.UInt8]
+public typealias PasswordPolicyCallback = ((_ status: Swift.Bool, _ response: BlockIDSDK.BIDPasswordPolicy?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
 public class DataGroup12 : BlockIDSDK.DataGroup {
   public var issuingAuthority: Swift.String? {
@@ -1720,6 +1729,7 @@ public class BACHandler {
   public var sceptoken: Swift.String?
   public var scep_expiry: Swift.String?
   public var account: BlockIDSDK.BIDAccount?
+  public var passwordPolicy: BlockIDSDK.BIDPasswordPolicy?
   public static func == (lhs: BlockIDSDK.BIDLinkedAccount, rhs: BlockIDSDK.BIDLinkedAccount) -> Swift.Bool
   public func isOfflineAuthSupported() -> Swift.Bool
   @objc deinit
@@ -2228,6 +2238,12 @@ public struct DriverLicenseData : Swift.Codable {
   public var dataString: Swift.String?
   public func getPDF417dataObj() -> (BlockIDSDK.DriverLicenseData?, Swift.Bool)
   @objc deinit
+}
+@_hasMissingDesignatedInitializers public class BIDPasswordPolicy : Swift.Codable {
+  public var allowed: Swift.Bool?
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
 }
 @_hasMissingDesignatedInitializers @available(iOS 13, macOS 10.15, *)
 public class CardAccess {
