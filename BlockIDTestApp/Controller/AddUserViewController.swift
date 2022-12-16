@@ -20,7 +20,6 @@ class AddUserViewController: UIViewController {
     
     // MARK: - Private Properties -
     private var userOnboardingServerPublicKey: String?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private var qrScannerHelper: QRScannerHelper?
     private var magicLinkData: MagicLinkModel?
     private var magicLink: MagicLink?
@@ -53,8 +52,7 @@ class AddUserViewController: UIViewController {
     // MARK: - Private methods -
     // INIT QR scanner
     private func scanQRCode() {
-        qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode,
-                                               bidScannerView: viewQRScan,
+        qrScannerHelper = QRScannerHelper.init(bidScannerView: viewQRScan,
                                                kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
