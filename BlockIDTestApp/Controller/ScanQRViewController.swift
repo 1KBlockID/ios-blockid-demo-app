@@ -17,8 +17,6 @@ protocol ScanQRViewDelegate: AnyObject {
 class ScanQRViewController: UIViewController {
     
     weak var delegate: ScanQRViewDelegate?
-    
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private var qrScannerHelper: QRScannerHelper?
 
     @IBOutlet weak var _viewQRScan: BIDScannerView!
@@ -28,7 +26,8 @@ class ScanQRViewController: UIViewController {
     }
     
     private func scanQRCode() {
-        qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode, bidScannerView: _viewQRScan, kQRScanResponseDelegate: self)
+        qrScannerHelper = QRScannerHelper.init(bidScannerView: _viewQRScan,
+                                               kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
 }
