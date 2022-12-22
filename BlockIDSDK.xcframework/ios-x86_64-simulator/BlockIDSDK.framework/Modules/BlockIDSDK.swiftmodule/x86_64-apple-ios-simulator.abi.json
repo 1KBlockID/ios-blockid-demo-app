@@ -18532,7 +18532,7 @@
           {
             "kind": "Function",
             "name": "registerFIDO2Key",
-            "printedName": "registerFIDO2Key(controller:userName:tenant:type:completion:)",
+            "printedName": "registerFIDO2Key(controller:userName:tenantDNS:communityName:type:completion:)",
             "children": [
               {
                 "kind": "TypeNominal",
@@ -18561,9 +18561,15 @@
               },
               {
                 "kind": "TypeNominal",
-                "name": "BIDTenant",
-                "printedName": "BlockIDSDK.BIDTenant",
-                "usr": "s:10BlockIDSDK9BIDTenantC"
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
+              },
+              {
+                "kind": "TypeNominal",
+                "name": "String",
+                "printedName": "Swift.String",
+                "usr": "s:SS"
               },
               {
                 "kind": "TypeNominal",
@@ -18612,8 +18618,8 @@
               }
             ],
             "declKind": "Func",
-            "usr": "s:10BlockIDSDKAAC16registerFIDO2Key10controller8userName6tenant4type10completionySo16UIViewControllerC_SSSgAA9BIDTenantCAA0dE4TypeOySb_AA13ErrorResponseCSgtctF",
-            "mangledName": "$s10BlockIDSDKAAC16registerFIDO2Key10controller8userName6tenant4type10completionySo16UIViewControllerC_SSSgAA9BIDTenantCAA0dE4TypeOySb_AA13ErrorResponseCSgtctF",
+            "usr": "s:10BlockIDSDKAAC16registerFIDO2Key10controller8userName9tenantDNS09communityH04type10completionySo16UIViewControllerC_SSSgS2SAA0dE4TypeOySb_AA13ErrorResponseCSgtctF",
+            "mangledName": "$s10BlockIDSDKAAC16registerFIDO2Key10controller8userName9tenantDNS09communityH04type10completionySo16UIViewControllerC_SSSgS2SAA0dE4TypeOySb_AA13ErrorResponseCSgtctF",
             "moduleName": "BlockIDSDK",
             "declAttributes": [
               "AccessControl",
@@ -80796,28 +80802,28 @@
     {
       "filePath": "\/Users\/adityasharma\/Desktop\/GitRepos\/1Kosmos\/ios-kernel-sdk\/BlockIDSDK\/FIDO2\/FIDO2NativeHelper.swift",
       "kind": "StringLiteral",
-      "offset": 64994,
+      "offset": 64704,
       "length": 10,
       "value": "\"platform\""
     },
     {
       "filePath": "\/Users\/adityasharma\/Desktop\/GitRepos\/1Kosmos\/ios-kernel-sdk\/BlockIDSDK\/FIDO2\/FIDO2NativeHelper.swift",
       "kind": "StringLiteral",
-      "offset": 65031,
+      "offset": 64741,
       "length": 16,
       "value": "\"cross-platform\""
     },
     {
       "filePath": "\/Users\/adityasharma\/Desktop\/GitRepos\/1Kosmos\/ios-kernel-sdk\/BlockIDSDK\/FIDO2\/FIDO2NativeHelper.swift",
       "kind": "StringLiteral",
-      "offset": 64994,
+      "offset": 64704,
       "length": 10,
       "value": "\"platform\""
     },
     {
       "filePath": "\/Users\/adityasharma\/Desktop\/GitRepos\/1Kosmos\/ios-kernel-sdk\/BlockIDSDK\/FIDO2\/FIDO2NativeHelper.swift",
       "kind": "StringLiteral",
-      "offset": 65031,
+      "offset": 64741,
       "length": 16,
       "value": "\"cross-platform\""
     },

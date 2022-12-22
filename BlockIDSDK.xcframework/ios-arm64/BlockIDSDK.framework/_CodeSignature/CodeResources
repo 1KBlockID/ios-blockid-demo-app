@@ -26,27 +26,27 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		SbwrzL6bCbk2yLOmoaTV06Ri9cM=
+		sI+yz4rwSCU7N4XTAKKCj/YH1ZM=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.abi.json</key>
 		<data>
-		yCRQSaedAhDaa77YgTbtloNM2Ro=
+		1nEVA5ksOAXDKfqYVVJJS9uDC04=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<data>
-		oQ9oCg2dbJJGxDGoWh73j9i7g7w=
+		gu89KEpNIeV6u5sZ6m0/0bJGjIc=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		bjKHylKJs+75xeg41uby9Nm0uPM=
+		iMbMgRbg5S+30oC3sT4+DfdiiRU=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<data>
-		oQ9oCg2dbJJGxDGoWh73j9i7g7w=
+		gu89KEpNIeV6u5sZ6m0/0bJGjIc=
 		</data>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		eqoSZSBZuetWBTnU+XfuJ4Xv33Y=
+		GOMR/o2c7rb09FHd78o8yCkwBik=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -106,35 +106,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/LiQ351CTGHlOW2x136pTCjMRBwM5DTAJl7MQhw5n4w=
+			ERJ7+u3J8QJQuelCuLV0adR0N2LRoT0hU4rBmm1OAFo=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BngmJvvPjZKfyPwuu9ns7j+DSL88Z6IBkD/dycV41Og=
+			hr3uABKN1m0mCEXS5KlssYMktitkhs7AUVyezDBL/Js=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y9gF+jL4ofcx1hc17IWLIghR9B4VzlknanLP2Fc2cUI=
+			CFB1x1Vo7raDX7d5cLzLBujMoYUrRgbzMMW+CU04f9Q=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BngmJvvPjZKfyPwuu9ns7j+DSL88Z6IBkD/dycV41Og=
+			hr3uABKN1m0mCEXS5KlssYMktitkhs7AUVyezDBL/Js=
 			</data>
 		</dict>
 		<key>Modules/BlockIDSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7khqsuHAwboNGpxE5KVKEFIusK8CQxS+oUqXqnYDoCQ=
+			/dW32xLZmL1yiJukQN8yEmL8Tk+gRAkN62meZ4LvCtU=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
