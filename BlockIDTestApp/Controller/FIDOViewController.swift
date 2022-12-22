@@ -64,7 +64,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             }
             UserDefaults.standard.set(self.txtFieldUsername.text,
                                       forKey: AppConsant.fidoUserName)
-            self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+            self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
                 _ in
                 self.navigationController?.popViewController(animated: true)
             }
