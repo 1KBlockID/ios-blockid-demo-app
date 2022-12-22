@@ -47,7 +47,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                       forKey: AppConsant.fidoUserName)
             self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
                 _ in
-                self.navigationController?.popViewController(animated: true)
+                //
             }
         }
         
@@ -70,7 +70,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                       forKey: AppConsant.fidoUserName)
             self.view.makeToast("Security key registered successfully", duration: 3.0, position: .center) {
                 _ in
-                self.navigationController?.popViewController(animated: true)
+                //
             }
         }
     }
@@ -85,14 +85,16 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             self.view.hideToastActivity()
             if !status {
                 guard let err = error else { return }
-                self.showAlertView(title: "Error", message: err.message)
+                self.showAlertView(title: "Error", message: "\(err.message) (\(err.code).")
                 return
             }
             UserDefaults.standard.set(self.txtFieldUsername.text,
                                       forKey: AppConsant.fidoUserName)
-            self.view.makeToast("Platform key authenticated successfully", duration: 3.0, position: .center) {
+            self.view.makeToast("Platform key authenticated successfully",
+                                duration: 3.0,
+                                position: .center) {
                 _ in
-                self.navigationController?.popViewController(animated: true)
+                //
             }
         }
     }
@@ -114,7 +116,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                       forKey: AppConsant.fidoUserName)
             self.view.makeToast("Security key is authenticated successfully.", duration: 3.0, position: .center) {
                 _ in
-                self.navigationController?.popViewController(animated: true)
+                //
             }
         }
         
