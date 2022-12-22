@@ -29,6 +29,58 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    
+    @IBAction func registerPlatformKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                   userName: self.txtFieldUsername.text, tenant: Tenant.defaultTenant,
+                                                   type: .PLATFORM) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+                _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
+    }
+    
+    @IBAction func registerExtKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                   userName: self.txtFieldUsername.text, tenant: Tenant.defaultTenant,
+                                                   type: .CROSS_PLATFORM) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+                _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    @IBAction func authenticatePlatformKey(_ sender: UIButton) {
+//        fidoType = .PLATFORM
+//        self.showQRCodeScanner()
+    }
+    
+    @IBAction func authenticateExtKey(_ sender: UIButton) {
+//        fidoType = .CROSS_PLATFORM
+//        self.showQRCodeScanner()
+    }
+    
     @IBAction func registerTapped(_ sender: Any) {
         guard let username = self.txtFieldUsername.text,
               !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
