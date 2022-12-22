@@ -51,7 +51,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    @IBAction func registerExtKey(_ sender: UIButton) {
+    @IBAction func registerExternalKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
                                                    userName: self.txtFieldUsername.text, tenant: Tenant.defaultTenant,
