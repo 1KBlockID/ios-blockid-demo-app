@@ -678,6 +678,9 @@ extension BlockIDSDK.BlockIDSDK {
 extension BlockIDSDK.BlockIDSDK {
   public func getPasswordPolicy(account: BlockIDSDK.BIDLinkedAccount, completion: @escaping BlockIDSDK.PasswordPolicyCallback)
 }
+extension BlockIDSDK.BlockIDSDK {
+  public func authenticateFIDO2Key(controller: UIKit.UIViewController?, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: BlockIDSDK.FIDO2KeyType, fileName: Swift.String? = nil, completion: @escaping BlockIDSDK.FIDO2Callback)
+}
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: BlockIDSDK.TOTPUtils
   public func generateTOTP(_timer timer: Swift.Int, secret: Foundation.Data, algorithm: BlockIDSDK.TOTPUtils.Algorithm, digits: Swift.Int) throws -> Swift.String
@@ -1392,6 +1395,8 @@ public struct CustomErrors {
     public static let UNLINKING_FAILED: (code: Swift.Int, message: Swift.String)
     public static let FETCH_MANAGED_WALLET_FAILED: (code: Swift.Int, message: Swift.String)
     public static let INVALID_USER: (code: Swift.Int, message: Swift.String)
+    public static let ASSERTION_OPTIONS_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let ASSERTION_RESULT_FAILED: (code: Swift.Int, message: Swift.String)
   }
   public struct SCEPCheck {
     public static let INVALID: (code: Swift.Int, message: Swift.String)

@@ -72,13 +72,48 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func authenticatePlatformKey(_ sender: UIButton) {
-//        fidoType = .PLATFORM
-//        self.showQRCodeScanner()
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.defaultTenant.dns!,
+                                                       communityName: Tenant.defaultTenant.community!,
+                                                       type: .PLATFORM) { status, error in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = error else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Platform key authenticated successfully", duration: 3.0, position: .center) {
+                _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
     }
     
     @IBAction func authenticateExtKey(_ sender: UIButton) {
-//        fidoType = .CROSS_PLATFORM
-//        self.showQRCodeScanner()
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.defaultTenant.dns!,
+                                                       communityName: Tenant.defaultTenant.community!,
+                                                       type: .CROSS_PLATFORM) { status, error in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = error else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("External key authenticated successfully", duration: 3.0, position: .center) {
+                _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+        
     }
     
     @IBAction func registerTapped(_ sender: Any) {
