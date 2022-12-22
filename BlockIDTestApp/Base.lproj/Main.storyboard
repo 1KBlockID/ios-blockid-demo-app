@@ -26,7 +26,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navSplash" id="xuA-Ga-UAK" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JE8-dt-1Hm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1235,7 +1235,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (External Authenticator) ">
+                                                <state key="normal" title="Register (Security Key) ">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -1251,7 +1251,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (External Authenticator) ">
+                                                <state key="normal" title="Authenticate (Security Key) ">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -1483,7 +1483,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (External Authenticator) ">
+                                                <state key="normal" title="Register (Security Key) ">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -1499,7 +1499,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (External Authenticator) ">
+                                                <state key="normal" title="Authenticate (Security Key) ">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -3549,7 +3549,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="262" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQw-NT-JAJ">
-                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.500000000000004"/>
+                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -3726,7 +3726,7 @@
                                         <rect key="frame" x="0.0" y="5" width="272" height="50.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lo-SE-pNd">
-                                                <rect key="frame" x="8" y="8" width="55.5" height="14.499999999999996"/>
+                                                <rect key="frame" x="8" y="8" width="55.5" height="14.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="vZi-jQ-dUt"/>
                                                 </constraints>
