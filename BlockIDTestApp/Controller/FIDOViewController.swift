@@ -64,7 +64,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             }
             UserDefaults.standard.set(self.txtFieldUsername.text,
                                       forKey: AppConsant.fidoUserName)
-            self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
+            self.view.makeToast("Security key registered successfully", duration: 3.0, position: .center) {
                 _ in
                 self.navigationController?.popViewController(animated: true)
             }
@@ -93,7 +93,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func authenticateExtKey(_ sender: UIButton) {
+    @IBAction func authenticateExternalKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
                                                        userName: self.txtFieldUsername.text!,
@@ -108,7 +108,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             }
             UserDefaults.standard.set(self.txtFieldUsername.text,
                                       forKey: AppConsant.fidoUserName)
-            self.view.makeToast("External key authenticated successfully", duration: 3.0, position: .center) {
+            self.view.makeToast("Security key is authenticated successfully.", duration: 3.0, position: .center) {
                 _ in
                 self.navigationController?.popViewController(animated: true)
             }
