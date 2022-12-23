@@ -115,20 +115,11 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func registerTapped(_ sender: Any) {
-        guard let username = self.txtFieldUsername.text,
-              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-               // do nothing
-            }))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        self.view.makeToastActivity(.center)
         
+        self.view.makeToastActivity(.center)
         // fileName parameter is optional
         // provide filename if customized html is required
-        BlockIDSDK.sharedInstance.registerFIDO2Key(userName: username,
+        BlockIDSDK.sharedInstance.registerFIDO2Key(userName: self.txtFieldUsername.text!,
                                                    tenantDNS: Tenant.defaultTenant.dns!,
                                                    communityName: Tenant.defaultTenant.community!,
                                                    fileName: "fido3.html")
@@ -141,12 +132,12 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                         
                     }))
                     self.present(alert, animated: true, completion: nil)
-                UserDefaults.standard.set(username, forKey: AppConsant.fidoUserName)
+                UserDefaults.standard.set(self.txtFieldUsername.text!, forKey: AppConsant.fidoUserName)
             } else {
                 guard let msg = error?.message, let code = error?.code else {
                     return
                 }
-                let alert = UIAlertController(title: "Error", message: "\(msg), \(code)", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error", message: "\(msg) (\(code)).", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                    // do nothing
                     
@@ -158,21 +149,11 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func authenticateTapped(_ sender: Any) {
-        guard let username = self.txtFieldUsername.text,
-              !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            let alert = UIAlertController(title: "Error", message: "User name can't be empty", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-               // do nothing
-            }))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        
+
         self.view.makeToastActivity(.center)
-        
         // fileName parameter is optional
         // provide filename if customized html is required
-        BlockIDSDK.sharedInstance.authenticateFIDO2Key(userName: username,
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(userName: self.txtFieldUsername.text!,
                                                        tenantDNS: Tenant.defaultTenant.dns!,
                                                        communityName: Tenant.defaultTenant.community!,
                                                        fileName: "fido3.html")
@@ -189,7 +170,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                     guard let msg = error?.message, let code = error?.code else {
                         return
                     }
-                    let alert = UIAlertController(title: "Error", message: "\(msg), \(code)", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: "\(msg) (\(code)).", preferredStyle: .alert)
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                        // do nothing
                         
