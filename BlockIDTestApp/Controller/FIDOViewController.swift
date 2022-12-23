@@ -29,6 +29,99 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    
+    @IBAction func registerPlatformKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                   userName: self.txtFieldUsername.text!,
+                                                   tenantDNS: Tenant.defaultTenant.dns!,
+                                                   communityName: Tenant.defaultTenant.community!,
+                                                   type: .PLATFORM) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+                _ in
+                //
+            }
+        }
+        
+    }
+    
+    @IBAction func registerExternalKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                   userName: self.txtFieldUsername.text!,
+                                                   tenantDNS: Tenant.defaultTenant.dns!,
+                                                   communityName: Tenant.defaultTenant.community!,
+                                                   type: .CROSS_PLATFORM) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Security key registered successfully", duration: 3.0, position: .center) {
+                _ in
+                //
+            }
+        }
+    }
+    
+    @IBAction func authenticatePlatformKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.defaultTenant.dns!,
+                                                       communityName: Tenant.defaultTenant.community!,
+                                                       type: .PLATFORM) { status, error in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = error else { return }
+                self.showAlertView(title: "Error", message: "\(err.message) (\(err.code).")
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Platform key authenticated successfully",
+                                duration: 3.0,
+                                position: .center) {
+                _ in
+                //
+            }
+        }
+    }
+    
+    @IBAction func authenticateExternalKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.defaultTenant.dns!,
+                                                       communityName: Tenant.defaultTenant.community!,
+                                                       type: .CROSS_PLATFORM) { status, error in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = error else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            UserDefaults.standard.set(self.txtFieldUsername.text,
+                                      forKey: AppConsant.fidoUserName)
+            self.view.makeToast("Security key is authenticated successfully.", duration: 3.0, position: .center) {
+                _ in
+                //
+            }
+        }
+        
+    }
+    
     @IBAction func registerTapped(_ sender: Any) {
         guard let username = self.txtFieldUsername.text,
               !username.isEmpty && !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {

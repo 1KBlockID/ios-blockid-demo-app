@@ -653,10 +653,6 @@ public typealias MessageGatewaysCallback = ((_ status: Swift.Bool, _ object: [Me
   public func migrateData(bidTenant: BIDTenant, clientTenant: BIDTenant, completion: @escaping BIDMigrationCallback)
   public func getVersion() -> Swift.String?
   public func verifyDocument(dvcID: Swift.String? = nil, dic: [Swift.String : Any], verifications: [Swift.String], completion: @escaping ((Swift.Bool, [Swift.String : Any]?, ErrorResponse?) -> Swift.Void))
-  public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
-  public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
-  public func registerFIDO2Key(controller: UIKit.UIViewController, linkedAccount: BIDLinkedAccount?, type: FIDO2KeyType, completion: @escaping FIDO2Callback)
-  public func authenticateFIDO2Key(type: FIDO2KeyType, controller: UIKit.UIViewController? = nil, sessionId: Swift.String?, sessionURL: Swift.String, creds: Swift.String, scopes: Swift.String, lat: Swift.Double, lon: Swift.Double, origin: BIDOrigin, userId: Swift.String? = nil, metaData: [Swift.String : Any]? = nil, completion: @escaping FIDO2Callback)
   public func checkSCEPCertificate(requestedAccount: BIDLinkedAccount, completion: @escaping SCEPCertificateCallback)
   @objc deinit
 }
@@ -674,6 +670,14 @@ extension BlockIDSDK {
 }
 extension BlockIDSDK {
   public func getPasswordPolicy(account: BIDLinkedAccount, completion: @escaping PasswordPolicyCallback)
+}
+extension BlockIDSDK {
+  public func registerFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
+  public func authenticateFIDO2Key(userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
+}
+extension BlockIDSDK {
+  public func registerFIDO2Key(controller: UIKit.UIViewController, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: FIDO2KeyType, completion: @escaping FIDO2Callback)
+  public func authenticateFIDO2Key(controller: UIKit.UIViewController?, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: FIDO2KeyType, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: TOTPUtils
@@ -1388,6 +1392,9 @@ public struct CustomErrors {
     public static let LINKING_FAILED: (code: Swift.Int, message: Swift.String)
     public static let UNLINKING_FAILED: (code: Swift.Int, message: Swift.String)
     public static let FETCH_MANAGED_WALLET_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let INVALID_USER: (code: Swift.Int, message: Swift.String)
+    public static let ASSERTION_OPTIONS_FAILED: (code: Swift.Int, message: Swift.String)
+    public static let ASSERTION_RESULT_FAILED: (code: Swift.Int, message: Swift.String)
   }
   public struct SCEPCheck {
     public static let INVALID: (code: Swift.Int, message: Swift.String)
