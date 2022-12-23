@@ -33,7 +33,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     @IBAction func registerPlatformKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
-                                                   userName: self.txtFieldUsername.text,
+                                                   userName: self.txtFieldUsername.text!,
                                                    tenantDNS: Tenant.defaultTenant.dns!,
                                                    communityName: Tenant.defaultTenant.community!,
                                                    type: .PLATFORM) { status, err in
@@ -56,7 +56,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     @IBAction func registerExternalKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
-                                                   userName: self.txtFieldUsername.text,
+                                                   userName: self.txtFieldUsername.text!,
                                                    tenantDNS: Tenant.defaultTenant.dns!,
                                                    communityName: Tenant.defaultTenant.community!,
                                                    type: .CROSS_PLATFORM) { status, err in
