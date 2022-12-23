@@ -677,7 +677,7 @@ extension BlockIDSDK {
 }
 extension BlockIDSDK {
   public func registerFIDO2Key(controller: UIKit.UIViewController, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: FIDO2KeyType, completion: @escaping FIDO2Callback)
-  public func authenticateFIDO2Key(controller: UIKit.UIViewController?, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: FIDO2KeyType, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
+  public func authenticateFIDO2Key(controller: UIKit.UIViewController, userName: Swift.String, tenantDNS: Swift.String, communityName: Swift.String, type: FIDO2KeyType, fileName: Swift.String? = nil, completion: @escaping FIDO2Callback)
 }
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TOTPUtils : ObjectiveC.NSObject {
   public static let sharedInstance: TOTPUtils
@@ -1442,6 +1442,8 @@ public struct CustomErrors {
   public static let kMagicLinkExpired: (code: Swift.Int, msg: Swift.String)
   public static let kMagicLinkCodeRedeemed: (code: Swift.Int, msg: Swift.String)
   public static let kTenantRegisterFailed: (code: Swift.Int, msg: Swift.String)
+  public static let K_TENANT_DNS_IS_MANDATORY: (code: Swift.Int, msg: Swift.String)
+  public static let K_COMMUNITY_NAME_IS_MANDATORY: (code: Swift.Int, msg: Swift.String)
   public static let kCancelledProcess: (code: Swift.Int, msg: Swift.String)
   public static let kSessionExpired: (code: Swift.Int, msg: Swift.String)
   public static let KServiceUrlNotSet: (code: Swift.Int, msg: Swift.String)
