@@ -243,7 +243,6 @@ extension SSNViewController {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
-                    
                     // Get certification verified
                     let verified = weakSelf.certification["verified"] as? Bool
                     
@@ -431,7 +430,7 @@ extension SSNViewController {
         
         // Get certifications proof_jwt token
         if let proofJWT = certification["proof_jwt"] as? String {
-            ssnData["proof_of_verification"] = [proofJWT]
+            ssnData["proof"] = [proofJWT]
         }
         
         let ssn = txtFieldSSN.text ?? ""

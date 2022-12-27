@@ -37,7 +37,7 @@ class EnrollMentViewController: UIViewController {
     var enrollmentArray = [Enrollments.About,
                            Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.DriverLicense_Liveness,
+                           /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
@@ -45,7 +45,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
-                           Enrollments.LiveID_liveness,
+                           /*Enrollments.LiveID_liveness,*/
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
@@ -68,6 +68,7 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
+        self.getKYC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -157,6 +158,21 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    /**
+            Name:  getKYC()
+            Parameter: completion: KYCCallback type returns (status, kycHash 512 string, error)
+     **/
+    private func getKYC() {
+        BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
+            if status {
+                debugPrint("KYC ->", kycHash as Any)
+            } else {
+                debugPrint("error message ->", error?.message as Any)
+                debugPrint("error code ->", error?.code as Any)
+            }
+        })
     }
     
     private func enrollSSN() {
