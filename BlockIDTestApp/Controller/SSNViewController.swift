@@ -82,10 +82,7 @@ extension SSNViewController {
     
     private func setupDataSource() {
         
-        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
-                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
-        
-        if isDLEnrolled {
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
@@ -102,13 +99,7 @@ extension SSNViewController {
     private func verifySSN() {
         var identityDocument = [String: Any]()
         
-        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
-                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
-        
-        let isPPTEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
-                                                                  type: RegisterDocType.PPT.rawValue, category: nil) != nil
-        
-        if isDLEnrolled {
+        if BlockIDSDK.sharedInstance.isDLEnrolled() {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
@@ -116,7 +107,7 @@ extension SSNViewController {
                 return
             }
             identityDocument = documents.first ?? [:]
-        } else if isPPTEnrolled {
+        } else if BlockIDSDK.sharedInstance.isPassportEnrolled() {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.PPT.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
