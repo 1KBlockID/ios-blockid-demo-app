@@ -758,6 +758,7 @@ public enum ScannerType {
   }
 }
 public typealias VerifyLiveIDCallback = ((_ status: Swift.Bool, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
+public typealias LivenessCheckCallback = ((_ status: Swift.Bool, _ token: Swift.String?, _ proof: Swift.String?, _ error: BlockIDSDK.ErrorResponse?) -> Swift.Void)
 public enum AuthAssetType : Swift.String {
   case pin
   case device

@@ -81,6 +81,7 @@ extension SSNViewController {
     }
     
     private func setupDataSource() {
+        
         if BlockIDSDK.sharedInstance.isDLEnrolled() {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
@@ -97,6 +98,7 @@ extension SSNViewController {
     
     private func verifySSN() {
         var identityDocument = [String: Any]()
+        
         if BlockIDSDK.sharedInstance.isDLEnrolled() {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,

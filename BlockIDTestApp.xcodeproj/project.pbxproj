@@ -41,8 +41,8 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
-		4C6D499D29115AE80041C9A1 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; };
-		4C6D499E29115AE80041C9A1 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5D3DF436295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */; };
+		5D3DF437295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
@@ -68,6 +68,7 @@
 		E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */; };
 		E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */; };
 		E6B95077287D84CB0015E759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B95076287D84CB0015E759 /* Localizable.strings */; };
+		E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC5F702923761100BB4E04 /* AboutViewController.swift */; };
 		E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */; };
 		E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */; };
 		E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */; };
@@ -86,13 +87,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4C8F39EC290FD92B0081A528 /* Embed Frameworks */ = {
+		B6BB891F29006D0B00C7CFFF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C6D499E29115AE80041C9A1 /* BlockIDSDK.xcframework in Embed Frameworks */,
+				5D3DF437295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,9 +142,9 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
-		5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
 		5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConsentViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +165,7 @@
 		E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV2.swift; sourceTree = "<group>"; };
 		E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV1.swift; sourceTree = "<group>"; };
 		E6B95076287D84CB0015E759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E6EC5F702923761100BB4E04 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLiveness.swift; sourceTree = "<group>"; };
 		E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLivenessViewController.swift; sourceTree = "<group>"; };
 		E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivenessCheck.swift; sourceTree = "<group>"; };
@@ -187,7 +189,7 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */,
-				4C6D499D29115AE80041C9A1 /* BlockIDSDK.xcframework in Frameworks */,
+				5D3DF436295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Frameworks */,
 				5D85693C28B80191000D0B05 /* Starscream in Frameworks */,
 				720C4D260E7C100C0B3CC8EA /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
@@ -199,7 +201,7 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5D4CA8B7290AF5A300830C70 /* BlockIDSDK.xcframework */,
+				5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */,
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				F19ADA37D3DF3FFFA3D3632E /* Pods_BlockIDTestApp.framework */,
@@ -334,6 +336,7 @@
 				E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */,
 				5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */,
 				5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */,
+				E6EC5F702923761100BB4E04 /* AboutViewController.swift */,
 				5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */,
 			);
 			path = Controller;
@@ -448,7 +451,7 @@
 				3CEE3309264413C2003FDB78 /* Resources */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
 				17211E9FCDFB05BC614D4E39 /* [CP] Embed Pods Frameworks */,
-				4C8F39EC290FD92B0081A528 /* Embed Frameworks */,
+				B6BB891F29006D0B00C7CFFF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -631,6 +634,7 @@
 				B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
 				E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */,
+				E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */,
 				E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */,
 				5D85693E28B80706000D0B05 /* WalletConsentViewController.swift in Sources */,
 				E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */,
