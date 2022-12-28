@@ -41,8 +41,10 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
-		5D3DF436295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */; };
-		5D3DF437295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C3BABD6295C8EA1001E6827 /* BlockIDSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BABD5295C8EA1001E6827 /* BlockIDSDK.xcframework */; };
+		4C3BABD7295C8EA1001E6827 /* BlockIDSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3BABD5295C8EA1001E6827 /* BlockIDSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CC1F5CC295C9641002C1C8F /* CustomActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC1F5CA295C9641002C1C8F /* CustomActivityIndicator.swift */; };
+		4CC1F5CD295C9641002C1C8F /* CustomActivityIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4CC1F5CB295C9641002C1C8F /* CustomActivityIndicator.xib */; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5D59A1E328BE1AE600A5D921 /* WalletConnect */; };
@@ -87,13 +89,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B6BB891F29006D0B00C7CFFF /* Embed Frameworks */ = {
+		4C3BABD8295C8EA1001E6827 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5D3DF437295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Embed Frameworks */,
+				4C3BABD7295C8EA1001E6827 /* BlockIDSDK.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,7 +144,10 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
-		5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = BlockIDSDK.xcframework; sourceTree = "<group>"; };
+		4C3BABD5295C8EA1001E6827 /* BlockIDSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = BlockIDSDK.xcframework; path = Frameworks/BlockIDSDK.xcframework; sourceTree = "<group>"; };
+		4C3BABD9295C8FEA001E6827 /* document-scanner.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "document-scanner.xcframework"; path = "Frameworks/document-scanner.xcframework"; sourceTree = "<group>"; };
+		4CC1F5CA295C9641002C1C8F /* CustomActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActivityIndicator.swift; sourceTree = "<group>"; };
+		4CC1F5CB295C9641002C1C8F /* CustomActivityIndicator.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomActivityIndicator.xib; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
@@ -189,7 +194,7 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				5D59A1E428BE1AE600A5D921 /* WalletConnect in Frameworks */,
-				5D3DF436295B0BB3003BD8B2 /* BlockIDSDK.xcframework in Frameworks */,
+				4C3BABD6295C8EA1001E6827 /* BlockIDSDK.xcframework in Frameworks */,
 				5D85693C28B80191000D0B05 /* Starscream in Frameworks */,
 				720C4D260E7C100C0B3CC8EA /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
@@ -201,7 +206,8 @@
 		1534371962C417F7F920BB63 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5D3DF434295B0BA8003BD8B2 /* BlockIDSDK.xcframework */,
+				4C3BABD9295C8FEA001E6827 /* document-scanner.xcframework */,
+				4C3BABD5295C8EA1001E6827 /* BlockIDSDK.xcframework */,
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
 				F19ADA37D3DF3FFFA3D3632E /* Pods_BlockIDTestApp.framework */,
@@ -345,6 +351,7 @@
 		3CEE334B264414E7003FDB78 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CC1F5C9295C9641002C1C8F /* Activity Indicator */,
 				5D4281C928B75183009E87A0 /* WalletConnectCell */,
 				3CD35A0E26458C03009D38B0 /* ConsentScreenCell */,
 				3CEE334C264414E7003FDB78 /* EnrollmentCell */,
@@ -390,6 +397,15 @@
 				E673A37D28F7EC6C008995A9 /* DateExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4CC1F5C9295C9641002C1C8F /* Activity Indicator */ = {
+			isa = PBXGroup;
+			children = (
+				4CC1F5CA295C9641002C1C8F /* CustomActivityIndicator.swift */,
+				4CC1F5CB295C9641002C1C8F /* CustomActivityIndicator.xib */,
+			);
+			path = "Activity Indicator";
 			sourceTree = "<group>";
 		};
 		5D4281C928B75183009E87A0 /* WalletConnectCell */ = {
@@ -451,7 +467,7 @@
 				3CEE3309264413C2003FDB78 /* Resources */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
 				17211E9FCDFB05BC614D4E39 /* [CP] Embed Pods Frameworks */,
-				B6BB891F29006D0B00C7CFFF /* Embed Frameworks */,
+				4C3BABD8295C8EA1001E6827 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -525,6 +541,7 @@
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
 				5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */,
+				4CC1F5CD295C9641002C1C8F /* CustomActivityIndicator.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 				B64453412893C71900597497 /* GoogleService-Info.plist in Resources */,
 			);
@@ -650,6 +667,7 @@
 				E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */,
 				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */,
+				4CC1F5CC295C9641002C1C8F /* CustomActivityIndicator.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
 				B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
