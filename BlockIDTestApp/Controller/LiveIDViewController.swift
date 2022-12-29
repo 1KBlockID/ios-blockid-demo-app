@@ -81,11 +81,10 @@ class LiveIDViewController: UIViewController {
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
     private let isResettingExpressionsAllowed = false
-    private var isLoaderHidden: Bool = false
+   /* private var isLoaderHidden: Bool = false*/
     var isLivenessNeeded: Bool = false
     private var imgOverlay: UIImageView!
     var onFinishCallback: ((_ status: Bool) -> Void)?
-    let currentScanningType: ProofingType = .ENHANCED_PROOFING //or .DEFAULT_PROOFING
 
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -132,46 +131,42 @@ class LiveIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    if self.currentScanningType == .DEFAULT_PROOFING {
-                        self._viewBG.isHidden = false
-                        let bidView = BIDScannerView()
-                        bidView.frame = self._viewLiveIDScan.frame
-                        self.view.addSubview(bidView)
-                        self._viewLiveIDScan.isHidden = true
-                        let imageName = "group3Copy.png"
-                        let image = UIImage(named: imageName)
-                        self.imgOverlay = UIImageView(image: image!)
-                        self.imgOverlay.contentMode = .scaleAspectFit
-                        self.imgOverlay.frame = self._imgOverlay.frame
-                        self.imgOverlay.tintColor = .red
-                        self.view.addSubview(self.imgOverlay)
-                        
-                        //3. Initialize LiveIDScannerHelper
-                        if self.liveIdScannerHelper == nil {
-                            self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
-                                                                                bidScannerView: bidView,
-                                                                                overlayFrame: self.imgOverlay.frame,
-                                                                                shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
-                                                                                liveIdResponseDelegate: self)
-                        }
-                        //4. Start Scanning
-                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-                    } else {
-                        self._viewLiveIDScan.isHidden = true
-                        self.imgOverlay = UIImageView(image: UIImage(named: "group3Copy.png")!)
-                        
-                        //3. Initialize LiveIDScannerHelper
-                        if self.liveIdScannerHelper == nil {
-                            self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
-                                                                                bidScannerView: BIDScannerView(),
-                                                                                overlayFrame: self.imgOverlay.frame,
-                                                                                shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
-                                                                                liveIdResponseDelegate: self,
-                                                                                proofingType: .ENHANCED_PROOFING)
-                        }
-                        //4. Start Scanning
-                        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                    self.activityIndicator.startAnimating()
+                    
+                     self._viewBG.isHidden = false
+                     let bidView = BIDScannerView()
+                     bidView.frame = self._viewLiveIDScan.frame
+                     self.view.addSubview(bidView)
+                     self._viewLiveIDScan.isHidden = true
+                     let imageName = "group3Copy.png"
+                     let image = UIImage(named: imageName)
+                     self.imgOverlay = UIImageView(image: image!)
+                     self.imgOverlay.contentMode = .scaleAspectFit
+                     self.imgOverlay.frame = self._imgOverlay.frame
+                     self.imgOverlay.tintColor = .red
+                     self.view.addSubview(self.imgOverlay)
+                     
+                     //3. Initialize LiveIDScannerHelper
+                     if self.liveIdScannerHelper == nil {
+                     self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
+                     bidScannerView: bidView,
+                     overlayFrame: self.imgOverlay.frame,
+                     shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
+                     liveIdResponseDelegate: self)
+                     }
+                     
+                     //4. Start Scanning
+                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                    
+                   /* self._viewLiveIDScan.isHidden = true
+                    
+                    //3. Initialize LiveIDScannerHelper
+                    if self.liveIdScannerHelper == nil {
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(liveIdResponseDelegate: self)
                     }
+                    
+                    //4. Start Scanning
+                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: nil) */
                 }
             }
         }
@@ -203,10 +198,8 @@ class LiveIDViewController: UIViewController {
     }
     
     private func setLiveID(withPhoto face: UIImage, token: String) {
-//        self.view.makeToastActivity(.center)
         self.showLoader(message: "Completing registration")
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face, liveIdProofedBy: nil, sigToken: token) { [self] (status, error) in
-            self.view.hideToastActivity()
             if !status {
                 // FAILED
                 self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
@@ -230,7 +223,6 @@ class LiveIDViewController: UIViewController {
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
         
         BlockIDSDK.sharedInstance.registerDocument(obj: obj, liveIdProofedBy: "", docSignToken: docSignToken, faceImage: face, liveIDSignToken: token) { [self] (status, error) in
-//            self.view.hideToastActivity()
             self.hideLoader()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
@@ -251,7 +243,6 @@ class LiveIDViewController: UIViewController {
     }
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
-//        self.view.makeToastActivity(.center)
         self.showLoader(message: "Verifing live id")
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo, sigToken: token) { (status, error) in
             self.hideLoader()
@@ -312,6 +303,8 @@ class LiveIDViewController: UIViewController {
         DispatchQueue.main.async {
             self.lblActivityIndicator.text = message
             self.viewActivityIndicator.isHidden = false
+            self.viewActivityIndicator.backgroundColor = .white
+            self.view.bringSubviewToFront(self.viewActivityIndicator)
             self.activityIndicator.startAnimating()
         }
     }
@@ -337,9 +330,9 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
         //Check If licenene key not enabled
-        if isLoaderHidden {
-            self.view.hideToastActivity()
-            self.hideLoader()
+        if liveIdImage == nil && signatureToken == nil && error == nil {
+            // Selfie scanner cancelled
+            self.goBack()
         }
         
         
@@ -369,7 +362,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {_ in
                 self.goBack()
             }))
-            self.present(alert, animated: true)
+            self.present(alert, animated: false)
             return
 
         }
@@ -418,11 +411,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
 
     }
     
-    func startLoader() {
+   /* func startLoader() {
         self.view.backgroundColor = .red
         isLoaderHidden = true
         self.view.makeToastActivity(.center)
-    }
+    } */
     
     func focusOnFaceChanged(isFocused: Bool?) {
         guard let inFocus = isFocused else {
