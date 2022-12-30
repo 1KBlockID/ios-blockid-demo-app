@@ -133,7 +133,7 @@ class LiveIDViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.activityIndicator.startAnimating()
                     
-                     self._viewBG.isHidden = false
+                    /* self._viewBG.isHidden = false
                      let bidView = BIDScannerView()
                      bidView.frame = self._viewLiveIDScan.frame
                      self.view.addSubview(bidView)
@@ -156,9 +156,9 @@ class LiveIDViewController: UIViewController {
                      }
                      
                      //4. Start Scanning
-                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID) */
                     
-                   /* self._viewLiveIDScan.isHidden = true
+                    self._viewLiveIDScan.isHidden = true
                     
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
@@ -166,7 +166,7 @@ class LiveIDViewController: UIViewController {
                     }
                     
                     //4. Start Scanning
-                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: nil) */
+                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: nil)
                 }
             }
         }
@@ -329,7 +329,6 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
-        //Check If licenene key not enabled
         if liveIdImage == nil && signatureToken == nil && error == nil {
             // Selfie scanner cancelled
             self.goBack()
