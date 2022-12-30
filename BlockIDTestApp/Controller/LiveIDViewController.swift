@@ -244,7 +244,7 @@ class LiveIDViewController: UIViewController {
     }
     
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
-        self.showLoader(message: "Verifing live id")
+        self.showLoader(message: "Verifying live id")
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo, sigToken: token) { (status, error) in
             self.hideLoader()
             if !status {
