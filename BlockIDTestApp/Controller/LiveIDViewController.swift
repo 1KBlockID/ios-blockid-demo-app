@@ -102,10 +102,6 @@ class LiveIDViewController: UIViewController {
         _viewBG.isHidden = true
        // _imgOverlay.isHidden = true
         _lblInformation.isHidden = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         if isLivenessNeeded {
             _lblPageTitle.text = "Enroll Live ID (with Liveness Check)"
@@ -120,6 +116,10 @@ class LiveIDViewController: UIViewController {
         startLiveIDScanning()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
     // MARK: - LiveID Scanning -
     private func startLiveIDScanning() {
         //1. Check for Camera Permission
@@ -132,7 +132,7 @@ class LiveIDViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self.activityIndicator.startAnimating()
-                    
+                    // NOTE: Uncomment below code for scan liveId with expression detection
                     /* self._viewBG.isHidden = false
                      let bidView = BIDScannerView()
                      bidView.frame = self._viewLiveIDScan.frame
@@ -158,6 +158,7 @@ class LiveIDViewController: UIViewController {
                      //4. Start Scanning
                      self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID) */
                     
+                    // Selfie scan
                     self._viewLiveIDScan.isHidden = true
                     
                     //3. Initialize LiveIDScannerHelper
@@ -320,7 +321,7 @@ class LiveIDViewController: UIViewController {
 extension LiveIDViewController: LiveIDResponseDelegate {
   
     func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
-        //Check If licenene key not enabled
+        //Check If license key not enabled
         if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
             self._lblInformation.text = "Camera sensor is blocked. Unblock sensor and continue..."
             Vibration.error.vibrate()
@@ -329,11 +330,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
         
-        if liveIdImage == nil && signatureToken == nil && error == nil {
+        if error?.code == CustomErrors.kScanCancelled.code {
             // Selfie scanner cancelled
             self.goBack()
         }
-        
         
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
@@ -363,7 +363,6 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             }))
             self.present(alert, animated: false)
             return
-
         }
 
         if isForVerification {
