@@ -280,4 +280,3 @@ extension UIViewController {
         return self.presentedViewController?.topMostViewController()
     }
 }
-
