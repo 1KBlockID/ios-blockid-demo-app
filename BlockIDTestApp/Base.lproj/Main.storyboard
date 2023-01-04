@@ -1422,7 +1422,7 @@
                                     <constraint firstItem="fNH-qy-Jct" firstAttribute="leading" secondItem="aDf-rj-Xcp" secondAttribute="leading" constant="8" id="qJm-4h-DKm"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-FV-pcR">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-FV-pcR">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNZ-af-cnL">
