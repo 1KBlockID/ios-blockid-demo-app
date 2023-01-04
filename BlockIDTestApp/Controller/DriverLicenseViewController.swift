@@ -92,6 +92,7 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     self._viewBG.isHidden = true
                     self._viewLiveIDScan.isHidden = true
+                    self.activityIndicator.startAnimating()
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
                         // NOTE: Uncomment below code to scan document with BIDScannerView
@@ -133,12 +134,10 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
-//        self.view.makeToastActivity(.center)
         self.showLoader(message: "Verifying Document")
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
-                    self.hideLoader()
                     if !status {
                         //Verification failed
                         self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
@@ -176,7 +175,6 @@ class DriverLicenseViewController: UIViewController {
         dic?["id"] = dl?["id"]
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.hideLoader()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
@@ -215,18 +213,12 @@ class DriverLicenseViewController: UIViewController {
             self.activityIndicator.startAnimating()
         }
     }
-    
-    private func hideLoader() {
-        self.viewActivityIndicator.isHidden = true
-        self.activityIndicator.stopAnimating()
-    }
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
         
     }
-    
     
     func dlScanCompleted(dlScanSide: DLScanningSide,
                          dictDriveLicense: [String : Any]?,
