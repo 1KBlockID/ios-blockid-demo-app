@@ -216,7 +216,7 @@ class DriverLicenseViewController: UIViewController {
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
-        
+        showLoader(message: "Authenticating Document")
     }
     
     func dlScanCompleted(dlScanSide: DLScanningSide,
@@ -224,7 +224,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
                          signatureToken signToken: String?,
                          error: ErrorResponse?) {
        
-        if (error?.code == CustomErrors.kScanError.code) || (error?.code == CustomErrors.kScanCancelled.code){
+        if (error?.code == CustomErrors.kScanError.code) || (error?.code == CustomErrors.kScanCancelled.code) {
             // Document scanner cancelled/Error
             self.goBack()
         }
