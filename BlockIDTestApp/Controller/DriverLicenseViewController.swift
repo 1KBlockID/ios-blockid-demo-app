@@ -210,10 +210,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
         showLoader(message: "Verifying Drivers License")
     }
     
-    func dlScanCompleted(dlScanSide: DLScanningSide,
-                         dictDriveLicense: [String : Any]?,
-                         signatureToken signToken: String?,
-                         error: ErrorResponse?) {
+    func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
        
         if (error?.code == CustomErrors.kScanError.code) || (error?.code == CustomErrors.kScanCancelled.code) {
             // Document scanner cancelled/Error
