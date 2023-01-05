@@ -133,7 +133,7 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
-        self.showLoader(message: "Verifying Document")
+        self.showLoader(message: "Verifying Drivers License")
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
@@ -216,7 +216,7 @@ class DriverLicenseViewController: UIViewController {
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
-        showLoader(message: "Authenticating Document")
+        showLoader(message: "Verifying Drivers License")
     }
     
     func dlScanCompleted(dlScanSide: DLScanningSide,
