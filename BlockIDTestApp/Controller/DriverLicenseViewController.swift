@@ -16,7 +16,7 @@ class DriverLicenseViewController: UIViewController {
 
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
-    private let firstScanningDocSide: DLScanningSide = .DL_BACK
+    private let firstScanningDocSide: DLScanningSide = .DL_FRONT
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var manualCaptureImg: UIImage?
@@ -27,6 +27,11 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    
+    // Loader
+    @IBOutlet private weak var viewActivityIndicator: UIView!
+    @IBOutlet private weak var activityIndicator: CustomActivityIndicator!
+    @IBOutlet private weak var lblActivityIndicator: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,18 +83,27 @@ class DriverLicenseViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
-                    self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
+                        // NOTE: Uncomment below code to scan document with BIDScannerView
+                       /* self._viewBG.isHidden = false
+                        self._viewLiveIDScan.isHidden = false
+                        self._scanLine = self.addScanLine(self._imgOverlay.frame)
+                        self._imgOverlay.layer.addSublayer(self._scanLine)
+                        self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
+                        
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode,
+                                                                            bidScannerView: self._viewLiveIDScan,
+                                                                            dlScanResponseDelegate: self,
+                                                                            cutoutView: self._imgOverlay.frame,
+                                                                            expiryGracePeriod: self.expiryDays)*/
+                        self.showLoader(message: nil)
+                        self._viewBG.isHidden = true
+                        self._viewLiveIDScan.isHidden = true
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
-
-                    self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
                 }
             }
         }
@@ -110,12 +124,10 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
-        self.view.makeToastActivity(.center)
-
+        self.showLoader(message: "Verifying Drivers License")
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
-                    self.view.hideToastActivity()
                     if !status {
                         //Verification failed
                         self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
@@ -146,15 +158,13 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
-        
-        self.view.makeToastActivity(.center)
+        self.showLoader(message: "Completing registration")
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl?["id"]
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
@@ -179,14 +189,35 @@ class DriverLicenseViewController: UIViewController {
     
     private func scanCompleteUIUpdates() {
         self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
+        if let scanLine = _scanLine {
+            scanLine.removeAllAnimations()
+        }
+    }
+    
+    private func showLoader(message: String?) {
+        DispatchQueue.main.async {
+            self.lblActivityIndicator.text = message
+            self.viewActivityIndicator.isHidden = false
+            self.viewActivityIndicator.backgroundColor = .white
+            self.view.bringSubviewToFront(self.viewActivityIndicator)
+            self.activityIndicator.startAnimating()
+        }
     }
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+    func verifyingDocument() {
+        showLoader(message: "Verifying Drivers License")
+    }
     
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
-        if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
+       
+        if (error?.code == CustomErrors.kScanError.code) || (error?.code == CustomErrors.kScanCancelled.code) {
+            // Document scanner cancelled/Error
+            self.goBack()
+        }
+        
+        if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
         // Check if DL is Expired...

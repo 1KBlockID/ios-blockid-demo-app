@@ -92,6 +92,7 @@ class LiveIDViewController: UIViewController {
     @IBOutlet private weak var _lblInformation: UILabel!
     @IBOutlet private weak var _lblPageTitle: UILabel!
     
+    // Loader
     @IBOutlet private weak var viewActivityIndicator: UIView!
     @IBOutlet private weak var activityIndicator: CustomActivityIndicator!
     @IBOutlet private weak var lblActivityIndicator: UILabel!
