@@ -37,7 +37,7 @@ class DriverLicenseViewController: UIViewController {
         super.viewDidLoad()
         startDLScanning()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"),  object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,8 +104,6 @@ class DriverLicenseViewController: UIViewController {
                     }
                     //4. Start Scanning
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
-                    
-                    
                 }
             }
         }
