@@ -283,13 +283,13 @@ class LiveIDViewController: UIViewController {
     private func showErrorDialog(_ error: ErrorResponse?) {
         var title: String? = nil
         var msg: String? = nil
-        if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
-            self.showAppLogin()
-        }
-        else if error?.code == NSURLErrorNotConnectedToInternet ||
+        if error?.code == NSURLErrorNotConnectedToInternet ||
             error?.code == CustomErrors.Network.OFFLINE.code {
             msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
+        }
+        else if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
+            self.showAppLogin()
         }
         else {
             msg = error!.message
