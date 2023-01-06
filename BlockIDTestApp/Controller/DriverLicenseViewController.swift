@@ -141,9 +141,9 @@ class DriverLicenseViewController: UIViewController {
         self.view.makeToastActivity(.center)
         
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
-            self.view.hideToastActivity()
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
+                    self.view.hideToastActivity()
                     if !status {
                         //Verification failed
                         self.view.makeToast(error?.message ?? "Verification Failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
@@ -182,6 +182,7 @@ class DriverLicenseViewController: UIViewController {
         dic?["id"] = dl?["id"]
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
+                self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {

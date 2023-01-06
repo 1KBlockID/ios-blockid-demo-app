@@ -395,6 +395,11 @@ extension LiveIDViewController: LiveIDResponseDelegate {
 
     }
     
+    func faceLivenessCheckStarted() {
+        isLoaderHidden = true
+        self.view.makeToastActivity(.center)
+    }
+    
     func focusOnFaceChanged(isFocused: Bool?) {
         guard let inFocus = isFocused else {
             return
@@ -440,10 +445,5 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             Vibration.oldSchool.vibrate()
 
         }
-    }
-    
-    func faceLivenessCheckStarted() {
-        isLoaderHidden = true
-        self.view.makeToastActivity(.center)
     }
 }
