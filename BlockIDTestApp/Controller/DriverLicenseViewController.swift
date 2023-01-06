@@ -16,7 +16,7 @@ class DriverLicenseViewController: UIViewController {
 
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
-    private let firstScanningDocSide: DLScanningSide = .DL_FRONT
+    private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var manualCaptureImg: UIImage?
@@ -27,12 +27,7 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
-    
-    // Loader
-    @IBOutlet private weak var viewActivityIndicator: UIView!
-    @IBOutlet private weak var activityIndicator: CustomActivityIndicator!
-    @IBOutlet private weak var lblActivityIndicator: UILabel!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
@@ -73,6 +68,39 @@ class DriverLicenseViewController: UIViewController {
         
     }
     
+    // NOTE: Uncomment below code to scan document with Legacy scanner
+   /* private func startDLScanning() {
+        //1. Check for Camera Permission
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if !response {
+                //2. Show Alert
+                DispatchQueue.main.async {
+                    self.alertForCameraAccess()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    //3. Initialize dlScannerHelper
+                    if self.dlScannerHelper == nil {
+                        self._viewBG.isHidden = false
+                        self._viewLiveIDScan.isHidden = false
+                        self._scanLine = self.addScanLine(self._imgOverlay.frame)
+                        self._imgOverlay.layer.addSublayer(self._scanLine)
+                        self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
+                        
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode,
+                                                                            bidScannerView: self._viewLiveIDScan,
+                                                                            dlScanResponseDelegate: self,
+                                                                            cutoutView: self._imgOverlay.frame,
+                                                                            expiryGracePeriod: self.expiryDays)
+                        
+                    }
+                    //4. Start Scanning
+                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
+                }
+            }
+        }
+    }*/
+    
     private func startDLScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
@@ -85,19 +113,6 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
-                        // NOTE: Uncomment below code to scan document with BIDScannerView
-                       /* self._viewBG.isHidden = false
-                        self._viewLiveIDScan.isHidden = false
-                        self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                        self._imgOverlay.layer.addSublayer(self._scanLine)
-                        self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
-                        
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode,
-                                                                            bidScannerView: self._viewLiveIDScan,
-                                                                            dlScanResponseDelegate: self,
-                                                                            cutoutView: self._imgOverlay.frame,
-                                                                            expiryGracePeriod: self.expiryDays)*/
-                        self.showLoader(message: nil)
                         self._viewBG.isHidden = true
                         self._viewLiveIDScan.isHidden = true
                         self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
@@ -124,8 +139,9 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
-        self.showLoader(message: "Verifying Drivers License")
+        self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
+            self.view.hideToastActivity()
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
                     if !status {
@@ -158,7 +174,7 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
-        self.showLoader(message: "Completing registration")
+        self.view.makeToastActivity(.center)
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
@@ -193,21 +209,11 @@ class DriverLicenseViewController: UIViewController {
             scanLine.removeAllAnimations()
         }
     }
-    
-    private func showLoader(message: String?) {
-        DispatchQueue.main.async {
-            self.lblActivityIndicator.text = message
-            self.viewActivityIndicator.isHidden = false
-            self.viewActivityIndicator.backgroundColor = .white
-            self.view.bringSubviewToFront(self.viewActivityIndicator)
-            self.activityIndicator.startAnimating()
-        }
-    }
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
-        showLoader(message: "Verifying Drivers License")
+        self.view.makeToastActivity(.center)
     }
     
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
@@ -271,6 +277,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
                 return
             }
         }
+        self.view.hideToastActivity()
         showVerificationAlert(dl: dl, token: token, error: error)
     }
     
