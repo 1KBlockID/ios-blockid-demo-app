@@ -81,6 +81,7 @@ class LiveIDViewController: UIViewController {
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let selectedMode: ScanningMode = .SCAN_LIVE
     private let isResettingExpressionsAllowed = false
+    private var isLoaderHidden: Bool = false
     var isLivenessNeeded: Bool = false
     private var imgOverlay: UIImageView!
     var onFinishCallback: ((_ status: Bool) -> Void)?
@@ -202,7 +203,7 @@ class LiveIDViewController: UIViewController {
     
     private func setLiveID(withPhoto face: UIImage, token: String) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face, liveIdProofedBy: nil, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face, liveIdProofedBy: "", sigToken: token) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -227,10 +228,10 @@ class LiveIDViewController: UIViewController {
         let docSignToken = DocumentStore.sharedInstance.token ?? ""
         
         BlockIDSDK.sharedInstance.registerDocument(obj: obj, liveIdProofedBy: "", docSignToken: docSignToken, faceImage: face, liveIDSignToken: token) { [self] (status, error) in
+            self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
             self.stopLiveIDScanning()
-            self.view.hideToastActivity()
             if !status {
                 // FAILED
                 self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
@@ -306,7 +307,7 @@ class LiveIDViewController: UIViewController {
 extension LiveIDViewController: LiveIDResponseDelegate {
   
     func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
-        //Check If license key not enabled
+        //Check If licenene key not enabled
         if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
             self._lblInformation.text = "Camera sensor is blocked. Unblock sensor and continue..."
             Vibration.error.vibrate()
@@ -441,4 +442,8 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
+    func faceLivenessCheckStarted() {
+        isLoaderHidden = true
+        self.view.makeToastActivity(.center)
+    }
 }

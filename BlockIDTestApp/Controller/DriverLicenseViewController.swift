@@ -27,7 +27,6 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
@@ -140,6 +139,7 @@ class DriverLicenseViewController: UIViewController {
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
         self.view.makeToastActivity(.center)
+        
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             self.view.hideToastActivity()
             DispatchQueue.global(qos: .userInitiated).async {
@@ -174,6 +174,7 @@ class DriverLicenseViewController: UIViewController {
     }
   
     private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
+        
         self.view.makeToastActivity(.center)
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
@@ -277,7 +278,6 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
                 return
             }
         }
-        self.view.hideToastActivity()
         showVerificationAlert(dl: dl, token: token, error: error)
     }
     
