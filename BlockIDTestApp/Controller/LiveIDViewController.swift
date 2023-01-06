@@ -133,7 +133,7 @@ class LiveIDViewController: UIViewController {
                     let bidView = BIDScannerView()
                     bidView.frame = self._viewLiveIDScan.frame
                     self.view.addSubview(bidView)
-                    self._viewLiveIDScan.isHidden = false
+                    self._viewLiveIDScan.isHidden = true
                     let imageName = "group3Copy.png"
                     let image = UIImage(named: imageName)
                     self.imgOverlay = UIImageView(image: image!)
@@ -141,15 +141,15 @@ class LiveIDViewController: UIViewController {
                     self.imgOverlay.frame = self._imgOverlay.frame
                     self.imgOverlay.tintColor = .red
                     self.view.addSubview(self.imgOverlay)
+  
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
-                    self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
  */
 // NOTE: Comment below code while you use above
-                    self._viewLiveIDScan.isHidden = true
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(liveIdResponseDelegate: self)
@@ -159,7 +159,6 @@ class LiveIDViewController: UIViewController {
                 }
             }
         }
-       
     }
         
     private func goBack() {

@@ -1702,7 +1702,7 @@
                                             <constraint firstAttribute="bottom" secondItem="MRL-r3-5mb" secondAttribute="bottom" constant="8" id="wKq-uv-fQS"/>
                                         </constraints>
                                     </view>
-                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockIDSDK">
                                         <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
