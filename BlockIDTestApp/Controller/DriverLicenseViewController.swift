@@ -68,7 +68,7 @@ class DriverLicenseViewController: UIViewController {
         
     }
     
-    // NOTE: Uncomment below code to scan document with BIDScannerView
+    // NOTE: Uncomment below code to scan document with Legacy scanner
    /* private func startDLScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
