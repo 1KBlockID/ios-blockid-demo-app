@@ -285,11 +285,13 @@ class LiveIDViewController: UIViewController {
         var msg: String? = nil
         if (error != nil && error?.code == CustomErrors.kUnauthorizedAccess.code) {
             self.showAppLogin()
-        } else if error?.code == NSURLErrorNotConnectedToInternet ||
+        }
+        else if error?.code == NSURLErrorNotConnectedToInternet ||
             error?.code == CustomErrors.Network.OFFLINE.code {
             msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
             title = ErrorConfig.noInternet.title
-        } else {
+        }
+        else {
             msg = error!.message
         }
         self.view.makeToast(msg, duration: 3.0, position: .center, title: title, completion: {_ in
