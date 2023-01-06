@@ -442,4 +442,8 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
+    func faceLivenessCheckStarted() {
+        isLoaderHidden = true
+        self.view.makeToastActivity(.center)
+    }
 }
