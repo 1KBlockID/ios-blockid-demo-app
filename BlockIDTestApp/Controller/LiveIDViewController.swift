@@ -128,11 +128,12 @@ class LiveIDViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
 // NOTE: Uncomment below code for scan liveId with expression detection
- /*                 self._viewLiveIDScan.isHidden = false
+ /*
                     self._viewBG.isHidden = false
                     let bidView = BIDScannerView()
                     bidView.frame = self._viewLiveIDScan.frame
                     self.view.addSubview(bidView)
+                    self._viewLiveIDScan.isHidden = false
                     let imageName = "group3Copy.png"
                     let image = UIImage(named: imageName)
                     self.imgOverlay = UIImageView(image: image!)
@@ -140,16 +141,10 @@ class LiveIDViewController: UIViewController {
                     self.imgOverlay.frame = self._imgOverlay.frame
                     self.imgOverlay.tintColor = .red
                     self.view.addSubview(self.imgOverlay)
-
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
-                    self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
-                    bidScannerView: bidView,
-                    overlayFrame: self.imgOverlay.frame,
-                    shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
-                    liveIdResponseDelegate: self)
+                    self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode, bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
-
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
  */
@@ -164,6 +159,7 @@ class LiveIDViewController: UIViewController {
                 }
             }
         }
+       
     }
         
     private func goBack() {
