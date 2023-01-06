@@ -68,25 +68,38 @@ class DriverLicenseViewController: UIViewController {
         
     }
     
-    fileprivate func initializeLagacyDriversLicenseScanner() {
-        self._viewBG.isHidden = false
-        self._viewLiveIDScan.isHidden = false
-        self._scanLine = self.addScanLine(self._imgOverlay.frame)
-        self._imgOverlay.layer.addSublayer(self._scanLine)
-        self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
-        
-        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode,
-                                                            bidScannerView: self._viewLiveIDScan,
-                                                            dlScanResponseDelegate: self,
-                                                            cutoutView: self._imgOverlay.frame,
-                                                            expiryGracePeriod: self.expiryDays)
-    }
-    
-    fileprivate func initializeEnhancedDocumentProofingScanner() {
-        self._viewBG.isHidden = true
-        self._viewLiveIDScan.isHidden = true
-        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
-    }
+    // NOTE: Uncomment below code to scan document with BIDScannerView
+   /* private func startDLScanning() {
+        //1. Check for Camera Permission
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if !response {
+                //2. Show Alert
+                DispatchQueue.main.async {
+                    self.alertForCameraAccess()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    //3. Initialize dlScannerHelper
+                    if self.dlScannerHelper == nil {
+                        self._viewBG.isHidden = false
+                        self._viewLiveIDScan.isHidden = false
+                        self._scanLine = self.addScanLine(self._imgOverlay.frame)
+                        self._imgOverlay.layer.addSublayer(self._scanLine)
+                        self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
+                        
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(scanningMode: self.selectedMode,
+                                                                            bidScannerView: self._viewLiveIDScan,
+                                                                            dlScanResponseDelegate: self,
+                                                                            cutoutView: self._imgOverlay.frame,
+                                                                            expiryGracePeriod: self.expiryDays)
+                        
+                    }
+                    //4. Start Scanning
+                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
+                }
+            }
+        }
+    }*/
     
     private func startDLScanning() {
         //1. Check for Camera Permission
@@ -100,10 +113,9 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
-                        // NOTE: Uncomment below code to scan document with BIDScannerView
-                        //self.initializeLagacyDriversLicenseScanner()
-                        
-                        self.initializeEnhancedDocumentProofingScanner()
+                        self._viewBG.isHidden = true
+                        self._viewLiveIDScan.isHidden = true
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)

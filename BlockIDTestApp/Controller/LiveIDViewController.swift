@@ -112,44 +112,45 @@ class LiveIDViewController: UIViewController {
     }
     
     // MARK: - LiveID Scanning -
-    private func initializeLagacyLiveIdScanner() {
-        self._viewBG.isHidden = false
-        let bidView = BIDScannerView()
-        bidView.frame = self._viewLiveIDScan.frame
-        self.view.addSubview(bidView)
-        self._viewLiveIDScan.isHidden = true
-        let imageName = "group3Copy.png"
-        let image = UIImage(named: imageName)
-        self.imgOverlay = UIImageView(image: image!)
-        self.imgOverlay.contentMode = .scaleAspectFit
-        self.imgOverlay.frame = self._imgOverlay.frame
-        self.imgOverlay.tintColor = .red
-        self.view.addSubview(self.imgOverlay)
-        
-        //3. Initialize LiveIDScannerHelper
-        if self.liveIdScannerHelper == nil {
-        self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
-        bidScannerView: bidView,
-        overlayFrame: self.imgOverlay.frame,
-        shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
-        liveIdResponseDelegate: self)
+    // NOTE: Uncomment below code for scan liveId with expression detection
+   /* private func startLiveIDScanning() {
+        //1. Check for Camera Permission
+        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
+            if !response {
+                //2. Show Alert
+                DispatchQueue.main.async {
+                    self.alertForCameraAccess()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self._viewBG.isHidden = false
+                    let bidView = BIDScannerView()
+                    bidView.frame = self._viewLiveIDScan.frame
+                    self.view.addSubview(bidView)
+                    self._viewLiveIDScan.isHidden = true
+                    let imageName = "group3Copy.png"
+                    let image = UIImage(named: imageName)
+                    self.imgOverlay = UIImageView(image: image!)
+                    self.imgOverlay.contentMode = .scaleAspectFit
+                    self.imgOverlay.frame = self._imgOverlay.frame
+                    self.imgOverlay.tintColor = .red
+                    self.view.addSubview(self.imgOverlay)
+                    
+                    //3. Initialize LiveIDScannerHelper
+                    if self.liveIdScannerHelper == nil {
+                    self.liveIdScannerHelper = LiveIDScannerHelper.init(scanningMode: self.selectedMode,
+                    bidScannerView: bidView,
+                    overlayFrame: self.imgOverlay.frame,
+                    shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
+                    liveIdResponseDelegate: self)
+                    }
+                    
+                    //4. Start Scanning
+                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                }
+            }
         }
-        
-        //4. Start Scanning
-        self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
-    }
-    
-    fileprivate func initializeEnhancedSelfieScanner() {
-        // Selfie scan
-        self._viewLiveIDScan.isHidden = true
-        
-        //3. Initialize LiveIDScannerHelper
-        if self.liveIdScannerHelper == nil {
-            self.liveIdScannerHelper = LiveIDScannerHelper.init(liveIdResponseDelegate: self)
-        }
-        //4. Start Scanning
-        self.liveIdScannerHelper?.startLiveIDScanning()
-    }
+    }*/
     
     private func startLiveIDScanning() {
         //1. Check for Camera Permission
@@ -161,15 +162,18 @@ class LiveIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    // NOTE: Uncomment below code for scan liveId with expression detection
-                    // self.initializeLagacyLiveIdScanner()
+                    // Selfie scan
+                    self._viewLiveIDScan.isHidden = true
                     
-                    // Selfie Scanner
-                    self.initializeEnhancedSelfieScanner()
+                    //3. Initialize LiveIDScannerHelper
+                    if self.liveIdScannerHelper == nil {
+                        self.liveIdScannerHelper = LiveIDScannerHelper.init(liveIdResponseDelegate: self)
+                    }
+                    //4. Start Scanning
+                    self.liveIdScannerHelper?.startLiveIDScanning()
                 }
             }
         }
-        
     }
         
     private func goBack() {
