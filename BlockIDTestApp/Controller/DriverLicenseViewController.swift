@@ -67,7 +67,7 @@ class DriverLicenseViewController: UIViewController {
         
     }
     
-   private func startDLScanning() {
+    private func startDLScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
             if !response {
