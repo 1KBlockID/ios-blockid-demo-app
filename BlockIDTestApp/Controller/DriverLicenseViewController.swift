@@ -186,7 +186,7 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
        
-        if (error?.code == CustomErrors.kScanError.code) || (error?.code == CustomErrors.kScanCancelled.code) {
+        if (error?.code == CustomErrors.kScanCancelled.code) {
             // Document scanner cancelled/Error
             self.goBack()
         }
@@ -217,6 +217,9 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             self.view.makeToast(error?.message,
                                 duration: 3.0,
                                 position: .center)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.goBack()
+            }
             return
             
         }
