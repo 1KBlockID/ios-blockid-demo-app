@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-import BlockIDSDK
+import BlockID
 
 class FIDOViewController: UIViewController, UITextFieldDelegate {
     

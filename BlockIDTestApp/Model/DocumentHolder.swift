@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 class DocumentStore : NSObject {
     var documentData: [String : Any]?

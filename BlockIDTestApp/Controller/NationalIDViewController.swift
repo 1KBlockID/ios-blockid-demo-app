@@ -8,7 +8,7 @@
 
 import Foundation
 import AVFoundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
   
 class NationalIDViewController: UIViewController {

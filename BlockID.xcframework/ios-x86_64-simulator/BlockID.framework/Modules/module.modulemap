@@ -1,0 +1,11 @@
+framework module BlockID {
+  umbrella header "BlockID.h"
+
+  export *
+  module * { export * }
+}
+
+module BlockID.Swift {
+    header "BlockID-Swift.h"
+    requires objc
+}

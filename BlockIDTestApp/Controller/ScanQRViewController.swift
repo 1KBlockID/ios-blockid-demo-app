@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 import AVFoundation
-import BlockIDSDK
+import BlockID
 
 protocol ScanQRViewDelegate: AnyObject {
     func scannedData(data: String)

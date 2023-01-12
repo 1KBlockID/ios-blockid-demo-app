@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 protocol AuthenticateViewControllerDelegate {
     func onAuthenticate(status: Bool)

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 public class AuthenticationPayloadV1: NSObject, Codable {
     public var authtype: String? = ""

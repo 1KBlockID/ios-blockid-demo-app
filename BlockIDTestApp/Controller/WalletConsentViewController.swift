@@ -7,7 +7,7 @@
 
 import UIKit
 import WalletConnectSign
-import BlockIDSDK
+import BlockID
 
 protocol WalletConsentVCDelegate: AnyObject {
     func proposalApproved(isApproved: Bool, sessionProposal: Session.Proposal)

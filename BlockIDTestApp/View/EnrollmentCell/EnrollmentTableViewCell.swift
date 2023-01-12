@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-import BlockIDSDK
+import BlockID
 
 class EnrollmentTableViewCell: UITableViewCell {
     weak var controllerObj:EnrollMentViewController?

@@ -2,6 +2,7 @@ PODS:
   - Alamofire (4.9.1)
   - BigInt (4.0.0)
   - CryptoSwift (1.3.8)
+  - DocumentSelfieScanner (4.3.0)
   - EllipticCurveKeyPair (2.0.2)
   - Firebase/Analytics (8.12.1):
     - Firebase/Core
@@ -142,6 +143,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - BigInt (~> 4.0)
   - CryptoSwift (~> 1.3.8)
+  - DocumentSelfieScanner (from `https://github.com/1KBlockID/ios-supporting-sdks.git`, tag `4.3.0`)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -180,6 +182,9 @@ SPEC REPOS:
     - YubiKit
 
 EXTERNAL SOURCES:
+  DocumentSelfieScanner:
+    :git: https://github.com/1KBlockID/ios-supporting-sdks.git
+    :tag: 4.3.0
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -191,6 +196,9 @@ EXTERNAL SOURCES:
     :tag: 2.0.2
 
 CHECKOUT OPTIONS:
+  DocumentSelfieScanner:
+    :git: https://github.com/1KBlockID/ios-supporting-sdks.git
+    :tag: 4.3.0
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -205,6 +213,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
+  DocumentSelfieScanner: 43af2202d269a131581770e940feedf08b6f6e44
   EllipticCurveKeyPair: 0b618482247e48744b9a0709ef4bb0713c39f957
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
@@ -229,6 +238,6 @@ SPEC CHECKSUMS:
   WebAuthnKit: ca41198026ba5a44ccf72e079e7737810bb47ca3
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: 5c199b9d5684ad161e5862a7599f0b575127e895
+PODFILE CHECKSUM: 2227c48256bee236cb25470dff8d4b04b70dda15
 
 COCOAPODS: 1.11.3
