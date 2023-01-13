@@ -239,7 +239,6 @@ extension EnrollMentViewController {
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
                 self.unlinkUser(linkedAccount: linkedUserAccounts[0])
             }))
-        
             self.present(alert, animated: true)
             return
         }

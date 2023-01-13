@@ -79,7 +79,6 @@ class LiveIDViewController: UIViewController {
     private var attemptCounts = 0
    
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private let isResettingExpressionsAllowed = false
     private var isLoaderHidden: Bool = false
     var isLivenessNeeded: Bool = false
@@ -130,6 +129,7 @@ class LiveIDViewController: UIViewController {
                     //3. Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(liveIdResponseDelegate: self)
+//                        self.liveIdScannerHelper = LiveIDScannerHelper.init(bidScannerView: bidView, overlayFrame: self.imgOverlay.frame, shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed, liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning()

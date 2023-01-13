@@ -9,7 +9,7 @@ target 'BlockIDTestApp' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'TrustWalletCore', '~> 2.5.6'
   pod 'Alamofire','~> 4.9.1'
-  pod 'CryptoSwift', '~> 1.3.0'
+  pod 'CryptoSwift', '~> 1.3.8'
   pod 'BigInt', '~> 4.0'
   pod 'SwiftyTesseract', '~> 3.1.3'
   pod 'OpenSSL-Universal', '~> 1.1.180'
@@ -18,7 +18,9 @@ target 'BlockIDTestApp' do
   pod 'WebAuthnKit', :git => 'https://github.com/1KBlockID/WebAuthnKit-iOS.git', :tag => '2.0.2'
   pod 'EllipticCurveKeyPair', :git => 'https://github.com/1KBlockID/EllipticCurveKeyPair.git', :tag => '2.0.2'
   pod 'Web3', :git => 'https://github.com/Boilertalk/Web3.swift.git', :tag => '0.4.2'
-  pod 'BlockIDSDK', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.9.03'
+  pod 'BlockIDSDK', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => 'merge_develop_simplified_test'
+  pod 'YubiKit', '~> 4.2.0'
+
 end
 post_install do |installer|
  installer.pods_project.targets.each do |target|

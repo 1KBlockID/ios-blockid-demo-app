@@ -15,7 +15,6 @@ import UIKit
 class DriverLicenseViewController: UIViewController {
 
     private var dlScannerHelper: DriverLicenseScanHelper?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
@@ -82,6 +81,7 @@ class DriverLicenseViewController: UIViewController {
                         self._viewBG.isHidden = true
                         self._viewLiveIDScan.isHidden = true
                         self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
+//                        self.dlScannerHelper = DriverLicenseScanHelper.init(bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
