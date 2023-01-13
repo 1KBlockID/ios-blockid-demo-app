@@ -81,7 +81,6 @@ class DriverLicenseViewController: UIViewController {
                         self._viewBG.isHidden = true
                         self._viewLiveIDScan.isHidden = true
                         self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
-//                        self.dlScannerHelper = DriverLicenseScanHelper.init(bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)

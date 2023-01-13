@@ -70,7 +70,6 @@ class EnrollMentViewController: UIViewController {
                                                                        metadata: metadata,
                                                                        delegate: appDelegate)
         }
-        //self.getKYC()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -172,7 +171,6 @@ extension EnrollMentViewController {
         BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
             let title = "My KYC"
             if status {
-                debugPrint("KYC ->", kycHash as Any)
                 if let kycHash = kycHash {
                     self.showAlertView(title: title, message: "{\"kyc_hash\": \"\(kycHash)\"}")
                 }
@@ -181,8 +179,6 @@ extension EnrollMentViewController {
                     let msg = "(" + "\(error.code)" + ") " + error.message
                     self.showAlertView(title: title, message: msg)
                 }
-                debugPrint("error message ->", error?.message as Any)
-                debugPrint("error code ->", error?.code as Any)
             }
         })
     }
