@@ -82,7 +82,10 @@ extension SSNViewController {
     
     private func setupDataSource() {
         
-        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        if isDLEnrolled {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
@@ -92,14 +95,20 @@ extension SSNViewController {
             txtFieldDob.text = self.getFormattedDate(date: arrDocuments[0]["dob"] as? String ?? "",
                                                      fromFormat: expectedDateFormat,
                                                      toFormat: displayDateFormat) ?? ""
-
+            
         }
     }
     
     private func verifySSN() {
         var identityDocument = [String: Any]()
         
-        if BlockIDSDK.sharedInstance.isDLEnrolled() {
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isPPTEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                   type: RegisterDocType.PPT.rawValue, category: nil) != nil
+        
+        if isDLEnrolled {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.DL.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
@@ -107,7 +116,7 @@ extension SSNViewController {
                 return
             }
             identityDocument = documents.first ?? [:]
-        } else if BlockIDSDK.sharedInstance.isPassportEnrolled() {
+        } else if isPPTEnrolled {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
                                                                           type: RegisterDocType.PPT.rawValue,
                                                                           category: RegisterDocCategory.Identity_Document.rawValue) ?? ""
