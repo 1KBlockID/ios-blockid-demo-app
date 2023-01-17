@@ -232,16 +232,12 @@ extension EnrollMentViewController {
     }
     
     private func addUser() {
-        
-        // need to discuss ...
         if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
-            let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unlinkUser(linkedAccount: linkedUserAccounts[0])
-            }))
-            self.present(alert, animated: true)
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let addUserVC = storyBoard.instantiateViewController(withIdentifier: "UserOptionsViewController") as? UserOptionsViewController {
+                addUserVC.currentUser = linkedUserAccounts[0]
+                self.navigationController?.pushViewController(addUserVC, animated: true)
+            }
             return
         }
         showAddUserViewController()
