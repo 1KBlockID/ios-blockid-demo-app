@@ -9,7 +9,6 @@ PODS:
     - SwiftyTesseract (~> 3.1.3)
     - TrustWalletCore (~> 2.5.6)
   - CryptoSwift (1.3.8)
-  - DocumentSelfieScanner (4.3.0)
   - EllipticCurveKeyPair (2.0.2)
   - Firebase/Analytics (8.12.1):
     - Firebase/Core
@@ -151,7 +150,6 @@ DEPENDENCIES:
   - BigInt (~> 4.0)
   - BlockIDSDK (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `develop_1.9.00`)
   - CryptoSwift (~> 1.3.8)
-  - DocumentSelfieScanner (from `https://github.com/1KBlockID/ios-supporting-sdks.git`, tag `4.3.0`)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -193,9 +191,6 @@ EXTERNAL SOURCES:
   BlockIDSDK:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
     :tag: develop_1.9.00
-  DocumentSelfieScanner:
-    :git: https://github.com/1KBlockID/ios-supporting-sdks.git
-    :tag: 4.3.0
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -210,9 +205,6 @@ CHECKOUT OPTIONS:
   BlockIDSDK:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
     :tag: develop_1.9.00
-  DocumentSelfieScanner:
-    :git: https://github.com/1KBlockID/ios-supporting-sdks.git
-    :tag: 4.3.0
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -228,7 +220,6 @@ SPEC CHECKSUMS:
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
   BlockIDSDK: 715fece9a4327790366994486a33b949847c2c71
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
-  DocumentSelfieScanner: 43af2202d269a131581770e940feedf08b6f6e44
   EllipticCurveKeyPair: 0b618482247e48744b9a0709ef4bb0713c39f957
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
@@ -253,6 +244,6 @@ SPEC CHECKSUMS:
   WebAuthnKit: ca41198026ba5a44ccf72e079e7737810bb47ca3
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: bc05ca5e5ceddfb56cd7556f1c21777350b024b4
+PODFILE CHECKSUM: 6acfac836b2fe9219454dee92bc96db23e05c9aa
 
 COCOAPODS: 1.11.3
