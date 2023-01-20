@@ -27,10 +27,51 @@ class UserOptionsViewController: UIViewController {
     }
     
     // MARK: - Button Actions
-    @IBAction func registerPlatformKey(_ sender: UIButton) {}
-    @IBAction func registerExtKey(_ sender: UIButton) {}
-    @IBAction func authenticatePlatformKey(_ sender: UIButton) {}
-    @IBAction func authenticateExtKey(_ sender: UIButton) {}
+    @IBAction func registerPlatformKey(_ sender: UIButton) {
+           self.view.makeToastActivity(.center)
+           BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .PLATFORM) { status, err in
+               self.view.hideToastActivity()
+               if !status {
+                   guard let err = err else { return }
+                   self.showAlertView(title: "Error", message: err.message)
+                   return
+               }
+               self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+                   _ in
+                   self.navigationController?.popViewController(animated: true)
+               }
+           }
+       }
+
+       @IBAction func registerExtKey(_ sender: UIButton) {
+           self.view.makeToastActivity(.center)
+           BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .CROSS_PLATFORM) { status, err in
+               DispatchQueue.main.async {
+                   self.view.hideToastActivity()
+                   if !status {
+                       guard let err = err else { return }
+                       self.showAlertView(title: "Error", message: err.message)
+                       return
+                   }
+                   self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
+                       _ in
+                       self.navigationController?.popViewController(animated: true)
+                   }
+
+               }
+           }
+       }
+
+       @IBAction func authenticatePlatformKey(_ sender: UIButton) {
+           fidoType = .PLATFORM
+           self.showQRCodeScanner()
+       }
+
+       @IBAction func authenticateExtKey(_ sender: UIButton) {
+           fidoType = .CROSS_PLATFORM
+           self.showQRCodeScanner()
+
+       }
     
     @IBAction func removeAccount(_ sender: UIButton) {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
@@ -89,6 +130,28 @@ class UserOptionsViewController: UIViewController {
         }
     }
 
+    func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV1?) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.authenticateFIDO2Key(type: fidoType,
+                                                       controller: self,
+                                                       sessionId: dataModel?.session,
+                                                       sessionURL: (dataModel?.sessionUrl)!,
+                                                       creds: (dataModel?.creds)!,
+                                                       scopes: (dataModel?.scopes)!,
+                                                       lat: 0.0,
+                                                       lon: 0.0,
+                                                       origin: (dataModel?.getBidOrigin())!,
+                                                       metaData: dataModel?.metadata) {(status, error) in
+            self.view.hideToastActivity()
+            if status {
+                //if success
+                self.view.makeToast("You have successfully authenticated to Log In", duration: 3.0, position: .center, title: "Success", completion: {_ in
+                    return
+                })
+                
+            }
+        }
+    }
 }
 
 extension UserOptionsViewController: ScanQRViewDelegate {
@@ -135,8 +198,7 @@ extension UserOptionsViewController: ScanQRViewDelegate {
                         let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
                         // authenticate user
                         let authQRModel1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
-                        // FIX ME :-
-                        //self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
+                        self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
                     } else {
                         // Show toast
                         self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in

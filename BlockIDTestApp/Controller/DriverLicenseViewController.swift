@@ -8,11 +8,12 @@
 
 import Foundation
 import AVFoundation
-import BlockID
+import BlockIDSDK
 import Toast_Swift
 import UIKit
   
 class DriverLicenseViewController: UIViewController {
+
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
@@ -25,7 +26,6 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
@@ -76,24 +76,19 @@ class DriverLicenseViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
-                    self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.dlScannerHelper == nil {
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(bidScannerView: self._viewLiveIDScan, dlScanResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
+                        self._viewBG.isHidden = true
+                        self._viewLiveIDScan.isHidden = true
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    self._lblScanInfoTxt.text = DLScanningSide.DL_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
                     self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
-
-                    self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
                 }
             }
         }
-        
     }
-    
+
     private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
         let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Drivers License?", preferredStyle: .alert)
         
@@ -109,7 +104,7 @@ class DriverLicenseViewController: UIViewController {
     
     private func verifyDL(withDLData dl: [String: Any]?, token: String) {
         self.view.makeToastActivity(.center)
-
+        
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
@@ -177,17 +172,25 @@ class DriverLicenseViewController: UIViewController {
     
     private func scanCompleteUIUpdates() {
         self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
+        if let scanLine = _scanLine {
+            scanLine.removeAllAnimations()
+        }
     }
 }
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
-    
     func verifyingDocument() {
+        self.view.makeToastActivity(.center)
     }
     
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
-        if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
+       
+        if (error?.code == CustomErrors.kScanCancelled.code) {
+            // Document scanner cancelled/Error
+            self.goBack()
+        }
+        
+        if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
         // Check if DL is Expired...
@@ -213,6 +216,9 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
             self.view.makeToast(error?.message,
                                 duration: 3.0,
                                 position: .center)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.goBack()
+            }
             return
             
         }

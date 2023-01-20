@@ -95,7 +95,7 @@ extension SSNViewController {
             txtFieldDob.text = self.getFormattedDate(date: arrDocuments[0]["dob"] as? String ?? "",
                                                      fromFormat: expectedDateFormat,
                                                      toFormat: displayDateFormat) ?? ""
-
+            
         }
     }
     
@@ -106,7 +106,7 @@ extension SSNViewController {
                                                                   type: RegisterDocType.DL.rawValue, category: nil) != nil
         
         let isPPTEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
-                                                                  type: RegisterDocType.PPT.rawValue, category: nil) != nil
+                                                                   type: RegisterDocType.PPT.rawValue, category: nil) != nil
         
         if isDLEnrolled {
             let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: "",
@@ -252,7 +252,6 @@ extension SSNViewController {
                 if let dataDict = dataDic,
                     let certifications = dataDict["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
-                    
                     // Get certification verified
                     let verified = weakSelf.certification["verified"] as? Bool
                     
@@ -440,7 +439,7 @@ extension SSNViewController {
         
         // Get certifications proof_jwt token
         if let proofJWT = certification["proof_jwt"] as? String {
-            ssnData["proof_of_verification"] = [proofJWT]
+            ssnData["proof"] = [proofJWT]
         }
         
         let ssn = txtFieldSSN.text ?? ""

@@ -21,6 +21,7 @@ public enum Enrollments: String {
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
     case SSN = "Verify SSN"
+    case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "Live ID"
@@ -37,11 +38,12 @@ class EnrollMentViewController: UIViewController {
     var enrollmentArray = [Enrollments.About,
                            Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.DriverLicense_Liveness,
+                           /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
                            Enrollments.SSN,
+                           Enrollments.KYC,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
@@ -113,6 +115,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollNationalID()
         case Enrollments.SSN.rawValue:
             enrollSSN()
+        case Enrollments.KYC.rawValue:
+            getKYC()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -157,6 +161,26 @@ extension EnrollMentViewController {
             return
         }
         showDLView()
+    }
+    
+    /**
+            Name:  getKYC()
+            Parameter: completion: KYCCallback type returns (status, kycHash 512 string, error)
+     **/
+    private func getKYC() {
+        BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
+            let title = "My KYC"
+            if status {
+                if let kycHash = kycHash {
+                    self.showAlertView(title: title, message: "{\"kyc_hash\": \"\(kycHash)\"}")
+                }
+            } else {
+                if let error = error {
+                    let msg = "(" + "\(error.code)" + ") " + error.message
+                    self.showAlertView(title: title, message: msg)
+                }
+            }
+        })
     }
     
     private func enrollSSN() {
@@ -208,16 +232,12 @@ extension EnrollMentViewController {
     }
     
     private func addUser() {
-        
-        // need to discuss ...
         if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
-            let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unlinkUser(linkedAccount: linkedUserAccounts[0])
-            }))
-            self.present(alert, animated: true)
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let addUserVC = storyBoard.instantiateViewController(withIdentifier: "UserOptionsViewController") as? UserOptionsViewController {
+                addUserVC.currentUser = linkedUserAccounts[0]
+                self.navigationController?.pushViewController(addUserVC, animated: true)
+            }
             return
         }
         showAddUserViewController()
