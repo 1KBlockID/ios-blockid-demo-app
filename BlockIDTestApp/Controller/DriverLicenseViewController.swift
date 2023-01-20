@@ -13,7 +13,6 @@ import Toast_Swift
 import UIKit
   
 class DriverLicenseViewController: UIViewController {
-
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
@@ -184,8 +183,11 @@ class DriverLicenseViewController: UIViewController {
 
 extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     
+    func verifyingDocument() {
+    }
+    
     func dlScanCompleted(dlScanSide: DLScanningSide, dictDriveLicense: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
-        if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
+        if (error)?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
         // Check if DL is Expired...
