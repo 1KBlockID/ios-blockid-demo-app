@@ -1619,7 +1619,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDf-rj-Xcp" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aDf-rj-Xcp" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="15" y="156.5" width="290" height="317.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
@@ -1736,7 +1736,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ook-fW-Sy9" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ook-fW-Sy9" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="15" y="123" width="290" height="351"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -1826,7 +1826,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zeo-fm-nyn" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zeo-fm-nyn" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="15" y="123" width="290" height="351"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </view>
@@ -1939,7 +1939,7 @@
                                             <constraint firstAttribute="bottom" secondItem="MRL-r3-5mb" secondAttribute="bottom" constant="8" id="wKq-uv-fQS"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -2168,7 +2168,7 @@
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockIDSDK">
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hvn-bd-RBc" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="32" y="85" width="256" height="398"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -3199,7 +3199,7 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ple-vU-aZD" customClass="BIDScannerView" customModule="BlockIDSDK">
+                            <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ple-vU-aZD" customClass="BIDScannerView" customModule="BlockID">
                                 <rect key="frame" x="32" y="85" width="256" height="398"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
@@ -3413,7 +3413,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anE-NZ-ZiW" customClass="BIDScannerView" customModule="BlockIDSDK">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="anE-NZ-ZiW" customClass="BIDScannerView" customModule="BlockID">
                                 <rect key="frame" x="15" y="125" width="290" height="318"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -3552,7 +3552,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="262" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQw-NT-JAJ">
-                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.500000000000004"/>
+                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -3729,7 +3729,7 @@
                                         <rect key="frame" x="0.0" y="5" width="272" height="50.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lo-SE-pNd">
-                                                <rect key="frame" x="8" y="8" width="55.5" height="14.499999999999996"/>
+                                                <rect key="frame" x="8" y="8" width="55.5" height="14.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="vZi-jQ-dUt"/>
                                                 </constraints>
