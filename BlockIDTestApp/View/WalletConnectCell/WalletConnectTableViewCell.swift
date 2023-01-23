@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 
 class WalletConnectTableViewCell: UITableViewCell {
 

@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-import BlockIDSDK
+import BlockID
 
 struct DetectionMsg {
     static let blink = "Please blink your eyes"

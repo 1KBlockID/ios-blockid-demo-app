@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 import WalletConnectSign
-import BlockIDSDK
+import BlockID
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 
 extension UIViewController {
     

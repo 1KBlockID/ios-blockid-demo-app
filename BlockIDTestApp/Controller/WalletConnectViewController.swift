@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 import WalletConnectSign
 import WalletConnectUtils
 import Combine

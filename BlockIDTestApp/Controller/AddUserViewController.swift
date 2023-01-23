@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 import WebKit
 import AVKit
 import CoreLocation
