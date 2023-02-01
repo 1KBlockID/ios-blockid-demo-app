@@ -8,14 +8,13 @@
 
 import Foundation
 import AVFoundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
 import CoreNFC
 
 class PassportViewController: UIViewController {
 
     private var ppScannerHelper: PassportScanHelper?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var _token = ""
@@ -50,7 +49,7 @@ class PassportViewController: UIViewController {
                     self._viewScanner.isHidden = false
                     //3. Initialize PassportScannerHelper
                     if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewScanner, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
+                        self.ppScannerHelper = PassportScanHelper.init(bidScannerView: self._viewScanner, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self.ppScannerHelper?.startPassportScanning()

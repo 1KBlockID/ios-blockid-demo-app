@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 public enum DocumentCategory: String {
     case identity_document = "identity_document"

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
 
 public enum PinActivity {

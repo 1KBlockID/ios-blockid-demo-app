@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
  class MagicLinkPayload: Codable {
     var did: String!

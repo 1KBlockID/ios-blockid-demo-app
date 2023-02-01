@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 class MagicLinkModel: NSObject, Codable {
     var api: String? = ""

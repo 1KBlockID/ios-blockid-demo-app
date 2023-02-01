@@ -8,7 +8,7 @@
 
 import Foundation
 import AVFoundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
 
 public enum QROptions {
@@ -24,8 +24,6 @@ class QRScanViewController: UIViewController {
     @IBOutlet weak var _qrView: UIView!
     @IBOutlet weak var _viewBtn: UIView!
     
-    // MARK: - selectedMode Scanning Mode
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private var qrOption = QROptions.withScopeData
     private var qrScannerHelper: QRScannerHelper?
     
@@ -38,7 +36,8 @@ class QRScanViewController: UIViewController {
     private func scanQRCode() {
         _qrView.isHidden = false
         _viewBtn.isHidden = true
-        qrScannerHelper = QRScannerHelper.init(scanningMode: selectedMode, bidScannerView: _viewQRScan, kQRScanResponseDelegate: self)
+        qrScannerHelper = QRScannerHelper.init(bidScannerView: _viewQRScan,
+                                               kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
     

@@ -7,11 +7,13 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
 import UIKit
+import WalletConnectSign
 
 public enum Enrollments: String {
+    case About  = "About"
     case AddUser = "Add User"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
@@ -19,6 +21,7 @@ public enum Enrollments: String {
     case Passport2  = "Passport 2"
     case NationalID  = "National ID 1"
     case SSN = "Verify SSN"
+    case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "Live ID"
@@ -26,18 +29,21 @@ public enum Enrollments: String {
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case RecoverMnemonics  = "Recover Mnemonics"
+    case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
 }
 
 class EnrollMentViewController: UIViewController {
     
-    var enrollmentArray = [Enrollments.AddUser,
+    var enrollmentArray = [Enrollments.About,
+                           Enrollments.AddUser,
                            Enrollments.DriverLicense,
-                           Enrollments.DriverLicense_Liveness,
+                           /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
                            Enrollments.Passport2,
                            Enrollments.NationalID,
                            Enrollments.SSN,
+                           Enrollments.KYC,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
@@ -45,31 +51,29 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.RecoverMnemonics,
+                           Enrollments.WalletConnect,
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
     @IBOutlet weak var lblSDKVersion: UILabel!
     var enrollTableViewReuseIdentifier = "EnrollmentTableViewCell"
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let appDelegate = appDelegate {
+            let metadata = AppMetadata(
+                name: "BlockID Demo",
+                description: "1Kosmos WalletConenct Demo",
+                url: "example.wallet",
+                icons: ["https://www.1kosmos.com/favicon.ico"])
+            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
+                                                                       metadata: metadata,
+                                                                       delegate: appDelegate)
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let version = BlockIDSDK.sharedInstance.getVersion() {
-            if let buildNo = version.components(separatedBy: ".").max(by: {$1.count > $0.count}) {
-                let versionArr = version.components(separatedBy: ".")
-                var sdkVersion = ""
-                for index in 0...versionArr.count - 1 {
-                    if versionArr[index] != buildNo {
-                        if index < versionArr.count - 2 {
-                            sdkVersion += versionArr[index] + "."
-                        } else {
-                            sdkVersion += versionArr[index]
-                        }
-                    }
-                }
-        
-                lblSDKVersion.text = "SDK Version: " + sdkVersion + " \( "(" + buildNo + ")"  )"
-            }
-        }
      
         tableEnrollments.register(UINib(nibName: "EnrollmentTableViewCell", bundle: nil), forCellReuseIdentifier: "EnrollmentTableViewCell")
         tableEnrollments.reloadData()
@@ -110,7 +114,9 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.NationalID.rawValue:
             enrollNationalID()
         case Enrollments.SSN.rawValue:
-            showSSNVerificationView()
+            enrollSSN()
+        case Enrollments.KYC.rawValue:
+            getKYC()
         case Enrollments.Pin.rawValue:
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
@@ -125,8 +131,12 @@ extension EnrollMentViewController: UITableViewDelegate {
             launchForFIDO2()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
+        case Enrollments.WalletConnect.rawValue:
+            self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
+        case Enrollments.About.rawValue:
+            showAboutScreen()
         default:
             return
         }
@@ -153,6 +163,56 @@ extension EnrollMentViewController {
         showDLView()
     }
     
+    /**
+            Name:  getKYC()
+            Parameter: completion: KYCCallback type returns (status, kycHash 512 string, error)
+     **/
+    private func getKYC() {
+        BlockIDSDK.sharedInstance.getKYC(completion: { (status, kycHash, error) in
+            let title = "My KYC"
+            if status {
+                if let kycHash = kycHash {
+                    self.showAlertView(title: title, message: "{\"kyc_hash\": \"\(kycHash)\"}")
+                }
+            } else {
+                if let error = error {
+                    let msg = "(" + "\(error.code)" + ") " + error.message
+                    self.showAlertView(title: title, message: msg)
+                }
+            }
+        })
+    }
+    
+    private func enrollSSN() {
+        
+        let isDLEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.DL.rawValue, category: nil) != nil
+        
+        let isSSNEnrolled = BIDDocumentProvider.shared.getDocument(id: nil,
+                                                                  type: RegisterDocType.SSN.rawValue, category: nil) != nil
+        
+        guard isDLEnrolled else {
+            self.view.makeToast("Please enroll your drivers license first.",
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if isSSNEnrolled {
+            let docID = self.getDocumentID(docIndex: 1, type: .SSN, category: .Identity_Document) ?? ""
+            let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to remove SSN?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.unenrollDocument(registerDocType: .SSN, id: docID)
+            }))
+            
+            self.present(alert, animated: true)
+            return
+        }
+        self.showSSNVerificationView()
+    }
+    
     private func documentLivenessVC() {
         let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
         if let docId = document.docId,
@@ -172,17 +232,12 @@ extension EnrollMentViewController {
     }
     
     private func addUser() {
-        
-        // need to discuss ...
         if let linkedUserAccounts = BlockIDSDK.sharedInstance.getLinkedUserAccounts().linkedUsers, linkedUserAccounts.count > 0 {
-            let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.unlinkUser(linkedAccount: linkedUserAccounts[0])
-            }))
-        
-            self.present(alert, animated: true)
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let addUserVC = storyBoard.instantiateViewController(withIdentifier: "UserOptionsViewController") as? UserOptionsViewController {
+                addUserVC.currentUser = linkedUserAccounts[0]
+                self.navigationController?.pushViewController(addUserVC, animated: true)
+            }
             return
         }
         showAddUserViewController()

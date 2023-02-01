@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 public class AuthLinkUrlData: Codable {
 

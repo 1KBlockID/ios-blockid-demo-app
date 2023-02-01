@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import BlockIDSDK
+import BlockID
 
 
 protocol EPassportChipScanViewControllerDelegate {

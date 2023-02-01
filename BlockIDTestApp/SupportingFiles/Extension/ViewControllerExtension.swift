@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 
 extension UIViewController {
     
@@ -164,6 +164,21 @@ extension UIViewController {
         self.navigationController?.pushViewController(qrScanVC, animated: true)
     }
     
+    /// About VC
+    public func showAboutScreen() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        let aboutVC = storyBoard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
+        self.navigationController?.pushViewController(aboutVC, animated: true)
+    }
+    
+    /// Wallet Connect VC
+    func showWalletConnectVC() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let walletConnectVC = storyBoard.instantiateViewController(withIdentifier: "WalletConnectViewController") as? WalletConnectViewController {
+            self.navigationController?.pushViewController(walletConnectVC, animated: false)
+        }
+    }
+    
     public func loginWithDeviceAuth() {
         BIDAuthProvider.shared.verifyDeviceAuth { (success, error, message) in
             if !success {
@@ -229,6 +244,40 @@ extension UIViewController {
     
     public func alertForCameraAccess() {
         self.openSettings(title: "Camera Inaccessible", message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
+    }
+    
+    // MARK: - Topmost View Controller
+    func topMostViewController() -> UIViewController? {
+        // if root view is Navigation
+        if let navigationController = self as? UINavigationController {
+            return navigationController.visibleViewController?.topMostViewController()
+        }
+        // if root view is Tab
+        if let tabController = self as? UITabBarController {
+            if let selectedTab = tabController.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabController.topMostViewController()
+        }
+        // otherwise
+        if self.presentedViewController == nil {
+            return self
+        }
+        // Navigation
+        if let navigationCon = self.presentedViewController as? UINavigationController {
+            if let visibleController = navigationCon.visibleViewController {
+                return visibleController.topMostViewController()
+            }
+        }
+        // Tab
+        if let tabCon = self.presentedViewController as? UITabBarController {
+            if let selectedTab = tabCon.selectedViewController {
+                return selectedTab.topMostViewController()
+            }
+            return tabCon.topMostViewController()
+        }
+        // otherwise
+        return self.presentedViewController?.topMostViewController()
     }
 }
 

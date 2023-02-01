@@ -8,13 +8,12 @@
 
 import Foundation
 import AVFoundation
-import BlockIDSDK
+import BlockID
 import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
     private var nidScannerHelper: NationalIDScanHelper?
-    private let selectedMode: ScanningMode = .SCAN_LIVE
     private let firstScanningDocSide: NIDScanningSide = .NATIONAL_ID_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
@@ -63,7 +62,7 @@ class NationalIDViewController: UIViewController {
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.nidScannerHelper == nil {
-                        self.nidScannerHelper = NationalIDScanHelper.init(scanningMode: self.selectedMode, bidScannerView: self._viewLiveIDScan, nidScanResponseDelegate: self, cutoutView:  self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
+                        self.nidScannerHelper = NationalIDScanHelper.init(bidScannerView: self._viewLiveIDScan, nidScanResponseDelegate: self, cutoutView:  self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
                     }
                     //4. Start Scanning
                     self._lblScanInfoTxt.text = NIDScanningSide.NATIONAL_ID_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"

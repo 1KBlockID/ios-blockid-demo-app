@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import BlockIDSDK
+import BlockID
 class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     private var isDefaultTenantRegistration = true
     private var bidTenant: BIDTenant!
