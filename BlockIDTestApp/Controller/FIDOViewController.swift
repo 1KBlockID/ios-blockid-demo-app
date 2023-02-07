@@ -34,8 +34,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
                                                    userName: self.txtFieldUsername.text!,
-                                                   tenantDNS: Tenant.defaultTenant.dns!,
-                                                   communityName: Tenant.defaultTenant.community!,
+                                                   tenantDNS: Tenant.clientTenant.dns!,
+                                                   communityName: Tenant.clientTenant.community!,
                                                    type: .PLATFORM) { status, err in
             self.view.hideToastActivity()
             if !status {
@@ -55,8 +55,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
                                                    userName: self.txtFieldUsername.text!,
-                                                   tenantDNS: Tenant.defaultTenant.dns!,
-                                                   communityName: Tenant.defaultTenant.community!,
+                                                   tenantDNS: Tenant.clientTenant.dns!,
+                                                   communityName: Tenant.clientTenant.community!,
                                                    type: .CROSS_PLATFORM) { status, err in
             self.view.hideToastActivity()
             if !status {
@@ -76,8 +76,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
                                                        userName: self.txtFieldUsername.text!,
-                                                       tenantDNS: Tenant.defaultTenant.dns!,
-                                                       communityName: Tenant.defaultTenant.community!,
+                                                       tenantDNS: Tenant.clientTenant.dns!,
+                                                       communityName: Tenant.clientTenant.community!,
                                                        type: .PLATFORM) { status, error in
             self.view.hideToastActivity()
             if !status {
@@ -97,8 +97,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
                                                        userName: self.txtFieldUsername.text!,
-                                                       tenantDNS: Tenant.defaultTenant.dns!,
-                                                       communityName: Tenant.defaultTenant.community!,
+                                                       tenantDNS: Tenant.clientTenant.dns!,
+                                                       communityName: Tenant.clientTenant.community!,
                                                        type: .CROSS_PLATFORM) { status, error in
             self.view.hideToastActivity()
             if !status {
@@ -120,8 +120,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         // fileName parameter is optional
         // provide filename if customized html is required
         BlockIDSDK.sharedInstance.registerFIDO2Key(userName: self.txtFieldUsername.text!,
-                                                   tenantDNS: Tenant.defaultTenant.dns!,
-                                                   communityName: Tenant.defaultTenant.community!,
+                                                   tenantDNS: Tenant.clientTenant.dns!,
+                                                   communityName: Tenant.clientTenant.community!,
                                                    fileName: "fido3.html")
         { status, error in
             self.view.hideToastActivity()
@@ -154,8 +154,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         // fileName parameter is optional
         // provide filename if customized html is required
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(userName: self.txtFieldUsername.text!,
-                                                       tenantDNS: Tenant.defaultTenant.dns!,
-                                                       communityName: Tenant.defaultTenant.community!,
+                                                       tenantDNS: Tenant.clientTenant.dns!,
+                                                       communityName: Tenant.clientTenant.community!,
                                                        fileName: "fido3.html")
         { status, error in
                 self.view.hideToastActivity()

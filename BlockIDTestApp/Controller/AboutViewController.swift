@@ -10,7 +10,8 @@ import BlockID
 
 // MARK: - Enums -
 enum InfoType: String, CaseIterable {
-    case tenantInformation = "Tenant Information: "
+    case defaultTenant = "Default Tenant: "
+    case clientTenant = "Client Tenant: "
     case licenseKey = "License Key: "
     case did = "DID: "
     case publicKey = "Public Key: "
@@ -49,7 +50,7 @@ class AboutViewController: UIViewController {
         var copiedTxt = ""
         InfoType.allCases.forEach {
             switch $0 {
-            case .tenantInformation:
+            case .defaultTenant:
                 copiedTxt += $0.rawValue
                 if let tenant = BlockIDSDK.sharedInstance.getTenant() {
                     let dns = "DNS: " + (tenant.dns ?? "-")
@@ -58,6 +59,15 @@ class AboutViewController: UIViewController {
                     let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
                     copiedTxt += subTitle
                 }
+            case .clientTenant:
+                copiedTxt += $0.rawValue
+                let tenant = Tenant.clientTenant
+                let dns = "DNS: " + (tenant.dns ?? "-")
+                let tag = "Tag: " + (tenant.tenantTag ?? "-")
+                let community = "Community: " + (tenant.community ?? "-")
+                let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
+                copiedTxt += subTitle
+                
             case .licenseKey:
                 let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
                 copiedTxt += $0.rawValue +  licenseKey + "\n\n"
@@ -116,7 +126,7 @@ extension AboutViewController: UITableViewDataSource {
         cell.textLabel?.text = InfoType.allCases[indexPath.row].rawValue
         switch InfoType.allCases[indexPath.row] {
             
-        case .tenantInformation:
+        case .defaultTenant:
             if let tenant = BlockIDSDK.sharedInstance.getTenant() {
                 let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
                 let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")" + "\n"
@@ -124,6 +134,13 @@ extension AboutViewController: UITableViewDataSource {
                 let subTitle = dns + tag + community
                 cell.detailTextLabel?.text = subTitle
             }
+        case .clientTenant:
+            let tenant = Tenant.clientTenant
+            let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
+            let tag = "Tag: " + (tenant.tenantTag ?? "-") + "\n"
+            let community = "Community: " + (tenant.community ?? "-") + "\n"
+            let subTitle = dns + tag + community
+            cell.detailTextLabel?.text = subTitle
         case .licenseKey:
            let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
             cell.detailTextLabel?.text = String(licenseKey)
