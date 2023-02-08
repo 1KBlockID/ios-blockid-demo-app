@@ -10,7 +10,7 @@ import BlockID
 
 // MARK: - Enums -
 enum InfoType: String, CaseIterable {
-    case defaultTenant = "Default Tenant: "
+    case rootTenant = "Root Tenant: "
     case clientTenant = "Client Tenant: "
     case licenseKey = "License Key: "
     case did = "DID: "
@@ -50,7 +50,7 @@ class AboutViewController: UIViewController {
         var copiedTxt = ""
         InfoType.allCases.forEach {
             switch $0 {
-            case .defaultTenant:
+            case .rootTenant:
                 copiedTxt += $0.rawValue
                 if let tenant = BlockIDSDK.sharedInstance.getTenant() {
                     let dns = "DNS: " + (tenant.dns ?? "-")
@@ -126,7 +126,7 @@ extension AboutViewController: UITableViewDataSource {
         cell.textLabel?.text = InfoType.allCases[indexPath.row].rawValue
         switch InfoType.allCases[indexPath.row] {
             
-        case .defaultTenant:
+        case .rootTenant:
             if let tenant = BlockIDSDK.sharedInstance.getTenant() {
                 let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
                 let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")" + "\n"
