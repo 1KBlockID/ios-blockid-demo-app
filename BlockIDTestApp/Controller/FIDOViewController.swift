@@ -29,6 +29,21 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    /// Handle Pin Code
+    ///
+    /// This will handle the pin if present on external key used
+    private func showPINInputAlert(completion: @escaping (_ pin: String?) -> Void) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(pinInputCompletion: { pin in
+                guard let pin = pin else {
+                    completion(nil)
+                    return
+                }
+                completion(pin)
+            })
+            self.present(alert, animated: true)
+        }
+    }
     
     @IBAction func registerPlatformKey(_ sender: UIButton) {
         self.view.makeToastActivity(.center)
@@ -52,23 +67,50 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func registerExternalKey(_ sender: UIButton) {
-        self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
-                                                   userName: self.txtFieldUsername.text!,
-                                                   tenantDNS: Tenant.clientTenant.dns!,
-                                                   communityName: Tenant.clientTenant.community!,
-                                                   type: .CROSS_PLATFORM) { status, err in
-            self.view.hideToastActivity()
-            if !status {
-                guard let err = err else { return }
-                self.showAlertView(title: "Error",
-                                   message: "\(err.message) (\(err.code)).")
+            self.view.makeToastActivity(.center)
+            BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.clientTenant.dns!,
+                                                       communityName: Tenant.clientTenant.community!,
+                                                       type: .CROSS_PLATFORM) { status, err in
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = err else { return }
+                    self.showAlertView(title: "Error",
+                                       message: "\(err.message) (\(err.code)).")
+                    return
+                }
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key registered successfully.")
+            }
+    }
+    
+    @IBAction func registerExternalKeyWithPin(_ sender: UIButton) {
+        showPINInputAlert { pin in
+            guard let verifiedPin = pin else {
                 return
             }
-            UserDefaults.standard.set(self.txtFieldUsername.text,
-                                      forKey: AppConsant.fidoUserName)
-            self.showAlertView(title: "",
-                               message: "Security key registered successfully.")
+            self.view.makeToastActivity(.center)
+            BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                       userName: self.txtFieldUsername.text!,
+                                                       tenantDNS: Tenant.clientTenant.dns!,
+                                                       communityName: Tenant.clientTenant.community!,
+                                                       type: .CROSS_PLATFORM,
+                                                       pin: verifiedPin) { status, err in
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = err else { return }
+                    self.showAlertView(title: "Error",
+                                       message: "\(err.message) (\(err.code)).")
+                    return
+                }
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key registered successfully.")
+            }
         }
     }
     
@@ -94,24 +136,49 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func authenticateExternalKey(_ sender: UIButton) {
-        self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
-                                                       userName: self.txtFieldUsername.text!,
-                                                       tenantDNS: Tenant.clientTenant.dns!,
-                                                       communityName: Tenant.clientTenant.community!,
-                                                       type: .CROSS_PLATFORM) { status, error in
-            self.view.hideToastActivity()
-            if !status {
-                guard let err = error else { return }
-                self.showAlertView(title: "Error", message: "\(err.message) (\(err.code)).")
+            self.view.makeToastActivity(.center)
+            BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                           userName: self.txtFieldUsername.text!,
+                                                           tenantDNS: Tenant.clientTenant.dns!,
+                                                           communityName: Tenant.clientTenant.community!,
+                                                           type: .CROSS_PLATFORM) { status, error in
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = error else { return }
+                    self.showAlertView(title: "Error", message: "\(err.message) (\(err.code)).")
+                    return
+                }
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key is authenticated successfully.")
+            }
+    }
+    
+    @IBAction func authenticateExternalKeyWithPin(_ sender: UIButton) {
+        showPINInputAlert { pin in
+            guard let verifiedPin = pin else {
                 return
             }
-            UserDefaults.standard.set(self.txtFieldUsername.text,
-                                      forKey: AppConsant.fidoUserName)
-            self.showAlertView(title: "",
-                               message: "Security key is authenticated successfully.")
+            self.view.makeToastActivity(.center)
+            BlockIDSDK.sharedInstance.authenticateFIDO2Key(controller: self,
+                                                           userName: self.txtFieldUsername.text!,
+                                                           tenantDNS: Tenant.clientTenant.dns!,
+                                                           communityName: Tenant.clientTenant.community!,
+                                                           type: .CROSS_PLATFORM,
+                                                           pin: verifiedPin) { status, error in
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = error else { return }
+                    self.showAlertView(title: "Error", message: "\(err.message) (\(err.code)).")
+                    return
+                }
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key is authenticated successfully.")
+            }
         }
-        
     }
     
     @IBAction func registerTapped(_ sender: Any) {
@@ -183,5 +250,22 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+}
+
+extension UIAlertController {
+    convenience init(pinInputCompletion:  @escaping (String?) -> Void) {
+        self.init(title: "PIN verification required", message: "Enter the key PIN", preferredStyle: UIAlertController.Style.alert)
+        addTextField { (textField) in
+            textField.placeholder = "PIN"
+            textField.isSecureTextEntry = true
+        }
+        addAction(UIAlertAction(title: "Verify", style: .default, handler: { (action) in
+            let pin = self.textFields![0].text
+            pinInputCompletion(pin)
+        }))
+        addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+            pinInputCompletion(nil)
+        }))
     }
 }
