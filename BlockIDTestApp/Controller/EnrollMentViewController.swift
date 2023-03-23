@@ -28,6 +28,7 @@ public enum Enrollments: String {
     case LiveID_liveness = "Live ID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
+    case FIDO2_Management = "FIDO2 Key Management"
     case RecoverMnemonics  = "Recover Mnemonics"
     case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
@@ -50,6 +51,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID_liveness,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
+                           Enrollments.FIDO2_Management,
                            Enrollments.RecoverMnemonics,
                            Enrollments.WalletConnect,
                            Enrollments.resetApp]
@@ -129,6 +131,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             scanQRCode()
         case Enrollments.FIDO2.rawValue:
             launchForFIDO2()
+        case Enrollments.FIDO2_Management.rawValue:
+            showFidoKeyManagement()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.WalletConnect.rawValue:
@@ -434,5 +438,11 @@ extension EnrollMentViewController {
     private func launchForFIDO2() {
         let fido2VC = self.storyboard?.instantiateViewController(withIdentifier: "FIDOViewController") as! FIDOViewController
         self.navigationController?.pushViewController(fido2VC, animated: true)
+    }
+}
+
+extension EnrollMentViewController {
+    private func showFidoKeyManagement() {
+        showFIDOManagementView()
     }
 }

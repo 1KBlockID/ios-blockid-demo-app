@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xuA-Ga-UAK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xuA-Ga-UAK">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -1130,7 +1130,7 @@
         <scene sceneID="bcC-5K-P2B">
             <objects>
                 <viewController storyboardIdentifier="FIDOViewController" id="VOU-Md-Ear" customClass="FIDOViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="pXH-Wr-KKf">
+                    <view key="view" contentMode="scaleToFill" id="pXH-Wr-KKf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1267,7 +1267,7 @@
                                         <rect key="frame" x="0.0" y="220" width="280" height="74"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7L-E6-hfX">
-                                                <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="29"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="IZv-Z6-00R"/>
@@ -1283,7 +1283,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23P-g9-htV">
-                                                <rect key="frame" x="0.0" y="45" width="280" height="29"/>
+                                                <rect key="frame" x="0.0" y="34" width="280" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="dxD-YX-SyJ"/>
@@ -1371,7 +1371,7 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AboutTableviewCell" textLabel="YzX-F1-deX" detailTextLabel="1Y0-zY-9lh" style="IBUITableViewCellStyleSubtitle" id="yEm-zE-SGd">
-                                        <rect key="frame" x="0.0" y="44.5" width="320" height="62"/>
+                                        <rect key="frame" x="0.0" y="50" width="320" height="62"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="yEm-zE-SGd" id="LCH-xm-RCt">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
@@ -3359,7 +3359,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTi-Ib-m4E">
-                                <rect key="frame" x="30" y="105.5" width="171" height="33"/>
+                                <rect key="frame" x="30" y="105.5" width="174.5" height="34"/>
                                 <color key="tintColor" systemColor="systemRedColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" imagePadding="8">
@@ -3384,7 +3384,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7zg-72-lKS">
-                                <rect key="frame" x="30" y="148.5" width="260" height="334.5"/>
+                                <rect key="frame" x="30" y="149.5" width="260" height="333.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="lQK-lQ-QES" id="ph3-do-eCx"/>
@@ -3845,6 +3845,113 @@
             </objects>
             <point key="canvasLocation" x="6496.875" y="1080.6338028169014"/>
         </scene>
+        <!--Key Management Controller-->
+        <scene sceneID="6xu-Sd-Lrj">
+            <objects>
+                <viewController storyboardIdentifier="FIDOKeyManagementController" id="a5g-l8-hjC" customClass="FIDOKeyManagementController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yxj-Yc-gsi">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySx-Ik-ZlT">
+                                <rect key="frame" x="2" y="15" width="60" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="O5H-7r-EMg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="iconBackarrow"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtColor" value="primary4"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtFont" value="fontRegular"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="backTapped:" destination="a5g-l8-hjC" eventType="touchUpInside" id="h6U-EC-Wr5"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIDO Key Management" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oju-pL-cAP">
+                                <rect key="frame" x="64" y="13" width="215" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="eZE-B5-vDx">
+                                <rect key="frame" x="20" y="77" width="280" height="150"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gh9-2g-GfM">
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="85"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QKH-CD-sr5">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="54O-jt-hrx"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Set PIN">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="setPIN:" destination="a5g-l8-hjC" eventType="touchUpInside" id="J52-0X-6Fh"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFy-z2-Nhr">
+                                                <rect key="frame" x="0.0" y="45" width="280" height="40"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="W1i-Cy-6zZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" title="Change PIN">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="changePIN:" destination="a5g-l8-hjC" eventType="touchUpInside" id="5d2-vb-Ufv"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-4o-aZo">
+                                        <rect key="frame" x="0.0" y="110" width="280" height="40"/>
+                                        <color key="backgroundColor" red="0.91372549020000005" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="9Bk-vn-QWM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Reset FIDO">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resetFIDO:" destination="a5g-l8-hjC" eventType="touchUpInside" id="0Dp-mC-jPX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pxb-ah-Xk5"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oju-pL-cAP" firstAttribute="leading" secondItem="ySx-Ik-ZlT" secondAttribute="trailing" constant="2" id="47d-7S-OaU"/>
+                            <constraint firstItem="eZE-B5-vDx" firstAttribute="centerX" secondItem="yxj-Yc-gsi" secondAttribute="centerX" id="4SG-9B-Vnt"/>
+                            <constraint firstItem="eZE-B5-vDx" firstAttribute="leading" secondItem="pxb-ah-Xk5" secondAttribute="leading" constant="20" id="By7-gb-kdT"/>
+                            <constraint firstItem="ySx-Ik-ZlT" firstAttribute="top" secondItem="pxb-ah-Xk5" secondAttribute="top" constant="15" id="b5v-uq-4Ia"/>
+                            <constraint firstItem="eZE-B5-vDx" firstAttribute="top" secondItem="oju-pL-cAP" secondAttribute="bottom" constant="40" id="eaa-1x-HJS"/>
+                            <constraint firstItem="oju-pL-cAP" firstAttribute="centerY" secondItem="ySx-Ik-ZlT" secondAttribute="centerY" id="mzU-MD-dkO"/>
+                            <constraint firstItem="ySx-Ik-ZlT" firstAttribute="leading" secondItem="pxb-ah-Xk5" secondAttribute="leading" constant="2" id="uyz-zv-wHd"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9pu-y4-blF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4584" y="1689"/>
+        </scene>
     </scenes>
     <resources>
         <image name="brandLogo" width="269" height="97"/>
@@ -3863,7 +3970,7 @@
         <image name="ssnCheck" width="20" height="20"/>
         <image name="ssnUnCheck" width="20" height="20"/>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
