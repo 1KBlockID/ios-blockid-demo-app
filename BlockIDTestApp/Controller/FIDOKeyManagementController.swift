@@ -27,8 +27,8 @@ class FIDOKeyManagementController: UIViewController {
                                         confirmPin: confirmPin) else {
                 return
             }
-            // manage key pin...
-            BlockIDSDK.sharedInstance.manageSecurityKeyPIN(type: .setPIN(newPin: newPin)) { status, error in
+            // set key pin...
+            BlockIDSDK.sharedInstance.setFido2PIN(newPin: newPin) { status, error in
                 if !status {
                     guard let err = error else { return }
                     DispatchQueue.main.async {
@@ -61,10 +61,9 @@ class FIDOKeyManagementController: UIViewController {
                   let newPin = newPin else {
                 return
             }
-            // manage key pin...
-            BlockIDSDK.sharedInstance.manageSecurityKeyPIN(type: .changePIN(oldPin: oldPin,
-                                                                            newPin: newPin)) { status, error in
-                
+            // change key pin...
+            BlockIDSDK.sharedInstance.changeFido2PIN(oldPin: oldPin,
+                                                     newPin: newPin) { status, error in
                 if !status {
                     guard let err = error else { return }
                     DispatchQueue.main.async {
@@ -91,7 +90,7 @@ class FIDOKeyManagementController: UIViewController {
     
     @IBAction func resetFIDO(_ sender: UIButton) {
         // Reset key pin...
-        BlockIDSDK.sharedInstance.manageSecurityKeyPIN(type: .resetKeyPIN) { status, error in
+        BlockIDSDK.sharedInstance.resetFido2 { status, error in
             if !status {
                 guard let err = error else { return }
                 DispatchQueue.main.async {

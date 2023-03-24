@@ -28,7 +28,7 @@ public enum Enrollments: String {
     case LiveID_liveness = "Live ID (with liveness check)"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
-    case FIDO2_Management = "FIDO2 Key Management"
+    case FIDO2_Management = "FIDO2 PIN Management"
     case RecoverMnemonics  = "Recover Mnemonics"
     case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
