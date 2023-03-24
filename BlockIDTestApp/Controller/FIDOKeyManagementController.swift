@@ -21,14 +21,14 @@ class FIDOKeyManagementController: UIViewController {
     @IBAction func setPIN(_ sender: UIButton) {
         // valdidate key pin...
         setPINInputAlert{ newPin, confirmPin in
-            guard let pin = newPin,
+            guard let newPin = newPin,
                   let confirmPin = confirmPin,
-                    self.validateSetPin(newPin: pin,
+                    self.validateSetPin(newPin: newPin,
                                         confirmPin: confirmPin) else {
                 return
             }
             // manage key pin...
-            BlockIDSDK.sharedInstance.manageSecurityKeyPIN(type: .setPIN(newPin: pin)) { status, error in
+            BlockIDSDK.sharedInstance.manageSecurityKeyPIN(type: .setPIN(newPin: newPin)) { status, error in
                 if !status {
                     guard let err = error else { return }
                     DispatchQueue.main.async {
@@ -58,7 +58,7 @@ class FIDOKeyManagementController: UIViewController {
         // valdidate key pin...
         changePINInputAlert{ oldPin, newPin in
             guard let oldPin = oldPin,
-            let newPin = newPin else {
+                  let newPin = newPin else {
                 return
             }
             // manage key pin...

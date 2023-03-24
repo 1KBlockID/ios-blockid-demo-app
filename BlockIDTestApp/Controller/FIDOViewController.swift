@@ -265,7 +265,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
                                                       confirmPin: confirmPin) else {
                                 return
                             }
-                            self.registerFIDO2ExternelKeyWithPin(pin: pin,
+                            self.registerFIDO2ExternelKeyWithPin(pin: confirmPin,
                                                                  setPin: true)
                         }
                     }))
