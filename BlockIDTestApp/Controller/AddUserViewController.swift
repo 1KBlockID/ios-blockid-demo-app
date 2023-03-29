@@ -261,30 +261,37 @@ extension AddUserViewController {
     
     private func buildInAppBrowserURL() {
         var finalURL = magicLink?.url ?? ""
-        if let payload = makePayload(userOnboardingServerPublicKey ?? "",
-                                     code: self.magicLinkData?.code ?? "") {
-            finalURL += "&payload=" + payload
-            debugPrint("Magic Link url with code + payload -> \(finalURL)")
-            if let url = URL(string: finalURL) {
-                webView.load(URLRequest(url: url))
+        self.makePayload(userOnboardingServerPublicKey ?? "",
+                         code: self.magicLinkData?.code ?? "") { payload in
+            if let payload = payload {
+                finalURL += "&payload=" + payload
+                debugPrint("Magic Link url with code + payload -> \(finalURL)")
+                if let url = URL(string: finalURL) {
+                    self.webView.load(URLRequest(url: url))
+                }
             }
         }
     }
     
-    private func makePayload(_ publicKey: String, code: String) -> String? {
-        let eventDataRequest = BlockIDSDK.sharedInstance.getEventData(publicKey: publicKey,
-                                                                      lon: location.1, lat: location.0)
-        guard let eventDataRequest = BlockIDSDK.sharedInstance.encryptString(str: eventDataRequest, rcptKey: publicKey) else {
-            return nil
+    private func makePayload(_ publicKey: String, code: String, completion: @escaping (String?) -> Void) {
+
+        BlockIDSDK.sharedInstance.getEventData(publicKey: publicKey, lon: location.1, lat: location.0) { eventDataRequest in
+            if let eventDataRequest = BlockIDSDK.sharedInstance.encryptString(str: eventDataRequest, rcptKey: publicKey) {
+                let urlData = MagicLinkPayload(did: BlockIDSDK.sharedInstance.getDID(),
+                                               eventData: eventDataRequest,
+                                               sender: AccountAuthConstants.kAuthSender,
+                                               code: code,
+                                               os: "ios",
+                                               ial: "")
+                
+               let payload = RequestUrlPayload(data: urlData,
+                                               publicKey: publicKey).base64Payload()
+                completion(payload)
+            } else {
+                completion(nil)
+            }
         }
-        let urlData = MagicLinkPayload(did: BlockIDSDK.sharedInstance.getDID(),
-                                       eventData: eventDataRequest,
-                                       sender: AccountAuthConstants.kAuthSender,
-                                       code: code,
-                                       os: "ios",
-                                       ial: "")
-        
-        return RequestUrlPayload(data: urlData, publicKey: publicKey).base64Payload()
+
     }
     
     private func onUserAuthResponseReceived(_ payload: String) {

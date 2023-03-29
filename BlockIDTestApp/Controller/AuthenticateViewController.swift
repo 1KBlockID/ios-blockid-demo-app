@@ -49,10 +49,20 @@ class AuthenticateViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         _txtPresetData.delegate = self
-        scopeAttributesDic = getScopesAttributesDict(scopes: qrModel.scopes ?? "",
-                                                                         creds: qrModel.creds ?? "",
-                                                                         origin: qrModel.getBidOrigin()!,
-                                                                         userId: userId)
+        self.view.makeToastActivity(.center)
+        self.view.isUserInteractionEnabled = false
+        getScopesAttributesDict(scopes: qrModel.scopes ?? "",
+                                creds: qrModel.creds ?? "",
+                                origin: qrModel.getBidOrigin()!,
+                                userId: userId) { scopeDict in
+            
+            DispatchQueue.main.async {
+                self.view.hideToastActivity()
+                self.view.isUserInteractionEnabled = true
+            }
+            self.scopeAttributesDic = scopeDict
+            
+        }
         self.userId = scopeAttributesDic?["userid"] as? String
         let clientName = (qrModel?.name != nil && qrModel?.name != "") ? qrModel.name : qrModel?.tag
 
@@ -110,15 +120,23 @@ class AuthenticateViewController: UIViewController {
         _tblScope.reloadData()
     }
     
-    private func getScopesAttributesDict(scopes: String, creds: String, origin: BIDOrigin, userId: String? = nil) -> [String: Any]? {
-        let scopesAttributes = BlockIDSDK.sharedInstance.getScopesAttributesDic(scopes: scopes, creds: creds, origin: origin, userId: userId)
-        guard let scopeDictUW = scopesAttributes.scopesAttributesDict else {
-            if let  errorUW = scopesAttributes.error, errorUW.code == CustomErrors.kUnauthorizedAccess.code {
-                showAppLogin()
+    private func getScopesAttributesDict(scopes: String, creds: String, origin: BIDOrigin, userId: String? = nil, completion: @escaping ([String: Any]?) -> Void) {
+        
+        BlockIDSDK.sharedInstance.getScopesAttributesDic(scopes: scopes,
+                                                         creds: creds,
+                                                         origin: origin,
+                                                         userId: userId) { scopesAttributesDict, error in
+            if let scopeDictionary = scopesAttributesDict {
+                if let  errorUW = error, errorUW.code == CustomErrors.kUnauthorizedAccess.code {
+                    self.showAppLogin()
+                    completion(nil)
+                } else {
+                    completion(scopeDictionary)
+                }
+            } else {
+                completion(nil)
             }
-            return nil
         }
-        return scopeDictUW
     }
     
     private func goBack() {
