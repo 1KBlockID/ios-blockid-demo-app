@@ -96,7 +96,7 @@ class FIDOKeyManagementController: UIViewController {
                                       style: .default,
                                       handler: nil))
         alert.addAction(UIAlertAction(title: "Yes",
-                                      style: .default,
+                                      style: .destructive,
                                       handler: {_ in
             self.resetFIDO()
         }))
