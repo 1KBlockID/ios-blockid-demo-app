@@ -88,28 +88,19 @@ class FIDOKeyManagementController: UIViewController {
     }
     
     @IBAction func resetFIDO(_ sender: UIButton) {
-        // Reset key pin...
-        BlockIDSDK.sharedInstance.resetFido2 { status, error in
-            if !status {
-                guard let err = error else { return }
-                DispatchQueue.main.async {
-                    self.showAlertView(title: "Error",
-                                       message: "\(err.message) (\(err.code)).")
-                }
-            } else {
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Success",
-                                                  message: "You have successfully reset FIDO2",
-                                                  preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default, handler: { action in
-                        // do nothing
-                        
-                    }))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            }
-        }
+        
+        let alert = UIAlertController(title: "Cancellation warning!",
+                                      message: "Do you want to reset FIDO?",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "No",
+                                      style: .default,
+                                      handler: nil))
+        alert.addAction(UIAlertAction(title: "Yes",
+                                      style: .default,
+                                      handler: {_ in
+            self.resetFIDO()
+        }))
+        self.present(alert, animated: true)
     }
     
     @IBAction func backTapped(_ sender: UIButton) {
@@ -154,6 +145,32 @@ class FIDOKeyManagementController: UIViewController {
                 completion(oldPin, newPin)
             })
             self.present(alert, animated: true)
+        }
+    }
+    
+    /// Reset FIDO
+    private func resetFIDO() {
+        // Reset key pin...
+        BlockIDSDK.sharedInstance.resetFido2 { status, error in
+            if !status {
+                guard let err = error else { return }
+                DispatchQueue.main.async {
+                    self.showAlertView(title: "Error",
+                                       message: "\(err.message) (\(err.code)).")
+                }
+            } else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Success",
+                                                  message: "You have successfully reset FIDO2",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK",
+                                                  style: .default, handler: { action in
+                        // do nothing
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
         }
     }
     
