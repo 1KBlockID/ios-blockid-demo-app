@@ -35,19 +35,19 @@ class FIDOKeyManagementController: UIViewController {
                         self.showAlertView(title: "Error",
                                            message: "\(err.message) (\(err.code)).")
                     }
-                    return
-                }
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Success",
-                                                  message: "You have successfully set the PIN", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default, handler: { action in
-                        // do nothing
-                        
-                    }))
-                    self.present(alert,
-                                 animated: true,
-                                 completion: nil)
+                } else {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Success",
+                                                      message: "You have successfully set the PIN", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK",
+                                                      style: .default, handler: { action in
+                            // do nothing
+                            
+                        }))
+                        self.present(alert,
+                                     animated: true,
+                                     completion: nil)
+                    }
                 }
             }
         }
@@ -70,19 +70,18 @@ class FIDOKeyManagementController: UIViewController {
                         self.showAlertView(title: "Error",
                                            message: "\(err.message) (\(err.code)).")
                     }
-                    return
-                }
-                
-                DispatchQueue.main.async {
-                    let alert = UIAlertController(title: "Success",
-                                                  message: "You have successfully changed the PIN", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK",
-                                                  style: .default, handler: { action in
-                        // do nothing
-                    }))
-                    self.present(alert,
-                                 animated: true,
-                                 completion: nil)
+                } else {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Success",
+                                                      message: "You have successfully changed the PIN", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK",
+                                                      style: .default, handler: { action in
+                            // do nothing
+                        }))
+                        self.present(alert,
+                                     animated: true,
+                                     completion: nil)
+                    }
                 }
             }
         }
@@ -97,19 +96,18 @@ class FIDOKeyManagementController: UIViewController {
                     self.showAlertView(title: "Error",
                                        message: "\(err.message) (\(err.code)).")
                 }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Success",
-                                              message: "You have successfully reset FIDO2",
-                                              preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK",
-                                              style: .default, handler: { action in
-                    // do nothing
-                    
-                }))
-                self.present(alert, animated: true, completion: nil)
+            } else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Success",
+                                                  message: "You have successfully reset FIDO2",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK",
+                                                  style: .default, handler: { action in
+                        // do nothing
+                        
+                    }))
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -141,7 +139,7 @@ class FIDOKeyManagementController: UIViewController {
     /// Change Pin Code
     ///
     /// This will handle the pin if present on used external key
-    private func changePINInputAlert(completion: @escaping (_ pin: String?, String?) -> Void) {
+    private func changePINInputAlert(completion: @escaping (String?, String?) -> Void) {
         DispatchQueue.main.async {
             let alert = UIAlertController(changePinInputCompletion: { oldPin, newPin, confirmPin in
                 guard let oldPin = oldPin,

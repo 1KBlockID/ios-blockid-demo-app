@@ -248,40 +248,43 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             if !status {
                 guard let err = err else { return }
                 if err.message == "No PIN has been set." {
-                    let alert = UIAlertController(title: "Error",
-                                                  message: "\(err.message) (\(err.code)).",
-                                                  preferredStyle: .alert)
-                    
-                    alert.addAction(UIAlertAction(title:
-                                                    "Cancel",
-                                                  style: .default, handler: nil))
-                    alert.addAction(UIAlertAction(title:
-                                                    "Set PIN",
-                                                  style: .default, handler: {_ in
-                        self.setPINInputAlert { newPin, confirmPin in
-                            guard let newPin = newPin,
-                                  let confirmPin = confirmPin,
-                                  self.validateSetPin(newPin: newPin,
-                                                      confirmPin: confirmPin) else {
-                                return
-                            }
-                            self.registerFIDO2ExternelKeyWithPin(pin: confirmPin,
-                                                                 setPin: true)
-                        }
-                    }))
-                    self.present(alert, animated: true)
+                    self.handleError(error: err)
                 } else {
                     self.showAlertView(title: "Error",
                                        message: "\(err.message) (\(err.code)).")
                 }
-                
-                return
+            } else {
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key registered successfully.")
             }
-            UserDefaults.standard.set(self.txtFieldUsername.text,
-                                      forKey: AppConsant.fidoUserName)
-            self.showAlertView(title: "",
-                               message: "Security key registered successfully.")
         }
+    }
+    
+    private func handleError(error: ErrorResponse) {
+        let alert = UIAlertController(title: "Error",
+                                      message: "\(error.message) (\(error.code)).",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title:
+                                        "Cancel",
+                                      style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title:
+                                        "Set PIN",
+                                      style: .default, handler: {_ in
+            self.setPINInputAlert { newPin, confirmPin in
+                guard let newPin = newPin,
+                      let confirmPin = confirmPin,
+                      self.validateSetPin(newPin: newPin,
+                                          confirmPin: confirmPin) else {
+                    return
+                }
+                self.registerFIDO2ExternelKeyWithPin(pin: confirmPin,
+                                                     setPin: true)
+            }
+        }))
+        self.present(alert, animated: true)
     }
     
     private func validateSetPin(newPin: String,
