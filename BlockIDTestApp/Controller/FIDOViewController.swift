@@ -92,25 +92,7 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             guard let verifiedPin = pin else {
                 return
             }
-            self.view.makeToastActivity(.center)
-            BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
-                                                       userName: self.txtFieldUsername.text!,
-                                                       tenantDNS: Tenant.clientTenant.dns!,
-                                                       communityName: Tenant.clientTenant.community!,
-                                                       type: .CROSS_PLATFORM,
-                                                       pin: verifiedPin) { status, err in
-                self.view.hideToastActivity()
-                if !status {
-                    guard let err = err else { return }
-                    self.showAlertView(title: "Error",
-                                       message: "\(err.message) (\(err.code)).")
-                    return
-                }
-                UserDefaults.standard.set(self.txtFieldUsername.text,
-                                          forKey: AppConsant.fidoUserName)
-                self.showAlertView(title: "",
-                                   message: "Security key registered successfully.")
-            }
+            self.registerFIDO2ExternelKeyWithPin(pin: verifiedPin)
         }
     }
     
@@ -251,20 +233,124 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
+    
+    private func registerFIDO2ExternelKeyWithPin(pin: String,
+                                                 setPin: Bool = false) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self,
+                                                   userName: self.txtFieldUsername.text!,
+                                                   tenantDNS: Tenant.clientTenant.dns!,
+                                                   communityName: Tenant.clientTenant.community!,
+                                                   type: .CROSS_PLATFORM,
+                                                   pin: pin,
+                                                   setPin: setPin) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                if err.message == "No PIN has been set." {
+                    self.handleError(error: err)
+                } else {
+                    self.showAlertView(title: "Error",
+                                       message: "\(err.message) (\(err.code)).")
+                }
+            } else {
+                UserDefaults.standard.set(self.txtFieldUsername.text,
+                                          forKey: AppConsant.fidoUserName)
+                self.showAlertView(title: "",
+                                   message: "Security key registered successfully.")
+            }
+        }
+    }
+    
+    private func handleError(error: ErrorResponse) {
+        let alert = UIAlertController(title: "Error",
+                                      message: "\(error.message) (\(error.code)).",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title:
+                                        "Cancel",
+                                      style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title:
+                                        "Set PIN",
+                                      style: .default, handler: {_ in
+            self.setPINInputAlert { newPin, confirmPin in
+                guard let newPin = newPin,
+                      let confirmPin = confirmPin,
+                      self.validateSetPin(newPin: newPin,
+                                          confirmPin: confirmPin) else {
+                    return
+                }
+                self.registerFIDO2ExternelKeyWithPin(pin: confirmPin,
+                                                     setPin: true)
+            }
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    private func validateSetPin(newPin: String,
+                                confirmPin: String) -> Bool {
+        
+        if newPin.isEmpty || confirmPin.isEmpty {
+            // show error
+            showAlertView(title: "Error",
+                          message: "PIN can not be empty")
+            return false
+        }
+        
+        if newPin.count < 4 || confirmPin.count < 4 {
+            // show error
+            self.showAlertView(title: "Error",
+                               message: "PIN can not be less than 4 digits")
+            return false
+        }
+        
+        if newPin != confirmPin {
+            showAlertView(title: "Error",
+                          message: "PIN does not match")
+            return false
+        }
+
+        return true
+    }
+    
+    /// Handle Pin Code
+    ///
+    /// This will handle the pin if present on external key used
+    private func setPINInputAlert(completion: @escaping (_ newPin: String?,
+                                                         _ confirmPin: String?) -> Void) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(setPinInputCompletion: { newPin, confirmPin in
+                guard let newPin = newPin,
+                      let confirmPin = confirmPin else {
+                    completion(nil, nil)
+                    return
+                }
+                completion(newPin, confirmPin)
+            })
+            self.present(alert, animated: true)
+            
+        }
+    }
 }
 
 extension UIAlertController {
     convenience init(pinInputCompletion:  @escaping (String?) -> Void) {
-        self.init(title: "PIN verification required", message: "Enter the key PIN", preferredStyle: UIAlertController.Style.alert)
+        self.init(title: "PIN verification required",
+                  message: "Enter the key PIN",
+                  preferredStyle: UIAlertController.Style.alert)
         addTextField { (textField) in
             textField.placeholder = "PIN"
             textField.isSecureTextEntry = true
         }
-        addAction(UIAlertAction(title: "Verify", style: .default, handler: { (action) in
+        addAction(UIAlertAction(title: "Verify",
+                                style: .default,
+                                handler: { (action) in
             let pin = self.textFields![0].text
             pinInputCompletion(pin)
         }))
-        addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+        addAction(UIAlertAction(title: "Cancel",
+                                style: .cancel,
+                                handler: { (action) in
             pinInputCompletion(nil)
         }))
     }
