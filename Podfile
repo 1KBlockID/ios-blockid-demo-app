@@ -15,12 +15,18 @@ target 'BlockIDTestApp' do
   pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.9.30'
 
 end
+
 post_install do |installer|
  installer.pods_project.targets.each do |target|
   target.build_configurations.each do |config|
+
+   # set build active architecture to to YES
     config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
+  
    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+
+   # enable simulator support
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
   end
  end
