@@ -28,6 +28,9 @@ post_install do |installer|
 
    # enable simulator support
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
+    
+    # set iOS Deployment Target to 13.0
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
   end
  end
 end
