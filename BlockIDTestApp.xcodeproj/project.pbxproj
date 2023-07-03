@@ -28,7 +28,7 @@
 		3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3345264414E7003FDB78 /* PassportViewController.swift */; };
 		3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3346264414E7003FDB78 /* DriverLicenseViewController.swift */; };
 		3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3347264414E7003FDB78 /* SplashViewController.swift */; };
-		3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */; };
+		3CEE3358264414E7003FDB78 /* ActiveLiveIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3348264414E7003FDB78 /* ActiveLiveIDViewController.swift */; };
 		3CEE3359264414E7003FDB78 /* NFCDisabledViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE3349264414E7003FDB78 /* NFCDisabledViewController.swift */; };
 		3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */; };
 		3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE334D264414E7003FDB78 /* EnrollmentTableViewCell.xib */; };
@@ -68,6 +68,7 @@
 		E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */; };
 		E689A17D2817F74300DCBED6 /* AuthenticationPayloadV1.swift in Sources */ = {isa = PBXBuildFile; fileRef = E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */; };
 		E6B95077287D84CB0015E759 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B95076287D84CB0015E759 /* Localizable.strings */; };
+		E6BD8DC92A52ACF200B19CDE /* PassiveLiveIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6BD8DC82A52ACF200B19CDE /* PassiveLiveIDViewController.swift */; };
 		E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6EC5F702923761100BB4E04 /* AboutViewController.swift */; };
 		E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */; };
 		E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */; };
@@ -128,7 +129,7 @@
 		3CEE3345264414E7003FDB78 /* PassportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassportViewController.swift; sourceTree = "<group>"; };
 		3CEE3346264414E7003FDB78 /* DriverLicenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverLicenseViewController.swift; sourceTree = "<group>"; };
 		3CEE3347264414E7003FDB78 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
-		3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveIDViewController.swift; sourceTree = "<group>"; };
+		3CEE3348264414E7003FDB78 /* ActiveLiveIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveLiveIDViewController.swift; sourceTree = "<group>"; };
 		3CEE3349264414E7003FDB78 /* NFCDisabledViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NFCDisabledViewController.swift; sourceTree = "<group>"; };
 		3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NationalIDViewController.swift; sourceTree = "<group>"; };
 		3CEE334D264414E7003FDB78 /* EnrollmentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnrollmentTableViewCell.xib; sourceTree = "<group>"; };
@@ -166,6 +167,7 @@
 		E689A17A2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV2.swift; sourceTree = "<group>"; };
 		E689A17C2817F74300DCBED6 /* AuthenticationPayloadV1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPayloadV1.swift; sourceTree = "<group>"; };
 		E6B95076287D84CB0015E759 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		E6BD8DC82A52ACF200B19CDE /* PassiveLiveIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassiveLiveIDViewController.swift; sourceTree = "<group>"; };
 		E6EC5F702923761100BB4E04 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLiveness.swift; sourceTree = "<group>"; };
 		E6F4CD11282E7D7F00646C68 /* DocumentLivenessViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentLivenessViewController.swift; sourceTree = "<group>"; };
@@ -314,13 +316,13 @@
 		3CEE3343264414E7003FDB78 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E6BD8DC72A52ACBC00B19CDE /* LiveIDScan */,
 				3CEE3344264414E7003FDB78 /* EnrollMentViewController.swift */,
 				B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */,
 				B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */,
 				3CEE3345264414E7003FDB78 /* PassportViewController.swift */,
 				3CEE3346264414E7003FDB78 /* DriverLicenseViewController.swift */,
 				3CEE3347264414E7003FDB78 /* SplashViewController.swift */,
-				3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */,
 				5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */,
 				3CEE3349264414E7003FDB78 /* NFCDisabledViewController.swift */,
 				3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */,
@@ -417,6 +419,15 @@
 				E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */,
 			);
 			path = APIs;
+			sourceTree = "<group>";
+		};
+		E6BD8DC72A52ACBC00B19CDE /* LiveIDScan */ = {
+			isa = PBXGroup;
+			children = (
+				E6BD8DC82A52ACF200B19CDE /* PassiveLiveIDViewController.swift */,
+				3CEE3348264414E7003FDB78 /* ActiveLiveIDViewController.swift */,
+			);
+			path = LiveIDScan;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -626,7 +637,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CEE3359264414E7003FDB78 /* NFCDisabledViewController.swift in Sources */,
-				3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */,
+				3CEE3358264414E7003FDB78 /* ActiveLiveIDViewController.swift in Sources */,
 				3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */,
 				E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */,
 				5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */,
@@ -676,6 +687,7 @@
 				E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */,
 				3CEE330F264413C2003FDB78 /* AppDelegate.swift in Sources */,
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
+				E6BD8DC92A52ACF200B19CDE /* PassiveLiveIDViewController.swift in Sources */,
 				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
 				3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */,
 			);

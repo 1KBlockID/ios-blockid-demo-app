@@ -26,7 +26,7 @@
             <objects>
                 <navigationController storyboardIdentifier="navSplash" id="xuA-Ga-UAK" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="JE8-dt-1Hm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -1130,7 +1130,7 @@
         <scene sceneID="bcC-5K-P2B">
             <objects>
                 <viewController storyboardIdentifier="FIDOViewController" id="VOU-Md-Ear" customClass="FIDOViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pXH-Wr-KKf">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="pXH-Wr-KKf">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -1267,7 +1267,7 @@
                                         <rect key="frame" x="0.0" y="220" width="280" height="45"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7L-E6-hfX">
-                                                <rect key="frame" x="0.0" y="0.0" width="280" height="40"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="0.0"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="IZv-Z6-00R"/>
@@ -1283,7 +1283,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23P-g9-htV">
-                                                <rect key="frame" x="0.0" y="45" width="280" height="0.0"/>
+                                                <rect key="frame" x="0.0" y="5" width="280" height="40"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="dxD-YX-SyJ"/>
@@ -1925,10 +1925,10 @@
             </objects>
             <point key="canvasLocation" x="1204" y="95"/>
         </scene>
-        <!--LiveID View Controller-->
+        <!--Active LiveID View Controller-->
         <scene sceneID="cpD-Yh-B38">
             <objects>
-                <viewController storyboardIdentifier="LiveIDViewController" id="xlp-JP-QXa" customClass="LiveIDViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ActiveLiveIDViewController" id="xlp-JP-QXa" customClass="ActiveLiveIDViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="shB-YS-EgG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1976,7 +1976,7 @@
                                             <constraint firstAttribute="bottom" secondItem="MRL-r3-5mb" secondAttribute="bottom" constant="8" id="wKq-uv-fQS"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockID">
+                                    <view autoresizesSubviews="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="10r-XB-PQF" customClass="BIDScannerView" customModule="BlockID">
                                         <rect key="frame" x="15" y="141.5" width="290" height="326.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
@@ -3589,7 +3589,7 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="262" height="65"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Address:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BQw-NT-JAJ">
-                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.500000000000004"/>
+                                                                <rect key="frame" x="8" y="8" width="84.5" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                                 <color key="textColor" red="0.67450980390000004" green="0.67450980390000004" blue="0.67450980390000004" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
@@ -3766,7 +3766,7 @@
                                         <rect key="frame" x="0.0" y="5" width="272" height="50.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4lo-SE-pNd">
-                                                <rect key="frame" x="8" y="8" width="55.5" height="14.499999999999996"/>
+                                                <rect key="frame" x="8" y="8" width="55.5" height="14.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="14.5" id="vZi-jQ-dUt"/>
                                                 </constraints>
@@ -3951,6 +3951,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9pu-y4-blF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4584" y="1689"/>
+        </scene>
+        <!--Passive LiveID View Controller-->
+        <scene sceneID="fjB-lf-jWK">
+            <objects>
+                <viewController storyboardIdentifier="PassiveLiveIDViewController" id="kBF-nf-Jff" customClass="PassiveLiveIDViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U3p-FD-Y12">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6H-oW-VXL">
+                                <rect key="frame" x="5" y="15" width="60" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="pdx-1f-gCg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
+                                <state key="normal" image="iconBackarrow"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtColor" value="primary4"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="txtFont" value="fontRegular"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="onBack:" destination="7mD-y5-OWi" eventType="touchUpInside" id="64M-Cv-xsC"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enroll LiveID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zE1-pV-rAp">
+                                <rect key="frame" x="67" y="13" width="116" height="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5fV-k8-8wF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zE1-pV-rAp" firstAttribute="centerY" secondItem="u6H-oW-VXL" secondAttribute="centerY" id="4CS-FV-h3J"/>
+                            <constraint firstItem="u6H-oW-VXL" firstAttribute="leading" secondItem="5fV-k8-8wF" secondAttribute="leading" constant="5" id="Ghi-7v-0uh"/>
+                            <constraint firstItem="zE1-pV-rAp" firstAttribute="leading" secondItem="u6H-oW-VXL" secondAttribute="trailing" constant="2" id="HkO-k5-gpY"/>
+                            <constraint firstItem="u6H-oW-VXL" firstAttribute="top" secondItem="5fV-k8-8wF" secondAttribute="top" constant="15" id="mTL-lR-ReY"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XBD-cP-mfI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5451" y="1718"/>
         </scene>
     </scenes>
     <resources>

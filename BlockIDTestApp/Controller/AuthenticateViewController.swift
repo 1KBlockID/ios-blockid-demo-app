@@ -172,7 +172,7 @@ class AuthenticateViewController: UIViewController {
         
         // Authenticate liveID on liveIDcontroller screen...
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "ActiveLiveIDViewController") as? ActiveLiveIDViewController {
             liveIDVC.isForVerification = true
             liveIDVC.onFinishCallback = { (status) -> Void in
                 if status {

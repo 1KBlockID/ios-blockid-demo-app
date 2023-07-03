@@ -12,7 +12,7 @@ import BlockID
 
 class EnrollmentTableViewCell: UITableViewCell {
     weak var controllerObj:EnrollMentViewController?
-    var liveID = Enrollments.LiveID
+    var liveID = Enrollments.LiveID_active
     
     @IBOutlet weak var lblEnrollment: UILabel!
     
@@ -97,7 +97,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .SSN ,category: .Identity_Document)
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = (docId != nil) ? .checkmark : .none
-        case .LiveID, .LiveID_liveness:
+        case .LiveID_active, .LiveID_passive:
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
         case .Pin:
