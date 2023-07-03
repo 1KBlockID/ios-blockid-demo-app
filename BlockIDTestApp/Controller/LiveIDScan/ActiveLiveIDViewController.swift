@@ -69,18 +69,22 @@ enum Vibration {
 
 class ActiveLiveIDViewController: UIViewController {
     
+    // MARK: - Properties -
     var isForVerification: Bool = false
     var isForConsent: Bool = false
-    
-    private var attemptCounts = 0
-   
+    var isLivenessNeeded: Bool = false
+       
+    // MARK: - Private properties -
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let isResettingExpressionsAllowed = false
     private var isLoaderHidden: Bool = false
-    var isLivenessNeeded: Bool = false
+    private var attemptCounts = 0
     private var imgOverlay: UIImageView!
+    
+    // MARK: - Completion handler -
     var onFinishCallback: ((_ status: Bool) -> Void)?
 
+    // MARK: - IBOutlets -
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
