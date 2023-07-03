@@ -177,7 +177,10 @@ class ActiveLiveIDViewController: UIViewController {
             self.view.hideToastActivity()
             if !status {
                 // FAILED
-                self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                self.view.makeToast(error?.message,
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error!", completion: {_ in
                     self.goBack()
                 })
                 return
@@ -239,7 +242,8 @@ class ActiveLiveIDViewController: UIViewController {
     /// - face: liveID image from liveID scanner object
     private func verifyLiveID(withPhoto photo: UIImage, token: String) {
         self.view.makeToastActivity(.center)
-        BlockIDSDK.sharedInstance.verifyLiveID(image: photo, sigToken: token) { (status, error) in
+        BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
+                                               sigToken: token) { (status, error) in
             self.view.hideToastActivity()
             if !status {
                 //If verification is for User Consent
@@ -312,7 +316,9 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
-    func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, error: ErrorResponse?) {
+    func liveIdDetectionCompleted(_ liveIdImage: UIImage?,
+                                  signatureToken: String?,
+                                  error: ErrorResponse?) {
         
         // check for error...
         if error?.code == CustomErrors.kScanCancelled.code {
