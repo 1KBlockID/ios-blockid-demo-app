@@ -76,7 +76,6 @@ class ActiveLiveIDViewController: UIViewController {
     // MARK: - Private properties -
     private var liveIdScannerHelper: LiveIDScannerHelper?
     private let isResettingExpressionsAllowed = false
-    private var isLoaderHidden: Bool = false
     private var attemptCounts = 0
     private var imgOverlay: UIImageView!
     
@@ -390,7 +389,6 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
     }
     
     func faceLivenessCheckStarted() {
-        isLoaderHidden = true
         self.view.makeToastActivity(.center)
     }
     
