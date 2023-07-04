@@ -24,8 +24,8 @@ public enum Enrollments: String {
     case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
-    case LiveID_active  = "LiveID Active"
-    case LiveID_passive = "LiveID Passive"
+    case LiveIDActive  = "LiveID Active"
+    case LiveIDPassive = "LiveID Passive"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
@@ -47,8 +47,8 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.KYC,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
-                           Enrollments.LiveID_active,
-                           Enrollments.LiveID_passive,
+                           Enrollments.LiveIDActive,
+                           Enrollments.LiveIDPassive,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_Management,
@@ -123,9 +123,9 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
             enrollDeviceAuth()
-        case Enrollments.LiveID_active.rawValue:
-            enrollLiveID()
-        case Enrollments.LiveID_passive.rawValue:
+        case Enrollments.LiveIDActive.rawValue:
+            showLiveIDActive()
+        case Enrollments.LiveIDPassive.rawValue:
             showLiveIDPassive()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
@@ -414,7 +414,7 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollLiveID() {
+    private func showLiveIDActive() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             showLiveIDView()
         }

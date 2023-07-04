@@ -93,8 +93,6 @@ class ActiveLiveIDViewController: UIViewController {
     // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        // unhide blockID liveID view
-        _viewBG.isHidden = false
         _lblInformation.isHidden = true
         
         if isForVerification {
@@ -117,7 +115,6 @@ class ActiveLiveIDViewController: UIViewController {
                 DispatchQueue.main.async {
                     
                     // BLOCKIDSDK scanning
-                    self._viewBG.isHidden = false
                     self._lblInformation.isHidden = true
                     
                     // Initialize LiveIDScannerHelper
