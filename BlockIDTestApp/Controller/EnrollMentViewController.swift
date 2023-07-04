@@ -124,7 +124,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.DeviceAuth.rawValue:
             enrollDeviceAuth()
         case Enrollments.LiveID_active.rawValue:
-            enrollLiveID(isLivenessNeeded: false)
+            enrollLiveID()
         case Enrollments.LiveID_passive.rawValue:
             showLiveIDPassive()
         case Enrollments.LoginWithQR.rawValue:
@@ -414,9 +414,9 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollLiveID(isLivenessNeeded: Bool) {
+    private func enrollLiveID() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
+            showLiveIDView()
         }
     }
     

@@ -72,7 +72,6 @@ class ActiveLiveIDViewController: UIViewController {
     // MARK: - Properties -
     var isForVerification: Bool = false
     var isForConsent: Bool = false
-    var isLivenessNeeded: Bool = false
        
     // MARK: - Private properties -
     private var liveIdScannerHelper: LiveIDScannerHelper?
@@ -321,12 +320,6 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
                                   error: ErrorResponse?) {
         
         // check for error...
-        if error?.code == CustomErrors.kScanCancelled.code {
-            // Selfie scanner cancelled
-            self.goBack()
-        }
-        
-        // check for error...
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
             self.view.makeToast(localizedMessage,
@@ -374,7 +367,7 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
         Vibration.heavy.vibrate()
     }
     
-    // wrong expression detected...
+    // expression to give...
     func readyForExpression(_ livenessFactor: LivenessFactorType) {
         DispatchQueue.main.async {
             self._lblInformation.isHidden = false

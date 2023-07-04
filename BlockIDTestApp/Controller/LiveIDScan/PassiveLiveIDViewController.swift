@@ -2,7 +2,7 @@
 //  PassiveLiveIDViewController.swift
 //  BlockIDTestApp
 //
-//  Created by Aditya Sharma on 03/07/23.
+//  Created by 1Kosmos Engineering on 03/07/23.
 //
 
 import UIKit
@@ -43,6 +43,7 @@ class PassiveLiveIDViewController: UIViewController {
         }
     }
     
+    // navigation to previous screen...
     private func goBack() {
         if let viewControllers = navigationController?.viewControllers {
             for viewController in viewControllers {
