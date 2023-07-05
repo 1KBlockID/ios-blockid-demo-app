@@ -304,7 +304,7 @@ class ActiveLiveIDViewController: UIViewController {
 extension ActiveLiveIDViewController: LiveIDResponseDelegate {
   
     func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
-        // check error when camera is blocked.
+        // check error when camera sensor is blocked.
         if error?.code == CustomErrors.kSomeProblemWhileFaceFinding.code {
             self._lblInformation.text = "Camera sensor is blocked. Unblock sensor and continue."
             Vibration.error.vibrate()
