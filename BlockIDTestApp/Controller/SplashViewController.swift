@@ -41,7 +41,6 @@ class SplashViewController: UIViewController {
                                            password: "esvgvx488tt3",
                                            isHTPPOnly: true)*/
         BlockIDSDK.sharedInstance.setLicenseKey(key: Tenant.licenseKey)
-        BlockIDSDK.sharedInstance.setDvcID(dvcID: AppConsant.dvcID)
         setRegisterButtonTitle()
     }
     
