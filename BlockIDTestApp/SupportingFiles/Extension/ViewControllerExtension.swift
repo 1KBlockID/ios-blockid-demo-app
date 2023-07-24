@@ -135,11 +135,19 @@ extension UIViewController {
     }
     
     
-    func showLiveIDView(isLivenessNeeded: Bool = false) {
+    func showLiveIDView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
-            liveIDVC.isLivenessNeeded = isLivenessNeeded
+        if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "ActiveLiveIDViewController") as? ActiveLiveIDViewController {
             self.navigationController?.pushViewController(liveIDVC, animated: true)
+        }
+    }
+    
+    func showLiveIDPassive() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "PassiveLiveIDViewController") as? PassiveLiveIDViewController {
+                self.navigationController?.pushViewController(liveIDVC, animated: true)
+            }
         }
     }
     

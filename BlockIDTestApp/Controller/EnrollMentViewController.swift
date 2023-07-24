@@ -24,8 +24,8 @@ public enum Enrollments: String {
     case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
-    case LiveID  = "Live ID"
-    case LiveID_liveness = "Live ID (with liveness check)"
+    case LiveIDActive  = "LiveID Active"
+    case LiveIDPassive = "LiveID Passive"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
@@ -47,8 +47,8 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.KYC,
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
-                           Enrollments.LiveID,
-                           Enrollments.LiveID_liveness,
+                           Enrollments.LiveIDActive,
+                           Enrollments.LiveIDPassive,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_Management,
@@ -123,10 +123,10 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollPin()
         case Enrollments.DeviceAuth.rawValue:
             enrollDeviceAuth()
-        case Enrollments.LiveID.rawValue:
-            enrollLiveID(isLivenessNeeded: false)
-        case Enrollments.LiveID_liveness.rawValue:
-            enrollLiveID(isLivenessNeeded: true)
+        case Enrollments.LiveIDActive.rawValue:
+            showLiveIDActive()
+        case Enrollments.LiveIDPassive.rawValue:
+            showLiveIDPassive()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.FIDO2.rawValue:
@@ -414,9 +414,9 @@ extension EnrollMentViewController {
 }
 
 extension EnrollMentViewController {
-    private func enrollLiveID(isLivenessNeeded: Bool) {
+    private func showLiveIDActive() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            showLiveIDView(isLivenessNeeded: isLivenessNeeded)
+            showLiveIDView()
         }
     }
     
