@@ -12,7 +12,7 @@ target 'BlockIDTestApp' do
   pod 'WebAuthnKit', :git => 'https://github.com/1KBlockID/WebAuthnKit-iOS.git', :tag => '2.0.2'
   pod 'EllipticCurveKeyPair', :git => 'https://github.com/1KBlockID/EllipticCurveKeyPair.git', :tag => '2.0.2'
   pod 'Web3', :git => 'https://github.com/Boilertalk/Web3.swift.git', :tag => '0.4.2'
-  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.9.70'
+  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :branch => '1.9.80'
 
 end
 
@@ -31,6 +31,12 @@ post_install do |installer|
     
     # set iOS Deployment Target to 13.0
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+    
+    # Settings for support of Xcode 15
+    xcconfig_path = config.base_configuration_reference.real_path
+    xcconfig = File.read(xcconfig_path)
+    xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+    File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
   end
  end
 end
