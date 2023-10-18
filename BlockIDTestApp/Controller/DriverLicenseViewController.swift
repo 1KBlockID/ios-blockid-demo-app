@@ -28,6 +28,10 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        BlockIDSDK.sharedInstance.generateNewSession { status, error in
+            
+        }
 //        startDLScanning()
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
