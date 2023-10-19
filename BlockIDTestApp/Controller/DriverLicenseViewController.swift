@@ -29,9 +29,11 @@ class DriverLicenseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        BlockIDSDK.sharedInstance.generateNewSession { status, error in
-            
-        }
+        BlockIDSDK.sharedInstance.createDocumentScannerSession(controllerObj: self,
+                                                               docType: .DL,
+                                                               completion: { status, error, response  in
+            debugPrint("****** response", status, error?.message, response?.url,  response?.sessionId)
+        })
 //        startDLScanning()
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
