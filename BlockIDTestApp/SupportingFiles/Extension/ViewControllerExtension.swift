@@ -67,11 +67,19 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
     
-    func showDLView() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
-            self.navigationController?.pushViewController(dlVC, animated: true)
-        }
+    private func getSDKBundle() -> Bundle? {
+        // Get bundle id of sdk
+        let frameworkBundleID  = "com.onekosmos.blockid.sdk"
+        let bundle = Bundle(identifier: frameworkBundleID)
+        return bundle
+    }
+    
+    func showDLView(delegate: EnrollMentViewController) {
+        // Move to document scanner
+        let dlVC = DocumentScannerViewController(nibName: "DocumentScannerViewController", bundle: getSDKBundle())
+        dlVC.documentType = .DL
+        dlVC.delegate = delegate
+        show(dlVC, sender: nil)
     }
     
     func showDocumentLivenessVC() {
@@ -88,18 +96,28 @@ extension UIViewController {
         }
     }
     
-    func showPassportView() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+    func showPassportView(delegate: EnrollMentViewController) {
+        // Move to document scanner
+        let dlVC = DocumentScannerViewController(nibName: "DocumentScannerViewController", bundle: getSDKBundle())
+        dlVC.documentType = .PPT
+        dlVC.delegate = delegate
+        show(dlVC, sender: nil)
+       /* let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
             self.navigationController?.pushViewController(ppVC, animated: true)
-        }
+        }*/
     }
     
-    func showNationalIDView() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
-            self.navigationController?.pushViewController(nidVC, animated: true)
-        }
+    func showNationalIDView(delegate: EnrollMentViewController) {
+        // Move to document scanner
+        let dlVC = DocumentScannerViewController(nibName: "DocumentScannerViewController", bundle: getSDKBundle())
+        dlVC.documentType = .ID
+        dlVC.delegate = delegate
+        show(dlVC, sender: nil)
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
+//            self.navigationController?.pushViewController(nidVC, animated: true)
+//        }
     }
     
     func showAddUserViewController() {

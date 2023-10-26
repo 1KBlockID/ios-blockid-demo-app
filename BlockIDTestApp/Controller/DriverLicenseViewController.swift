@@ -28,19 +28,18 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        startDLScanning()
         
-        BlockIDSDK.sharedInstance.createDocumentScannerSession(controllerObj: self,
-                                                               docType: .DL,
-                                                               completion: { status, error, response  in
-            debugPrint("****** response", status, error?.message, response?.url,  response?.sessionId)
-        })
-//        startDLScanning()
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.numberOfFacesNotification(_:)),
+                                               name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"),
+                                               object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
+        NotificationCenter.default.removeObserver(self,
+                                                  name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"),
+                                                  object: nil)
     }
 
     @objc func numberOfFacesNotification(_ notification: Notification) {
@@ -60,7 +59,9 @@ class DriverLicenseViewController: UIViewController {
     }
     
     @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Cancellation warning!",
+                                      message: "Do you want to cancel the registration process?",
+                                      preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -96,7 +97,9 @@ class DriverLicenseViewController: UIViewController {
     }
 
     private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
-        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Drivers License?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Verification",
+                                      message: "Do you want to verify your Drivers License?",
+                                      preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
