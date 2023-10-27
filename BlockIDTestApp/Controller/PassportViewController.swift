@@ -20,6 +20,7 @@ class PassportViewController: UIViewController {
     private var _token = ""
     private var pp: [String : Any]?
     private var isWithNFC = false
+    private var rfidScannerHelper: RFIDScannerHelper?
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
@@ -164,7 +165,7 @@ class PassportViewController: UIViewController {
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
-                self.ppScannerHelper?.startRFIDScanning()
+                self.rfidScannerHelper?.startRFIDScanning()
             }))
             self.present(alert, animated: true)
             return
@@ -172,7 +173,7 @@ class PassportViewController: UIViewController {
         case CustomErrors.kPPRFIDTimeout.code:
             self.view.makeToast("Scan Again", duration: 3.0, position: .center, title: "Timeout", completion: {_ in
                 self._viewEPassportScan.isHidden = false
-                self.ppScannerHelper?.startRFIDScanning()
+                self.rfidScannerHelper?.startRFIDScanning()
             })
             return
             
@@ -281,8 +282,13 @@ extension PassportViewController: PassportResponseDelegate {
 }
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
+        
         self._viewEPassportScan.isHidden = false
-        self.ppScannerHelper?.startRFIDScanning()
+        //self.ppScannerHelper?.startRFIDScanning()
+        
+        self.rfidScannerHelper = RFIDScannerHelper(ppResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
+        self.rfidScannerHelper?.startRFIDScanning()
+        
     }
     
     func onSkip() {
