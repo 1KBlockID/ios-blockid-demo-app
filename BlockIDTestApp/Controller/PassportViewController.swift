@@ -45,7 +45,8 @@ class PassportViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
+                    self.showDocumentScannerFor(.PPT, self)
+                    /*self._viewBG.isHidden = false
                     self._viewScanner.isHidden = false
                     //3. Initialize PassportScannerHelper
                     if self.ppScannerHelper == nil {
@@ -55,7 +56,7 @@ class PassportViewController: UIViewController {
                     self.ppScannerHelper?.startPassportScanning()
                     
                     self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
+                    self._imgOverlay.layer.addSublayer(self._scanLine)*/
                 }
             }
         }
@@ -205,6 +206,20 @@ class PassportViewController: UIViewController {
     }
 
 }
+
+// MARK: - DocumentSessionScanDelegate -
+extension PassportViewController: DocumentSessionScanDelegate {
+    
+    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
+        debugPrint("******", status, error?.message as Any)
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+            self.goBack()
+        }
+    }
+}
+
+
+/*
 extension PassportViewController: PassportResponseDelegate {
     
     func passportScanCompleted(withPassport obj: [String : Any]?, error: ErrorResponse?, signatureToken signToken: String?, isWithRFID: Bool?) {
@@ -278,7 +293,7 @@ extension PassportViewController: PassportResponseDelegate {
       }
     }
     
-}
+}*/
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
         self._viewEPassportScan.isHidden = false

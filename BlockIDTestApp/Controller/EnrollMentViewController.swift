@@ -82,19 +82,6 @@ class EnrollMentViewController: UIViewController {
     }
 }
 
-// MARK: - DocumentSessionScanDelegate -
-extension EnrollMentViewController: DocumentSessionScanDelegate {
-    func cancelDocumentScannerClickedFor(docType: DocumentScannerType?) {
-        debugPrint("******", #function, docType as Any)
-    }
-    
-    func documentScannerResponseReceived(status: Bool, error: BlockID.ErrorResponse?) {
-        debugPrint("******", #function)
-    }
-    
-    
-}
-
 extension EnrollMentViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return enrollmentArray.count
@@ -177,7 +164,7 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
-        showDLView(delegate: self)
+        showDLView()
     }
     
     /**
@@ -328,7 +315,7 @@ extension EnrollMentViewController {
             return
         }
         
-        showPassportView(delegate: self)
+        showPassportView()
     }
 }
 
@@ -348,7 +335,7 @@ extension EnrollMentViewController {
             return
         }
      
-        showNationalIDView(delegate: self)
+        showNationalIDView()
     }
 }
 

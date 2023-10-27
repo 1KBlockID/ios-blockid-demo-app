@@ -30,19 +30,19 @@ class DriverLicenseViewController: UIViewController {
         super.viewDidLoad()
         startDLScanning()
         
-        NotificationCenter.default.addObserver(self,
+       /* NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.numberOfFacesNotification(_:)),
                                                name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"),
-                                               object: nil)
+                                               object: nil) */
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
+   /* override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self,
                                                   name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"),
                                                   object: nil)
-    }
+    } */
 
-    @objc func numberOfFacesNotification(_ notification: Notification) {
+ /*   @objc func numberOfFacesNotification(_ notification: Notification) {
         guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
         print ("Number of faces found: \(faceCount)")
         DispatchQueue.main.async {
@@ -53,7 +53,7 @@ class DriverLicenseViewController: UIViewController {
             }
         }
     }
-
+*/
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -82,21 +82,23 @@ class DriverLicenseViewController: UIViewController {
                     self.alertForCameraAccess()
                 }
             } else {
+                // Camera access given
                 DispatchQueue.main.async {
+                    self.showDocumentScannerFor(.DL, self)
                     //3. Initialize dlScannerHelper
-                    if self.dlScannerHelper == nil {
-                        self._viewBG.isHidden = true
-                        self._viewLiveIDScan.isHidden = true
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
-                    }
-                    //4. Start Scanning
-                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
+//                    if self.dlScannerHelper == nil {
+//                        self._viewBG.isHidden = true
+//                        self._viewLiveIDScan.isHidden = true
+//                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
+//                    }
+//                    //4. Start Scanning
+//                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
                 }
             }
         }
     }
 
-    private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
+   /* private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)
@@ -184,10 +186,22 @@ class DriverLicenseViewController: UIViewController {
         if let scanLine = _scanLine {
             scanLine.removeAllAnimations()
         }
+    }*/
+}
+
+// MARK: - DocumentSessionScanDelegate -
+extension DriverLicenseViewController: DocumentSessionScanDelegate {
+   
+    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
+        debugPrint("******", status, error?.message as Any)
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+            self.goBack()
+        }
     }
 }
 
-extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+
+/*extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
         self.view.makeToastActivity(.center)
     }
@@ -299,3 +313,4 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
           }
       }
 }
+*/

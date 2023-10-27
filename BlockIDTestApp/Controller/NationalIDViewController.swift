@@ -58,7 +58,8 @@ class NationalIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
+                    self.showDocumentScannerFor(.ID, self)
+                   /* self._viewBG.isHidden = false
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
                     if self.nidScannerHelper == nil {
@@ -68,7 +69,7 @@ class NationalIDViewController: UIViewController {
                     self._lblScanInfoTxt.text = NIDScanningSide.NATIONAL_ID_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
                     self.nidScannerHelper?.startNationalIDScanning(scanningSide: self.firstScanningDocSide)
                     self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
+                    self._imgOverlay.layer.addSublayer(self._scanLine)*/
                 }
             }
         }
@@ -113,6 +114,19 @@ class NationalIDViewController: UIViewController {
     }
 }
 
+// MARK: - DocumentSessionScanDelegate -
+extension NationalIDViewController: DocumentSessionScanDelegate {
+    
+    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
+        debugPrint("******", status, error?.message as Any)
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+            self.goBack()
+        }
+    }
+}
+
+
+/*
 extension NationalIDViewController: NationalIDResponseDelegate {
     func nidScanCompleted(nidScanSide: NIDScanningSide, dictNationalID: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
         if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -186,3 +200,4 @@ extension NationalIDViewController: NationalIDResponseDelegate {
           }
       }
 }
+*/
