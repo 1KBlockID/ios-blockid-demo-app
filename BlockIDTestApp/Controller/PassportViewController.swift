@@ -208,7 +208,7 @@ class PassportViewController: UIViewController {
 }
 
 // MARK: - DocumentSessionScanDelegate -
-extension PassportViewController: DocumentSessionScanDelegate {
+extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
         debugPrint("******", status, error?.message as Any)
