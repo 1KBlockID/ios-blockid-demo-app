@@ -26,35 +26,22 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    
+    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.numberOfFacesNotification(_:)), name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "BlockIDFaceDetectionNotification"), object: nil)
-    }
-
-    @objc func numberOfFacesNotification(_ notification: Notification) {
-        guard let faceCount = notification.userInfo?["numberOfFaces"] as? Int else { return }
-        print ("Number of faces found: \(faceCount)")
-        DispatchQueue.main.async {
-            if faceCount > 0 {
-                self._lblScanInfoTxt.text = "Faces found : \(faceCount)"
-            } else {
-                self._lblScanInfoTxt.text = "Scan Front"
-            }
-        }
-    }
-
+    // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Cancellation warning!",
+                                      message: "Do you want to cancel the registration process?",
+                                      preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -75,22 +62,26 @@ class DriverLicenseViewController: UIViewController {
                     self.alertForCameraAccess()
                 }
             } else {
+                // Camera access given
                 DispatchQueue.main.async {
+                    self.showDocumentScannerFor(.DL, self)
                     //3. Initialize dlScannerHelper
-                    if self.dlScannerHelper == nil {
-                        self._viewBG.isHidden = true
-                        self._viewLiveIDScan.isHidden = true
-                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
-                    }
-                    //4. Start Scanning
-                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
+//                    if self.dlScannerHelper == nil {
+//                        self._viewBG.isHidden = true
+//                        self._viewLiveIDScan.isHidden = true
+//                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
+//                    }
+//                    //4. Start Scanning
+//                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
                 }
             }
         }
     }
 
-    private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
-        let alert = UIAlertController(title: "Verification", message: "Do you want to verify your Drivers License?", preferredStyle: .alert)
+   /* private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
+        let alert = UIAlertController(title: "Verification",
+                                      message: "Do you want to verify your Drivers License?",
+                                      preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
             self.setDriverLicense(withDLData: dl, token: token)
@@ -175,10 +166,22 @@ class DriverLicenseViewController: UIViewController {
         if let scanLine = _scanLine {
             scanLine.removeAllAnimations()
         }
+    }*/
+}
+
+// MARK: - DocumentSessionScanDelegate -
+extension DriverLicenseViewController: DocumentScanDelegate {
+   
+    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
+        debugPrint("******", status, error?.message as Any)
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+            self.goBack()
+        }
     }
 }
 
-extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+
+/*extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
         self.view.makeToastActivity(.center)
     }
@@ -290,3 +293,4 @@ extension DriverLicenseViewController: DriverLicenseResponseDelegate {
           }
       }
 }
+*/
