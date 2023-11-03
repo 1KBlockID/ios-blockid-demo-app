@@ -172,10 +172,14 @@ class DriverLicenseViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension DriverLicenseViewController: DocumentScanDelegate {
    
-    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
-        debugPrint("******", status, error?.message as Any)
+    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+//        debugPrint("******", status, error?.message as Any)
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
+        }
+        
+        if status { // Success
+            self.showAlertView(title: "Success", message: document!.description)
         }
     }
 }

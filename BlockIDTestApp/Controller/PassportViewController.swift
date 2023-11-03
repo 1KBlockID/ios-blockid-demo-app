@@ -210,7 +210,7 @@ class PassportViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension PassportViewController: DocumentScanDelegate {
     
-    func onDocumentScanResponse(status: Bool, document: [String: Any]?, error: ErrorResponse?) {
+    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
         debugPrint("******", status, error?.message as Any)
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
