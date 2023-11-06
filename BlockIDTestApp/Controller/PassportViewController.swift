@@ -20,6 +20,7 @@ class PassportViewController: UIViewController {
     private var _token = ""
     private var pp: [String : Any]?
     private var isWithNFC = false
+    private var rfidScannerHelper: RFIDScannerHelper?
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
@@ -78,7 +79,7 @@ class PassportViewController: UIViewController {
         return
     }
     
-    private func setPassport(withPPDat pp: [String : Any], token: String, isWithNFC: Bool) {
+    private func setPassport(withPPDat pp: [String : Any], token: String?, isWithNFC: Bool) {
         self.view.makeToastActivity(.center)
         
         var dic = pp
@@ -164,7 +165,7 @@ class PassportViewController: UIViewController {
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
-                self.ppScannerHelper?.startRFIDScanning()
+                self.rfidScannerHelper?.startRFIDScanning()
             }))
             self.present(alert, animated: true)
             return
@@ -172,7 +173,7 @@ class PassportViewController: UIViewController {
         case CustomErrors.kPPRFIDTimeout.code:
             self.view.makeToast("Scan Again", duration: 3.0, position: .center, title: "Timeout", completion: {_ in
                 self._viewEPassportScan.isHidden = false
-                self.ppScannerHelper?.startRFIDScanning()
+                self.rfidScannerHelper?.startRFIDScanning()
             })
             return
             
@@ -282,7 +283,9 @@ extension PassportViewController: PassportResponseDelegate {
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
         self._viewEPassportScan.isHidden = false
-        self.ppScannerHelper?.startRFIDScanning()
+        self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
+        self.rfidScannerHelper?.startRFIDScanning()
+        
     }
     
     func onSkip() {
@@ -292,5 +295,57 @@ extension PassportViewController: EPassportChipScanViewControllerDelegate {
 extension PassportViewController: NFCDisabledViewControllerDelegate {
     func cancelRFID() {
         self.setPassport(withPPDat: pp!, token: self._token, isWithNFC: false)
+    }
+}
+
+extension PassportViewController: RFIDResponseDelegate {
+    func rfidScanCompleted(withPassport docDic: [String : Any]?, error: ErrorResponse?) {
+        assert(Thread.isMainThread, "call me on main thread")
+        
+        //Check for errors
+        //  EXPIRED || INVALID || TIMEOUT || USER_CANCEL || LICENSE_KEY_DISABLED
+        if error?.code == CustomErrors.kPPExpired.code ||
+            error?.code == CustomErrors.kInvalidPP.code ||
+            error?.code == CustomErrors.kPPRFIDTimeout.code ||
+            error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
+            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            
+            guard let err = error else {
+                return
+            }
+            self.handleScanErrorResponse(error: err)
+            
+            return
+        }
+        scanCompleteUIUpdates()
+        
+        guard let pp = docDic else {
+            guard let err = error else {
+                return
+            }
+            self.handleScanErrorResponse(error: err)
+            return
+        }
+        
+        //Check if Not to Expiring Soon
+        if error?.code == CustomErrors.kPPAboutToExpire.code {
+            //About to Expire, Show Alert
+            let msg = "\(error?.message ?? CustomErrors.kSomethingWentWrong.msg) (Error code: \(error?.code ?? CustomErrors.kSomethingWentWrong.code))"
+            
+            //About to Expire, Show Alert
+            let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
+
+            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                self.setPassport(withPPDat: pp, token: nil, isWithNFC: true)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
+                
+                self.rfidScannerHelper?.stopRFIDScanning()
+                self.goBack()
+            }))
+            self.present(alert, animated: true)
+            return
+        }
+        setPassport(withPPDat: pp, token: nil, isWithNFC: true)
     }
 }

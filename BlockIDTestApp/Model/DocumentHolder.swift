@@ -19,7 +19,7 @@ class DocumentStore : NSObject {
         return (documentData != nil) ? true : false
     }
     
-    public func setData(documentData: [String : Any]?, token: String) {
+    public func setData(documentData: [String : Any]?, token: String?) {
         self.documentData = documentData
         self.token = token
         self.type = documentData?["type"] as? String ?? ""
