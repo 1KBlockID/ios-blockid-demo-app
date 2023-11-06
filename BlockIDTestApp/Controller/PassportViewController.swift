@@ -282,10 +282,7 @@ extension PassportViewController: PassportResponseDelegate {
 }
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
-        
         self._viewEPassportScan.isHidden = false
-        //self.ppScannerHelper?.startRFIDScanning()
-        
         self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
         self.rfidScannerHelper?.startRFIDScanning()
         
