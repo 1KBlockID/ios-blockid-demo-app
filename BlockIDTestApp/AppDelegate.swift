@@ -26,6 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+   /* class func sharedAppDelegate() -> AppDelegate? {
+        return UIApplication.shared.delegate as? AppDelegate
+    }
+    
+    var orientationLock = UIInterfaceOrientationMask.portrait
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return self.orientationLock
+    }*/
 }
 
 // MARK: -

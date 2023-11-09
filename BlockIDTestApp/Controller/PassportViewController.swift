@@ -215,6 +215,10 @@ extension PassportViewController: DocumentScanDelegate {
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
+        
+        if status { // Success
+            self.showAlertView(title: "Success", message: document!.description)
+        }
     }
 }
 

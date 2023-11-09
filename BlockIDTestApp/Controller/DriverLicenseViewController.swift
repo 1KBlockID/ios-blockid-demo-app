@@ -31,6 +31,22 @@ class DriverLicenseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         startDLScanning()
+
+       /* switch AVAudioSession.sharedInstance().recordPermission {
+           case .granted:
+            startDLScanning()
+               print("Permission granted")
+           case .denied:
+               print("Permission denied")
+           case .undetermined:
+               print("Request permission here")
+               AVAudioSession.sharedInstance().requestRecordPermission({ granted in
+                   // Handle granted
+                   self.startDLScanning()
+               })
+           @unknown default:
+               print("Unknown case")
+           }*/
     }
 
     // MARK:
@@ -66,19 +82,19 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.showDocumentScannerFor(.DL, self)
                     //3. Initialize dlScannerHelper
-//                    if self.dlScannerHelper == nil {
-//                        self._viewBG.isHidden = true
-//                        self._viewLiveIDScan.isHidden = true
-//                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
-//                    }
-//                    //4. Start Scanning
-//                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)
+                  /*  if self.dlScannerHelper == nil {
+                        self._viewBG.isHidden = true
+                        self._viewLiveIDScan.isHidden = true
+                        self.dlScannerHelper = DriverLicenseScanHelper.init(dlScanResponseDelegate: self)
+                    }
+                    //4. Start Scanning
+                    self.dlScannerHelper?.startDLScanning(scanningSide: self.firstScanningDocSide)*/
                 }
             }
         }
     }
 
-   /* private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
+    private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)
@@ -166,14 +182,15 @@ class DriverLicenseViewController: UIViewController {
         if let scanLine = _scanLine {
             scanLine.removeAllAnimations()
         }
-    }*/
+    }
 }
 
 // MARK: - DocumentSessionScanDelegate -
 extension DriverLicenseViewController: DocumentScanDelegate {
    
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-//        debugPrint("******", status, error?.message as Any)
+        debugPrint("******", status, error?.message as Any)
+        
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
@@ -181,11 +198,91 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         if status { // Success
             self.showAlertView(title: "Success", message: document!.description)
         }
+        return
+        
+        
+        
+        guard let doc = document else { return }
+        // Convert response to dictionary
+        guard let dictDocument = CommonFunctions.jsonStringToDic(from: doc) else { return }
+        let dlObject = dictDocument["dl_object"] as? [String: Any]
+        let timeOutTimer = 3.0
+
+        // Register document
+        if (error?.code == CustomErrors.kScanCancelled.code || error?.code == CustomErrors.DocumentScanner.TIMEOUT.code) {
+             // Document scanner cancelled/Error
+            self.view.makeToast(error?.message,
+                                duration: timeOutTimer,
+                                position: .center)
+            DispatchQueue.main.asyncAfter(deadline: .now() + timeOutTimer) {
+                self.goBack()
+            }
+         }
+         
+         if error?.code == CustomErrors.kUnauthorizedAccess.code {
+             self.showAppLogin()
+         }
+         // Check if DL is Expired...
+         if error?.code == CustomErrors.kDocumentExpired.code {
+             self.view.makeToast(error?.message,
+                                 duration: timeOutTimer,
+                                 position: .center)
+             return
+         }
+         
+         // DL Module not enabled
+         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+             self.view.makeToast(localizedMessage,
+                                 duration: timeOutTimer,
+                                 position: .center)
+             return
+         }
+         
+         scanCompleteUIUpdates()
+         
+         guard var dl = dlObject else {
+             self.view.makeToast(error?.message,
+                                 duration: timeOutTimer,
+                                 position: .center)
+             DispatchQueue.main.asyncAfter(deadline: .now() + timeOutTimer) {
+                 self.goBack()
+             }
+             return
+             
+         }
+        let token = ""
+        dl["isLivenessRequired"] = false
+         if isLivenessNeeded {
+             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+             if let documentLivenessVC = storyBoard.instantiateViewController(withIdentifier: "DocumentLivenessViewController") as? DocumentLivenessViewController {
+                 documentLivenessVC.onLivenessFinished = { (sender) in
+                     if let sender = sender {
+                         sender.navigationController?.popViewController(animated: false)
+                         dl["isLivenessRequired"] = true
+                         if error?.code == CustomErrors.kDocumentAboutToExpire.code {
+                             //About to Expire, Show Alert
+                             let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
+                             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+                                 self.setDriverLicense(withDLData: dl, token: token)
+                             }))
+                             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                             self.present(alert, animated: true)
+                             return
+                         }
+                         self.setDriverLicense(withDLData: dl, token: token)
+                     }
+                 }
+                 self.navigationController?.pushViewController(documentLivenessVC, animated: false)
+                 return
+             }
+         }
+//         showVerificationAlert(dl: dl, token: token, error: error)
     }
 }
 
-
-/*extension DriverLicenseViewController: DriverLicenseResponseDelegate {
+/*
+extension DriverLicenseViewController: DriverLicenseResponseDelegate {
     func verifyingDocument() {
         self.view.makeToastActivity(.center)
     }
@@ -255,25 +352,25 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             }
         }
         showVerificationAlert(dl: dl, token: token, error: error)
-    }
+    }*/
     
-    private func showVerificationAlert(dl: [String: Any], token: String, error: ErrorResponse?) {
-        //Check if Not to Expiring Soon
-        if error?.code != CustomErrors.kDocumentAboutToExpire.code {
-            self.wantToVerifyAlert(withDLData: dl, token: token)
-            return
-        }
-        
-        //About to Expire, Show Alert
-        let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-            self.wantToVerifyAlert(withDLData: dl, token: token)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(alert, animated: true)
-    }
+//    private func showVerificationAlert(dl: [String: Any], token: String, error: ErrorResponse?) {
+//        //Check if Not to Expiring Soon
+//        if error?.code != CustomErrors.kDocumentAboutToExpire.code {
+//            self.wantToVerifyAlert(withDLData: dl, token: token)
+//            return
+//        }
+//
+//        //About to Expire, Show Alert
+//        let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+//            self.wantToVerifyAlert(withDLData: dl, token: token)
+//        }))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//        self.present(alert, animated: true)
+//    }
     
-    func scanFrontSide() {
+   /* func scanFrontSide() {
         DispatchQueue.main.async {
             self._lblScanInfoTxt.text = "Scan Front"
             self.dlScannerHelper?.startDLScanning(scanningSide: .DL_FRONT)
