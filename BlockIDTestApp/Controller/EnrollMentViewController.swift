@@ -15,6 +15,7 @@ import WalletConnectSign
 public enum Enrollments: String {
     case About  = "About"
     case AddUser = "Add User"
+    case SubmitUrl = "Submit URL"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
@@ -38,6 +39,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.About,
                            Enrollments.AddUser,
+                           Enrollments.SubmitUrl,
                            Enrollments.DriverLicense,
                            /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
@@ -105,6 +107,8 @@ extension EnrollMentViewController: UITableViewDelegate {
         switch enrolmentObj {
         case Enrollments.AddUser.rawValue:
             addUser()
+        case Enrollments.SubmitUrl.rawValue:
+            loadURLinSafariViewController()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.DriverLicense_Liveness.rawValue:
@@ -148,6 +152,11 @@ extension EnrollMentViewController: UITableViewDelegate {
 }
 
 extension EnrollMentViewController {
+    
+    private func loadURLinSafariViewController() {
+        let safariVC = self.storyboard?.instantiateViewController(withIdentifier: "MySafariViewController") as! MySafariViewController
+        self.navigationController?.pushViewController(safariVC, animated: true)
+    }
     
     private func enrollDL() {
         let document = getDriverLicenseData(docIndex: 1, category: .Identity_Document)
