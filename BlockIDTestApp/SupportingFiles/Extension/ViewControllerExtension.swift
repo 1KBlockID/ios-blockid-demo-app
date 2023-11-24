@@ -88,7 +88,7 @@ extension UIViewController {
         case .PPT:
             documentVC.delegate = delegate as? PassportViewController
             break
-        case .ID:
+        case .IDCARD:
             documentVC.delegate = delegate as? NationalIDViewController
             break
         @unknown default:

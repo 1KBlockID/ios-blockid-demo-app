@@ -58,7 +58,7 @@ class NationalIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.ID, self)
+                    self.showDocumentScannerFor(.IDCARD, self)
                    /* self._viewBG.isHidden = false
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
