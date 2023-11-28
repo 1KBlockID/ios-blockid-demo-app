@@ -17,26 +17,35 @@ class NationalIDViewController: UIViewController {
     private let firstScanningDocSide: NIDScanningSide = .NATIONAL_ID_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
-    
+
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    @IBOutlet private weak var loaderView: UIView!
+    @IBOutlet private weak var imgLoader: UIImageView!
  
-    
-    
+    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         
         startNationalIDScanning()
     }
     
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        imgLoader.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
+//    }
+    
+    // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Cancellation warning!",
+                                      message: "Do you want to cancel the registration process?",
+                                      preferredStyle: .alert)
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
@@ -116,16 +125,24 @@ class NationalIDViewController: UIViewController {
 
 // MARK: - DocumentSessionScanDelegate -
 extension NationalIDViewController: DocumentScanDelegate {
-    
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        debugPrint("******", #function, status, error?.message as Any)
-        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+        debugPrint("****** document >>", document?.count, #function, error?.message as Any)
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled || Completed
             self.goBack()
         }
         
-        if status { // Success
-            self.showAlertView(title: "Success", message: document!.description)
+        if status && document != nil { // Success
+            debugPrint("****** Before alert")
+            self.showAlert(title: "Success", message: "Document data count: \(document!.count).")
         }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+        self.present(alert, animated: true)
     }
 }
 
