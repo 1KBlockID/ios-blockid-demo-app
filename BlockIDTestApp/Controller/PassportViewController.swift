@@ -100,12 +100,12 @@ class PassportViewController: UIViewController {
 //                self.view.hideToastActivity()
                 if !status {
                     
-                   /* if error?.code == CustomErrors.kLiveIDMandatory.code {
+                    if error?.code == CustomErrors.kLiveIDMandatory.code {
                         DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
-                    }*/
+                    }
                     // FAILED
                     self.view.makeToast(error?.message, duration: 3.0, position: .center)
                     return
