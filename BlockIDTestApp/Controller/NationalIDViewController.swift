@@ -159,7 +159,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         }
         
         debugPrint("***** onDocumentScanResponse", document?.count, error?.message)
-        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled || Completed
+        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
         

@@ -195,14 +195,48 @@ extension DriverLicenseViewController: DocumentScanDelegate {
    
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
         debugPrint("******", #function, status, error?.message as Any)
-
+        // Temp code -remove in final PR
+        self.view.makeToast(error?.message,
+                            duration: 3.0,
+                            position: .center)
+        
+        if error?.code == CustomErrors.kUnauthorizedAccess.code {
+            self.showAppLogin()
+        }
+        //Check If Expired, licenene key not enabled
+        if error?.code == CustomErrors.kDocumentExpired.code {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
         
-        if status { // Success
-            self.showAlertView(title: "Success", message: document!.description)
+        if let dlDoc = document {
+            guard let dlObject = CommonFunctions.jsonStringToDic(from: dlDoc) else {
+                return
+            }
+            debugPrint("*****", dlObject.keys)
+            
+            if var dictDLObject = dlObject["dl_object"] as? [String: Any] {
+                dictDLObject["token"] = dlObject["token"]
+                debugPrint("*****", dictDLObject.keys)
+                
+                self.setDriverLicense(withDLData: dictDLObject, token: "")
+            }
         }
+       
         return
         
         

@@ -220,12 +220,48 @@ extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
         debugPrint("******", #function, status, error?.message as Any)
+        // Temp code -remove in final PR
+        self.view.makeToast(error?.message,
+                            duration: 3.0,
+                            position: .center)
+        
+        if error?.code == CustomErrors.kUnauthorizedAccess.code {
+            self.showAppLogin()
+        }
+        //Check If Expired, licenene key not enabled
+        if error?.code == CustomErrors.kDocumentExpired.code {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
         
-        if status { // Success
-            self.showAlertView(title: "Success", message: document!.description)
+        if let ppt = document {
+            guard let pptObject = CommonFunctions.jsonStringToDic(from: ppt) else {
+                return
+            }
+            debugPrint("*****", pptObject.keys)
+            
+            if var dictPPTObject = pptObject["ppt_object"] as? [String: Any] {
+                dictPPTObject["token"] = pptObject["token"]
+                debugPrint("*****", dictPPTObject.keys)
+                
+                self.setPassport(withPPDat: dictPPTObject,
+                                 token: "",
+                                 isWithNFC: false)
+            }
         }
     }
 }
