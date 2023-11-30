@@ -93,7 +93,7 @@ extension UIViewController {
         @unknown default:
             fatalError()
         }
-        show(documentVC, sender: nil)
+        self.navigationController?.pushViewController(documentVC, animated: false)
     }
     
     func showDLView() {
@@ -330,6 +330,15 @@ extension UIViewController {
         }
         // otherwise
         return self.presentedViewController?.topMostViewController()
+    }
+    
+    // MARK: - Rotate View Infinite (For Loader)-
+    func rotateView(_ targetView: UIView, _ duration: Double = 2) { // Duration will helps to control rotation speed
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
+            targetView.transform = targetView.transform.rotated(by: .pi)
+        }) { finished in
+            self.rotateView(targetView, duration)
+        }
     }
 }
 

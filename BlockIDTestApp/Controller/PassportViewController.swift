@@ -20,18 +20,23 @@ class PassportViewController: UIViewController {
     private var _token = ""
     private var pp: [String : Any]?
     private var isWithNFC = false
+    private var registrationCalled = false
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     @IBOutlet weak var _viewEPassportScan: UIView!
-    
     @IBOutlet weak var _viewScanner: BIDScannerView!
+    @IBOutlet private weak var loaderView: UIView!
+    @IBOutlet private weak var imgLoader: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self._viewEPassportScan.isHidden = true
         self._viewScanner.isHidden = true
+        // Start loader spin
+        self.rotateView(imgLoader)
+        // Start PPT loading
         startPassportScanning()
     }
     
@@ -80,8 +85,11 @@ class PassportViewController: UIViewController {
     }
     
     private func setPassport(withPPDat pp: [String : Any], token: String, isWithNFC: Bool) {
-        self.view.makeToastActivity(.center)
-        
+//        self.view.makeToastActivity(.center)
+        if registrationCalled {
+            return
+        }
+        registrationCalled = true
         var dic = pp
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.PPT.rawValue
@@ -89,15 +97,15 @@ class PassportViewController: UIViewController {
         
         BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
+//                self.view.hideToastActivity()
                 if !status {
                     
-                    if error?.code == CustomErrors.kLiveIDMandatory.code {
+                   /* if error?.code == CustomErrors.kLiveIDMandatory.code {
                         DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
-                    }
+                    }*/
                     // FAILED
                     self.view.makeToast(error?.message, duration: 3.0, position: .center)
                     return

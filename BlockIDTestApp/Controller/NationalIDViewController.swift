@@ -17,6 +17,7 @@ class NationalIDViewController: UIViewController {
     private let firstScanningDocSide: NIDScanningSide = .NATIONAL_ID_BACK
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
+    private var registrationCalled = false
 
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
@@ -28,14 +29,16 @@ class NationalIDViewController: UIViewController {
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // Start loader spin
+        self.rotateView(imgLoader)
+        // Start ID CARD loading
         startNationalIDScanning()
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        imgLoader.transform = CGAffineTransform(rotationAngle: CGFloat.pi/2)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        debugPrint("***** viewWillAppear", self.description)
+    }
     
     // MARK:
     private func goBack() {
@@ -54,7 +57,6 @@ class NationalIDViewController: UIViewController {
         }))
         self.present(alert, animated: true)
         return
-        
     }
     
     private func startNationalIDScanning() {
@@ -68,6 +70,7 @@ class NationalIDViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self.showDocumentScannerFor(.IDCARD, self)
+                    
                    /* self._viewBG.isHidden = false
                     self._viewLiveIDScan.isHidden = false
                     //3. Initialize dlScannerHelper
@@ -86,23 +89,28 @@ class NationalIDViewController: UIViewController {
     }
 
     private func setNationaID(withNIDData nid: [String : Any], token: String) {
+        if registrationCalled {
+            return
+        }
+        registrationCalled = true
+        debugPrint("***** setNationaID")
         //self._viewBG.isHidden = true
-        self.view.makeToastActivity(.center)
+//        self.view.makeToastActivity(.center)
         var dic = nid
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
         BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
+//                self.view.hideToastActivity()
                 if !status {
                     // FAILED
-                    if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
-                        self.goBack()
-                        self.showLiveIDView()
-                        return
-                    }
+//                    if error?.code == CustomErrors.kLiveIDMandatory.code {
+//                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
+//                        self.goBack()
+//                        self.showLiveIDView()
+//                        return
+//                    }
                     
                     self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
                         self.goBack()
@@ -126,22 +134,79 @@ class NationalIDViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension NationalIDViewController: DocumentScanDelegate {
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        debugPrint("****** document >>", document?.count, #function, error?.message as Any)
+        // Temp code -remove in final PR
+        self.view.makeToast(error?.message,
+                            duration: 3.0,
+                            position: .center)
+        
+        if error?.code == CustomErrors.kUnauthorizedAccess.code {
+            self.showAppLogin()
+        }
+        //Check If Expired, licenene key not enabled
+        if error?.code == CustomErrors.kDocumentExpired.code {
+            self.view.makeToast(error?.message,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+            self.view.makeToast(localizedMessage,
+                                duration: 3.0,
+                                position: .center)
+            return
+        }
+        
+        debugPrint("***** onDocumentScanResponse", document?.count, error?.message)
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled || Completed
             self.goBack()
         }
         
-        if status && document != nil { // Success
-            debugPrint("****** Before alert")
-            self.showAlert(title: "Success", message: "Document data count: \(document!.count).")
+        if let idCard = document {
+            guard let idCardObject = CommonFunctions.jsonStringToDic(from: idCard) else {
+                return
+            }
+            debugPrint("*****", idCardObject.keys)
+            
+            if var dictIdcardObject = idCardObject["idcard_object"] as? [String: Any] {
+                dictIdcardObject["token"] = idCardObject["token"]
+                debugPrint("*****", dictIdcardObject.keys)
+                
+                self.setNationaID(withNIDData: dictIdcardObject, token: "")
+            }
         }
+        
+        
+        //            scanCompleteUIUpdates()
+        //            guard let nid = dictNationalID, let token = signToken else {
+        //                self.view.makeToast(error?.message,
+        //                                    duration: 3.0,
+        //                                    position: .center)
+        //                return
+        //
+        //            }
+        
+        //        //Check if Not to Expiring Soon
+        //        if error?.code != CustomErrors.kDocumentAboutToExpire.code {
+        //            self.setNationaID(withNIDData: nid, token: token)
+        //            return
+        //        }
+        //            //About to Expire, Show Alert
+        //            let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
+        //
+        //            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
+        //                self.setNationaID(withNIDData: nid, token: token)
+        //            }))
+        //            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        //
+        //            self.present(alert, animated: true)
+        
     }
     
     private func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
         self.present(alert, animated: true)
     }
 }

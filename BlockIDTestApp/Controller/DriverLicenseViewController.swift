@@ -26,10 +26,15 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    @IBOutlet private weak var loaderView: UIView!
+    @IBOutlet private weak var imgLoader: UIImageView!
     
     // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Start loader spin
+        self.rotateView(imgLoader)
+        // Start DL loading
         startDLScanning()
 
        /* switch AVAudioSession.sharedInstance().recordPermission {
@@ -157,12 +162,12 @@ class DriverLicenseViewController: UIViewController {
                 self.view.hideToastActivity()
                 if !status {
                     // FAILED
-                    if error?.code == CustomErrors.kLiveIDMandatory.code {
+                   /* if error?.code == CustomErrors.kLiveIDMandatory.code {
                         DocumentStore.sharedInstance.setData(documentData: dic, token: token)
                         self.goBack()
                         self.showLiveIDView()
                         return
-                    }
+                    }*/
                     
                     self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
                         self.goBack()
