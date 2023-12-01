@@ -21,6 +21,7 @@ class PassportViewController: UIViewController {
     private var pp: [String : Any]?
     private var isWithNFC = false
     private var registrationCalled = false
+    private let kPPTFailedMessage = "Passport failed failed to scan."
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!

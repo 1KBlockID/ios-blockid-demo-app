@@ -19,6 +19,7 @@ class DriverLicenseViewController: UIViewController {
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var manualCaptureImg: UIImage?
+    private let kDLFailedMessage = "Drivers License failed to scan."
     
     var isLivenessNeeded: Bool = false
     

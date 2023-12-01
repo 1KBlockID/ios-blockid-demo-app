@@ -18,7 +18,7 @@ class NationalIDViewController: UIViewController {
     private let expiryDays = 90
     private var _scanLine: CAShapeLayer!
     private var registrationCalled = false
-
+    private let kIDCardFailedMessage = "National ID failed to scan."
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
@@ -41,8 +41,14 @@ class NationalIDViewController: UIViewController {
     }
     
     // MARK:
-    private func goBack() {
-        self.navigationController?.popViewController(animated: true)
+    private func goBack(isDelayReuired: Bool = false) {
+        if isDelayReuired {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.navigationController?.popViewController(animated: true)
+            }
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     private func startNationalIDScanning() {
@@ -105,10 +111,6 @@ class NationalIDViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension NationalIDViewController: DocumentScanDelegate {
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        // Temp code -remove in final PR
-        self.view.makeToast(error?.message,
-                            duration: 3.0,
-                            position: .center)
         
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
@@ -118,6 +120,7 @@ extension NationalIDViewController: DocumentScanDelegate {
             self.view.makeToast(error?.message,
                                 duration: 3.0,
                                 position: .center)
+            self.goBack(isDelayReuired: true)
             return
         }
         
@@ -126,11 +129,15 @@ extension NationalIDViewController: DocumentScanDelegate {
             self.view.makeToast(localizedMessage,
                                 duration: 3.0,
                                 position: .center)
+            self.goBack(isDelayReuired: true)
             return
         }
         
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-            self.goBack()
+            self.view.makeToast(CustomErrors.DocumentScanner.CANCELED.message,
+                                duration: 3.0,
+                                position: .center)
+            self.goBack(isDelayReuired: true)
         }
         
         /*If responseStatus == SUCCESS *
@@ -139,22 +146,38 @@ extension NationalIDViewController: DocumentScanDelegate {
          AND the document has a proof_jwt
          */
         
-        guard let idCard = document else {
+        guard let idCardObject = document else {
+            self.goBack()
            return
         }
-        guard let idCardObject = CommonFunctions.jsonStringToDic(from: idCard) else {
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: idCardObject) else {
             // Document data does not exist
+            self.goBack()
             return
         }
-        guard let  responseStatus = idCardObject["responseStatus"] as? String, responseStatus == "SUCCESS" else {
+        debugPrint(dictDocObject)
+        guard let  responseStatus = dictDocObject["responseStatus"] as? String else {
+            self.goBack()
            return
         }
-        guard var dictIdcardObject = idCardObject["idcard_object"] as? [String: Any] else {
+        if responseStatus == "FAILED" {
+            self.view.makeToast(kIDCardFailedMessage,
+                                duration: 3.0,
+                                position: .center)
+            self.goBack(isDelayReuired: true)
+          return
+        }
+        guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
+            self.goBack()
            return
         }
-        guard let token = idCardObject["token"] else {
+        guard let token = dictDocObject["token"] else {
+            self.goBack()
             return
         }
+//        guard let proof_jwt = dictDocObject["proof_jwt"] else {
+//            return
+//        }
         dictIdcardObject["token"] = token // Add proof_jwt to this key
         self.setNationaID(withNIDData: dictIdcardObject, token: "")
     }
