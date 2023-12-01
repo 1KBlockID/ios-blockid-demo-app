@@ -110,75 +110,65 @@ class NationalIDViewController: UIViewController {
 
 // MARK: - DocumentSessionScanDelegate -
 extension NationalIDViewController: DocumentScanDelegate {
+    fileprivate func showErrorAndMoveBack(_ message: String = "") {
+        self.view.makeToast(message,
+                            duration: 3.0,
+                            position: .center)
+        self.goBack(isDelayReuired: true)
+    }
+    
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
         
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
-        //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code {
-            self.view.makeToast(error?.message,
-                                duration: 3.0,
-                                position: .center)
-            self.goBack(isDelayReuired: true)
-            return
-        }
         
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.view.makeToast(localizedMessage,
-                                duration: 3.0,
-                                position: .center)
-            self.goBack(isDelayReuired: true)
+            self.showErrorAndMoveBack(localizedMessage)
             return
         }
         
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-            self.view.makeToast(CustomErrors.DocumentScanner.CANCELED.message,
-                                duration: 3.0,
-                                position: .center)
-            self.goBack(isDelayReuired: true)
+            self.goBack()
+        }
+       
+        if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+            self.showErrorAndMoveBack("Scanning time exceeded. To continue, please restart the scanning process.")
+            return
         }
         
-        /*If responseStatus == SUCCESS *
-         AND token is NON-NULL/NON-EMPTY *
-         AND there is a dl_object OR a ppt_object OR a idcard_object *
-         AND the document has a proof_jwt
-         */
-        
         guard let idCardObject = document else {
-            self.goBack()
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
            return
         }
         guard let dictDocObject = CommonFunctions.jsonStringToDic(from: idCardObject) else {
-            // Document data does not exist
-            self.goBack()
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
             return
         }
-        debugPrint(dictDocObject)
         guard let  responseStatus = dictDocObject["responseStatus"] as? String else {
-            self.goBack()
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
            return
         }
         if responseStatus == "FAILED" {
-            self.view.makeToast(kIDCardFailedMessage,
-                                duration: 3.0,
-                                position: .center)
-            self.goBack(isDelayReuired: true)
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
           return
         }
-        guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
-            self.goBack()
-           return
-        }
-        guard let token = dictDocObject["token"] else {
-            self.goBack()
+        guard let token = dictDocObject["token"] as? String, !token.isEmpty else {
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
             return
         }
-//        guard let proof_jwt = dictDocObject["proof_jwt"] else {
-//            return
-//        }
-        dictIdcardObject["token"] = token // Add proof_jwt to this key
+        guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
+           return
+        }
+        guard let proof_jwt = dictIdcardObject["proof_jwt"] as? String, !proof_jwt.isEmpty else {
+            self.showErrorAndMoveBack(kIDCardFailedMessage)
+            return
+        }
+        
+        dictIdcardObject["proof"] = proof_jwt
+        dictIdcardObject["certificate_token"] = token
         self.setNationaID(withNIDData: dictIdcardObject, token: "")
     }
     
