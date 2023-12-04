@@ -122,7 +122,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                                       message: kIDCardFailedMessage)
            return
         }
-        if responseStatus == "FAILED" {
+        if responseStatus.uppercased() == "FAILED" {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
           return

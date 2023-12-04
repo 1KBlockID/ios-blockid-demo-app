@@ -211,7 +211,7 @@ extension PassportViewController: DocumentScanDelegate {
                                       message: kPPTFailedMessage)
            return
         }
-        if responseStatus == "FAILED" {
+        if responseStatus.uppercased() == "FAILED" {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kPPTFailedMessage)
           return
