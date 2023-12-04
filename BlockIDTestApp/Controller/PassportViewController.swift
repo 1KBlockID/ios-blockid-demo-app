@@ -37,11 +37,6 @@ class PassportViewController: UIViewController {
         startPassportScanning()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        debugPrint("***** viewWillAppear", self.description)
-    }
-    
     private func startPassportScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
@@ -196,7 +191,6 @@ class PassportViewController: UIViewController {
 extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        debugPrint("???????? onDocumentScanResponse", error?.message, document?.count)
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
@@ -228,7 +222,7 @@ extension PassportViewController: DocumentScanDelegate {
                                       message: kPPTFailedMessage)
             return
         }
-        debugPrint(dictDocObject)
+
         guard let responseStatus = dictDocObject["responseStatus"] as? String else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kPPTFailedMessage)

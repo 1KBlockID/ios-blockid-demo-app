@@ -35,11 +35,6 @@ class NationalIDViewController: UIViewController {
         startNationalIDScanning()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        debugPrint("***** viewWillAppear", self.description)
-    }
-    
     // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
@@ -108,7 +103,6 @@ class NationalIDViewController: UIViewController {
 extension NationalIDViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        debugPrint("onDocumentScanResponse", document, error?.message)
 
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
