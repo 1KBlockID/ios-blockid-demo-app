@@ -14,40 +14,34 @@ import UIKit
   
 class DriverLicenseViewController: UIViewController {
 
-    private var dlScannerHelper: DriverLicenseScanHelper?
-    private let firstScanningDocSide: DLScanningSide = .DL_BACK
-    private let expiryDays = 90
-    private var manualCaptureImg: UIImage?
     private let kDLFailedMessage = "Drivers License failed to scan."
-    
-    var isLivenessNeeded: Bool = false
-    
-    @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
-    @IBOutlet private weak var _imgOverlay: UIImageView!
-    @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
     
     // MARK:
+    fileprivate func processDLScanning() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .granted:
+            startDLScanning()
+            print("Permission granted")
+        case .denied:
+            print("Permission denied")
+        case .undetermined:
+            print("Request permission here")
+            AVAudioSession.sharedInstance().requestRecordPermission({ granted in
+                // Handle granted
+                self.startDLScanning()
+            })
+        @unknown default:
+            print("Unknown case")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        switch AVAudioSession.sharedInstance().recordPermission {
-           case .granted:
-            startDLScanning()
-               print("Permission granted")
-           case .denied:
-               print("Permission denied")
-           case .undetermined:
-               print("Request permission here")
-               AVAudioSession.sharedInstance().requestRecordPermission({ granted in
-                   // Handle granted
-                   self.startDLScanning()
-               })
-           @unknown default:
-               print("Unknown case")
-           }
+        self.processDLScanning()
     }
 
     // MARK:
@@ -62,7 +56,6 @@ class DriverLicenseViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.dlScannerHelper?.stopDLScanning()
             self.goBack()
         }))
         self.present(alert, animated: true)
@@ -196,12 +189,12 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             return
         }
         
-        guard let dlObject = document else {
+        guard let documentObject = document else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
            return
         }
-        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: dlObject) else {
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
@@ -211,7 +204,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
            return
         }
-        if responseStatus == "FAILED" {
+        if responseStatus.uppercased() == "FAILED" {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
           return

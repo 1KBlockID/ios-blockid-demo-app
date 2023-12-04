@@ -13,16 +13,8 @@ import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
-    private var nidScannerHelper: NationalIDScanHelper?
-    private let firstScanningDocSide: NIDScanningSide = .NATIONAL_ID_BACK
-    private let expiryDays = 90
-    private var _scanLine: CAShapeLayer!
-    private var registrationCalled = false
     private let kIDCardFailedMessage = "National ID failed to scan."
-    @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
-    @IBOutlet private weak var _imgOverlay: UIImageView!
-    @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
  
@@ -58,10 +50,6 @@ class NationalIDViewController: UIViewController {
     }
 
     private func setNationaID(withNIDData nid: [String : Any], token: String) {
-        if registrationCalled {
-            return
-        }
-        registrationCalled = true
         var dic = nid
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
@@ -92,11 +80,6 @@ class NationalIDViewController: UIViewController {
             }
         }
     }
-    
-    private func scanCompleteUIUpdates() {
-        self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
-    }
 }
 
 // MARK: - DocumentSessionScanDelegate -
@@ -124,17 +107,17 @@ extension NationalIDViewController: DocumentScanDelegate {
             return
         }
         
-        guard let idCardObject = document else {
+        guard let documentObject = document else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
            return
         }
-        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: idCardObject) else {
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
         }
-        guard let  responseStatus = dictDocObject["responseStatus"] as? String else {
+        guard let responseStatus = dictDocObject["responseStatus"] as? String else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
            return

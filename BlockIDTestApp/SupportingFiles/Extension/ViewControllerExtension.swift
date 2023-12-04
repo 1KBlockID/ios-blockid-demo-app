@@ -74,9 +74,6 @@ extension UIViewController {
     }
     
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: UIViewController) {
-       /* if appDelegate?.orientationLock != UIInterfaceOrientationMask.portrait {
-            DocumentScannerViewController.rotateDeviceWithOrientationMode(.portrait)
-        }*/
         // Move to document scanner
         let documentVC = DocumentScannerViewController(nibName: "DocumentScannerViewController", bundle: getSDKBundle())
         documentVC.documentType = docType
@@ -116,14 +113,6 @@ extension UIViewController {
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }
-    
-   /* static func rotateDeviceWithOrientationMode(_ orientationType: UIInterfaceOrientationMask) {
-        appDelegate?.orientationLock = orientationType
-        let value = orientationType.rawValue
-        DispatchQueue.main.async {
-            UIDevice.current.setValue(value, forKey: "orientation")
-        }
-    }*/
     
     func showPassportView() {
        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)

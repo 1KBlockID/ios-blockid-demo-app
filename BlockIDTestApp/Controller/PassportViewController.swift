@@ -14,18 +14,13 @@ import CoreNFC
 
 class PassportViewController: UIViewController {
 
-    private var ppScannerHelper: PassportScanHelper?
     private let expiryDays = 90
-    private var pp: [String : Any]?
+    private var dictPPT: [String : Any]?
     private var isWithNFC = false
     private let kPPTFailedMessage = "Passport failed to scan."
     private var rfidScannerHelper: RFIDScannerHelper?
     
-    @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _imgOverlay: UIImageView!
-    @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     @IBOutlet weak var _viewEPassportScan: UIView!
-    @IBOutlet weak var _viewScanner: BIDScannerView!
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
     
@@ -58,17 +53,6 @@ class PassportViewController: UIViewController {
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
-
-    @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.ppScannerHelper?.stopPassportScanning()
-            self.goBack()
-        }))
-        self.present(alert, animated: true)
-        return
-    }
     
     private func setPassport(withPPDat pp: [String : Any], isWithNFC: Bool) {
         var dic = pp
@@ -91,7 +75,6 @@ class PassportViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.ppScannerHelper?.stopPassportScanning()
                 var nfcTxt = ""
                 if !isWithNFC {
                     nfcTxt = "RFID not scanned"
@@ -121,7 +104,7 @@ class PassportViewController: UIViewController {
     }
     
     private func startRFIDScanWorkflow(withPPDat pp: [String : Any]) {
-        self.pp = pp
+        self.dictPPT = pp
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
             //NOT NFC COMPATIBLE
             if !isNFCCompatible {
@@ -147,7 +130,7 @@ class PassportViewController: UIViewController {
             let alert = UIAlertController(title: "Warning!", message: "Do you want to cancel RFID Scan?", preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPDat: self.pp!, isWithNFC: false)
+                self.setPassport(withPPDat: self.dictPPT!, isWithNFC: false)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
@@ -212,12 +195,12 @@ extension PassportViewController: DocumentScanDelegate {
             return
         }
         
-        guard let pptObject = document else {
+        guard let documentObject = document else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kPPTFailedMessage)
            return
         }
-        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: pptObject) else {
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kPPTFailedMessage)
             return
@@ -266,17 +249,17 @@ extension PassportViewController: DocumentScanDelegate {
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
         self._viewEPassportScan.isHidden = false
-        self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
+        self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.dictPPT ?? [:], expiryGracePeriod: self.expiryDays)
         self.rfidScannerHelper?.startRFIDScanning()
     }
     
     func onSkip() {
-        self.setPassport(withPPDat: pp!, isWithNFC: false)
+        self.setPassport(withPPDat: dictPPT!, isWithNFC: false)
     }
 }
 extension PassportViewController: NFCDisabledViewControllerDelegate {
     func cancelRFID() {
-        self.setPassport(withPPDat: pp!, isWithNFC: false)
+        self.setPassport(withPPDat: dictPPT!, isWithNFC: false)
     }
 }
 
