@@ -17,7 +17,6 @@ class DriverLicenseViewController: UIViewController {
     private var dlScannerHelper: DriverLicenseScanHelper?
     private let firstScanningDocSide: DLScanningSide = .DL_BACK
     private let expiryDays = 90
-    private var _scanLine: CAShapeLayer!
     private var manualCaptureImg: UIImage?
     private let kDLFailedMessage = "Drivers License failed to scan."
     
@@ -90,22 +89,22 @@ class DriverLicenseViewController: UIViewController {
         }
     }
 
-    private func wantToVerifyAlert(withDLData dl: [String : Any]?, token: String) {
+    private func showVerifyAlert(withDLData dl: [String : Any]?) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-            self.setDriverLicense(withDLData: dl, token: token)
+            self.setDriverLicense(withDLData: dl)
         }))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.verifyDL(withDLData: dl, token: token)
+            self.verifyDL(withDLData: dl)
         }))
         
         self.present(alert, animated: true)
     }
     
-    private func verifyDL(withDLData dl: [String: Any]?, token: String) {
+    private func verifyDL(withDLData dl: [String: Any]?) {
         
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
@@ -133,21 +132,21 @@ class DriverLicenseViewController: UIViewController {
                             tokens.append(token)
                         }
                         dlObj["tokens"] = tokens
-                        self.setDriverLicense(withDLData: dlObj, token: token)
+                        self.setDriverLicense(withDLData: dlObj)
                     } else {
-                        self.setDriverLicense(withDLData: dl, token: token)
+                        self.setDriverLicense(withDLData: dl)
                     }
                 }
             }
         }
     }
   
-    private func setDriverLicense(withDLData dl: [String : Any]?, token: String) {
+    private func setDriverLicense(withDLData dl: [String : Any]?) {
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl?["id"]
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:], sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:]) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -236,7 +235,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         
         dictDLObject["proof"] = proof_jwt
         dictDLObject["certificate_token"] = token
-        self.setDriverLicense(withDLData: dictDLObject, token: "")
+        self.showVerifyAlert(withDLData: dictDLObject)
     }
     
     private func showAlertAndMoveBack(title: String, message: String) {
