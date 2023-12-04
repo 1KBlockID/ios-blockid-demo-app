@@ -111,12 +111,8 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     if !status {
                         //Verification failed
-                        self.view.makeToast(error?.message ?? "Verification Failed",
-                                            duration: 3.0,
-                                            position: .center,
-                                            title: "Error", completion: {_ in
-                            self.goBack()
-                        })
+                        self.showAlertAndMoveBack(title: "Error",
+                                                  message: error?.message ?? "Verification Failed")
                         return
                     }
                     
@@ -156,14 +152,17 @@ class DriverLicenseViewController: UIViewController {
                         self.showLiveIDView()
                         return
                     }
-                    
-                    self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error", completion: {_ in
-                        self.goBack()
-                    })
+
+                    self.showAlertAndMoveBack(title: "Error",
+                                              message: error?.message ?? self.kDLFailedMessage)
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("Drivers License enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Drivers License enrolled successfully.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!",
+                                    completion: {_ in
                     self.goBack()
                 })
             }
