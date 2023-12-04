@@ -16,7 +16,6 @@ class PassportViewController: UIViewController {
 
     private var ppScannerHelper: PassportScanHelper?
     private let expiryDays = 90
-    private var _scanLine: CAShapeLayer!
     private var pp: [String : Any]?
     private var isWithNFC = false
     private let kPPTFailedMessage = "Passport failed to scan."
@@ -67,7 +66,6 @@ class PassportViewController: UIViewController {
 
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
-
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.ppScannerHelper?.stopPassportScanning()
@@ -192,12 +190,6 @@ class PassportViewController: UIViewController {
             return
         }
     }
-    
-    private func scanCompleteUIUpdates() {
-        self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
-    }
-
 }
 
 // MARK: - DocumentSessionScanDelegate -
@@ -266,8 +258,6 @@ extension PassportViewController: DocumentScanDelegate {
         dictPPTObject["proof"] = proof_jwt
         dictPPTObject["certificate_token"] = token
         self.startRFIDScanWorkflow(withPPDat: dictPPTObject)
-//        self.setPassport(withPPDat: dictPPTObject,
-//                         isWithNFC: self.isWithNFC)
     }
     
     private func showAlertAndMoveBack(title: String, message: String) {
@@ -284,7 +274,6 @@ extension PassportViewController: EPassportChipScanViewControllerDelegate {
         self._viewEPassportScan.isHidden = false
         self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
         self.rfidScannerHelper?.startRFIDScanning()
-        
     }
     
     func onSkip() {
@@ -306,8 +295,7 @@ extension PassportViewController: RFIDResponseDelegate {
         if error?.code == CustomErrors.kPPExpired.code ||
             error?.code == CustomErrors.kInvalidPP.code ||
             error?.code == CustomErrors.kPPRFIDTimeout.code ||
-            error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
-            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            error?.code == CustomErrors.kPPRFIDUserCancelled.code {
             
             guard let err = error else {
                 return
@@ -316,7 +304,6 @@ extension PassportViewController: RFIDResponseDelegate {
             
             return
         }
-        scanCompleteUIUpdates()
         
         guard let pp = docDic else {
             guard let err = error else {
@@ -335,7 +322,7 @@ extension PassportViewController: RFIDResponseDelegate {
             let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPDat: pp, token: nil, isWithNFC: true)
+                self.setPassport(withPPDat: pp, isWithNFC: true)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 
@@ -345,6 +332,6 @@ extension PassportViewController: RFIDResponseDelegate {
             self.present(alert, animated: true)
             return
         }
-        setPassport(withPPDat: pp, token: nil, isWithNFC: true)
+        setPassport(withPPDat: pp, isWithNFC: true)
     }
 }
