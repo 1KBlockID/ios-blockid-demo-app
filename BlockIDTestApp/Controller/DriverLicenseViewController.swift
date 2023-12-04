@@ -152,7 +152,7 @@ class DriverLicenseViewController: UIViewController {
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic)
                         self.goBack()
                         self.showLiveIDView()
                         return
@@ -223,7 +223,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard var dictDLObject = dictDocObject["idcard_object"] as? [String: Any] else {
+        guard var dictDLObject = dictDocObject["dl_object"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
            return

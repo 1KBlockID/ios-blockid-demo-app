@@ -76,7 +76,7 @@ class NationalIDViewController: UIViewController {
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic)
                         self.goBack()
                         self.showLiveIDView()
                         return
@@ -108,7 +108,8 @@ class NationalIDViewController: UIViewController {
 extension NationalIDViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        
+        debugPrint("onDocumentScanResponse", document, error?.message)
+
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
@@ -139,7 +140,6 @@ extension NationalIDViewController: DocumentScanDelegate {
                                       message: kIDCardFailedMessage)
             return
         }
-        debugPrint(dictDocObject)
         guard let  responseStatus = dictDocObject["responseStatus"] as? String else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
