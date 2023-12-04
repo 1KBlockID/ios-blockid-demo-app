@@ -80,7 +80,6 @@ class DocumentLivenessViewController: UIViewController {
                         
                         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
                         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
-                            dlVC.isLivenessNeeded = true
                             if var vcArray = weakSelf.navigationController?.viewControllers {
                                 vcArray.removeLast()
                                 vcArray.append(dlVC)

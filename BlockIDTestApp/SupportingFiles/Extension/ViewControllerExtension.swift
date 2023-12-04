@@ -51,7 +51,6 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
         self.present(alert, animated: true)
-
     }
     
     public func  resetAppNSDK() {
@@ -85,13 +84,13 @@ extension UIViewController {
         case .PPT:
             documentVC.delegate = delegate as? PassportViewController
             break
-        case .ID:
+        case .IDCARD:
             documentVC.delegate = delegate as? NationalIDViewController
             break
         @unknown default:
             fatalError()
         }
-        show(documentVC, sender: nil)
+        self.navigationController?.pushViewController(documentVC, animated: false)
     }
     
     func showDLView() {
@@ -284,7 +283,8 @@ extension UIViewController {
     }
     
     public func alertForCameraAccess() {
-        self.openSettings(title: "Camera Inaccessible", message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
+        self.openSettings(title: "Camera Inaccessible",
+                          message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
     }
     
     // MARK: - Topmost View Controller
@@ -319,6 +319,15 @@ extension UIViewController {
         }
         // otherwise
         return self.presentedViewController?.topMostViewController()
+    }
+    
+    // MARK: - Rotate View Infinite (For Loader)-
+    func rotateView(_ targetView: UIView, _ duration: Double = 2) { // Duration will helps to control rotation speed
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
+            targetView.transform = targetView.transform.rotated(by: .pi)
+        }) { finished in
+            self.rotateView(targetView, duration)
+        }
     }
 }
 
