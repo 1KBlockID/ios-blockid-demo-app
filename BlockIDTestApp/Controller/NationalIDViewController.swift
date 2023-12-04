@@ -124,36 +124,45 @@ extension NationalIDViewController: DocumentScanDelegate {
         }
        
         if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
-            self.showAlertAndMoveBack(title: "Error", message: "Scanning time exceeded. To continue, please restart the scanning process.")
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scanning time exceeded. To continue, please restart the scanning process.")
             return
         }
         
         guard let idCardObject = document else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
            return
         }
         guard let dictDocObject = CommonFunctions.jsonStringToDic(from: idCardObject) else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
             return
         }
+        debugPrint(dictDocObject)
         guard let  responseStatus = dictDocObject["responseStatus"] as? String else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
            return
         }
         if responseStatus == "FAILED" {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
           return
         }
         guard let token = dictDocObject["token"] as? String, !token.isEmpty else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
             return
         }
         guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
            return
         }
         guard let proof_jwt = dictIdcardObject["proof_jwt"] as? String, !proof_jwt.isEmpty else {
-            self.showAlertAndMoveBack(title: "Error", message: kIDCardFailedMessage)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
             return
         }
         

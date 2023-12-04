@@ -21,7 +21,7 @@ class PassportViewController: UIViewController {
     private var pp: [String : Any]?
     private var isWithNFC = false
     private var registrationCalled = false
-    private let kPPTFailedMessage = "Passport failed failed to scan."
+    private let kPPTFailedMessage = "Passport failed to scan."
     
     @IBOutlet private weak var _viewBG: UIView!
     @IBOutlet private weak var _imgOverlay: UIImageView!
@@ -37,6 +37,11 @@ class PassportViewController: UIViewController {
         self.rotateView(imgLoader)
         // Start PPT loading
         startPassportScanning()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        debugPrint("***** viewWillAppear", self.description)
     }
     
     private func startPassportScanning() {
@@ -205,7 +210,7 @@ class PassportViewController: UIViewController {
 extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        
+        debugPrint("???????? onDocumentScanResponse", error?.message)
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
@@ -237,6 +242,7 @@ extension PassportViewController: DocumentScanDelegate {
                                       message: kPPTFailedMessage)
             return
         }
+        debugPrint(dictDocObject)
         guard let responseStatus = dictDocObject["responseStatus"] as? String else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kPPTFailedMessage)
@@ -275,7 +281,7 @@ extension PassportViewController: DocumentScanDelegate {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
             self.goBack()
         }))
-        self.present(alert, animated: true)
+        present(alert, animated: true)
     }
 }
 
