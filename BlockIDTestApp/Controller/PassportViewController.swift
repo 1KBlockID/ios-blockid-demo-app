@@ -33,8 +33,6 @@ class PassportViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self._viewEPassportScan.isHidden = true
-        self._viewScanner.isHidden = true
         // Start loader spin
         self.rotateView(imgLoader)
         // Start PPT loading
@@ -52,23 +50,13 @@ class PassportViewController: UIViewController {
             } else {
                 DispatchQueue.main.async {
                     self.showDocumentScannerFor(.PPT, self)
-                    /*self._viewBG.isHidden = false
-                    self._viewScanner.isHidden = false
-                    //3. Initialize PassportScannerHelper
-                    if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(bidScannerView: self._viewScanner, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
-                    }
-                    //4. Start Scanning
-                    self.ppScannerHelper?.startPassportScanning()
-                    
-                    self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)*/
                 }
             }
         }
         
     }
     
+    // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -86,7 +74,6 @@ class PassportViewController: UIViewController {
     }
     
     private func setPassport(withPPDat pp: [String : Any], token: String, isWithNFC: Bool) {
-//        self.view.makeToastActivity(.center)
         if registrationCalled {
             return
         }
@@ -98,7 +85,6 @@ class PassportViewController: UIViewController {
         
         BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
-//                self.view.hideToastActivity()
                 if !status {
                     
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
@@ -152,7 +138,6 @@ class PassportViewController: UIViewController {
                 return
             }
            
-            
             self.showRFIDViewController(delegate: self)
             return
         }
@@ -220,129 +205,80 @@ class PassportViewController: UIViewController {
 extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-        debugPrint("******", #function, status, error?.message as Any)
-        // Temp code -remove in final PR
-        self.view.makeToast(error?.message,
-                            duration: 3.0,
-                            position: .center)
         
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
         }
-        //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code {
-            self.view.makeToast(error?.message,
-                                duration: 3.0,
-                                position: .center)
-            return
-        }
         
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.view.makeToast(localizedMessage,
-                                duration: 3.0,
-                                position: .center)
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: localizedMessage)
             return
         }
         
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
-        
-        if let ppt = document {
-            guard let pptObject = CommonFunctions.jsonStringToDic(from: ppt) else {
-                return
-            }
-            debugPrint("*****", pptObject.keys)
-            
-            if var dictPPTObject = pptObject["ppt_object"] as? [String: Any] {
-                dictPPTObject["token"] = pptObject["token"]
-                debugPrint("*****", dictPPTObject.keys)
-                
-                self.setPassport(withPPDat: dictPPTObject,
-                                 token: "",
-                                 isWithNFC: false)
-            }
+       
+        if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scanning time exceeded. To continue, please restart the scanning process.")
+            return
         }
+        
+        guard let pptObject = document else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+           return
+        }
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: pptObject) else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard let responseStatus = dictDocObject["responseStatus"] as? String else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+           return
+        }
+        if responseStatus == "FAILED" {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+          return
+        }
+        guard let token = dictDocObject["token"] as? String, !token.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard var dictPPTObject = dictDocObject["idcard_object"] as? [String: Any] else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+           return
+        }
+        guard let proof_jwt = dictPPTObject["proof_jwt"] as? String, !proof_jwt.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        
+        dictPPTObject["proof"] = proof_jwt
+        dictPPTObject["certificate_token"] = token
+        self.setPassport(withPPDat: dictPPTObject,
+                         token: "",
+                         isWithNFC: self.isWithNFC)
+    }
+    
+    private func showAlertAndMoveBack(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.goBack()
+        }))
+        self.present(alert, animated: true)
     }
 }
 
-
-/*
-extension PassportViewController: PassportResponseDelegate {
-    
-    func passportScanCompleted(withPassport obj: [String : Any]?, error: ErrorResponse?, signatureToken signToken: String?, isWithRFID: Bool?) {
-        assert(Thread.isMainThread, "call me on main thread")
-        
-        //Check for errors
-        //  EXPIRED || INVALID || TIMEOUT || USER_CANCEL || LICENSE_KEY_DISABLED
-        if error?.code == CustomErrors.kPPExpired.code ||
-            error?.code == CustomErrors.kInvalidPP.code ||
-            error?.code == CustomErrors.kPPRFIDTimeout.code ||
-            error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
-            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
-            
-            guard let err = error else {
-                return
-            }
-            self.handleScanErrorResponse(error: err)
-            
-            return
-        }
-        scanCompleteUIUpdates()
-        
-        guard let pp = obj, let token = signToken else {
-            guard let err = error else {
-                return
-            }
-            self.handleScanErrorResponse(error: err)
-            return
-        }
-        
-        //Check if Not to Expiring Soon
-        if error?.code == CustomErrors.kPPAboutToExpire.code {
-            //About to Expire, Show Alert
-            let msg = "\(error?.message ?? CustomErrors.kSomethingWentWrong.msg) (Error code: \(error?.code ?? CustomErrors.kSomethingWentWrong.code))"
-            
-            //About to Expire, Show Alert
-            let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
-
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                if let isWithRFID = isWithRFID, !isWithRFID {
-                    self.startRFIDScanWorkflow(withPPDat: pp, token: token)
-                    return
-                }
-                self.setPassport(withPPDat: pp, token: token, isWithNFC: false)
-            }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                
-                self.ppScannerHelper?.stopPassportScanning()
-                self.goBack()
-            }))
-            self.present(alert, animated: true)
-            return
-        }
-        
-        if let isWithRFID = isWithRFID, !isWithRFID {
-            self.startRFIDScanWorkflow(withPPDat: pp, token: token)
-            return
-        }
-        
-        setPassport(withPPDat: pp, token: token, isWithNFC: isWithRFID ?? false)
-        
-    }
-    
-    func readyForDetection() {
-        DispatchQueue.main.async {
-            //Check if there are any existing animations
-            if !(self._scanLine.animationKeys()?.count ?? 0 > 0) {
-                self.animateScanLine(_scanLine: self._scanLine, height:  self._imgOverlay.frame.height)
-               
-        }
-      }
-    }
-    
-}*/
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
         self._viewEPassportScan.isHidden = false
