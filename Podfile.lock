@@ -147,7 +147,7 @@ PODS:
   - YubiKit (4.2.0)
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `webbased_document_scanner`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `MOB-5127`)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -184,7 +184,7 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: webbased_document_scanner
+    :tag: MOB-5127
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -198,7 +198,7 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: webbased_document_scanner
+    :tag: MOB-5127
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -212,7 +212,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: a202626bd9b93f12f5199d7a8a14fc407de0fefe
+  BlockID: d67617619e9d3ad243b71fbf7235967139ba9a72
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   EllipticCurveKeyPair: 0b618482247e48744b9a0709ef4bb0713c39f957
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
@@ -238,6 +238,6 @@ SPEC CHECKSUMS:
   WebAuthnKit: ca41198026ba5a44ccf72e079e7737810bb47ca3
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: 79fa675b890351c61aec0a90760f856ce0e6d6c3
+PODFILE CHECKSUM: 07f14cc0318d7df470d4dbef6df4af5610e0c2a9
 
 COCOAPODS: 1.13.0
