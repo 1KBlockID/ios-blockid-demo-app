@@ -154,24 +154,31 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                 document: String?,
                                 error: ErrorResponse?) {
         
-        if error?.code == CustomErrors.kUnauthorizedAccess.code {
-            self.showAppLogin()
-        }
-        
-        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
-            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+        if !status {
+            if error?.code == CustomErrors.kUnauthorizedAccess.code {
+                self.showAppLogin()
+                return
+            }
+            
+            if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+                let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+                self.showAlertAndMoveBack(title: "Error", message: localizedMessage)
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+                self.goBack()
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+                self.showAlertAndMoveBack(title: "Error",
+                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                return
+            }
+            
             self.showAlertAndMoveBack(title: "Error",
-                                      message: localizedMessage)
-            return
-        }
-        
-        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-            self.goBack()
-        }
-        
-        if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
-            self.showAlertAndMoveBack(title: "Error",
-                                      message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                                      message: error?.message ?? kDLFailedMessage)
             return
         }
         
