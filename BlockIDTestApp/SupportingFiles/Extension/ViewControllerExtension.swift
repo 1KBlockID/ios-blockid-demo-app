@@ -65,32 +65,11 @@ extension UIViewController {
         let enrollMentvC = storyBoard.instantiateViewController(withIdentifier: "EnrollMentViewController") as! EnrollMentViewController
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
-    
-    private func getSDKBundle() -> Bundle? {
-        // Get bundle id of sdk
-        let frameworkBundleID  = "com.onekosmos.blockid.sdk"
-        let bundle = Bundle(identifier: frameworkBundleID)
-        return bundle
-    }
-    
-    func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: UIViewController) {
-        // Move to document scanner
-        let documentVC = DocumentScannerViewController(nibName: "DocumentScannerViewController", bundle: getSDKBundle())
-        documentVC.documentType = docType
-        switch docType {
-        case .DL:
-            documentVC.delegate = delegate as? DriverLicenseViewController
-            break
-        case .PPT:
-            documentVC.delegate = delegate as? PassportViewController
-            break
-        case .IDCARD:
-            documentVC.delegate = delegate as? NationalIDViewController
-            break
-        @unknown default:
-            fatalError()
-        }
-        self.navigationController?.pushViewController(documentVC, animated: false)
+
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: UIViewController) { // Move to document scanner
+        let document = DocumentScannerViewController(docType: docType,
+                                                     delegate: delegate as! DocumentScanDelegate)
+        self.show(document, sender: nil)
     }
     
     func showDLView() {
