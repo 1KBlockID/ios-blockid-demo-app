@@ -22,25 +22,7 @@ class DriverLicenseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.processDLScanning()
-    }
-
-    fileprivate func processDLScanning() {
-        switch AVAudioSession.sharedInstance().recordPermission {
-        case .granted:
-            startDLScanning()
-            print("Permission granted")
-        case .denied:
-            print("Permission denied")
-        case .undetermined:
-            print("Request permission here")
-            AVAudioSession.sharedInstance().requestRecordPermission({ granted in
-                // Handle granted
-                self.startDLScanning()
-            })
-        @unknown default:
-            print("Unknown case")
-        }
+        self.startDLScanning()
     }
     
     private func goBack() {
@@ -60,6 +42,8 @@ class DriverLicenseViewController: UIViewController {
                 DispatchQueue.main.async {
                     // Start loader spin
                     self.rotateView(self.imgLoader)
+                    
+                    // Show document scanner View controller
                     self.showDocumentScannerFor(.DL, self)
                 }
             }
