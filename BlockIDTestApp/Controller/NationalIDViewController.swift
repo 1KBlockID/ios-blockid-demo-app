@@ -18,16 +18,15 @@ class NationalIDViewController: UIViewController {
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
  
-    // MARK:
     override func viewDidLoad() {
         super.viewDidLoad()
         // Start loader spin
         self.rotateView(imgLoader)
+        
         // Start ID CARD loading
         startNationalIDScanning()
     }
     
-    // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -54,7 +53,8 @@ class NationalIDViewController: UIViewController {
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic,
+                                                   sigToken: token) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -65,7 +65,11 @@ class NationalIDViewController: UIViewController {
                         return
                     }
                     
-                    self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                    self.view.makeToast(error?.message,
+                                        duration: 3.0,
+                                        position: .center,
+                                        title: "Error!",
+                                        completion: {_ in
                         self.goBack()
                     })
                     return
@@ -86,48 +90,59 @@ class NationalIDViewController: UIViewController {
 extension NationalIDViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
-
-        if error?.code == CustomErrors.kUnauthorizedAccess.code {
-            self.showAppLogin()
-        }
         
-        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
-            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.showAlertAndMoveBack(title: "Error", message: localizedMessage)
-            return
-        }
-        
-        if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-            self.goBack()
-        }
-       
-        if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+        if !status {
+            if error?.code == CustomErrors.kUnauthorizedAccess.code {
+                self.showAppLogin()
+                return
+            }
+            
+            if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+                let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+                self.showAlertAndMoveBack(title: "Error", message: localizedMessage)
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+                self.goBack()
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+                self.showAlertAndMoveBack(title: "Error",
+                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                return
+            }
+            
             self.showAlertAndMoveBack(title: "Error",
-                                      message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                                      message: error?.message ?? kIDCardFailedMessage)
             return
         }
         
-        guard let documentObject = document else {
+        guard let documentObject = document,
+              !documentObject.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
-           return
+            return
         }
         guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["responseStatus"] as? String else {
+        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+              !responseStatus.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
-           return
+            return
         }
         if responseStatus.uppercased() == "FAILED" {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
-          return
+            return
         }
-        guard let token = dictDocObject["token"] as? String, !token.isEmpty else {
+        guard let token = dictDocObject["token"] as? String,
+              !token.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
@@ -135,9 +150,10 @@ extension NationalIDViewController: DocumentScanDelegate {
         guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
-           return
+            return
         }
-        guard let proof_jwt = dictIdcardObject["proof_jwt"] as? String, !proof_jwt.isEmpty else {
+        guard let proof_jwt = dictIdcardObject["proof_jwt"] as? String,
+              !proof_jwt.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
@@ -147,7 +163,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         dictIdcardObject["certificate_token"] = token
         self.setNationaID(withNIDData: dictIdcardObject, token: "")
     }
-    
+
     private func showAlertAndMoveBack(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
