@@ -66,6 +66,7 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
 
+    // MARK: - Document Scanner -
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: UIViewController) { // Move to document scanner
         let document = DocumentScannerViewController(docType: docType,
                                                      delegate: delegate as! DocumentScanDelegate)

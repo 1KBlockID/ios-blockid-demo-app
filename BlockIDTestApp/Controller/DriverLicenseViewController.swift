@@ -19,7 +19,12 @@ class DriverLicenseViewController: UIViewController {
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
     
-    // MARK:
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.processDLScanning()
+    }
+
     fileprivate func processDLScanning() {
         switch AVAudioSession.sharedInstance().recordPermission {
         case .granted:
@@ -38,31 +43,10 @@ class DriverLicenseViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        self.processDLScanning()
-    }
-
-    // MARK:
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!",
-                                      message: "Do you want to cancel the registration process?",
-                                      preferredStyle: .alert)
 
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.goBack()
-        }))
-        self.present(alert, animated: true)
-        return
-        
-    }
-    
     private func startDLScanning() {
         //1. Check for Camera Permission
         AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
@@ -166,7 +150,9 @@ class DriverLicenseViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension DriverLicenseViewController: DocumentScanDelegate {
    
-    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+    func onDocumentScanResponse(status: Bool,
+                                document: String?,
+                                error: ErrorResponse?) {
         
         if error?.code == CustomErrors.kUnauthorizedAccess.code {
             self.showAppLogin()
@@ -182,34 +168,37 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
             self.goBack()
         }
-       
+        
         if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
             self.showAlertAndMoveBack(title: "Error",
                                       message: "Scanning time exceeded. To continue, please restart the scanning process.")
             return
         }
         
-        guard let documentObject = document else {
+        guard let documentObject = document,
+              !documentObject.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
-           return
+            return
         }
         guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["responseStatus"] as? String else {
+        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+              !responseStatus.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
-           return
+            return
         }
         if responseStatus.uppercased() == "FAILED" {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
-          return
+            return
         }
-        guard let token = dictDocObject["token"] as? String, !token.isEmpty else {
+        guard let token = dictDocObject["token"] as? String,
+              !token.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
@@ -217,9 +206,10 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         guard var dictDLObject = dictDocObject["dl_object"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
-           return
+            return
         }
-        guard let proof_jwt = dictDLObject["proof_jwt"] as? String, !proof_jwt.isEmpty else {
+        guard let proof_jwt = dictDLObject["proof_jwt"] as? String,
+              !proof_jwt.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
