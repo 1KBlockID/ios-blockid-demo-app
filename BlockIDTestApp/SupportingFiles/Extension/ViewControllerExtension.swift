@@ -70,7 +70,7 @@ extension UIViewController {
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: UIViewController) { // Move to document scanner
         let document = DocumentScannerViewController(docType: docType,
                                                      delegate: delegate as! DocumentScanDelegate)
-        self.show(document, sender: nil)
+        self.navigationController?.pushViewController(document, animated: false)
     }
     
     func showDLView() {
