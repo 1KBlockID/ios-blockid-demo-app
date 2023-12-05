@@ -14,25 +14,22 @@ import CoreNFC
 
 class PassportViewController: UIViewController {
 
-    private var ppScannerHelper: PassportScanHelper?
     private let expiryDays = 90
-    private var _scanLine: CAShapeLayer!
-    private var _token = ""
-    private var pp: [String : Any]?
+    private var dictPPT: [String : Any]?
     private var isWithNFC = false
+    private let kPPTFailedMessage = "Passport failed to scan."
     private var rfidScannerHelper: RFIDScannerHelper?
     
-    @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _imgOverlay: UIImageView!
-    @IBOutlet private weak var _lblScanInfoTxt: UILabel!
     @IBOutlet weak var _viewEPassportScan: UIView!
-    
-    @IBOutlet weak var _viewScanner: BIDScannerView!
+    @IBOutlet private weak var loaderView: UIView!
+    @IBOutlet private weak var imgLoader: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self._viewEPassportScan.isHidden = true
-        self._viewScanner.isHidden = true
+        // Start loader spin
+        self.rotateView(imgLoader)
+        
+        // Start PPT loading
         startPassportScanning()
     }
     
@@ -46,17 +43,7 @@ class PassportViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
-                    self._viewScanner.isHidden = false
-                    //3. Initialize PassportScannerHelper
-                    if self.ppScannerHelper == nil {
-                        self.ppScannerHelper = PassportScanHelper.init(bidScannerView: self._viewScanner, ppResponseDelegate: self, cutoutView: self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
-                    }
-                    //4. Start Scanning
-                    self.ppScannerHelper?.startPassportScanning()
-                    
-                    self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
+                    self.showDocumentScannerFor(.PPT, self)
                 }
             }
         }
@@ -66,34 +53,18 @@ class PassportViewController: UIViewController {
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
-
-    @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.ppScannerHelper?.stopPassportScanning()
-            self.goBack()
-        }))
-        self.present(alert, animated: true)
-        return
-    }
     
-    private func setPassport(withPPDat pp: [String : Any], token: String?, isWithNFC: Bool) {
-        self.view.makeToastActivity(.center)
+    private func setPassport(withPPData ppt: [String : Any], isWithNFC: Bool) {
+        var dict = ppt
+        dict["category"] = RegisterDocCategory.Identity_Document.rawValue
+        dict["type"] = RegisterDocType.PPT.rawValue
+        dict["id"] = ppt["id"]
         
-        var dic = pp
-        dic["category"] = RegisterDocCategory.Identity_Document.rawValue
-        dic["type"] = RegisterDocType.PPT.rawValue
-        dic["id"] = pp["id"]
-        
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dict) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
                 if !status {
-                    
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dict)
                         self.goBack()
                         self.showLiveIDView()
                         return
@@ -103,12 +74,15 @@ class PassportViewController: UIViewController {
                     return
                 }
                 // SUCCESS
-                self.ppScannerHelper?.stopPassportScanning()
                 var nfcTxt = ""
                 if !isWithNFC {
                     nfcTxt = "RFID not scanned"
                 }
-                self.view.makeToast("Passport enrolled successfully. \(nfcTxt)", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("Passport enrolled successfully. \(nfcTxt)",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!",
+                                    completion: {_ in
                     self.goBack()
                 })
             }
@@ -132,18 +106,16 @@ class PassportViewController: UIViewController {
         }
     }
     
-    private func startRFIDScanWorkflow(withPPDat pp: [String : Any], token: String) {
-        self._token = token
-        self.pp = pp
+    private func startRFIDScanWorkflow(withPPData ppt: [String : Any]) {
+        self.dictPPT = ppt
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
             //NOT NFC COMPATIBLE
             if !isNFCCompatible {
                 //Cannot scan NFC, proceed with bio-data of PP
-                self.setPassport(withPPDat: pp, token: token, isWithNFC: false)
+                self.setPassport(withPPData: ppt, isWithNFC: false)
                 return
             }
            
-            
             self.showRFIDViewController(delegate: self)
             return
         }
@@ -158,10 +130,12 @@ class PassportViewController: UIViewController {
         case CustomErrors.kPPRFIDUserCancelled.code:
 
             //About to Expire, Show Alert
-            let alert = UIAlertController(title: "Warning!", message: "Do you want to cancel RFID Scan?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Warning!",
+                                          message: "Do you want to cancel RFID Scan?",
+                                          preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPDat: self.pp!, token: self._token, isWithNFC: false)
+                self.setPassport(withPPData: self.dictPPT!, isWithNFC: false)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
@@ -171,7 +145,11 @@ class PassportViewController: UIViewController {
             return
             
         case CustomErrors.kPPRFIDTimeout.code:
-            self.view.makeToast("Scan Again", duration: 3.0, position: .center, title: "Timeout", completion: {_ in
+            self.view.makeToast("Scan Again",
+                                duration: 3.0,
+                                position: .center,
+                                title: "Timeout",
+                                completion: {_ in
                 self._viewEPassportScan.isHidden = false
                 self.rfidScannerHelper?.startRFIDScanning()
             })
@@ -199,102 +177,111 @@ class PassportViewController: UIViewController {
             return
         }
     }
-    
-    private func scanCompleteUIUpdates() {
-        self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
-    }
-
 }
-extension PassportViewController: PassportResponseDelegate {
-    
-    func passportScanCompleted(withPassport obj: [String : Any]?, error: ErrorResponse?, signatureToken signToken: String?, isWithRFID: Bool?) {
-        assert(Thread.isMainThread, "call me on main thread")
-        
-        //Check for errors
-        //  EXPIRED || INVALID || TIMEOUT || USER_CANCEL || LICENSE_KEY_DISABLED
-        if error?.code == CustomErrors.kPPExpired.code ||
-            error?.code == CustomErrors.kInvalidPP.code ||
-            error?.code == CustomErrors.kPPRFIDTimeout.code ||
-            error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
-            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
-            
-            guard let err = error else {
-                return
-            }
-            self.handleScanErrorResponse(error: err)
-            
-            return
-        }
-        scanCompleteUIUpdates()
-        
-        guard let pp = obj, let token = signToken else {
-            guard let err = error else {
-                return
-            }
-            self.handleScanErrorResponse(error: err)
-            return
-        }
-        
-        //Check if Not to Expiring Soon
-        if error?.code == CustomErrors.kPPAboutToExpire.code {
-            //About to Expire, Show Alert
-            let msg = "\(error?.message ?? CustomErrors.kSomethingWentWrong.msg) (Error code: \(error?.code ?? CustomErrors.kSomethingWentWrong.code))"
-            
-            //About to Expire, Show Alert
-            let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
 
-            alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                if let isWithRFID = isWithRFID, !isWithRFID {
-                    self.startRFIDScanWorkflow(withPPDat: pp, token: token)
-                    return
-                }
-                self.setPassport(withPPDat: pp, token: token, isWithNFC: false)
-            }))
-            alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-                
-                self.ppScannerHelper?.stopPassportScanning()
+// MARK: - DocumentSessionScanDelegate -
+extension PassportViewController: DocumentScanDelegate {
+    
+    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+        if !status {
+            if error?.code == CustomErrors.kUnauthorizedAccess.code {
+                self.showAppLogin()
+                return
+            }
+            
+            if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+                let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+                self.showAlertAndMoveBack(title: "Error", message: localizedMessage)
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
                 self.goBack()
-            }))
-            self.present(alert, animated: true)
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+                self.showAlertAndMoveBack(title: "Error",
+                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                return
+            }
+            
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: error?.message ?? kPPTFailedMessage)
             return
         }
         
-        if let isWithRFID = isWithRFID, !isWithRFID {
-            self.startRFIDScanWorkflow(withPPDat: pp, token: token)
+        guard let documentObject = document,
+              !documentObject.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
             return
         }
         
-        setPassport(withPPDat: pp, token: token, isWithNFC: isWithRFID ?? false)
-        
-    }
-    
-    func readyForDetection() {
-        DispatchQueue.main.async {
-            //Check if there are any existing animations
-            if !(self._scanLine.animationKeys()?.count ?? 0 > 0) {
-                self.animateScanLine(_scanLine: self._scanLine, height:  self._imgOverlay.frame.height)
-               
+        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+              !responseStatus.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
         }
-      }
+        if responseStatus.uppercased() == "FAILED" {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard let token = dictDocObject["token"] as? String,
+              !token.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard var dictPPTObject = dictDocObject["ppt_object"] as? [String: Any] else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        guard let proof_jwt = dictPPTObject["proof_jwt"] as? String,
+              !proof_jwt.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kPPTFailedMessage)
+            return
+        }
+        
+        dictPPTObject["proof"] = proof_jwt
+        dictPPTObject["certificate_token"] = token
+        self.startRFIDScanWorkflow(withPPData: dictPPTObject)
     }
     
+    private func showAlertAndMoveBack(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.goBack()
+        }))
+        present(alert, animated: true)
+    }
 }
+
 extension PassportViewController: EPassportChipScanViewControllerDelegate {
     func onScan() {
         self._viewEPassportScan.isHidden = false
-        self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self, ppObject: self.pp ?? [:], expiryGracePeriod: self.expiryDays)
+        self.rfidScannerHelper = RFIDScannerHelper(rfidResponseDelegate: self,
+                                                   ppObject: self.dictPPT ?? [:],
+                                                   expiryGracePeriod: self.expiryDays)
         self.rfidScannerHelper?.startRFIDScanning()
-        
     }
     
     func onSkip() {
-        self.setPassport(withPPDat: pp!, token: self._token, isWithNFC: false)
+        self.setPassport(withPPData: dictPPT!, isWithNFC: false)
     }
 }
 extension PassportViewController: NFCDisabledViewControllerDelegate {
     func cancelRFID() {
-        self.setPassport(withPPDat: pp!, token: self._token, isWithNFC: false)
+        self.setPassport(withPPData: dictPPT!, isWithNFC: false)
     }
 }
 
@@ -303,12 +290,11 @@ extension PassportViewController: RFIDResponseDelegate {
         assert(Thread.isMainThread, "call me on main thread")
         
         //Check for errors
-        //  EXPIRED || INVALID || TIMEOUT || USER_CANCEL || LICENSE_KEY_DISABLED
+        //  EXPIRED || INVALID || TIMEOUT || USER_CANCEL
         if error?.code == CustomErrors.kPPExpired.code ||
             error?.code == CustomErrors.kInvalidPP.code ||
             error?.code == CustomErrors.kPPRFIDTimeout.code ||
-            error?.code == CustomErrors.kPPRFIDUserCancelled.code ||
-            error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+            error?.code == CustomErrors.kPPRFIDUserCancelled.code {
             
             guard let err = error else {
                 return
@@ -317,9 +303,8 @@ extension PassportViewController: RFIDResponseDelegate {
             
             return
         }
-        scanCompleteUIUpdates()
         
-        guard let pp = docDic else {
+        guard let ppt = docDic else {
             guard let err = error else {
                 return
             }
@@ -336,7 +321,7 @@ extension PassportViewController: RFIDResponseDelegate {
             let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPDat: pp, token: nil, isWithNFC: true)
+                self.setPassport(withPPData: ppt, isWithNFC: true)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 
@@ -346,6 +331,6 @@ extension PassportViewController: RFIDResponseDelegate {
             self.present(alert, animated: true)
             return
         }
-        setPassport(withPPDat: pp, token: nil, isWithNFC: true)
+        setPassport(withPPData: ppt, isWithNFC: true)
     }
 }

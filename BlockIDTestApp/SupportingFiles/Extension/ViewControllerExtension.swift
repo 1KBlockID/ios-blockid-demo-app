@@ -51,7 +51,6 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 
         self.present(alert, animated: true)
-
     }
     
     public func  resetAppNSDK() {
@@ -65,6 +64,13 @@ extension UIViewController {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let enrollMentvC = storyBoard.instantiateViewController(withIdentifier: "EnrollMentViewController") as! EnrollMentViewController
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
+    }
+
+    // MARK: - Document Scanner -
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: DocumentScanDelegate) { // Move to document scanner
+        let document = DocumentScannerViewController(docType: docType,
+                                                     delegate: delegate)
+        self.navigationController?.pushViewController(document, animated: false)
     }
     
     func showDLView() {
@@ -89,7 +95,7 @@ extension UIViewController {
     }
     
     func showPassportView() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+       let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
             self.navigationController?.pushViewController(ppVC, animated: true)
         }
@@ -257,7 +263,8 @@ extension UIViewController {
     }
     
     public func alertForCameraAccess() {
-        self.openSettings(title: "Camera Inaccessible", message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
+        self.openSettings(title: "Camera Inaccessible",
+                          message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
     }
     
     // MARK: - Topmost View Controller
@@ -292,6 +299,15 @@ extension UIViewController {
         }
         // otherwise
         return self.presentedViewController?.topMostViewController()
+    }
+    
+    // MARK: - Rotate View Infinite (For Loader)-
+    func rotateView(_ targetView: UIView, _ duration: Double = 2) { // Duration will helps to control rotation speed
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
+            targetView.transform = targetView.transform.rotated(by: .pi)
+        }) { finished in
+            self.rotateView(targetView, duration)
+        }
     }
 }
 
