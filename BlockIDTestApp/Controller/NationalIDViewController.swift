@@ -48,13 +48,12 @@ class NationalIDViewController: UIViewController {
         
     }
 
-    private func setNationaID(withNIDData nid: [String : Any], token: String) {
+    private func setNationaID(withNIDData nid: [String : Any]) {
         var dic = nid
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic,
-                                                   sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -161,7 +160,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         
         dictIdcardObject["proof"] = proof_jwt
         dictIdcardObject["certificate_token"] = token
-        self.setNationaID(withNIDData: dictIdcardObject, token: "")
+        self.setNationaID(withNIDData: dictIdcardObject)
     }
 
     private func showAlertAndMoveBack(title: String, message: String) {
