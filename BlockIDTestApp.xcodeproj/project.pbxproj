@@ -929,8 +929,6 @@
 					"\"UIKit\"",
 					"-framework",
 					"\"WalletCore\"",
-					"-framework",
-					"\"SwiftyTesseract\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -990,8 +988,6 @@
 					"\"UIKit\"",
 					"-framework",
 					"\"WalletCore\"",
-					"-framework",
-					"\"SwiftyTesseract\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekosmos.blockid.poc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
