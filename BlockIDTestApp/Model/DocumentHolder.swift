@@ -10,7 +10,6 @@ import BlockID
 
 class DocumentStore : NSObject {
     var documentData: [String : Any]?
-    var token : String?
     var type: String?
     
     public static let sharedInstance = DocumentStore()
@@ -19,15 +18,13 @@ class DocumentStore : NSObject {
         return (documentData != nil) ? true : false
     }
     
-    public func setData(documentData: [String : Any]?, token: String) {
+    public func setData(documentData: [String : Any]?) {
         self.documentData = documentData
-        self.token = token
         self.type = documentData?["type"] as? String ?? ""
     }
     
     public func clearData() {
         self.documentData = nil
-        self.token = nil
         self.type = nil
     }
     

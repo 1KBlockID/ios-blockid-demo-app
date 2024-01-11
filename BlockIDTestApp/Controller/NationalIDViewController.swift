@@ -13,39 +13,22 @@ import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
-    private var nidScannerHelper: NationalIDScanHelper?
-    private let firstScanningDocSide: NIDScanningSide = .NATIONAL_ID_BACK
-    private let expiryDays = 90
-    private var _scanLine: CAShapeLayer!
+    private let kIDCardFailedMessage = "National ID failed to scan."
     
-    @IBOutlet private weak var _viewBG: UIView!
-    @IBOutlet private weak var _viewLiveIDScan: BIDScannerView!
-    @IBOutlet private weak var _imgOverlay: UIImageView!
-    @IBOutlet private weak var _lblScanInfoTxt: UILabel!
+    @IBOutlet private weak var loaderView: UIView!
+    @IBOutlet private weak var imgLoader: UIImageView!
  
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Start loader spin
+        self.rotateView(imgLoader)
         
+        // Start ID CARD loading
         startNationalIDScanning()
     }
     
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func cancelClicked(_ sender: Any) {
-        let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the registration process?", preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.nidScannerHelper?.stopNationalIDScanning()
-            self.goBack()
-        }))
-        self.present(alert, animated: true)
-        return
-        
     }
     
     private func startNationalIDScanning() {
@@ -58,131 +41,134 @@ class NationalIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self._viewBG.isHidden = false
-                    self._viewLiveIDScan.isHidden = false
-                    //3. Initialize dlScannerHelper
-                    if self.nidScannerHelper == nil {
-                        self.nidScannerHelper = NationalIDScanHelper.init(bidScannerView: self._viewLiveIDScan, nidScanResponseDelegate: self, cutoutView:  self._imgOverlay.frame, expiryGracePeriod: self.expiryDays)
-                    }
-                    //4. Start Scanning
-                    self._lblScanInfoTxt.text = NIDScanningSide.NATIONAL_ID_BACK == self.firstScanningDocSide ? "Scan Back" : "Scan Front"
-                    self.nidScannerHelper?.startNationalIDScanning(scanningSide: self.firstScanningDocSide)
-                    self._scanLine = self.addScanLine(self._imgOverlay.frame)
-                    self._imgOverlay.layer.addSublayer(self._scanLine)
+                    self.showDocumentScannerFor(.IDCARD, self)
                 }
             }
         }
         
     }
 
-    private func setNationaID(withNIDData nid: [String : Any], token: String) {
-        //self._viewBG.isHidden = true
-        self.view.makeToastActivity(.center)
+    private func setNationaID(withNIDData nid: [String : Any]) {
         var dic = nid
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic, sigToken: token) { [self] (status, error) in
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
             DispatchQueue.main.async {
-                self.view.hideToastActivity()
                 if !status {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic, token: token)
+                        DocumentStore.sharedInstance.setData(documentData: dic)
                         self.goBack()
                         self.showLiveIDView()
                         return
                     }
                     
-                    self.view.makeToast(error?.message, duration: 3.0, position: .center, title: "Error!", completion: {_ in
+                    self.view.makeToast(error?.message,
+                                        duration: 3.0,
+                                        position: .center,
+                                        title: "Error!",
+                                        completion: {_ in
                         self.goBack()
                     })
                     return
                 }
                 // SUCCESS
-                self.view.makeToast("National ID enrolled successfully.", duration: 3.0, position: .center, title: "Thank you!", completion: {_ in
+                self.view.makeToast("National ID enrolled successfully.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!", completion: {_ in
                     self.goBack()
                 })
             }
         }
     }
-    
-    private func scanCompleteUIUpdates() {
-        self._lblScanInfoTxt.text = "Scan Complete"
-        _scanLine.removeAllAnimations()
-    }
 }
 
-extension NationalIDViewController: NationalIDResponseDelegate {
-    func nidScanCompleted(nidScanSide: NIDScanningSide, dictNationalID: [String : Any]?, signatureToken signToken: String?, error: ErrorResponse?) {
-        if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
-           self.showAppLogin()
-        }
-        //Check If Expired, licenene key not enabled
-        if error?.code == CustomErrors.kDocumentExpired.code {
-            self.view.makeToast(error?.message,
-                                duration: 3.0,
-                                position: .center)
-            return
-        }
-        
-        if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
-            let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
-            self.view.makeToast(localizedMessage,
-                                duration: 3.0,
-                                position: .center)
-            return
-        }
-        
-        scanCompleteUIUpdates()
-        guard let nid = dictNationalID, let token = signToken else {
-            self.view.makeToast(error?.message,
-                                duration: 3.0,
-                                position: .center)
-            return
-
-        }
-        
-        //Check if Not to Expiring Soon
-        if error?.code != CustomErrors.kDocumentAboutToExpire.code {
-            self.setNationaID(withNIDData: nid, token: token)
-            return
-        }
-
-        //About to Expire, Show Alert
-        let alert = UIAlertController(title: "Error", message: error!.message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {_ in
-            self.setNationaID(withNIDData: nid, token: token)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-
-        self.present(alert, animated: true)
-      }
+// MARK: - DocumentSessionScanDelegate -
+extension NationalIDViewController: DocumentScanDelegate {
     
-
-      
-    func scanFrontSide() {
-        DispatchQueue.main.async {
-            self._lblScanInfoTxt.text = "Scan Front"
-            self.nidScannerHelper?.startNationalIDScanning(scanningSide: .NATIONAL_ID_FRONT)
-        }
-    }
-    
-    func scanBackSide() {
-        DispatchQueue.main.async {
-            self._lblScanInfoTxt.text = "Scan Back"
-            self.nidScannerHelper?.startNationalIDScanning(scanningSide: .NATIONAL_ID_BACK)
-        }
-    }
-      
-      func readyForDetection() {
-            DispatchQueue.main.async {
-                //Check if there are any existing animations
-                if !(self._scanLine.animationKeys()?.count ?? 0 > 0) {
-                    self.animateScanLine(_scanLine: self._scanLine, height:  self._imgOverlay.frame.height)
-                   
+    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+        
+        if !status {
+            if error?.code == CustomErrors.kUnauthorizedAccess.code {
+                self.showAppLogin()
+                return
             }
-          }
-      }
+            
+            if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
+                let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
+                self.showAlertAndMoveBack(title: "Error", message: localizedMessage)
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
+                self.goBack()
+                return
+            }
+            
+            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
+                self.showAlertAndMoveBack(title: "Error",
+                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
+                return
+            }
+            
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: error?.message ?? kIDCardFailedMessage)
+            return
+        }
+        
+        guard let documentObject = document,
+              !documentObject.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        guard let dictDocObject = CommonFunctions.jsonStringToDic(from: documentObject) else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+              !responseStatus.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        if responseStatus.uppercased() == "FAILED" {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        guard let token = dictDocObject["token"] as? String,
+              !token.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        guard let proof_jwt = dictIdcardObject["proof_jwt"] as? String,
+              !proof_jwt.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: kIDCardFailedMessage)
+            return
+        }
+        
+        dictIdcardObject["proof"] = proof_jwt
+        dictIdcardObject["certificate_token"] = token
+        self.setNationaID(withNIDData: dictIdcardObject)
+    }
+
+    private func showAlertAndMoveBack(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.goBack()
+        }))
+        self.present(alert, animated: true)
+    }
 }
+
