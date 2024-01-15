@@ -26,6 +26,14 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func goBack() {
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: EnrollMentViewController.self) {
+                    self.navigationController?.popToViewController(viewController, animated: true)
+                }
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
 
