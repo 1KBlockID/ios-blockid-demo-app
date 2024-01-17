@@ -14,7 +14,9 @@ import Toast_Swift
 class NationalIDViewController: UIViewController {
 
     private let kIDCardFailedMessage = "National ID failed to scan."
-    
+    private var liveIdFace: String!
+    private var proofedBy: String!
+
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
  
@@ -61,17 +63,54 @@ class NationalIDViewController: UIViewController {
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
+        
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            self.registerWithLiveID(dic: dic)
+        } else {
+            self.registerWithOutLiveID(dic: dic)
+        }
+    }
+    
+    private func registerWithLiveID(dic: [String: Any]) {
+        guard let imgB64Str = self.liveIdFace,
+              let imgdata = Data(base64Encoded: imgB64Str,
+                                 options: .ignoreUnknownCharacters),
+              let img = UIImage(data: imgdata) else {
+            return
+        }
+
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic,
+                                                   liveIdProofedBy: self.proofedBy,
+                                                   faceImage: img)
+        { [self] (status, error) in
+            DispatchQueue.main.async {
+                if !status {
+                    // FAILED
+                    self.view.makeToast(error?.message,
+                                        duration: 3.0,
+                                        position: .center,
+                                        title: "Error!",
+                                        completion: {_ in
+                        self.goBack()
+                    })
+                    return
+                }
+                // SUCCESS
+                self.view.makeToast("National ID enrolled successfully.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!", completion: {_ in
+                    self.goBack()
+                })
+            }
+        }
+    }
+    
+    private func registerWithOutLiveID(dic: [String: Any]) {
         BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
-                    if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dic)
-                        self.goBack()
-                        self.showLiveIDView()
-                        return
-                    }
-                    
                     self.view.makeToast(error?.message,
                                         duration: 3.0,
                                         position: .center,
@@ -166,6 +205,11 @@ extension NationalIDViewController: DocumentScanDelegate {
             return
         }
         
+        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+            self.liveIdFace = liveIdObj["face"] as? String
+            self.proofedBy = liveIdObj["proofedBy"] as? String
+        }
+
         dictIdcardObject["proof"] = proof_jwt
         dictIdcardObject["certificate_token"] = token
         self.setNationaID(withNIDData: dictIdcardObject)
