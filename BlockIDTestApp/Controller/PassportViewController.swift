@@ -19,7 +19,9 @@ class PassportViewController: UIViewController {
     private var isWithNFC = false
     private let kPPTFailedMessage = "Passport failed to scan."
     private var rfidScannerHelper: RFIDScannerHelper?
-    
+    private var liveIdFace: String!
+    private var proofedBy: String!
+
     @IBOutlet weak var _viewEPassportScan: UIView!
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -51,6 +53,14 @@ class PassportViewController: UIViewController {
     }
     
     private func goBack() {
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: EnrollMentViewController.self) {
+                    self.navigationController?.popToViewController(viewController, animated: true)
+                }
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -60,22 +70,58 @@ class PassportViewController: UIViewController {
         dict["type"] = RegisterDocType.PPT.rawValue
         dict["id"] = ppt["id"]
         
-        BlockIDSDK.sharedInstance.registerDocument(obj: dict) { [self] (status, error) in
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            self.registerWithLiveID(dic: dict)
+        } else {
+            self.registerWithOutLiveID(dic: dict)
+        }
+    }
+    
+    private func registerWithLiveID(dic: [String: Any]?) {
+        guard let imgB64Str = self.liveIdFace,
+              let imgdata = Data(base64Encoded: imgB64Str,
+                                 options: .ignoreUnknownCharacters),
+              let img = UIImage(data: imgdata) else {
+            return
+        }
+
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:],
+                                                   liveIdProofedBy: self.proofedBy,
+                                                   faceImage: img)
+        { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
-                    if error?.code == CustomErrors.kLiveIDMandatory.code {
-                        DocumentStore.sharedInstance.setData(documentData: dict)
-                        self.goBack()
-                        self.showLiveIDView()
-                        return
-                    }
                     // FAILED
                     self.view.makeToast(error?.message, duration: 3.0, position: .center)
                     return
                 }
                 // SUCCESS
                 var nfcTxt = ""
-                if !isWithNFC {
+                if !self.isWithNFC {
+                    nfcTxt = "RFID not scanned"
+                }
+                self.view.makeToast("Passport enrolled successfully. \(nfcTxt)",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!",
+                                    completion: {_ in
+                    self.goBack()
+                })
+            }
+        }
+    }
+    
+    private func registerWithOutLiveID(dic: [String: Any]) {
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
+            DispatchQueue.main.async {
+                if !status {
+                    // FAILED
+                    self.view.makeToast(error?.message, duration: 3.0, position: .center)
+                    return
+                }
+                // SUCCESS
+                var nfcTxt = ""
+                if !self.isWithNFC {
                     nfcTxt = "RFID not scanned"
                 }
                 self.view.makeToast("Passport enrolled successfully. \(nfcTxt)",
@@ -252,6 +298,11 @@ extension PassportViewController: DocumentScanDelegate {
             return
         }
         
+        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+            self.liveIdFace = liveIdObj["face"] as? String
+            self.proofedBy = liveIdObj["proofedBy"] as? String
+        }
+
         dictPPTObject["proof"] = proof_jwt
         dictPPTObject["certificate_token"] = token
         self.startRFIDScanWorkflow(withPPData: dictPPTObject)

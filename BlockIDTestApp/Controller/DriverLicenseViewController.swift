@@ -15,6 +15,9 @@ import UIKit
 class DriverLicenseViewController: UIViewController {
 
     private let kDLFailedMessage = "Drivers License failed to scan."
+    
+    private var liveIdFace: String!
+    private var proofedBy: String!
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -26,6 +29,14 @@ class DriverLicenseViewController: UIViewController {
     }
     
     private func goBack() {
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: EnrollMentViewController.self) {
+                    self.navigationController?.popToViewController(viewController, animated: true)
+                }
+            }
+            return
+        }
         self.navigationController?.popViewController(animated: true)
     }
 
@@ -103,6 +114,47 @@ class DriverLicenseViewController: UIViewController {
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl?["id"]
+        
+        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            self.registerWithLiveID(dic: dic)
+        } else {
+            self.registerWithOutLiveID(dic: dic)
+        }
+        
+    }
+    
+    private func registerWithLiveID(dic: [String: Any]?) {
+        guard let imgB64Str = self.liveIdFace,
+              let imgdata = Data(base64Encoded: imgB64Str,
+                                 options: .ignoreUnknownCharacters),
+              let img = UIImage(data: imgdata) else {
+            return
+        }
+
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:],
+                                                   liveIdProofedBy: self.proofedBy,
+                                                   faceImage: img)
+        { [self] (status, error) in
+            DispatchQueue.main.async {
+                if !status {
+                    // FAILED
+                    self.showAlertAndMoveBack(title: "Error",
+                                              message: error?.message ?? self.kDLFailedMessage)
+                    return
+                }
+                // SUCCESS
+                self.view.makeToast("Drivers License enrolled successfully.",
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Thank you!",
+                                    completion: {_ in
+                    self.goBack()
+                })
+            }
+        }
+    }
+    
+    private func registerWithOutLiveID(dic: [String: Any]?) {
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:]) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
@@ -113,7 +165,7 @@ class DriverLicenseViewController: UIViewController {
                         self.showLiveIDView()
                         return
                     }
-
+                    
                     self.showAlertAndMoveBack(title: "Error",
                                               message: error?.message ?? self.kDLFailedMessage)
                     return
@@ -206,6 +258,10 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             return
         }
         
+        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+            self.liveIdFace = liveIdObj["face"] as? String
+            self.proofedBy = liveIdObj["proofedBy"] as? String
+        }
         dictDLObject["proof"] = proof_jwt
         dictDLObject["certificate_token"] = token
         self.showVerifyAlert(withDLData: dictDLObject)
