@@ -11,7 +11,7 @@ import BlockID
 // MARK: - Enums -
 enum InfoType: String, CaseIterable {
     case rootTenant = "Root Tenant: "
-    case clientTenant = "Client Tenant: "
+    case appTenant = "App Tenant: "
     case licenseKey = "License Key: "
     case did = "DID: "
     case publicKey = "Public Key: "
@@ -59,15 +59,15 @@ class AboutViewController: UIViewController {
                     let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
                     copiedTxt += subTitle
                 }
-            case .clientTenant:
+            case .appTenant:
                 copiedTxt += $0.rawValue
-                let tenant = Tenant.clientTenant
-                let dns = "DNS: " + (tenant.dns ?? "-")
-                let tag = "Tag: " + (tenant.tenantTag ?? "-")
-                let community = "Community: " + (tenant.community ?? "-")
-                let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
-                copiedTxt += subTitle
-                
+                if let tenant = BlockIDSDK.sharedInstance.getAppTenant() {
+                    let dns = "DNS: " + (tenant.dns ?? "-")
+                    let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")"
+                    let community = "Community: " + (tenant.community ?? "-") + " (" + "\(tenant.communityId ?? "-")" + ")"
+                    let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
+                    copiedTxt += subTitle
+                }
             case .licenseKey:
                 let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
                 copiedTxt += $0.rawValue +  licenseKey + "\n\n"
@@ -134,13 +134,14 @@ extension AboutViewController: UITableViewDataSource {
                 let subTitle = dns + tag + community
                 cell.detailTextLabel?.text = subTitle
             }
-        case .clientTenant:
-            let tenant = Tenant.clientTenant
-            let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
-            let tag = "Tag: " + (tenant.tenantTag ?? "-") + "\n"
-            let community = "Community: " + (tenant.community ?? "-") + "\n"
-            let subTitle = dns + tag + community
-            cell.detailTextLabel?.text = subTitle
+        case .appTenant:
+            if let tenant = BlockIDSDK.sharedInstance.getAppTenant() {
+                let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
+                let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")" + "\n"
+                let community = "Community: " + (tenant.community ?? "-")  + " (" + "\(tenant.communityId ?? "-")" + ")" + "\n"
+                let subTitle = dns + tag + community
+                cell.detailTextLabel?.text = subTitle
+            }
         case .licenseKey:
            let licenseKey = Tenant.licenseKey.prefix(8) + "-xxxx-xxxx-xxxx-xxxxxxxx" + Tenant.licenseKey.suffix(4)
             cell.detailTextLabel?.text = String(licenseKey)
