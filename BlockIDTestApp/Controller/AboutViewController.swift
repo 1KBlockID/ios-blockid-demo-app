@@ -63,8 +63,8 @@ class AboutViewController: UIViewController {
                 copiedTxt += $0.rawValue
                 if let tenant = BlockIDSDK.sharedInstance.getAppTenant() {
                     let dns = "DNS: " + (tenant.dns ?? "-")
-                    let tag = "Tag: " + (tenant.tenantTag ?? "-")
-                    let community = "Community: " + (tenant.community ?? "-")
+                    let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")"
+                    let community = "Community: " + (tenant.community ?? "-") + " (" + "\(tenant.communityId ?? "-")" + ")"
                     let subTitle = "\n" + dns + "\n" + tag + "\n" + community + "\n\n"
                     copiedTxt += subTitle
                 }
