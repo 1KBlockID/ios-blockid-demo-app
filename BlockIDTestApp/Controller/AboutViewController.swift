@@ -137,8 +137,8 @@ extension AboutViewController: UITableViewDataSource {
         case .appTenant:
             if let tenant = BlockIDSDK.sharedInstance.getAppTenant() {
                 let dns = "DNS: " + (tenant.dns ?? "-") + "\n"
-                let tag = "Tag: " + (tenant.tenantTag ?? "-") + "\n"
-                let community = "Community: " + (tenant.community ?? "-") + "\n"
+                let tag = "Tag: " + (tenant.tenantTag ?? "-") + " (" + "\(tenant.tenantId ?? "-")" + ")" + "\n"
+                let community = "Community: " + (tenant.community ?? "-")  + " (" + "\(tenant.communityId ?? "-")" + ")" + "\n"
                 let subTitle = dns + tag + community
                 cell.detailTextLabel?.text = subTitle
             }
