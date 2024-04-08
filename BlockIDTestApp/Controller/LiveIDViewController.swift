@@ -1,5 +1,5 @@
 //
-//  ActiveLiveIDViewController.swift
+//  LiveIDViewController.swift
 //  BlockIDTestApp
 //
 //  Created by 1Kosmos Engineering
@@ -67,7 +67,7 @@ enum Vibration {
     }
 
 
-class ActiveLiveIDViewController: UIViewController {
+class LiveIDViewController: UIViewController {
     
     // MARK: - Properties -
     var isForVerification: Bool = false
@@ -120,7 +120,6 @@ class ActiveLiveIDViewController: UIViewController {
                     if self.liveIdScannerHelper == nil {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(bidScannerView: self._viewLiveIDScan,
                                                                             overlayFrame: self._imgOverlay.frame,
-                                                                            shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
                                                                             liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
@@ -299,7 +298,7 @@ class ActiveLiveIDViewController: UIViewController {
 }
 
 // MARK: - LiveIDResponseDelegate -
-extension ActiveLiveIDViewController: LiveIDResponseDelegate {
+extension LiveIDViewController: LiveIDResponseDelegate {
   
     func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
         // check error when camera sensor is blocked.
