@@ -10,13 +10,6 @@ import UIKit
 import AVFoundation
 import BlockID
 
-struct DetectionMsg {
-    static let blink = "Please blink your eyes"
-    static let smile = "Please smile"
-    static let left = "Please turn left"
-    static let right = "Please turn right"
-}
-
 /*
  Adding Feedback Generator
  */
@@ -75,7 +68,6 @@ class LiveIDViewController: UIViewController {
        
     // MARK: - Private properties -
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private let isResettingExpressionsAllowed = false
     private var attemptCounts = 0
     private var imgOverlay: UIImageView!
     
