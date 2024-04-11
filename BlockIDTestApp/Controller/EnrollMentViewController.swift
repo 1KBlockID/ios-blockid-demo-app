@@ -24,7 +24,7 @@ public enum Enrollments: String {
     case KYC = "My KYC"
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
-    case LiveID  = "LiveID"
+    case LiveID  = "Live ID"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
