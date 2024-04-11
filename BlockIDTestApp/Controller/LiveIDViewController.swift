@@ -363,9 +363,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         guard let inFocus = isFocused else {
             return
         }
-        
-        self._lblInformation.isHidden = (message ?? "").isEmpty
-        
+                
         self._lblInformation.text = message
         self._lblInformation.isHidden = inFocus
         if !inFocus {
