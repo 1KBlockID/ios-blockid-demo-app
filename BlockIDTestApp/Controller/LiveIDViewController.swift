@@ -150,11 +150,12 @@ class LiveIDViewController: UIViewController {
     // register liveID -
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func setLiveID(withPhoto face: UIImage, token: String) {
+    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face,
                                             liveIdProofedBy: "",
-                                            sigToken: token) { [self] (status, error) in
+                                            sigToken: token, 
+                                            livenessResult: livenessResult) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -219,10 +220,12 @@ class LiveIDViewController: UIViewController {
     // verify liveID
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func verifyLiveID(withPhoto photo: UIImage, token: String) {
+    private func verifyLiveID(withPhoto photo: UIImage, token: String,
+                              livenessResult: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
-                                               sigToken: token) { (status, error) in
+                                               sigToken: token, 
+                                               livenessResult: livenessResult) { (status, error) in
             self.view.hideToastActivity()
             if !status {
                 //If verification is for User Consent
@@ -297,6 +300,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
     
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?,
                                   signatureToken: String?,
+                                  livenessResult: String?,
                                   error: ErrorResponse?) {
         // check for error...
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
@@ -332,14 +336,14 @@ extension LiveIDViewController: LiveIDResponseDelegate {
 
         if isForVerification {
             // Verify LiveID
-            self.verifyLiveID(withPhoto: face, token: signToken)
+            self.verifyLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
                 self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
                 return
             }
-            self.setLiveID(withPhoto: face, token: signToken)
+            self.setLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
 
         }
         
