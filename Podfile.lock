@@ -145,7 +145,7 @@ PODS:
   - YubiKit (4.2.0)
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, branch `ios-17.4-sdk`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, branch `1.10.20`)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -180,7 +180,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   BlockID:
-    :branch: ios-17.4-sdk
+    :branch: 1.10.20
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
@@ -194,7 +194,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   BlockID:
-    :commit: 7788ab574b074658f94f004bece29d5e771b2574
+    :commit: f3eb60a07cf983d22767dd25f6f687df42d99d7f
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
@@ -234,6 +234,6 @@ SPEC CHECKSUMS:
   WebAuthnKit: d84fc07aa8f07707085ffee8baa41b11d69403ca
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: 67775fc0a0b8122c109cb9fc8a333b5f44747cd1
+PODFILE CHECKSUM: f89ed4175c74b22ce6a7da909337f0b3516ed6c9
 
 COCOAPODS: 1.15.2
