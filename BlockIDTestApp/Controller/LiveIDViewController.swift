@@ -1,5 +1,5 @@
 //
-//  ActiveLiveIDViewController.swift
+//  LiveIDViewController.swift
 //  BlockIDTestApp
 //
 //  Created by 1Kosmos Engineering
@@ -9,13 +9,6 @@
 import UIKit
 import AVFoundation
 import BlockID
-
-struct DetectionMsg {
-    static let blink = "Please blink your eyes"
-    static let smile = "Please smile"
-    static let left = "Please turn left"
-    static let right = "Please turn right"
-}
 
 /*
  Adding Feedback Generator
@@ -67,7 +60,7 @@ enum Vibration {
     }
 
 
-class ActiveLiveIDViewController: UIViewController {
+class LiveIDViewController: UIViewController {
     
     // MARK: - Properties -
     var isForVerification: Bool = false
@@ -75,7 +68,6 @@ class ActiveLiveIDViewController: UIViewController {
        
     // MARK: - Private properties -
     private var liveIdScannerHelper: LiveIDScannerHelper?
-    private let isResettingExpressionsAllowed = false
     private var attemptCounts = 0
     private var imgOverlay: UIImageView!
     
@@ -88,11 +80,10 @@ class ActiveLiveIDViewController: UIViewController {
     @IBOutlet private weak var _imgOverlay: UIImageView!
     @IBOutlet private weak var _lblInformation: UILabel!
     @IBOutlet private weak var _lblPageTitle: UILabel!
-
+    
     // MARK: - View Life Cycle -
     override func viewDidLoad() {
         super.viewDidLoad()
-        _lblInformation.isHidden = true
         
         if isForVerification {
             //For LiveID Verification
@@ -112,15 +103,10 @@ class ActiveLiveIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    
-                    // BLOCKIDSDK scanning
-                    self._lblInformation.isHidden = true
-                    
                     // Initialize LiveIDScannerHelper
                     if self.liveIdScannerHelper == nil {
                         self.liveIdScannerHelper = LiveIDScannerHelper.init(bidScannerView: self._viewLiveIDScan,
                                                                             overlayFrame: self._imgOverlay.frame,
-                                                                            shouldResetOnWrongExpresssion: self.isResettingExpressionsAllowed,
                                                                             liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
@@ -164,11 +150,12 @@ class ActiveLiveIDViewController: UIViewController {
     // register liveID -
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func setLiveID(withPhoto face: UIImage, token: String) {
+    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face,
                                             liveIdProofedBy: "",
-                                            sigToken: token) { [self] (status, error) in
+                                            sigToken: token, 
+                                            livenessResult: livenessResult) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -233,10 +220,12 @@ class ActiveLiveIDViewController: UIViewController {
     // verify liveID
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func verifyLiveID(withPhoto photo: UIImage, token: String) {
+    private func verifyLiveID(withPhoto photo: UIImage, token: String,
+                              livenessResult: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
-                                               sigToken: token) { (status, error) in
+                                               sigToken: token, 
+                                               livenessResult: livenessResult) { (status, error) in
             self.view.hideToastActivity()
             if !status {
                 //If verification is for User Consent
@@ -299,7 +288,7 @@ class ActiveLiveIDViewController: UIViewController {
 }
 
 // MARK: - LiveIDResponseDelegate -
-extension ActiveLiveIDViewController: LiveIDResponseDelegate {
+extension LiveIDViewController: LiveIDResponseDelegate {
   
     func liveIdDidDetectErrorInScanning(error: ErrorResponse?) {
         // check error when camera sensor is blocked.
@@ -311,8 +300,8 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
     
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?,
                                   signatureToken: String?,
+                                  livenessResult: String?,
                                   error: ErrorResponse?) {
-        
         // check for error...
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
@@ -347,90 +336,41 @@ extension ActiveLiveIDViewController: LiveIDResponseDelegate {
 
         if isForVerification {
             // Verify LiveID
-            self.verifyLiveID(withPhoto: face, token: signToken)
+            self.verifyLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
                 self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
                 return
             }
-            self.setLiveID(withPhoto: face, token: signToken)
+            self.setLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
 
         }
         
         Vibration.heavy.vibrate()
     }
     
-    // expression to give...
-    func readyForExpression(_ livenessFactor: LivenessFactorType) {
-        DispatchQueue.main.async {
-            self._lblInformation.isHidden = false
-            self._lblInformation.text = ""
-            Vibration.success.vibrate()
-            switch livenessFactor {
-            case .BLINK:
-                self._lblInformation.text = DetectionMsg.blink
-            case .SMILE:
-                self._lblInformation.text = DetectionMsg.smile
-            case .TURN_LEFT:
-                self._lblInformation.text = DetectionMsg.left
-            case .TURN_RIGHT:
-                self._lblInformation.text = DetectionMsg.right
-            case .NONE:
-                return
-            @unknown default:
-                return
-            }
-            self._imgOverlay.tintColor = .green
-        }
-
-    }
-    
     func faceLivenessCheckStarted() {
         self.view.makeToastActivity(.center)
     }
     
-    // show error when face is out of focus..
-    func focusOnFaceChanged(isFocused: Bool?) {
+    // show error when face is out of focus
+    func focusOnFaceChanged(isFocused: Bool?, message: String?) {
         guard let inFocus = isFocused else {
             return
         }
-        
+                
+        self._lblInformation.text = message
+        self._lblInformation.isHidden = inFocus
         if !inFocus {
             DispatchQueue.main.async {
                 self._imgOverlay.tintColor = .red
-                self._lblInformation.text = "Out of focus !!!. Please try again."
                 Vibration.oldSchool.vibrate()
             }
         } else {
             DispatchQueue.main.async {
                 self._imgOverlay.tintColor = .green
             }
-        }
-    }
-    
-    // wrong expression detected...
-    func wrongExpressionDetected(_ livenessFactor: LivenessFactorType) {
-        var factor = ""
-        switch livenessFactor {
-        case .BLINK:
-            factor = "Blink"
-        case .SMILE:
-            factor = "Smile"
-        case .TURN_LEFT:
-            factor = "Turned Left"
-        case .TURN_RIGHT:
-            factor = "Turned Right"
-        case .NONE:
-            factor = "Unknown"
-        @unknown default:
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self._imgOverlay.tintColor = .red
-            self._lblInformation.text = "Wrong Expression: \(factor)"
-            Vibration.oldSchool.vibrate()
         }
     }
 }
