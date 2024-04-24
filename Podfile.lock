@@ -209,7 +209,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: 8128bffcee2e537f18da3053f2dcdc8afc303975
+  BlockID: c22b8afce23c7393eadf1e04d306a5acd1dbc88b
   CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   EllipticCurveKeyPair: 0b618482247e48744b9a0709ef4bb0713c39f957
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
