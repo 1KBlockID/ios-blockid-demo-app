@@ -48,7 +48,7 @@ class SplashViewController: UIViewController {
     {
         let buildVer = UserDefaults.standard.string(forKey: AppConsant.buildVersion)
         if buildVer == nil {
-            resetAppNSDK()
+            resetAppNSDK(ResetSDK.freshInstallAndBuildVersionNotFound.message())
         }
         setVersionAndBuildNumber()
     }
