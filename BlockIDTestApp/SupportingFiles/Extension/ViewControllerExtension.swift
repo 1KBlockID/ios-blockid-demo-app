@@ -53,11 +53,13 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
     
-    public func  resetAppNSDK() {
+    public func  resetAppNSDK(_ reason: String) {
         //If launched using Magic-Link
         //Need to resave magic-link once app is reset
         UserDefaults.removeAllValues()
-        BlockIDSDK.sharedInstance.resetSDK(licenseKey: Tenant.licenseKey)
+        BlockIDSDK.sharedInstance.resetSDK(licenseKey: Tenant.licenseKey,
+                                           rootTenant: Tenant.defaultTenant,
+                                           reason: reason)
     }
     
     func showEnrollmentView() {
