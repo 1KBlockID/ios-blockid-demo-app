@@ -41,7 +41,7 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
-		4E86538D41E487628D6A4A9E /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8228E28D1776E04535E3EC67 /* Pods_BlockIDTestApp.framework */; };
+		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
 		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
 		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
@@ -51,6 +51,7 @@
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
 		5DEFCD5C293A11CB007E28FA /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5DEFCD5B293A11CB007E28FA /* WalletConnect */; };
 		5DEFCD5F293A1351007E28FA /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 5DEFCD5E293A1351007E28FA /* Starscream */; };
+		A8881666CFF7F6B81FB4A3F8 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */; };
 		B64453412893C71900597497 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B64453402893C71900597497 /* GoogleService-Info.plist */; };
 		B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB861328BE043100C488A1 /* WalletConnectListner.swift */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
@@ -100,7 +101,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		01964E85E1F69713DF2B3A62 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1F29F9A12804AAA700BF2456 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
 		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +140,7 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
 		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
 		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
@@ -147,8 +148,9 @@
 		5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConsentViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
-		6BA8EA1ADB279CECBF3354D2 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
-		8228E28D1776E04535E3EC67 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B64453402893C71900597497 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6AB861328BE043100C488A1 /* WalletConnectListner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListner.swift; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
@@ -190,7 +192,7 @@
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				5DEFCD5C293A11CB007E28FA /* WalletConnect in Frameworks */,
 				5DEFCD5F293A1351007E28FA /* Starscream in Frameworks */,
-				4E86538D41E487628D6A4A9E /* Pods_BlockIDTestApp.framework in Frameworks */,
+				A8881666CFF7F6B81FB4A3F8 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +204,7 @@
 			children = (
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				8228E28D1776E04535E3EC67 /* Pods_BlockIDTestApp.framework */,
+				A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -282,6 +284,7 @@
 		3CEE3339264414E7003FDB78 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */,
 				B6AB861328BE043100C488A1 /* WalletConnectListner.swift */,
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
@@ -404,8 +407,8 @@
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				01964E85E1F69713DF2B3A62 /* Pods-BlockIDTestApp.debug.xcconfig */,
-				6BA8EA1ADB279CECBF3354D2 /* Pods-BlockIDTestApp.release.xcconfig */,
+				984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */,
+				8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -444,14 +447,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
 			buildPhases = (
-				E4FE5AA5C6B43CE54F31A212 /* [CP] Check Pods Manifest.lock */,
+				8500AF0A8863C6CA8DCC74BD /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				4C9FDEF72970420D003433CC /* Embed Frameworks */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				2C05258F8F43BF7C816A2FEB /* [CP] Embed Pods Frameworks */,
+				9ECD4E2C04B7C56ED21B03C6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -551,7 +554,29 @@
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n\necho \"DOB: $date_of_build\"\n";
 		};
-		2C05258F8F43BF7C816A2FEB /* [CP] Embed Pods Frameworks */ = {
+		8500AF0A8863C6CA8DCC74BD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BlockIDTestApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9ECD4E2C04B7C56ED21B03C6 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -588,28 +613,6 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
-		E4FE5AA5C6B43CE54F31A212 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BlockIDTestApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -633,6 +636,7 @@
 				3CEE339026443347003FDB78 /* PinViewController.swift in Sources */,
 				B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
+				4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */,
 				E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */,
 				E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */,
 				E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */,
@@ -870,7 +874,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01964E85E1F69713DF2B3A62 /* Pods-BlockIDTestApp.debug.xcconfig */;
+			baseConfigurationReference = 984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -890,7 +894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.20;
+				MARKETING_VERSION = 1.10.21;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -929,7 +933,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6BA8EA1ADB279CECBF3354D2 /* Pods-BlockIDTestApp.release.xcconfig */;
+			baseConfigurationReference = 8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -948,7 +952,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.20;
+				MARKETING_VERSION = 1.10.21;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

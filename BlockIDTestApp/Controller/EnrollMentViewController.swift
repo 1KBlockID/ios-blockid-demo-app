@@ -421,7 +421,7 @@ extension EnrollMentViewController {
 
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.resetAppNSDK()
+            self.resetAppNSDK(ResetSDK.resetAppOptionClicked.message())
             self.showHomeView()
         }))
         
