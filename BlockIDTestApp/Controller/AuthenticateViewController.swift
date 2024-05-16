@@ -156,7 +156,7 @@ class AuthenticateViewController: UIViewController {
             case "fingerprint":
                 askForDeviceAuth(data: data)
             default:
-                doAuthenticate(data: data)
+                doAuthenticate(data: data, authFactor: "none")
             }
         }
     }
@@ -176,7 +176,7 @@ class AuthenticateViewController: UIViewController {
             liveIDVC.isForVerification = true
             liveIDVC.onFinishCallback = { (status) -> Void in
                 if status {
-                    self.doAuthenticate(data: data)
+                    self.doAuthenticate(data: data, authFactor: "LiveID")
                 }
             }
             self.navigationController?.pushViewController(liveIDVC, animated: true)
@@ -198,7 +198,7 @@ class AuthenticateViewController: UIViewController {
             pinVC.pinActivity = .isLogin
             pinVC.onFinishCallback = { (status) -> Void in
                 if status {
-                    self.doAuthenticate(data: data)
+                    self.doAuthenticate(data: data, authFactor: "Pin")
                 }
             }
             self.navigationController?.pushViewController(pinVC, animated: true)
@@ -222,12 +222,12 @@ class AuthenticateViewController: UIViewController {
                     self.showAlertView(title: "Error", message: messageUW)
                 }
             } else {
-                self.doAuthenticate(data: data)
+                self.doAuthenticate(data: data, authFactor: "Biometric")
             }
         }
     }
     
-    private func doAuthenticate(data: AuthenticationPayloadV1) {
+    private func doAuthenticate(data: AuthenticationPayloadV1, authFactor: String) {
         var dataModel: AuthRequestModel
         
         if let sessionUrl = data.sessionUrl, !sessionUrl.isEmpty {
@@ -235,22 +235,30 @@ class AuthenticateViewController: UIViewController {
         } else {
             dataModel = AuthRequestModel(lat: location.0, lon: location.1, session: data.session ?? "", creds: data.creds ?? "", scopes: data.scopes ?? "", origin: data.getBidOrigin(), isConsentGiven: true, userId: userId)
         }
-        
         switch qrOption {
         case .withScopeData:
-            self.authenticateUserWithScopes(dataModel: dataModel)
+            self.authenticateUserWithScopes(dataModel: dataModel, authFactor: authFactor)
         case .withPresetData:
-            self.authenticateUserWithPreset(dataModel: dataModel)
+            self.authenticateUserWithPreset(dataModel: dataModel, authFactor: authFactor)
         default:
             break
         }
     }
     
-    private func authenticateUserWithPreset(dataModel: AuthRequestModel) {
+    private func getAuthFactor(_ authType: String) -> String {
+        if authType.lowercased() == "face" {
+            return "LiveID"
+        } else if authType.lowercased() == "fingerprint" {
+            return "Biometric"
+        }
+        return authType
+    }
+    
+    private func authenticateUserWithPreset(dataModel: AuthRequestModel, authFactor: String) {
         self.view.makeToastActivity(.center)
         let dictScopes = ["data" : _txtPresetData.text]
             
-        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, dictScopes: dictScopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId) {  [weak self] (status, sessionid, error) in
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, dictScopes: dictScopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId, authFactor: authFactor) {  [weak self] (status, sessionid, error) in
             self?.view.hideToastActivity()
             if status {
                 //if success
@@ -283,10 +291,10 @@ class AuthenticateViewController: UIViewController {
     }
    
     
-    private func authenticateUserWithScopes(dataModel: AuthRequestModel) {
+    private func authenticateUserWithScopes(dataModel: AuthRequestModel, authFactor: String) {
         self.view.makeToastActivity(.center)
 
-        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, scopes: dataModel.scopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId) {  [weak self] (status, sessionid, error) in
+        BlockIDSDK.sharedInstance.authenticateUser(sessionId: dataModel.session, sessionURL: dataModel.sessionUrl, creds: dataModel.creds, scopes: dataModel.scopes, lat: dataModel.lat, lon: dataModel.lon, origin: dataModel.origin, userId: dataModel.userId, authFactor: authFactor) {  [weak self] (status, sessionid, error) in
             self?.view.hideToastActivity()
             if status {
                 //if success
