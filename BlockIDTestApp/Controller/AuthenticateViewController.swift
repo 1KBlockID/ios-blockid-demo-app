@@ -245,15 +245,6 @@ class AuthenticateViewController: UIViewController {
         }
     }
     
-    private func getAuthFactor(_ authType: String) -> String {
-        if authType.lowercased() == "face" {
-            return "LiveID"
-        } else if authType.lowercased() == "fingerprint" {
-            return "Biometric"
-        }
-        return authType
-    }
-    
     private func authenticateUserWithPreset(dataModel: AuthRequestModel, authFactor: String) {
         self.view.makeToastActivity(.center)
         let dictScopes = ["data" : _txtPresetData.text]
