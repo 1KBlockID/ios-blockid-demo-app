@@ -141,7 +141,8 @@ class UserOptionsViewController: UIViewController {
                                                        lat: 0.0,
                                                        lon: 0.0,
                                                        origin: (dataModel?.getBidOrigin())!,
-                                                       metaData: dataModel?.metadata) {(status, error) in
+                                                       metaData: dataModel?.metadata,
+                                                       authFactor: "none") {(status, error) in
             self.view.hideToastActivity()
             if status {
                 //if success
@@ -196,7 +197,7 @@ extension UserOptionsViewController: ScanQRViewDelegate {
                     
                     if isSuccess {
                         let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
-                        // authenticate user
+                        // Authenticate user
                         let authQRModel1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
                         self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
                     } else {
