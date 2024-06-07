@@ -110,7 +110,7 @@ class LiveIDViewController: UIViewController {
                                                                             liveIdResponseDelegate: self)
                     }
                     //4. Start Scanning
-                    self.liveIdScannerHelper?.startLiveIDScanning(dvcID: AppConsant.dvcID)
+                    self.liveIdScannerHelper?.startLiveIDScanning()
                 }
             }
         }
