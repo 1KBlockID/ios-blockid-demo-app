@@ -10,7 +10,6 @@ import Foundation
 import BlockID
 import Toast_Swift
 import UIKit
-import WalletConnectSign
 
 public enum Enrollments: String {
     case About  = "About"
@@ -29,7 +28,6 @@ public enum Enrollments: String {
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
     case RecoverMnemonics  = "Recover Mnemonics"
-    case WalletConnect = "WalletConnect"
     case resetApp  = "Reset App"
 }
 
@@ -51,7 +49,6 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_Management,
                            Enrollments.RecoverMnemonics,
-                           Enrollments.WalletConnect,
                            Enrollments.resetApp]
     
     @IBOutlet weak var tableEnrollments: UITableView!
@@ -60,16 +57,6 @@ class EnrollMentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let appDelegate = appDelegate {
-            let metadata = AppMetadata(
-                name: "BlockID Demo",
-                description: "1Kosmos WalletConenct Demo",
-                url: "example.wallet",
-                icons: ["https://www.1kosmos.com/favicon.ico"])
-            appDelegate.walletConnectHelper = WalletConnectHelper.init(projectID: "932edbeee51ba767c6e1fb7947b92c39",
-                                                                       metadata: metadata,
-                                                                       delegate: appDelegate)
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,8 +118,6 @@ extension EnrollMentViewController: UITableViewDelegate {
             showFidoKeyManagement()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
-        case Enrollments.WalletConnect.rawValue:
-            self.showWalletConnectVC()
         case Enrollments.resetApp.rawValue:
             resetApp()
         case Enrollments.About.rawValue:

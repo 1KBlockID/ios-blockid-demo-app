@@ -42,20 +42,13 @@
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
-		5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */; };
-		5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
-		5D85693E28B80706000D0B05 /* WalletConsentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */; };
-		5DBDE3F328B6026D00D8D9FF /* WalletConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
-		5DEFCD5C293A11CB007E28FA /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = 5DEFCD5B293A11CB007E28FA /* WalletConnect */; };
-		5DEFCD5F293A1351007E28FA /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 5DEFCD5E293A1351007E28FA /* Starscream */; };
-		A8881666CFF7F6B81FB4A3F8 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */; };
 		B64453412893C71900597497 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B64453402893C71900597497 /* GoogleService-Info.plist */; };
-		B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AB861328BE043100C488A1 /* WalletConnectListner.swift */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
+		E14763711E0714F0D6072679 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0F7171D27093F8A0392C6C3 /* Pods_BlockIDTestApp.framework */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
 		E61CF47629C83F7A00C5881A /* FIDOKeyManagementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */; };
 		E666409F282A863600E78498 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E666409E282A863600E78498 /* MagicLinkModel.swift */; };
@@ -140,21 +133,16 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		47196A8196E6FF6ABFFCF900 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
-		5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectTableViewCell.swift; sourceTree = "<group>"; };
-		5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletConnectTableViewCell.xib; sourceTree = "<group>"; };
+		4E812E9998D20AE86F8DC781 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
-		5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConsentViewController.swift; sourceTree = "<group>"; };
-		5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
-		8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
-		984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B64453402893C71900597497 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		B6AB861328BE043100C488A1 /* WalletConnectListner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListner.swift; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
+		D0F7171D27093F8A0392C6C3 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
 		E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOKeyManagementController.swift; sourceTree = "<group>"; };
 		E666409E282A863600E78498 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
@@ -190,9 +178,7 @@
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
-				5DEFCD5C293A11CB007E28FA /* WalletConnect in Frameworks */,
-				5DEFCD5F293A1351007E28FA /* Starscream in Frameworks */,
-				A8881666CFF7F6B81FB4A3F8 /* Pods_BlockIDTestApp.framework in Frameworks */,
+				E14763711E0714F0D6072679 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +190,7 @@
 			children = (
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				A1E63A683AB97279905B885E /* Pods_BlockIDTestApp.framework */,
+				D0F7171D27093F8A0392C6C3 /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -285,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */,
-				B6AB861328BE043100C488A1 /* WalletConnectListner.swift */,
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
 				3CEE333F264414E7003FDB78 /* CommonFunctions.swift */,
@@ -335,10 +320,8 @@
 				3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */,
 				E6FFD6642786E376004CBB62 /* SSNViewController.swift */,
 				E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */,
-				5DBDE3F228B6026D00D8D9FF /* WalletConnectViewController.swift */,
 				5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */,
 				E6EC5F702923761100BB4E04 /* AboutViewController.swift */,
-				5D85693D28B80706000D0B05 /* WalletConsentViewController.swift */,
 				5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */,
 				E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */,
 			);
@@ -348,7 +331,6 @@
 		3CEE334B264414E7003FDB78 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				5D4281C928B75183009E87A0 /* WalletConnectCell */,
 				3CD35A0E26458C03009D38B0 /* ConsentScreenCell */,
 				3CEE334C264414E7003FDB78 /* EnrollmentCell */,
 			);
@@ -395,20 +377,11 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		5D4281C928B75183009E87A0 /* WalletConnectCell */ = {
-			isa = PBXGroup;
-			children = (
-				5D4281CA28B751B8009E87A0 /* WalletConnectTableViewCell.swift */,
-				5D4281CB28B751B8009E87A0 /* WalletConnectTableViewCell.xib */,
-			);
-			path = WalletConnectCell;
-			sourceTree = "<group>";
-		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */,
-				8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */,
+				47196A8196E6FF6ABFFCF900 /* Pods-BlockIDTestApp.debug.xcconfig */,
+				4E812E9998D20AE86F8DC781 /* Pods-BlockIDTestApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -447,24 +420,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
 			buildPhases = (
-				8500AF0A8863C6CA8DCC74BD /* [CP] Check Pods Manifest.lock */,
+				A2081ED339375A708483525E /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				4C9FDEF72970420D003433CC /* Embed Frameworks */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				9ECD4E2C04B7C56ED21B03C6 /* [CP] Embed Pods Frameworks */,
+				6224D38873D946521F715AA0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = BlockIDTestApp;
-			packageProductDependencies = (
-				5DEFCD5B293A11CB007E28FA /* WalletConnect */,
-				5DEFCD5E293A1351007E28FA /* Starscream */,
-			);
 			productName = BlockIDTestApp;
 			productReference = 3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */;
 			productType = "com.apple.product-type.application";
@@ -496,10 +465,6 @@
 				Base,
 			);
 			mainGroup = 3CEE3302264413C2003FDB78;
-			packageReferences = (
-				5DEFCD5A293A11CB007E28FA /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
-				5DEFCD5D293A1351007E28FA /* XCRemoteSwiftPackageReference "Starscream" */,
-			);
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -527,7 +492,6 @@
 				3CEE3318264413C2003FDB78 /* Assets.xcassets in Resources */,
 				3CEE3316264413C2003FDB78 /* Main.storyboard in Resources */,
 				3CD35A1226458C39009D38B0 /* ConsentScreenCell.xib in Resources */,
-				5D4281CD28B751B8009E87A0 /* WalletConnectTableViewCell.xib in Resources */,
 				3CEE335B264414E7003FDB78 /* EnrollmentTableViewCell.xib in Resources */,
 				B64453412893C71900597497 /* GoogleService-Info.plist in Resources */,
 			);
@@ -554,7 +518,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n\necho \"DOB: $date_of_build\"\n";
 		};
-		8500AF0A8863C6CA8DCC74BD /* [CP] Check Pods Manifest.lock */ = {
+		6224D38873D946521F715AA0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2081ED339375A708483525E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -574,23 +555,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9ECD4E2C04B7C56ED21B03C6 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B66C5EC82892973F00E8005C /* Firebase Crashalytics */ = {
@@ -632,7 +596,6 @@
 				3CEE3358264414E7003FDB78 /* LiveIDViewController.swift in Sources */,
 				3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */,
 				E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */,
-				5D4281CC28B751B8009E87A0 /* WalletConnectTableViewCell.swift in Sources */,
 				3CEE339026443347003FDB78 /* PinViewController.swift in Sources */,
 				B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */,
 				3CD35A142649122C009D38B0 /* EPassportChipScanViewController.swift in Sources */,
@@ -640,7 +603,6 @@
 				E689A17B2817DB1E00DCBED6 /* AuthenticationPayloadV2.swift in Sources */,
 				E6EC5F712923761100BB4E04 /* AboutViewController.swift in Sources */,
 				E6F4CD12282E7D7F00646C68 /* DocumentLivenessViewController.swift in Sources */,
-				5D85693E28B80706000D0B05 /* WalletConsentViewController.swift in Sources */,
 				E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */,
 				3CEE3351264414E7003FDB78 /* CommonFunctions.swift in Sources */,
 				3CEE334F264414E7003FDB78 /* ViewControllerExtension.swift in Sources */,
@@ -656,14 +618,12 @@
 				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
 				5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */,
 				3CEE3353264414E7003FDB78 /* ErrorConfig.swift in Sources */,
-				B6AB861428BE043100C488A1 /* WalletConnectListner.swift in Sources */,
 				3CEE3352264414E7003FDB78 /* AppConstants.swift in Sources */,
 				3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */,
 				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
 				E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */,
 				5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */,
 				E666409F282A863600E78498 /* MagicLinkModel.swift in Sources */,
-				5DBDE3F328B6026D00D8D9FF /* WalletConnectViewController.swift in Sources */,
 				E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */,
 				E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
@@ -874,7 +834,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 984A140D7222212DFC68753D /* Pods-BlockIDTestApp.debug.xcconfig */;
+			baseConfigurationReference = 47196A8196E6FF6ABFFCF900 /* Pods-BlockIDTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -933,7 +893,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8636E726199B6318223DDE2A /* Pods-BlockIDTestApp.release.xcconfig */;
+			baseConfigurationReference = 4E812E9998D20AE86F8DC781 /* Pods-BlockIDTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1021,38 +981,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		5DEFCD5A293A11CB007E28FA /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/1KBlockID/WalletConnectSwiftV2";
-			requirement = {
-				branch = BIDWalletConnect;
-				kind = branch;
-			};
-		};
-		5DEFCD5D293A1351007E28FA /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream";
-			requirement = {
-				kind = exactVersion;
-				version = 3.1.1;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		5DEFCD5B293A11CB007E28FA /* WalletConnect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DEFCD5A293A11CB007E28FA /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
-			productName = WalletConnect;
-		};
-		5DEFCD5E293A1351007E28FA /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DEFCD5D293A1351007E28FA /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3CEE3303264413C2003FDB78 /* Project object */;
 }

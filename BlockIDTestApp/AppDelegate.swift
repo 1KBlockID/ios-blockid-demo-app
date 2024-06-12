@@ -8,15 +8,11 @@
 
 import UIKit
 import Firebase
-import WalletConnectSign
 import BlockID
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    var currentProposal: Session.Proposal?
-    var walletConnectHelper: WalletConnectHelper?
-    var sessionItems: [ActiveSessionItem] = []
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
