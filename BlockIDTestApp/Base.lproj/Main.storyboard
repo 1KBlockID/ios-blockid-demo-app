@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -3288,115 +3287,6 @@
             </objects>
             <point key="canvasLocation" x="4051.875" y="878.87323943661977"/>
         </scene>
-        <!--Wallet Connect View Controller-->
-        <scene sceneID="1qU-sx-Jdz">
-            <objects>
-                <viewController storyboardIdentifier="WalletConnectViewController" id="lQK-lQ-QES" customClass="WalletConnectViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8Mp-CJ-lpM">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYP-Sx-ygm">
-                                <rect key="frame" x="2" y="63" width="60" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="u2t-IM-FFV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" image="iconBackarrow"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="txtColor" value="primary4"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="txtFont" value="fontRegular"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="backTapped:" destination="lQK-lQ-QES" eventType="touchUpInside" id="bVL-Or-TcJ"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wallet Connect" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSu-Rn-2fk">
-                                <rect key="frame" x="64" y="61" width="140.5" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nTi-Ib-m4E">
-                                <rect key="frame" x="30" y="134.5" width="174.5" height="34"/>
-                                <color key="tintColor" systemColor="systemRedColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" imagePadding="8">
-                                    <imageReference key="image" image="plus" catalog="system" symbolScale="medium" renderingMode="template"/>
-                                    <attributedString key="attributedTitle">
-                                        <fragment content="Connect to DApp">
-                                            <attributes>
-                                                <color key="NSColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <font key="NSFont" size="16" name="HelveticaNeue"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="connectDAppTapped:" destination="lQK-lQ-QES" eventType="touchUpInside" id="6iy-iJ-BbI"/>
-                                </connections>
-                            </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected Decentralized APPs" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oeS-Vf-Oeh">
-                                <rect key="frame" x="64" y="105" width="286" height="19.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="7zg-72-lKS">
-                                <rect key="frame" x="30" y="178.5" width="354" height="598.5"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="lQK-lQ-QES" id="ph3-do-eCx"/>
-                                    <outlet property="delegate" destination="lQK-lQ-QES" id="keV-1a-Hna"/>
-                                </connections>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKu-EO-ZAd">
-                                <rect key="frame" x="147" y="802" width="120" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="120" id="uqE-av-u1G"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Disconnect">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="disconnectTapped:" destination="lQK-lQ-QES" eventType="touchUpInside" id="pEh-B1-JFj"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="4sV-X0-Ana"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="7zg-72-lKS" firstAttribute="leading" secondItem="4sV-X0-Ana" secondAttribute="leading" constant="30" id="091-Kx-sXG"/>
-                            <constraint firstItem="oeS-Vf-Oeh" firstAttribute="centerX" secondItem="8Mp-CJ-lpM" secondAttribute="centerX" id="3BM-WM-lDb"/>
-                            <constraint firstItem="nTi-Ib-m4E" firstAttribute="leading" secondItem="4sV-X0-Ana" secondAttribute="leading" constant="30" id="3Fn-Ok-4JZ"/>
-                            <constraint firstItem="gYP-Sx-ygm" firstAttribute="leading" secondItem="4sV-X0-Ana" secondAttribute="leading" constant="2" id="5D7-XT-zhI"/>
-                            <constraint firstItem="uSu-Rn-2fk" firstAttribute="centerY" secondItem="gYP-Sx-ygm" secondAttribute="centerY" id="8o2-e0-ZwV"/>
-                            <constraint firstItem="tKu-EO-ZAd" firstAttribute="centerX" secondItem="8Mp-CJ-lpM" secondAttribute="centerX" id="D4t-4P-Q2H"/>
-                            <constraint firstItem="oeS-Vf-Oeh" firstAttribute="top" secondItem="uSu-Rn-2fk" secondAttribute="bottom" constant="20" id="KJl-mc-G8b"/>
-                            <constraint firstItem="7zg-72-lKS" firstAttribute="centerX" secondItem="8Mp-CJ-lpM" secondAttribute="centerX" id="QOI-hU-W56"/>
-                            <constraint firstItem="4sV-X0-Ana" firstAttribute="bottom" secondItem="tKu-EO-ZAd" secondAttribute="bottom" constant="30" id="S3k-QS-jHp"/>
-                            <constraint firstItem="uSu-Rn-2fk" firstAttribute="leading" secondItem="gYP-Sx-ygm" secondAttribute="trailing" constant="2" id="Tpn-tt-4M5"/>
-                            <constraint firstItem="nTi-Ib-m4E" firstAttribute="top" secondItem="oeS-Vf-Oeh" secondAttribute="bottom" constant="10" id="ULx-1B-ehj"/>
-                            <constraint firstItem="oeS-Vf-Oeh" firstAttribute="leading" secondItem="uSu-Rn-2fk" secondAttribute="leading" id="Ukp-S3-OTP"/>
-                            <constraint firstItem="7zg-72-lKS" firstAttribute="top" secondItem="nTi-Ib-m4E" secondAttribute="bottom" constant="10" id="jUh-Fx-5Ik"/>
-                            <constraint firstItem="tKu-EO-ZAd" firstAttribute="top" secondItem="7zg-72-lKS" secondAttribute="bottom" constant="25" id="lQy-vv-tLK"/>
-                            <constraint firstItem="gYP-Sx-ygm" firstAttribute="top" secondItem="4sV-X0-Ana" secondAttribute="top" constant="15" id="yI1-PT-qvr"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="connectTable" destination="7zg-72-lKS" id="5dQ-bq-k90"/>
-                        <outlet property="disconnectBtn" destination="tKu-EO-ZAd" id="POO-Fn-X7c"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cro-os-1A8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4828.125" y="985.56338028169012"/>
-        </scene>
         <!--ScanQR View Controller-->
         <scene sceneID="Qne-Km-olP">
             <objects>
@@ -3924,7 +3814,6 @@
         <image name="iconPassChip" width="34" height="20"/>
         <image name="iconWarning" width="20" height="20"/>
         <image name="liveIdFace" width="345" height="402"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="qrErrorBg" width="347" height="40"/>
         <image name="qrScanner" width="346" height="378"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>

@@ -184,14 +184,6 @@ extension UIViewController {
         self.navigationController?.pushViewController(aboutVC, animated: true)
     }
     
-    /// Wallet Connect VC
-    func showWalletConnectVC() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let walletConnectVC = storyBoard.instantiateViewController(withIdentifier: "WalletConnectViewController") as? WalletConnectViewController {
-            self.navigationController?.pushViewController(walletConnectVC, animated: false)
-        }
-    }
-    
     public func loginWithDeviceAuth() {
         BIDAuthProvider.shared.verifyDeviceAuth { (success, error, message) in
             if !success {
