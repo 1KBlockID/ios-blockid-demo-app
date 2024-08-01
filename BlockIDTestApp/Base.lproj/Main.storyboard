@@ -1969,7 +1969,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liveIdFace" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-PE-0Ie">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liveIdFaceOval" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-PE-0Ie">
                                         <rect key="frame" x="15" y="141.5" width="384" height="620.5"/>
                                         <color key="tintColor" systemColor="systemRedColor"/>
                                     </imageView>
@@ -3813,7 +3813,7 @@
         <image name="iconMicsRfidNfc" width="40" height="40"/>
         <image name="iconPassChip" width="34" height="20"/>
         <image name="iconWarning" width="20" height="20"/>
-        <image name="liveIdFace" width="345" height="402"/>
+        <image name="liveIdFaceOval" width="345" height="402"/>
         <image name="qrErrorBg" width="347" height="40"/>
         <image name="qrScanner" width="346" height="378"/>
         <image name="square.and.arrow.up" catalog="system" width="108" height="128"/>
