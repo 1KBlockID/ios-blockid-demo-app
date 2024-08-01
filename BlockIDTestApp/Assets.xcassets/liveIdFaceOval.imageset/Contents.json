@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "liveIdFace@1x.png",
+      "filename" : "liveIdFaceOval.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "liveIdFace@2x.png",
+      "filename" : "liveIdFaceOval@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "liveIdFace@3x.png",
+      "filename" : "liveIdFaceOval@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
