@@ -504,8 +504,12 @@ extension SSNViewController {
         let ssnPayload = prepareSSNPayload(verifiedPersonObj: verifiedPersonObj,
                                            certification: certification)
         self.view.makeToastActivity(.center)
+        let mobileSessionId = UUID().uuidString
+        var mobileDocumentId = "ssn_" + mobileSessionId
         BlockIDSDK.sharedInstance.registerDocument(obj: ssnPayload,
-                                                   sigToken: nil)
+                                                   sigToken: nil,
+                                                   mobileSessionId: mobileSessionId,
+                                                   mobileDocumentId: mobileDocumentId)
         { (status, error) in
             DispatchQueue.main.async {
                 // Hide loader
