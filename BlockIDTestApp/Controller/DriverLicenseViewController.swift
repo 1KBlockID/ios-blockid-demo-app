@@ -267,6 +267,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         }
         dictDLObject["proof"] = proof_jwt
         dictDLObject["certificate_token"] = token
+        DocumentStore.sharedInstance.setSessionId(sessionID)
         self.showVerifyAlert(withDLData: dictDLObject, sessionID)
     }
     
