@@ -78,7 +78,7 @@ class DriverLicenseViewController: UIViewController {
     
     private func verifyDL(withDLData dl: [String: Any]?, _ sessionId: String?) {
         
-        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
+        BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"], mobileSessionId: sessionId, mobileDocumentId: "dl_"+UUID().uuidString) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
                 DispatchQueue.main.async {
                     if !status {
