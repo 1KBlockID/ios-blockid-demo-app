@@ -252,8 +252,9 @@ extension SSNViewController {
             var message: String = ""
             var alertTag: Int = 0
             if status {
-                if let dataDict = dataDic,
-                    let certifications = dataDict["certifications"] as? [[String: Any]] {
+                if let dataDic = dataDic,
+                   let dictResult = dataDic["result"] as? [String: Any],
+                   let certifications = dictResult["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
                     // Get certification verified
                     let verified = weakSelf.certification["verified"] as? Bool
