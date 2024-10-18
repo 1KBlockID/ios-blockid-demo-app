@@ -109,8 +109,17 @@ class LiveIDViewController: UIViewController {
                                                                             overlayFrame: self._imgOverlay.frame,
                                                                             liveIdResponseDelegate: self)
                     }
+                    let mobileSessionId = UUID().uuidString
+                    var liveIdScanType = "liveid_"
+                    if self.isForConsent && self.isForVerification {
+                        liveIdScanType = "consent_liveid_verify_"
+                    } else if self.isForVerification {
+                        liveIdScanType = "liveid_verify_"
+                    }
+                    let mobileDocumentId = liveIdScanType + mobileSessionId
                     //4. Start Scanning
-                    self.liveIdScannerHelper?.startLiveIDScanning()
+                    self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
+                                                                  mobileDocumentId: mobileDocumentId)
                 }
             }
         }
@@ -150,12 +159,14 @@ class LiveIDViewController: UIViewController {
     // register liveID -
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?) {
+    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face,
                                             liveIdProofedBy: "",
                                             sigToken: token, 
-                                            livenessResult: livenessResult) { [self] (status, error) in
+                                            livenessResult: livenessResult,
+                                            mobileSessionId: mobileSessionId,
+                                            mobileDocumentId: mobileDocumentId) { [self] (status, error) in
             self.view.hideToastActivity()
             if !status {
                 // FAILED
@@ -185,12 +196,15 @@ class LiveIDViewController: UIViewController {
     private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String) {
         self.view.makeToastActivity(.center)
         let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
+        let sessionId = DocumentStore.sharedInstance.getSessionId() ?? ""
         guard let obj = documentData.documentData else { return  }
-        
+        let mobileDocumentId = (documentData.type ?? "doctype").lowercased() + "_with_live_id_" + sessionId
         BlockIDSDK.sharedInstance.registerDocument(obj: obj,
                                                    liveIdProofedBy: "",
                                                    faceImage: face,
-                                                   liveIDSignToken: token) { [self] (status, error) in
+                                                   liveIDSignToken: token,
+                                                   mobileSessionId: sessionId,
+                                                   mobileDocumentId: mobileDocumentId) { [self] (status, error) in
             self.view.hideToastActivity()
             DocumentStore.sharedInstance.clearData()
             // SUCCESS
@@ -221,11 +235,13 @@ class LiveIDViewController: UIViewController {
     /// - Parameters
     /// - face: liveID image from liveID scanner object
     private func verifyLiveID(withPhoto photo: UIImage, token: String,
-                              livenessResult: String?) {
+                              livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.verifyLiveID(image: photo,
                                                sigToken: token, 
-                                               livenessResult: livenessResult) { (status, error) in
+                                               livenessResult: livenessResult,
+                                               mobileSessionId: mobileSessionId,
+                                               mobileDocumentId: mobileDocumentId) { (status, error) in
             self.view.hideToastActivity()
             if !status {
                 //If verification is for User Consent
@@ -298,10 +314,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
-    func liveIdDetectionCompleted(_ liveIdImage: UIImage?,
-                                  signatureToken: String?,
-                                  livenessResult: String?,
-                                  error: ErrorResponse?) {
+    func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, livenessResult: String?, mobileSessionId: String?, mobileDocumentId: String?, error: BlockID.ErrorResponse?) {
         // check for error...
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
             let localizedMessage = "MODULE_NOT_ENABLED".localizedMessage(CustomErrors.License.MODULE_NOT_ENABLED.code)
@@ -336,14 +349,14 @@ extension LiveIDViewController: LiveIDResponseDelegate {
 
         if isForVerification {
             // Verify LiveID
-            self.verifyLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
+            self.verifyLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
         } else {
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
                 self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
                 return
             }
-            self.setLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult)
+            self.setLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
 
         }
         

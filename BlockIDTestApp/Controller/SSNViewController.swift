@@ -238,10 +238,13 @@ extension SSNViewController {
     
     private func verifySSN(_ dictDocumentObj: [String: Any]) {
         self.view.makeToastActivity(.center)
-        
+        let mobileSessionId = UUID().uuidString
+        var mobileDocumentId = "ssn_" + mobileSessionId
         let dictPayload = getVerifySSNPayload(dictDocumentObj)
         BlockIDSDK.sharedInstance.verifyDocument(dic: dictPayload,
-                                                 verifications: ["ssn_verify"])
+                                                 verifications: ["ssn_verify"],
+                                                 mobileSessionId: mobileSessionId,
+                                                 mobileDocumentId: mobileDocumentId)
         { [weak self] (status, dataDic, errorResponse) in
             guard let weakSelf = self else {return}
             weakSelf.view.hideToastActivity()
@@ -249,8 +252,9 @@ extension SSNViewController {
             var message: String = ""
             var alertTag: Int = 0
             if status {
-                if let dataDict = dataDic,
-                    let certifications = dataDict["certifications"] as? [[String: Any]] {
+                if let dataDic = dataDic,
+                   let dictResult = dataDic["result"] as? [String: Any],
+                   let certifications = dictResult["certifications"] as? [[String: Any]] {
                     weakSelf.certification = certifications[0]
                     // Get certification verified
                     let verified = weakSelf.certification["verified"] as? Bool
@@ -501,8 +505,12 @@ extension SSNViewController {
         let ssnPayload = prepareSSNPayload(verifiedPersonObj: verifiedPersonObj,
                                            certification: certification)
         self.view.makeToastActivity(.center)
+        let mobileSessionId = UUID().uuidString
+        var mobileDocumentId = "ssn_" + mobileSessionId
         BlockIDSDK.sharedInstance.registerDocument(obj: ssnPayload,
-                                                   sigToken: nil)
+                                                   sigToken: nil,
+                                                   mobileSessionId: mobileSessionId,
+                                                   mobileDocumentId: mobileDocumentId)
         { (status, error) in
             DispatchQueue.main.async {
                 // Hide loader
