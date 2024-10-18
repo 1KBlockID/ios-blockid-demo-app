@@ -93,7 +93,10 @@ class DriverLicenseViewController: UIViewController {
                     // - Recommended for future use -
                     // Update DL dictionary to include array of token recieved
                     // from verifyDocument API response.
-                    if let dataDict = dataDic, let certifications = dataDict["certifications"] as? [[String: Any]], var dlObj = dl {
+                    if let dataDic = dataDic,
+                       let dictResult = dataDic["result"] as? [String: Any],
+                       let certifications = dictResult["certifications"] as? [[String: Any]],
+                       var dlObj = dl {
                         var tokens = [String]()
                         for certification in certifications {
                             let token = certification["token"] as? String ?? ""
