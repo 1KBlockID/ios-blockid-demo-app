@@ -61,22 +61,22 @@ class DriverLicenseViewController: UIViewController {
         }
     }
 
-    private func showVerifyAlert(withDLData dl: [String : Any]?) {
+    private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
-            self.setDriverLicense(withDLData: dl)
+            self.setDriverLicense(withDLData: dl, sessionId)
         }))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-            self.verifyDL(withDLData: dl)
+            self.verifyDL(withDLData: dl, sessionId)
         }))
         
         self.present(alert, animated: true)
     }
     
-    private func verifyDL(withDLData dl: [String: Any]?) {
+    private func verifyDL(withDLData dl: [String: Any]?, _ sessionId: String?) {
         
         BlockIDSDK.sharedInstance.verifyDocument(dvcID: AppConsant.dvcID, dic: dl ?? [:], verifications: ["dl_verify"]) { [self] (status, dataDic, error) in
             DispatchQueue.global(qos: .userInitiated).async {
@@ -100,40 +100,42 @@ class DriverLicenseViewController: UIViewController {
                             tokens.append(token)
                         }
                         dlObj["tokens"] = tokens
-                        self.setDriverLicense(withDLData: dlObj)
+                        self.setDriverLicense(withDLData: dlObj, sessionId)
                     } else {
-                        self.setDriverLicense(withDLData: dl)
+                        self.setDriverLicense(withDLData: dl, sessionId)
                     }
                 }
             }
         }
     }
   
-    private func setDriverLicense(withDLData dl: [String : Any]?) {
+    private func setDriverLicense(withDLData dl: [String : Any]?, _ sessionId: String?) {
         var dic = dl
         dic?["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl?["id"]
         
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            self.registerWithLiveID(dic: dic)
+            self.registerWithLiveID(dic: dic, sessionId)
         } else {
-            self.registerWithOutLiveID(dic: dic)
+            self.registerWithOutLiveID(dic: dic, sessionId)
         }
         
     }
     
-    private func registerWithLiveID(dic: [String: Any]?) {
+    private func registerWithLiveID(dic: [String: Any]?, _ mobileSessionId: String?) {
         guard let imgB64Str = self.liveIdFace,
               let imgdata = Data(base64Encoded: imgB64Str,
                                  options: .ignoreUnknownCharacters),
               let img = UIImage(data: imgdata) else {
             return
         }
-
+        let mobileDocumentId = "dl_with_live_id_" + UUID().uuidString
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:],
                                                    liveIdProofedBy: self.proofedBy,
-                                                   faceImage: img)
+                                                   faceImage: img,
+                                                   mobileSessionId: mobileSessionId,
+                                                   mobileDocumentId: mobileDocumentId)
         { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
@@ -154,8 +156,11 @@ class DriverLicenseViewController: UIViewController {
         }
     }
     
-    private func registerWithOutLiveID(dic: [String: Any]?) {
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:]) { [self] (status, error) in
+    private func registerWithOutLiveID(dic: [String: Any]?, _ mobileSessionId: String?) {
+        let mobileDocumentId = "dl_" + UUID().uuidString
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:],
+                                                   mobileSessionId: mobileSessionId,
+                                                   mobileDocumentId: mobileDocumentId) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -186,9 +191,7 @@ class DriverLicenseViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension DriverLicenseViewController: DocumentScanDelegate {
    
-    func onDocumentScanResponse(status: Bool,
-                                document: String?,
-                                error: ErrorResponse?) {
+    func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
         
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -264,7 +267,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         }
         dictDLObject["proof"] = proof_jwt
         dictDLObject["certificate_token"] = token
-        self.showVerifyAlert(withDLData: dictDLObject)
+        self.showVerifyAlert(withDLData: dictDLObject, sessionID)
     }
     
     private func showAlertAndMoveBack(title: String, message: String) {
