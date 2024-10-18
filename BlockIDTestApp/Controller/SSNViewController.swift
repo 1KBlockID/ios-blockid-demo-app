@@ -238,10 +238,13 @@ extension SSNViewController {
     
     private func verifySSN(_ dictDocumentObj: [String: Any]) {
         self.view.makeToastActivity(.center)
-        
+        let mobileSessionId = UUID().uuidString
+        var mobileDocumentId = "ssn_" + mobileSessionId
         let dictPayload = getVerifySSNPayload(dictDocumentObj)
         BlockIDSDK.sharedInstance.verifyDocument(dic: dictPayload,
-                                                 verifications: ["ssn_verify"])
+                                                 verifications: ["ssn_verify"],
+                                                 mobileSessionId: mobileSessionId,
+                                                 mobileDocumentId: mobileDocumentId)
         { [weak self] (status, dataDic, errorResponse) in
             guard let weakSelf = self else {return}
             weakSelf.view.hideToastActivity()
