@@ -21,6 +21,7 @@ class PassportViewController: UIViewController {
     private var rfidScannerHelper: RFIDScannerHelper?
     private var liveIdFace: String!
     private var proofedBy: String!
+    private var sessionId: String!
 
     @IBOutlet weak var _viewEPassportScan: UIView!
     @IBOutlet private weak var loaderView: UIView!
@@ -64,30 +65,33 @@ class PassportViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-    private func setPassport(withPPData ppt: [String : Any], isWithNFC: Bool) {
+    private func setPassport(withPPData ppt: [String : Any], isWithNFC: Bool, _ sessionId: String?) {
         var dict = ppt
         dict["category"] = RegisterDocCategory.Identity_Document.rawValue
         dict["type"] = RegisterDocType.PPT.rawValue
         dict["id"] = ppt["id"]
         
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            self.registerWithLiveID(dic: dict)
+            self.registerWithLiveID(dic: dict, sessionId)
         } else {
-            self.registerWithOutLiveID(dic: dict)
+            self.registerWithOutLiveID(dic: dict, sessionId)
         }
     }
     
-    private func registerWithLiveID(dic: [String: Any]?) {
+    private func registerWithLiveID(dic: [String: Any]?, _ sessionId: String?) {
         guard let imgB64Str = self.liveIdFace,
               let imgdata = Data(base64Encoded: imgB64Str,
                                  options: .ignoreUnknownCharacters),
               let img = UIImage(data: imgdata) else {
             return
         }
-
+        
+        let mobileDocumentId = "ppt_with_live_id_" + UUID().uuidString
         BlockIDSDK.sharedInstance.registerDocument(obj: dic ?? [:],
                                                    liveIdProofedBy: self.proofedBy,
-                                                   faceImage: img)
+                                                   faceImage: img,
+                                                   mobileSessionId: sessionId,
+                                                   mobileDocumentId: mobileDocumentId)
         { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
@@ -111,8 +115,11 @@ class PassportViewController: UIViewController {
         }
     }
     
-    private func registerWithOutLiveID(dic: [String: Any]) {
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
+    private func registerWithOutLiveID(dic: [String: Any], _ sessionId: String?) {
+        let mobileDocumentId = "ppt_" + UUID().uuidString
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic,
+                                                   mobileSessionId: sessionId,
+                                                   mobileDocumentId: mobileDocumentId) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -152,13 +159,13 @@ class PassportViewController: UIViewController {
         }
     }
     
-    private func startRFIDScanWorkflow(withPPData ppt: [String : Any]) {
+    private func startRFIDScanWorkflow(withPPData ppt: [String : Any], _ sessionId: String?) {
         self.dictPPT = ppt
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
             //NOT NFC COMPATIBLE
             if !isNFCCompatible {
                 //Cannot scan NFC, proceed with bio-data of PP
-                self.setPassport(withPPData: ppt, isWithNFC: false)
+                self.setPassport(withPPData: ppt, isWithNFC: false, sessionId)
                 return
             }
            
@@ -169,7 +176,7 @@ class PassportViewController: UIViewController {
         self.showNFCDisableViewController(delegate: self)
     }
     
-    private func handleScanErrorResponse(error: ErrorResponse) {
+    private func handleScanErrorResponse(error: ErrorResponse, _ sessionId: String?) {
         let msg = "\(error.message) (Error code: \(error.code))"
         
         switch error.code {
@@ -181,7 +188,7 @@ class PassportViewController: UIViewController {
                                           preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPData: self.dictPPT!, isWithNFC: false)
+                self.setPassport(withPPData: self.dictPPT!, isWithNFC: false, sessionId)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 self._viewEPassportScan.isHidden = false
@@ -228,7 +235,7 @@ class PassportViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension PassportViewController: DocumentScanDelegate {
     
-    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+    func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
                 self.showAppLogin()
@@ -302,10 +309,10 @@ extension PassportViewController: DocumentScanDelegate {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }
-
+        self.sessionId = sessionID
         dictPPTObject["proof"] = proof_jwt
         dictPPTObject["certificate_token"] = token
-        self.startRFIDScanWorkflow(withPPData: dictPPTObject)
+        self.startRFIDScanWorkflow(withPPData: dictPPTObject, sessionID)
     }
     
     private func showAlertAndMoveBack(title: String, message: String) {
@@ -327,12 +334,12 @@ extension PassportViewController: EPassportChipScanViewControllerDelegate {
     }
     
     func onSkip() {
-        self.setPassport(withPPData: dictPPT!, isWithNFC: false)
+        self.setPassport(withPPData: dictPPT!, isWithNFC: false, self.sessionId)
     }
 }
 extension PassportViewController: NFCDisabledViewControllerDelegate {
     func cancelRFID() {
-        self.setPassport(withPPData: dictPPT!, isWithNFC: false)
+        self.setPassport(withPPData: dictPPT!, isWithNFC: false, self.sessionId)
     }
 }
 
@@ -350,7 +357,7 @@ extension PassportViewController: RFIDResponseDelegate {
             guard let err = error else {
                 return
             }
-            self.handleScanErrorResponse(error: err)
+            self.handleScanErrorResponse(error: err, self.sessionId)
             
             return
         }
@@ -359,7 +366,7 @@ extension PassportViewController: RFIDResponseDelegate {
             guard let err = error else {
                 return
             }
-            self.handleScanErrorResponse(error: err)
+            self.handleScanErrorResponse(error: err, self.sessionId)
             return
         }
         
@@ -372,7 +379,7 @@ extension PassportViewController: RFIDResponseDelegate {
             let alert = UIAlertController(title: "Error", message: msg, preferredStyle: .alert)
 
             alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                self.setPassport(withPPData: ppt, isWithNFC: true)
+                self.setPassport(withPPData: ppt, isWithNFC: true, self.sessionId)
             }))
             alert.addAction(UIAlertAction(title: "No", style: .default, handler: {_ in
                 
@@ -382,6 +389,6 @@ extension PassportViewController: RFIDResponseDelegate {
             self.present(alert, animated: true)
             return
         }
-        setPassport(withPPData: ppt, isWithNFC: true)
+        self.setPassport(withPPData: ppt, isWithNFC: true, self.sessionId)
     }
 }

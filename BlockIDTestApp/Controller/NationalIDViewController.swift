@@ -58,30 +58,33 @@ class NationalIDViewController: UIViewController {
         
     }
 
-    private func setNationaID(withNIDData nid: [String : Any]) {
+    private func setNationaID(withNIDData nid: [String : Any], _ sessionId: String?) {
         var dic = nid
         dic["category"] = RegisterDocCategory.Identity_Document.rawValue
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
         
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
-            self.registerWithLiveID(dic: dic)
+            self.registerWithLiveID(dic: dic, sessionId)
         } else {
-            self.registerWithOutLiveID(dic: dic)
+            self.registerWithOutLiveID(dic: dic, sessionId)
         }
     }
     
-    private func registerWithLiveID(dic: [String: Any]) {
+    private func registerWithLiveID(dic: [String: Any], _ sessionId: String?) {
         guard let imgB64Str = self.liveIdFace,
               let imgdata = Data(base64Encoded: imgB64Str,
                                  options: .ignoreUnknownCharacters),
               let img = UIImage(data: imgdata) else {
             return
         }
-
+        
+        let mobileDocumentId = "nationalid_with_live_id_" + UUID().uuidString
         BlockIDSDK.sharedInstance.registerDocument(obj: dic,
                                                    liveIdProofedBy: self.proofedBy,
-                                                   faceImage: img)
+                                                   faceImage: img,
+                                                   mobileSessionId: sessionId,
+                                                   mobileDocumentId: mobileDocumentId)
         { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
@@ -106,8 +109,11 @@ class NationalIDViewController: UIViewController {
         }
     }
     
-    private func registerWithOutLiveID(dic: [String: Any]) {
-        BlockIDSDK.sharedInstance.registerDocument(obj: dic) { [self] (status, error) in
+    private func registerWithOutLiveID(dic: [String: Any], _ sessionId: String?) {
+        let mobileDocumentId = "nationalid_" + UUID().uuidString
+        BlockIDSDK.sharedInstance.registerDocument(obj: dic,
+                                                   mobileSessionId: sessionId,
+                                                   mobileDocumentId: mobileDocumentId) { [self] (status, error) in
             DispatchQueue.main.async {
                 if !status {
                     // FAILED
@@ -135,7 +141,7 @@ class NationalIDViewController: UIViewController {
 // MARK: - DocumentSessionScanDelegate -
 extension NationalIDViewController: DocumentScanDelegate {
     
-    func onDocumentScanResponse(status: Bool, document: String?, error: ErrorResponse?) {
+    func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
         
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -212,7 +218,7 @@ extension NationalIDViewController: DocumentScanDelegate {
 
         dictIdcardObject["proof"] = proof_jwt
         dictIdcardObject["certificate_token"] = token
-        self.setNationaID(withNIDData: dictIdcardObject)
+        self.setNationaID(withNIDData: dictIdcardObject, sessionID)
     }
 
     private func showAlertAndMoveBack(title: String, message: String) {

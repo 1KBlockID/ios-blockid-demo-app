@@ -11,6 +11,7 @@ import BlockID
 class DocumentStore : NSObject {
     var documentData: [String : Any]?
     var type: String?
+    var sessionId: String?
     
     public static let sharedInstance = DocumentStore()
     
@@ -21,6 +22,14 @@ class DocumentStore : NSObject {
     public func setData(documentData: [String : Any]?) {
         self.documentData = documentData
         self.type = documentData?["type"] as? String ?? ""
+    }
+    
+    public func setSessionId(_ sessionId: String?) {
+        self.sessionId = sessionId
+    }
+    
+    public func getSessionId() -> String? {
+        return self.sessionId
     }
     
     public func clearData() {
