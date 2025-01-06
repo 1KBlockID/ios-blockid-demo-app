@@ -41,6 +41,9 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
+		46CACEB4749B4E12AD3CDA40 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC43D1ABFEC1D5030BD42EB /* Pods_BlockIDTestApp.framework */; };
+		4C8DEE612D2BEF2D0075A0D4 /* BlockID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8DEE5D2D2BE9BB0075A0D4 /* BlockID.framework */; };
+		4C8DEE622D2BEF2D0075A0D4 /* BlockID.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C8DEE5D2D2BE9BB0075A0D4 /* BlockID.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
@@ -67,7 +70,6 @@
 		E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
-		EC0F8003DB6969D745A0F538 /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0578B1490529C9C5D26BD1C3 /* Pods_BlockIDTestApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +80,20 @@
 			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
 			remoteInfo = BlockIDTestApp;
 		};
+		4C8DEE5C2D2BE9BB0075A0D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C8DEE562D2BE9BA0075A0D4 /* BlockID.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD73A64A25DE5F8D000864C3;
+			remoteInfo = BlockID;
+		};
+		4C8DEE632D2BEF330075A0D4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C8DEE562D2BE9BA0075A0D4 /* BlockID.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = AD73A64925DE5F8D000864C3;
+			remoteInfo = BlockID;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -87,6 +103,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4C8DEE622D2BEF2D0075A0D4 /* BlockID.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -94,13 +111,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0578B1490529C9C5D26BD1C3 /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0ACD43C16E9C4DF98DC19590 /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		1BC43D1ABFEC1D5030BD42EB /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F29F9A12804AAA700BF2456 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
 		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
 		1FA0938C268472A6008AAAA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		375800913BE2FAFCDB822F15 /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
 		3C2C96C526551EC100323172 /* DocumentMapUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMapUtil.swift; sourceTree = "<group>"; };
 		3C78FA07264AA1D8001576DF /* DocumentHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHolder.swift; sourceTree = "<group>"; };
 		3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentScreenCell.swift; sourceTree = "<group>"; };
@@ -135,6 +152,7 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
+		4C8DEE562D2BE9BA0075A0D4 /* BlockID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlockID.xcodeproj; path = "../ios-kernel-sdk/BlockID.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
@@ -142,7 +160,7 @@
 		B64453402893C71900597497 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
-		D12701273C5DD97326E65BAA /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		CA10E07E46E72544D8D18D0C /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
 		E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOKeyManagementController.swift; sourceTree = "<group>"; };
 		E666409E282A863600E78498 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
@@ -177,8 +195,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
+				4C8DEE612D2BEF2D0075A0D4 /* BlockID.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
-				EC0F8003DB6969D745A0F538 /* Pods_BlockIDTestApp.framework in Frameworks */,
+				46CACEB4749B4E12AD3CDA40 /* Pods_BlockIDTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +209,7 @@
 			children = (
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				0578B1490529C9C5D26BD1C3 /* Pods_BlockIDTestApp.framework */,
+				1BC43D1ABFEC1D5030BD42EB /* Pods_BlockIDTestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,6 +250,7 @@
 		3CEE3302264413C2003FDB78 = {
 			isa = PBXGroup;
 			children = (
+				4C8DEE562D2BE9BA0075A0D4 /* BlockID.xcodeproj */,
 				3CEE330D264413C2003FDB78 /* BlockIDTestApp */,
 				1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */,
 				3CEE330C264413C2003FDB78 /* Products */,
@@ -377,11 +397,19 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		4C8DEE592D2BE9BA0075A0D4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C8DEE5D2D2BE9BB0075A0D4 /* BlockID.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0ACD43C16E9C4DF98DC19590 /* Pods-BlockIDTestApp.debug.xcconfig */,
-				D12701273C5DD97326E65BAA /* Pods-BlockIDTestApp.release.xcconfig */,
+				CA10E07E46E72544D8D18D0C /* Pods-BlockIDTestApp.debug.xcconfig */,
+				375800913BE2FAFCDB822F15 /* Pods-BlockIDTestApp.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -420,18 +448,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
 			buildPhases = (
-				34AC7136D240654428BAB08C /* [CP] Check Pods Manifest.lock */,
+				B1956D78D20FBF90FC7C5C31 /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				4C9FDEF72970420D003433CC /* Embed Frameworks */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				72375DA45FBF17F765A7E4BA /* [CP] Embed Pods Frameworks */,
+				708BF00050335224DC5CEDB3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4C8DEE642D2BEF330075A0D4 /* PBXTargetDependency */,
 			);
 			name = BlockIDTestApp;
 			productName = BlockIDTestApp;
@@ -467,6 +496,12 @@
 			mainGroup = 3CEE3302264413C2003FDB78;
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4C8DEE592D2BE9BA0075A0D4 /* Products */;
+					ProjectRef = 4C8DEE562D2BE9BA0075A0D4 /* BlockID.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* BlockIDTestApp */,
@@ -474,6 +509,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4C8DEE5D2D2BE9BB0075A0D4 /* BlockID.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BlockID.framework;
+			remoteRef = 4C8DEE5C2D2BE9BB0075A0D4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA09386268472A6008AAAA1 /* Resources */ = {
@@ -518,7 +563,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n\necho \"DOB: $date_of_build\"\n";
 		};
-		34AC7136D240654428BAB08C /* [CP] Check Pods Manifest.lock */ = {
+		708BF00050335224DC5CEDB3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B1956D78D20FBF90FC7C5C31 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -538,23 +600,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		72375DA45FBF17F765A7E4BA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B66C5EC82892973F00E8005C /* Firebase Crashalytics */ = {
@@ -652,6 +697,11 @@
 			isa = PBXTargetDependency;
 			target = 3CEE330A264413C2003FDB78 /* BlockIDTestApp */;
 			targetProxy = 1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */;
+		};
+		4C8DEE642D2BEF330075A0D4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BlockID;
+			targetProxy = 4C8DEE632D2BEF330075A0D4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -834,7 +884,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0ACD43C16E9C4DF98DC19590 /* Pods-BlockIDTestApp.debug.xcconfig */;
+			baseConfigurationReference = CA10E07E46E72544D8D18D0C /* Pods-BlockIDTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -854,7 +904,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.90;
+				MARKETING_VERSION = 1.20.00;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -893,7 +943,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D12701273C5DD97326E65BAA /* Pods-BlockIDTestApp.release.xcconfig */;
+			baseConfigurationReference = 375800913BE2FAFCDB822F15 /* Pods-BlockIDTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -912,7 +962,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10.90;
+				MARKETING_VERSION = 1.20.00;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
