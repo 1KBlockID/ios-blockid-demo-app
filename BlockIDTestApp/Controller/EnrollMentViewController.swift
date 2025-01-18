@@ -24,6 +24,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
+    case VerifyLiveID  = "Verify LiveID"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
@@ -45,6 +46,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
+                           Enrollments.VerifyLiveID,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_Management,
@@ -110,6 +112,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             showLiveID()
+        case Enrollments.VerifyLiveID.rawValue:
+            verifyLiveID()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.FIDO2.rawValue:
@@ -398,6 +402,27 @@ extension EnrollMentViewController {
     private func showLiveID() {
         if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             showLiveIDView()
+        }
+    }
+    
+    private func verifyLiveID() {
+        if BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            // Authenticate liveID on liveIDcontroller screen...
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+                liveIDVC.isForVerification = true
+                liveIDVC.onFinishCallback = { (status) -> Void in
+                    if status {
+                        self.view.makeToast("LiveID verified successfully.", duration: 3.0, position: .center)
+                        self.tableEnrollments.reloadData()
+                    }
+                }
+                self.navigationController?.pushViewController(liveIDVC, animated: true)
+            }
+        } else {
+            let alert = UIAlertController(title: "Alert!", message: "LiveID is not registered.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
     }
     
