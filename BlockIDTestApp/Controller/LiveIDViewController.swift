@@ -119,7 +119,8 @@ class LiveIDViewController: UIViewController {
                     let mobileDocumentId = liveIdScanType + mobileSessionId
                     //4. Start Scanning
                     self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
-                                                                  mobileDocumentId: mobileDocumentId)
+                                                                  mobileDocumentId: mobileDocumentId,
+                                                                  isWithoutLivenessCheck: true)
                 }
             }
         }
@@ -234,6 +235,45 @@ class LiveIDViewController: UIViewController {
     // verify liveID
     /// - Parameters
     /// - face: liveID image from liveID scanner object
+    private func verifyFaceWithLiveness(withPhoto photo: UIImage, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.verifyFaceWithLiveness(image: photo,
+                                               mobileSessionId: mobileSessionId,
+                                               mobileDocumentId: mobileDocumentId) { (status, error) in
+            self.view.hideToastActivity()
+            if !status {
+                //If verification is for User Consent
+                if self.isForConsent {
+                    self.attemptCounts += 1
+                    debugPrint("LiveID: Current attempts = \(self.attemptCounts)")
+                    if self.attemptCounts == 3 {
+                        self.attemptCounts = 0
+                        //Failed 3 attempts
+                        //Finish Process with false status
+                        self.stopLiveIDScanning()
+                        self.goBack()
+                        return
+                    }
+                    self.liveIdScannerHelper = nil
+                    self.startLiveIDScanning()
+                    return
+                }
+                //Verification failed, show error
+                self.showErrorDialog(error)
+                return
+            }
+            //Verification successful
+            if let onFinishCallback = self.onFinishCallback {
+                onFinishCallback(true)
+            }
+            self.goBack()
+        }
+    }
+    
+    
+    // verify liveID
+    /// - Parameters
+    /// - face: liveID image from liveID scanner object
     private func verifyLiveID(withPhoto photo: UIImage, token: String,
                               livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
         self.view.makeToastActivity(.center)
@@ -327,8 +367,8 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             return
         }
         
-        // check for error...
-        guard let face = liveIdImage, let signToken = signatureToken else {
+        // check for error
+        guard let face = liveIdImage else {
             var errorMessage = error?.message ?? ""
             if let dict = error?.responseObj {
                 errorMessage = "(" + "\(error?.code ?? 0)" + ")"  + (error?.message ?? "") + "\n"
@@ -338,7 +378,7 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             } else {
                 errorMessage = (error?.message ?? "") + "(" + "\(error?.code ?? 0)" + ")"  + "\n"
             }
-
+            
             let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {_ in
                 self.goBack()
@@ -349,8 +389,10 @@ extension LiveIDViewController: LiveIDResponseDelegate {
 
         if isForVerification {
             // Verify LiveID
-            self.verifyLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
+            self.verifyFaceWithLiveness(withPhoto: face, mobileSessionId, mobileDocumentId)
         } else {
+            // FIXME: Below code should be handled with error response
+            guard let signToken = signatureToken else { return }
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
                 self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
