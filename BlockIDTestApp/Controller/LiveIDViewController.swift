@@ -89,6 +89,9 @@ class LiveIDViewController: UIViewController {
         if isForVerification {
             //For LiveID Verification
             _lblPageTitle.text = "Live ID Authentication"
+        } else if isForFaceCompareAndVerification {
+            //For LiveID Verification & Compare
+            _lblPageTitle.text = "Live ID Liveness & Compare"
         }
         startLiveIDScanning()
     }
@@ -112,14 +115,14 @@ class LiveIDViewController: UIViewController {
                     }
                     let mobileSessionId = UUID().uuidString
                     var liveIdScanType = "liveid_"
-                    if self.isForConsent && self.isForVerification {
+                    if self.isForConsent && (self.isForVerification || self.isForFaceCompareAndVerification) {
                         liveIdScanType = "consent_liveid_verify_"
-                    } else if self.isForVerification {
+                    } else if self.isForVerification || self.isForFaceCompareAndVerification {
                         liveIdScanType = "liveid_verify_"
                     }
                     let mobileDocumentId = liveIdScanType + mobileSessionId
                     //4. Start Scanning
-                    if self.isForVerification {
+                    if self.isForFaceCompareAndVerification {
                         self.liveIdScannerHelper?.startLiveIDScanning(isWithoutLivenessCheck: true,
                                                                       mobileSessionId: mobileSessionId,
                                                                       mobileDocumentId: mobileDocumentId)
