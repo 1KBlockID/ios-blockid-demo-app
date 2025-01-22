@@ -24,7 +24,7 @@ public enum Enrollments: String {
     case Pin  = "App Pin"
     case DeviceAuth  = "Device Auth"
     case LiveID  = "LiveID"
-    case LiveIDAuth  = "LiveID Authenticate"
+    case LiveIDLivenessAndCompare  = "LiveID Liveness & Compare"
     case LoginWithQR  = "Login With QR"
     case FIDO2 = "FIDO2"
     case FIDO2_Management = "FIDO2 PIN Management"
@@ -46,7 +46,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.Pin,
                            Enrollments.DeviceAuth,
                            Enrollments.LiveID,
-                           Enrollments.LiveIDAuth,
+                           Enrollments.LiveIDLivenessAndCompare,
                            Enrollments.LoginWithQR,
                            Enrollments.FIDO2,
                            Enrollments.FIDO2_Management,
@@ -112,8 +112,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             enrollDeviceAuth()
         case Enrollments.LiveID.rawValue:
             showLiveID()
-        case Enrollments.LiveIDAuth.rawValue:
-            showLiveIDAuthenticationView()
+        case Enrollments.LiveIDLivenessAndCompare.rawValue:
+            showLiveIDLivenessAndCompareView()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.FIDO2.rawValue:

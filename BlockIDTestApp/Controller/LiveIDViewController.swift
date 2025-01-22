@@ -64,6 +64,7 @@ class LiveIDViewController: UIViewController {
     
     // MARK: - Properties -
     var isForVerification: Bool = false
+    var isForFaceCompareAndVerification: Bool = false
     var isForConsent: Bool = false
        
     // MARK: - Private properties -
@@ -165,7 +166,7 @@ class LiveIDViewController: UIViewController {
     // register liveID -
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func setLiveID(withPhoto face: UIImage, token: String?, livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
+    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face,
                                             liveIdProofedBy: "",
@@ -199,7 +200,7 @@ class LiveIDViewController: UIViewController {
     // register liveID with doc
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String?) {
+    private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String) {
         self.view.makeToastActivity(.center)
         let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
         let sessionId = DocumentStore.sharedInstance.getSessionId() ?? ""
@@ -359,6 +360,24 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         }
     }
     
+    fileprivate func manageErrorResponse(_ error: ErrorResponse?) {
+        var errorMessage = error?.message ?? ""
+        if let dict = error?.responseObj {
+            errorMessage = "(" + "\(error?.code ?? 0)" + ")"  + (error?.message ?? "") + "\n"
+            let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: [])
+            let decoded = String(data: jsonData, encoding: .utf8)!
+            errorMessage += decoded
+        } else {
+            errorMessage = (error?.message ?? "") + "(" + "\(error?.code ?? 0)" + ")"  + "\n"
+        }
+        
+        let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {_ in
+            self.goBack()
+        }))
+        self.present(alert, animated: true)
+    }
+    
     func liveIdDetectionCompleted(_ liveIdImage: UIImage?, signatureToken: String?, livenessResult: String?, mobileSessionId: String?, mobileDocumentId: String?, error: BlockID.ErrorResponse?) {
         // check for error...
         if error?.code == CustomErrors.License.MODULE_NOT_ENABLED.code {
@@ -374,35 +393,38 @@ extension LiveIDViewController: LiveIDResponseDelegate {
         
         // check for error
         guard let face = liveIdImage else {
-            var errorMessage = error?.message ?? ""
-            if let dict = error?.responseObj {
-                errorMessage = "(" + "\(error?.code ?? 0)" + ")"  + (error?.message ?? "") + "\n"
-                let jsonData = try! JSONSerialization.data(withJSONObject: dict, options: [])
-                let decoded = String(data: jsonData, encoding: .utf8)!
-                errorMessage += decoded
-            } else {
-                errorMessage = (error?.message ?? "") + "(" + "\(error?.code ?? 0)" + ")"  + "\n"
-            }
-            
-            let alert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {_ in
-                self.goBack()
-            }))
-            self.present(alert, animated: true)
+            manageErrorResponse(error)
             return
         }
 
-        if isForVerification {
+        if isForFaceCompareAndVerification {
             // Verify LiveID
             self.verifyFaceWithLiveness(withPhoto: face, mobileSessionId, mobileDocumentId)
         } else {
-            // Set LiveID
-            if DocumentStore.sharedInstance.hasData() {
-                self.registerLiveIDWithDocument(withPhoto: face, token: signatureToken)
+            guard let token = signatureToken else {
+                manageErrorResponse(error)
                 return
             }
-            self.setLiveID(withPhoto: face, token: signatureToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
+            
+            if isForVerification {
+                self.verifyLiveID(withPhoto: face,
+                                  token: token,
+                                  livenessResult: livenessResult,
+                                  mobileSessionId,
+                                  mobileDocumentId)
+            } else {
+                // Set LiveID
+                if DocumentStore.sharedInstance.hasData() {
+                    self.registerLiveIDWithDocument(withPhoto: face, token: token)
+                    return
+                }
+                self.setLiveID(withPhoto: face,
+                               token: token,
+                               livenessResult: livenessResult,
+                               mobileSessionId,
+                               mobileDocumentId)
 
+            }
         }
         
         Vibration.heavy.vibrate()

@@ -150,11 +150,11 @@ extension UIViewController {
         }
     }
     
-    func showLiveIDAuthenticationView() {
+    func showLiveIDLivenessAndCompareView() {
         if BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
-                    liveIDVC.isForVerification = true
+                liveIDVC.isForFaceCompareAndVerification = true
                     self.navigationController?.pushViewController(liveIDVC, animated: true)
                
             }
