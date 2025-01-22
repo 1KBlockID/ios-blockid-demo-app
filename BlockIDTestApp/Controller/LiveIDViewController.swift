@@ -119,9 +119,9 @@ class LiveIDViewController: UIViewController {
                     let mobileDocumentId = liveIdScanType + mobileSessionId
                     //4. Start Scanning
                     if self.isForVerification {
-                        self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
-                                                                      mobileDocumentId: mobileDocumentId,
-                                                                      isWithoutLivenessCheck: true)
+                        self.liveIdScannerHelper?.startLiveIDScanning(isWithoutLivenessCheck: true,
+                                                                      mobileSessionId: mobileSessionId,
+                                                                      mobileDocumentId: mobileDocumentId)
                     } else {
                         self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
                                                                       mobileDocumentId: mobileDocumentId)
