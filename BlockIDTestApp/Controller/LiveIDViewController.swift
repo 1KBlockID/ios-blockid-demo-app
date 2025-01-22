@@ -118,9 +118,14 @@ class LiveIDViewController: UIViewController {
                     }
                     let mobileDocumentId = liveIdScanType + mobileSessionId
                     //4. Start Scanning
-                    self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
-                                                                  mobileDocumentId: mobileDocumentId,
-                                                                  isWithoutLivenessCheck: true)
+                    if self.isForVerification {
+                        self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
+                                                                      mobileDocumentId: mobileDocumentId,
+                                                                      isWithoutLivenessCheck: true)
+                    } else {
+                        self.liveIdScannerHelper?.startLiveIDScanning(mobileSessionId: mobileSessionId,
+                                                                      mobileDocumentId: mobileDocumentId)
+                    }
                 }
             }
         }
@@ -160,7 +165,7 @@ class LiveIDViewController: UIViewController {
     // register liveID -
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func setLiveID(withPhoto face: UIImage, token: String, livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
+    private func setLiveID(withPhoto face: UIImage, token: String?, livenessResult: String?, _ mobileSessionId: String?, _ mobileDocumentId: String?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.setLiveID(liveIdImage: face,
                                             liveIdProofedBy: "",
@@ -194,7 +199,7 @@ class LiveIDViewController: UIViewController {
     // register liveID with doc
     /// - Parameters
     /// - face: liveID image from liveID scanner object
-    private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String) {
+    private func registerLiveIDWithDocument(withPhoto face: UIImage, token: String?) {
         self.view.makeToastActivity(.center)
         let documentData = DocumentStore.sharedInstance.getDocumentStoreData()
         let sessionId = DocumentStore.sharedInstance.getSessionId() ?? ""
@@ -391,14 +396,12 @@ extension LiveIDViewController: LiveIDResponseDelegate {
             // Verify LiveID
             self.verifyFaceWithLiveness(withPhoto: face, mobileSessionId, mobileDocumentId)
         } else {
-            // FIXME: Below code should be handled with error response
-            guard let signToken = signatureToken else { return }
             // Set LiveID
             if DocumentStore.sharedInstance.hasData() {
-                self.registerLiveIDWithDocument(withPhoto: face, token: signToken)
+                self.registerLiveIDWithDocument(withPhoto: face, token: signatureToken)
                 return
             }
-            self.setLiveID(withPhoto: face, token: signToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
+            self.setLiveID(withPhoto: face, token: signatureToken, livenessResult: livenessResult, mobileSessionId, mobileDocumentId)
 
         }
         
