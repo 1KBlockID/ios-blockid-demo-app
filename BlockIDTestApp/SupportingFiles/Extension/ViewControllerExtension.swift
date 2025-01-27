@@ -150,6 +150,17 @@ extension UIViewController {
         }
     }
     
+    func showLiveIDLivenessAndCompareView() {
+        if BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
+                liveIDVC.isForFaceCompareAndVerification = true
+                    self.navigationController?.pushViewController(liveIDVC, animated: true)
+               
+            }
+        }
+    }
+    
     func showPinView(pinActivity : PinActivity) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         let pinVC = storyBoard.instantiateViewController(withIdentifier: "PinViewController") as! PinViewController
