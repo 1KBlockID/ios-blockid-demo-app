@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - BigInt (4.0.0)
-  - BlockID (1.20.10):
+  - BlockID (1.20.20):
     - Alamofire (~> 4.9.1)
     - BigInt (~> 4.0)
     - CryptoSwift (~> 1.6.0)
@@ -120,7 +120,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromisesObjC (2.3.1)
   - secp256k1.swift (0.1.4)
-  - SwiftProtobuf (1.28.2)
+  - SwiftProtobuf (1.29.0)
   - Toast-Swift (5.0.1)
   - TrustWalletCore (2.5.10):
     - TrustWalletCore/Core (= 2.5.10)
@@ -145,7 +145,7 @@ PODS:
   - YubiKit (4.2.0)
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.20.10`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.20.20`)
   - EllipticCurveKeyPair (from `https://github.com/1KBlockID/EllipticCurveKeyPair.git`, tag `2.0.2`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
@@ -181,7 +181,7 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.10
+    :tag: 1.20.20
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -195,7 +195,7 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.10
+    :tag: 1.20.20
   EllipticCurveKeyPair:
     :git: https://github.com/1KBlockID/EllipticCurveKeyPair.git
     :tag: 2.0.2
@@ -209,7 +209,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: 31c565e281d149e80c156bb5031d4980a6953e9c
+  BlockID: b00f322a888eaf22f478ae286dabbb9203cceada
   CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   EllipticCurveKeyPair: 0b618482247e48744b9a0709ef4bb0713c39f957
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
@@ -227,13 +227,13 @@ SPEC CHECKSUMS:
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  SwiftProtobuf: 4dbaffec76a39a8dc5da23b40af1a5dc01a4c02d
+  SwiftProtobuf: b7aa08087e2ab6d162862d143020091254095f69
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 221e7c95e4e3263c807cbbfda9a5613b6a975214
   Web3: 7b2c30f98f24cc290bc671ab525d7a30a2afbc73
   WebAuthnKit: d84fc07aa8f07707085ffee8baa41b11d69403ca
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: ab9b248c0f50e8940b7e6e4fc5a119df32cd5a0a
+PODFILE CHECKSUM: 0743d8b378ab9bce5c5211fb5ae26a5180124830
 
 COCOAPODS: 1.15.2
