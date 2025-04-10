@@ -213,12 +213,6 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                 return
             }
             
-            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
-                self.showAlertAndMoveBack(title: "Error",
-                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
-                return
-            }
-            
             self.showAlertAndMoveBack(title: "Error",
                                       message: error?.message ?? kDLFailedMessage)
             return

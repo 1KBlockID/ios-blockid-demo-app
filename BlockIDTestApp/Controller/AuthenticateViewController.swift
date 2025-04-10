@@ -209,7 +209,11 @@ class AuthenticateViewController: UIViewController {
     private func askForDeviceAuth(data: AuthenticationPayloadV1) {
         
         if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
-            self.view.makeToast("Please enroll Touch ID / Face ID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
+            var currentBioMetric = "Touch ID / Face ID"
+            if let currentBiometricTemp = BlockIDSDK.sharedInstance.getDeviceAuth().currentBiometric {
+                currentBioMetric = currentBiometricTemp
+            }
+            self.view.makeToast("Please enroll \(currentBioMetric) in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
                 self.goBack()
             })
             return

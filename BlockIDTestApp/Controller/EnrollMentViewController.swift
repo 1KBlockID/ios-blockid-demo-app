@@ -350,7 +350,11 @@ extension EnrollMentViewController {
             BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
                 if success {
                     self.tableEnrollments.reloadData()
-                    self.view.makeToast("Touch ID / Face ID is now enabled.", duration: 3.0, position: .center)
+                    var currentBioMetric = "Touch ID / Face ID"
+                    if let currentBiometricTemp = BlockIDSDK.sharedInstance.getDeviceAuth().currentBiometric {
+                        currentBioMetric = currentBiometricTemp
+                    }
+                    self.view.makeToast("\(currentBioMetric) is now enabled.", duration: 3.0, position: .center)
                     
                 } else {
                     if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
@@ -371,7 +375,11 @@ extension EnrollMentViewController {
     private func unEnrollDeviceAuth() {
         BIDAuthProvider.shared.unenrollDeviceAuth(completion: { (success, error, message) in
             if success {
-                self.view.makeToast("Touch ID / Face ID is now unenrolled from App.", duration: 3.0, position: .center)
+                var currentBioMetric = "Touch ID / Face ID"
+                if let currentBiometricTemp = BlockIDSDK.sharedInstance.getDeviceAuth().currentBiometric {
+                    currentBioMetric = currentBiometricTemp
+                }
+                self.view.makeToast("\(currentBioMetric) is now unenrolled from App.", duration: 3.0, position: .center)
                 self.tableEnrollments.reloadData()
             } else {
                 if (error as? ErrorResponse)?.code == CustomErrors.kUnauthorizedAccess.code {
