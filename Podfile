@@ -12,7 +12,13 @@ target 'BlockIDTestApp' do
   pod 'WebAuthnKit', :git => 'https://github.com/1KBlockID/WebAuthnKit-iOS.git', :tag => '2.0.4'
   pod 'EllipticCurveKeyPair', :git => 'https://github.com/1KBlockID/EllipticCurveKeyPair.git', :tag => '2.0.2'
   pod 'Web3', :git => 'https://github.com/Boilertalk/Web3.swift.git', :tag => '0.4.2'
-  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.20'
+ # pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.30'
+  pod 'TrustWalletCore', '~> 2.5.6'
+  pod 'Alamofire','~> 4.9.1'
+  pod 'CryptoSwift', '~> 1.6.0’
+  pod 'BigInt', '~> 4.0'
+  pod 'OpenSSL-Universal', '~> 1.1.180'
+  pod 'YubiKit', '~> 4.2.0'
 
 end
 
