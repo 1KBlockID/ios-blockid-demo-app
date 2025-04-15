@@ -18,6 +18,8 @@ class PassportViewController: UIViewController {
     private var dictPPT: [String : Any]?
     private var isWithNFC = false
     private let kPPTFailedMessage = "Passport failed to scan."
+    private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
+
     private var rfidScannerHelper: RFIDScannerHelper?
     private var liveIdFace: String!
     private var proofedBy: String!
@@ -276,11 +278,28 @@ extension PassportViewController: DocumentScanDelegate {
                                       message: kPPTFailedMessage)
             return
         }
-        if responseStatus.uppercased() == "FAILED" {
-            self.showAlertAndMoveBack(title: "Error",
-                                      message: kPPTFailedMessage)
+        
+        let failedStatuses: Set<String> = ["FAILED", "EXPIRED", "ABANDONED"]
+        if failedStatuses.contains(responseStatus.uppercased()) {
+            var title = "Error"
+            var msg = ""
+            switch responseStatus.uppercased() {
+            case "FAILED":
+                msg = kPPTFailedMessage
+            case "EXPIRED":
+                title = "Session Expired"
+                msg = kSessionExpiredOrTimeout
+            case "ABANDONED":
+                title = "Scanning Timeout"
+                msg = kSessionExpiredOrTimeout
+            default:
+                debugPrint("unknown status")
+            }
+            self.showAlertAndMoveBack(title: title,
+                                      message: msg)
             return
         }
+        
         guard let token = dictDocObject["token"] as? String,
               !token.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
