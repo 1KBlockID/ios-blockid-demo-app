@@ -161,7 +161,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
+
+    // fixme remove
     @IBAction func registerTapped(_ sender: Any) {
         
         self.view.makeToastActivity(.center)
@@ -195,7 +196,8 @@ class FIDOViewController: UIViewController, UITextFieldDelegate {
         }
        
     }
-    
+
+    // fixme remove
     @IBAction func authenticateTapped(_ sender: Any) {
 
         self.view.makeToastActivity(.center)
