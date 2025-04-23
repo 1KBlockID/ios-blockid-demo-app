@@ -27,10 +27,6 @@ class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let currentBiometric = BlockIDSDK.sharedInstance.getDeviceAuth().currentBiometric {
-            self.btnBiometric.setTitle(currentBiometric, for: .normal)
-            self.btnRegisterDeviceAuth.setTitle(currentBiometric, for: .normal)
-        }
         checkAppVersion()
     }
     
