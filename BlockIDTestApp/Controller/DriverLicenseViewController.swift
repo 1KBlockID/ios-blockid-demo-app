@@ -15,7 +15,8 @@ import UIKit
 class DriverLicenseViewController: UIViewController {
 
     private let kDLFailedMessage = "Drivers License failed to scan."
-    
+    private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
+
     private var liveIdFace: String!
     private var proofedBy: String!
 
@@ -213,12 +214,6 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                 return
             }
             
-            if error?.code == CustomErrors.DocumentScanner.TIMEOUT.code {
-                self.showAlertAndMoveBack(title: "Error",
-                                          message: "Scanning time exceeded. To continue, please restart the scanning process.")
-                return
-            }
-            
             self.showAlertAndMoveBack(title: "Error",
                                       message: error?.message ?? kDLFailedMessage)
             return
@@ -241,9 +236,25 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        if responseStatus.uppercased() == "FAILED" {
-            self.showAlertAndMoveBack(title: "Error",
-                                      message: kDLFailedMessage)
+        
+        let failedStatuses: Set<String> = ["FAILED", "EXPIRED", "ABANDONED"]
+        if failedStatuses.contains(responseStatus.uppercased()) {
+            var title = "Error"
+            var msg = ""
+            switch responseStatus.uppercased() {
+            case "FAILED":
+                msg = kDLFailedMessage
+            case "EXPIRED":
+                title = "Session Expired"
+                msg = kSessionExpiredOrTimeout
+            case "ABANDONED":
+                title = "Scanning Timeout"
+                msg = kSessionExpiredOrTimeout
+            default:
+                debugPrint("unknown status")
+            }
+            self.showAlertAndMoveBack(title: title,
+                                      message: msg)
             return
         }
         guard let token = dictDocObject["token"] as? String,
