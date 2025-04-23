@@ -224,7 +224,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="btnAppPin" destination="HHa-Kw-8Kf" id="2gU-zY-LdX"/>
-                        <outlet property="btnBiometric" destination="4du-Ey-FYU" id="TNP-Nk-b1S"/>
                         <outlet property="btnRegister" destination="zFb-cA-P6q" id="6T6-Jl-PgZ"/>
                         <outlet property="btnRegisterDeviceAuth" destination="IRS-u0-f33" id="gd8-mM-YlJ"/>
                         <outlet property="btnRestoreAccount" destination="237-XF-GB2" id="kf6-L9-ZL3"/>

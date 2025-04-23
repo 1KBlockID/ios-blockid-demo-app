@@ -23,7 +23,6 @@ class SplashViewController: UIViewController {
     
     @IBOutlet weak var registerView: UIView!
     @IBOutlet weak var btnAppPin: UIButton!
-    @IBOutlet weak var btnBiometric: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
