@@ -129,7 +129,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromisesObjC (2.4.0)
   - secp256k1.swift (0.1.4)
-  - SwiftProtobuf (1.29.0)
+  - SwiftProtobuf (1.30.0)
   - Toast-Swift (5.0.1)
   - TrustWalletCore (2.5.10):
     - TrustWalletCore/Core (= 2.5.10)
@@ -236,13 +236,13 @@ SPEC CHECKSUMS:
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  SwiftProtobuf: b7aa08087e2ab6d162862d143020091254095f69
+  SwiftProtobuf: 3697407f0d5b23bedeba9c2eaaf3ec6fdff69349
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 221e7c95e4e3263c807cbbfda9a5613b6a975214
-  Web3: 7b2c30f98f24cc290bc671ab525d7a30a2afbc73
+  Web3: c5e2f6369630ff825ed75758eaf6cc051c4be741
   WebAuthnKit: d84fc07aa8f07707085ffee8baa41b11d69403ca
   YubiKit: bde189dbaddc29e41dbda9e2c55ec5a79d38c654
 
-PODFILE CHECKSUM: aa74db1d8c8ea32cf613011e909e80226a75d189
+PODFILE CHECKSUM: ae6a50cc1b5115f0c925598276620fe68580cbbe
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.16.2

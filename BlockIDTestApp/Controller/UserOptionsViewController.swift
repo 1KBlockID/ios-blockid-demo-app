@@ -28,50 +28,50 @@ class UserOptionsViewController: UIViewController {
     
     // MARK: - Button Actions
     @IBAction func registerPlatformKey(_ sender: UIButton) {
-           self.view.makeToastActivity(.center)
-           BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .PLATFORM) { status, err in
-               self.view.hideToastActivity()
-               if !status {
-                   guard let err = err else { return }
-                   self.showAlertView(title: "Error", message: err.message)
-                   return
-               }
-               self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
-                   _ in
-                   self.navigationController?.popViewController(animated: true)
-               }
-           }
-       }
-
-       @IBAction func registerExtKey(_ sender: UIButton) {
-           self.view.makeToastActivity(.center)
-           BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .CROSS_PLATFORM) { status, err in
-               DispatchQueue.main.async {
-                   self.view.hideToastActivity()
-                   if !status {
-                       guard let err = err else { return }
-                       self.showAlertView(title: "Error", message: err.message)
-                       return
-                   }
-                   self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
-                       _ in
-                       self.navigationController?.popViewController(animated: true)
-                   }
-
-               }
-           }
-       }
-
-       @IBAction func authenticatePlatformKey(_ sender: UIButton) {
-           fidoType = .PLATFORM
-           self.showQRCodeScanner()
-       }
-
-       @IBAction func authenticateExtKey(_ sender: UIButton) {
-           fidoType = .CROSS_PLATFORM
-           self.showQRCodeScanner()
-
-       }
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .PLATFORM) { status, err in
+            self.view.hideToastActivity()
+            if !status {
+                guard let err = err else { return }
+                self.showAlertView(title: "Error", message: err.message)
+                return
+            }
+            self.view.makeToast("Platform key registered successfully", duration: 3.0, position: .center) {
+                _ in
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+    
+    @IBAction func registerExtKey(_ sender: UIButton) {
+        self.view.makeToastActivity(.center)
+        BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: currentUser, type: .CROSS_PLATFORM) { status, err in
+            DispatchQueue.main.async {
+                self.view.hideToastActivity()
+                if !status {
+                    guard let err = err else { return }
+                    self.showAlertView(title: "Error", message: err.message)
+                    return
+                }
+                self.view.makeToast("External key registered successfully", duration: 3.0, position: .center) {
+                    _ in
+                    self.navigationController?.popViewController(animated: true)
+                }
+                
+            }
+        }
+    }
+    
+    @IBAction func authenticatePlatformKey(_ sender: UIButton) {
+        fidoType = .PLATFORM
+        self.showQRCodeScanner()
+    }
+    
+    @IBAction func authenticateExtKey(_ sender: UIButton) {
+        fidoType = .CROSS_PLATFORM
+        self.showQRCodeScanner()
+        
+    }
     
     @IBAction func removeAccount(_ sender: UIButton) {
         let alert = UIAlertController(title: "Warning!", message: "Do you want to remove the user?", preferredStyle: .alert)
@@ -80,14 +80,14 @@ class UserOptionsViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.unlinkUser(linkedAccount: self.currentUser)
         }))
-    
+        
         self.present(alert, animated: true)
-
+        
     }
     
     @IBAction func backTapped(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
-
+        
     }
     
     private func showQRCodeScanner() {
@@ -129,7 +129,7 @@ class UserOptionsViewController: UIViewController {
             }
         }
     }
-
+    
     func authenticateUser(fidoType: FIDO2KeyType, sessionUrl: String, dataModel: AuthenticationPayloadV1?) {
         self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.authenticateFIDO2Key(type: fidoType,
@@ -186,33 +186,35 @@ extension UserOptionsViewController: ScanQRViewDelegate {
         
         
     }
-
+    
     private func handleUWL2(data: String) {
         
-            let arrSplitStrings = data.components(separatedBy: "/session/")
-            let url = arrSplitStrings.first ?? ""
-            if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
-
-                GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
-                    
-                    if isSuccess {
-                        let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
-                        // Authenticate user
-                        let authQRModel1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
-                        self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
-                    } else {
-                        // Show toast
-                        self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
-                            return
-                        })
-                    }
-                }
-            } else {
+        let arrSplitStrings = data.components(separatedBy: "/session/")
+        let url = arrSplitStrings.first ?? ""
+        
+        BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) { isTrusted in
+            if(!isTrusted){
                 // Show toast
                 self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .center, title: "Error", completion: {_ in
                     return
                 })
+                return
             }
+            GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
+                
+                if isSuccess {
+                    let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
+                    // Authenticate user
+                    let authQRModel1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
+                    self.authenticateUser(fidoType: self.fidoType, sessionUrl: data, dataModel: authQRModel1)
+                } else {
+                    // Show toast
+                    self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        return
+                    })
+                }
+            }
+        }
     }
     
     private func inValidQRCode() {
