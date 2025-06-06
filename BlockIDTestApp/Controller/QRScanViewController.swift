@@ -48,7 +48,7 @@ class QRScanViewController: UIViewController {
 extension QRScanViewController: QRScanResponseDelegate {
     func onQRScanResult(qrCodeData: String?) {
         if qrCodeData == nil {
-
+            
             AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
                 if !response {
                     DispatchQueue.main.async {
@@ -62,7 +62,7 @@ extension QRScanViewController: QRScanResponseDelegate {
         _qrView.isHidden = true
         
         self.processQRData(qrCodeData ?? "")
-
+        
     }
     
     private func processQRData(_ data: String) {
@@ -103,31 +103,34 @@ extension QRScanViewController: QRScanResponseDelegate {
     
     private func handleUWL2(data: String) {
         
-            let arrSplitStrings = data.components(separatedBy: "/session/")
-            let url = arrSplitStrings.first ?? ""
-            if BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) {
-
-                GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
-                    
-                    if isSuccess {
-                        let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
-                        let authQRUWL1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
-                        processScope(qrModel: authQRUWL1)
-                    } else {
-                        // Show toast
-                        self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
-                            self.goBack()
-                            return
-                        })
-                    }
-                }
-            } else {
+        let arrSplitStrings = data.components(separatedBy: "/session/")
+        let url = arrSplitStrings.first ?? ""
+        
+        
+        BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: url) { isTrusted in
+            if(!isTrusted){
                 // Show toast
                 self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .center, title: "Error", completion: {_ in
                     self.goBack()
                     return
                 })
+                return
             }
+            
+            GetSessionData.sharedInstance.getSessionData(url: data) { [self] response, message, isSuccess in
+                if isSuccess {
+                    let authQRUWL2 = CommonFunctions.jsonStringToObject(json: response ?? "") as AuthenticationPayloadV2?
+                    let authQRUWL1 = authQRUWL2?.getAuthRequestModel(sessionUrl: data)
+                    processScope(qrModel: authQRUWL1)
+                } else {
+                    // Show toast
+                    self.view.makeToast(message, duration: 3.0, position: .center, title: "Error", completion: {_ in
+                        self.goBack()
+                        return
+                    })
+                }
+            }
+        }
     }
     
     private func inValidQRCode() {
@@ -145,14 +148,14 @@ extension QRScanViewController: QRScanResponseDelegate {
     
     @IBAction func cancelClicked(_ sender: Any) {
         let alert = UIAlertController(title: "Cancellation warning!", message: "Do you want to cancel the QR Login?", preferredStyle: .alert)
-
+        
         alert.addAction(UIAlertAction(title: "No", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
             self.goBack()
         }))
         self.present(alert, animated: true)
         return
-
+        
     }
 }
 
