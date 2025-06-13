@@ -167,13 +167,7 @@ extension UIViewController {
         pinVC.pinActivity = pinActivity
         self.navigationController?.pushViewController(pinVC, animated: true)
     }
-    
-    func showFIDOManagementView() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let fidoVC = storyBoard.instantiateViewController(withIdentifier: "FIDOKeyManagementController") as! FIDOKeyManagementController
-        self.navigationController?.pushViewController(fidoVC, animated: true)
-    }
-    
+        
     func showHomeView() {
         self.navigationController?.popToRootViewController(animated: true)
     }
