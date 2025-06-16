@@ -356,21 +356,6 @@ extension AddUserViewController {
                               origin: originUW,
                               account: user?.account) { (status, error) in
             if status {
-                //FIXME: - Uncomment below code for FIDO2 registration
-//                let response = BlockIDSDK.sharedInstance.getLinkedUserAccounts()
-//                let linkedAccounts = response.linkedUsers
-//
-//                BlockIDSDK.sharedInstance.registerFIDO2Key(controller: self, linkedAccount: linkedAccounts.first, type: .PLATFORM) { _, _ in
-//                    // Fido registration is failed || succeed, show success dialog
-//                    self.view.makeToast("User registration successful.",
-//                                        duration: 3.0,
-//                                        position: .center,
-//                                        title: "Success",
-//                                        completion: {_ in
-//                        self.goBack()
-//                    })
-//                }
-                
                 self.view.makeToast("User registration successful.",
                                     duration: 3.0,
                                     position: .center,
