@@ -1,1 +1,1 @@
-# ios-blockid-demo-app
+# ios-1kosmos-demo-app

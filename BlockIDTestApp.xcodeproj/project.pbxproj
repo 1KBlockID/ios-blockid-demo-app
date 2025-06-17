@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		06EB59BC76DF62C2E883AFDA /* Pods_BlockIDTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3A28A255EEB61F5CA74D6E /* Pods_BlockIDTestApp.framework */; };
 		1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F29F9A12804AAA700BF2456 /* SafariServices.framework */; };
 		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
@@ -44,13 +43,12 @@
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		4CC8838C2DBA0FC30051518A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
+		5C1B634F0C1DE9FE5D20C731 /* Pods_1Kosmos_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A5FE217761EF2917923C3AD /* Pods_1Kosmos_Demo.framework */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
-		5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
-		E61CF47629C83F7A00C5881A /* FIDOKeyManagementController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */; };
 		E666409F282A863600E78498 /* MagicLinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E666409E282A863600E78498 /* MagicLinkModel.swift */; };
 		E66640A1282A9E9000E78498 /* AddUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A0282A9E9000E78498 /* AddUserViewController.swift */; };
 		E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */; };
@@ -96,15 +94,16 @@
 /* Begin PBXFileReference section */
 		1F29F9A12804AAA700BF2456 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
-		1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlockIDTestAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1FA09388268472A6008AAAA1 /* 1KosmosDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 1KosmosDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockIDTestAppUITests.swift; sourceTree = "<group>"; };
 		1FA0938C268472A6008AAAA1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3132795CE1B87D27355922C7 /* Pods-1Kosmos Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.release.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.release.xcconfig"; sourceTree = "<group>"; };
 		3C2C96C526551EC100323172 /* DocumentMapUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentMapUtil.swift; sourceTree = "<group>"; };
 		3C78FA07264AA1D8001576DF /* DocumentHolder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentHolder.swift; sourceTree = "<group>"; };
 		3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentScreenCell.swift; sourceTree = "<group>"; };
 		3CD35A1126458C39009D38B0 /* ConsentScreenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConsentScreenCell.xib; sourceTree = "<group>"; };
 		3CD35A132649122C009D38B0 /* EPassportChipScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EPassportChipScanViewController.swift; sourceTree = "<group>"; };
-		3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BlockIDTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CEE330B264413C2003FDB78 /* 1Kosmos Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "1Kosmos Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CEE330E264413C2003FDB78 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3CEE3315264413C2003FDB78 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3CEE3317264413C2003FDB78 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,16 +134,13 @@
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
-		5B3A28A255EEB61F5CA74D6E /* Pods_BlockIDTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BlockIDTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
-		5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
-		A2737CD31371239EED02DBCC /* Pods-BlockIDTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.release.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		8A5FE217761EF2917923C3AD /* Pods_1Kosmos_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1Kosmos_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
-		C1C0470894CE9FCB4A23125C /* Pods-BlockIDTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BlockIDTestApp.debug.xcconfig"; path = "Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		DC8C894E86D3968F55C2A34F /* Pods-1Kosmos Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.debug.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
-		E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FIDOKeyManagementController.swift; sourceTree = "<group>"; };
 		E666409E282A863600E78498 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
 		E66640A0282A9E9000E78498 /* AddUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
 		E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkPayload.swift; sourceTree = "<group>"; };
@@ -178,7 +174,7 @@
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
-				06EB59BC76DF62C2E883AFDA /* Pods_BlockIDTestApp.framework in Frameworks */,
+				5C1B634F0C1DE9FE5D20C731 /* Pods_1Kosmos_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,7 +186,7 @@
 			children = (
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				5B3A28A255EEB61F5CA74D6E /* Pods_BlockIDTestApp.framework */,
+				8A5FE217761EF2917923C3AD /* Pods_1Kosmos_Demo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -242,8 +238,8 @@
 		3CEE330C264413C2003FDB78 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */,
-				1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */,
+				3CEE330B264413C2003FDB78 /* 1Kosmos Demo.app */,
+				1FA09388268472A6008AAAA1 /* 1KosmosDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -309,7 +305,6 @@
 				3CEE3345264414E7003FDB78 /* PassportViewController.swift */,
 				3CEE3346264414E7003FDB78 /* DriverLicenseViewController.swift */,
 				3CEE3347264414E7003FDB78 /* SplashViewController.swift */,
-				5D5C0C5127EB2DEE00A9B730 /* FIDOViewController.swift */,
 				3CEE3349264414E7003FDB78 /* NFCDisabledViewController.swift */,
 				3CEE334A264414E7003FDB78 /* NationalIDViewController.swift */,
 				3CEE338F26443347003FDB78 /* PinViewController.swift */,
@@ -323,7 +318,6 @@
 				5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */,
 				E6EC5F702923761100BB4E04 /* AboutViewController.swift */,
 				5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */,
-				E61CF47529C83F7A00C5881A /* FIDOKeyManagementController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -380,8 +374,8 @@
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C1C0470894CE9FCB4A23125C /* Pods-BlockIDTestApp.debug.xcconfig */,
-				A2737CD31371239EED02DBCC /* Pods-BlockIDTestApp.release.xcconfig */,
+				DC8C894E86D3968F55C2A34F /* Pods-1Kosmos Demo.debug.xcconfig */,
+				3132795CE1B87D27355922C7 /* Pods-1Kosmos Demo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -398,9 +392,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1FA09387268472A6008AAAA1 /* BlockIDTestAppUITests */ = {
+		1FA09387268472A6008AAAA1 /* 1KosmosDemoUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "BlockIDTestAppUITests" */;
+			buildConfigurationList = 1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "1KosmosDemoUITests" */;
 			buildPhases = (
 				1FA09384268472A6008AAAA1 /* Sources */,
 				1FA09385268472A6008AAAA1 /* Frameworks */,
@@ -411,31 +405,31 @@
 			dependencies = (
 				1FA0938E268472A6008AAAA1 /* PBXTargetDependency */,
 			);
-			name = BlockIDTestAppUITests;
+			name = 1KosmosDemoUITests;
 			productName = BlockIDTestAppUITests;
-			productReference = 1FA09388268472A6008AAAA1 /* BlockIDTestAppUITests.xctest */;
+			productReference = 1FA09388268472A6008AAAA1 /* 1KosmosDemoUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		3CEE330A264413C2003FDB78 /* BlockIDTestApp */ = {
+		3CEE330A264413C2003FDB78 /* 1Kosmos Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */;
+			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "1Kosmos Demo" */;
 			buildPhases = (
-				1C8DA0CB3FE03EA748196959 /* [CP] Check Pods Manifest.lock */,
+				55418673DBD7093C6F17A846 /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				4C9FDEF72970420D003433CC /* Embed Frameworks */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				1B72EABBBF53111D74D3D2F2 /* [CP] Embed Pods Frameworks */,
+				75D3D26D652D760C7F67E868 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = BlockIDTestApp;
+			name = "1Kosmos Demo";
 			productName = BlockIDTestApp;
-			productReference = 3CEE330B264413C2003FDB78 /* BlockIDTestApp.app */;
+			productReference = 3CEE330B264413C2003FDB78 /* 1Kosmos Demo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -469,8 +463,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3CEE330A264413C2003FDB78 /* BlockIDTestApp */,
-				1FA09387268472A6008AAAA1 /* BlockIDTestAppUITests */,
+				3CEE330A264413C2003FDB78 /* 1Kosmos Demo */,
+				1FA09387268472A6008AAAA1 /* 1KosmosDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -500,45 +494,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1B72EABBBF53111D74D3D2F2 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BlockIDTestApp/Pods-BlockIDTestApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1C8DA0CB3FE03EA748196959 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-BlockIDTestApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1F3DA18926CD513000DDE095 /* DoB Versioning */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -556,6 +511,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n\necho \"DOB: $date_of_build\"\n";
+		};
+		55418673DBD7093C6F17A846 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-1Kosmos Demo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75D3D26D652D760C7F67E868 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		B66C5EC82892973F00E8005C /* Firebase Crashalytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -622,12 +616,10 @@
 				3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */,
 				3CEE338D26443199003FDB78 /* IntExtension.swift in Sources */,
 				E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */,
-				5D5C0C5227EB2DEE00A9B730 /* FIDOViewController.swift in Sources */,
 				E666409F282A863600E78498 /* MagicLinkModel.swift in Sources */,
 				E6F4CD10282E75E300646C68 /* DocumentLiveness.swift in Sources */,
 				E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */,
 				3CEE3356264414E7003FDB78 /* DriverLicenseViewController.swift in Sources */,
-				E61CF47629C83F7A00C5881A /* FIDOKeyManagementController.swift in Sources */,
 				3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */,
 				E673A37A28F6DAAA008995A9 /* VerifiedPerson.swift in Sources */,
 				3CEE338E26443199003FDB78 /* StringExtension.swift in Sources */,
@@ -650,7 +642,7 @@
 /* Begin PBXTargetDependency section */
 		1FA0938E268472A6008AAAA1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 3CEE330A264413C2003FDB78 /* BlockIDTestApp */;
+			target = 3CEE330A264413C2003FDB78 /* 1Kosmos Demo */;
 			targetProxy = 1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -834,7 +826,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C1C0470894CE9FCB4A23125C /* Pods-BlockIDTestApp.debug.xcconfig */;
+			baseConfigurationReference = DC8C894E86D3968F55C2A34F /* Pods-1Kosmos Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -854,7 +846,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.30;
+				MARKETING_VERSION = 1.20.40;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -893,7 +885,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A2737CD31371239EED02DBCC /* Pods-BlockIDTestApp.release.xcconfig */;
+			baseConfigurationReference = 3132795CE1B87D27355922C7 /* Pods-1Kosmos Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -912,7 +904,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.30;
+				MARKETING_VERSION = 1.20.40;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -953,7 +945,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "BlockIDTestAppUITests" */ = {
+		1FA09391268472A6008AAAA1 /* Build configuration list for PBXNativeTarget "1KosmosDemoUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1FA0938F268472A6008AAAA1 /* Debug */,
@@ -971,7 +963,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "BlockIDTestApp" */ = {
+		3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "1Kosmos Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CEE3320264413C2003FDB78 /* Debug */,

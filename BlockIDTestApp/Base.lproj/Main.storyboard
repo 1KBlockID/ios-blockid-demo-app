@@ -39,7 +39,7 @@
         <!--Splash View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="SplashViewController" id="BYZ-38-t0r" customClass="SplashViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SplashViewController" id="BYZ-38-t0r" customClass="SplashViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -238,7 +238,7 @@
         <!--Recover Mnemonics View Controller-->
         <scene sceneID="nfJ-Tu-kw4">
             <objects>
-                <viewController storyboardIdentifier="RecoverMnemonicsViewController" id="jYy-96-JKr" customClass="RecoverMnemonicsViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecoverMnemonicsViewController" id="jYy-96-JKr" customClass="RecoverMnemonicsViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dwD-Tl-JVP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -897,7 +897,7 @@
         <!--View Controller-->
         <scene sceneID="0Tq-er-9ua">
             <objects>
-                <viewController storyboardIdentifier="SSNViewController" id="bGs-ch-VfJ" customClass="SSNViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SSNViewController" id="bGs-ch-VfJ" customClass="SSNViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pkL-qr-aDj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="700"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1055,7 +1055,7 @@
         <!--Verify Response View Controller-->
         <scene sceneID="HJ1-7b-H8M">
             <objects>
-                <viewController storyboardIdentifier="SSNVerifyResponseViewController" id="Fub-FC-Vzg" customClass="SSNVerifyResponseViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SSNVerifyResponseViewController" id="Fub-FC-Vzg" customClass="SSNVerifyResponseViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ifL-Go-0gY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1125,219 +1125,10 @@
             </objects>
             <point key="canvasLocation" x="1526.25" y="808.09859154929575"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="bcC-5K-P2B">
-            <objects>
-                <viewController storyboardIdentifier="FIDOViewController" id="VOU-Md-Ear" customClass="FIDOViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pXH-Wr-KKf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="brandLogo" translatesAutoresizingMaskIntoConstraints="NO" id="8C9-9j-ztu">
-                                <rect key="frame" x="132" y="58" width="150" height="45"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="45" id="g4j-jV-Edd"/>
-                                    <constraint firstAttribute="width" constant="150" id="m2r-TO-XXe"/>
-                                </constraints>
-                            </imageView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1oU-VK-zNJ">
-                                <rect key="frame" x="20" y="163" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="go"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IjZ-J6-d4y">
-                                <rect key="frame" x="20" y="237" width="168.5" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Mkv-X2-An0"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Register (Web)">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="registerTapped:" destination="VOU-Md-Ear" eventType="touchUpInside" id="28p-p9-2j3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="shU-xw-CIx">
-                                <rect key="frame" x="225.5" y="237" width="168.5" height="50"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="t1W-tC-OuU"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <state key="normal" title="Authenticate (Web)">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="authenticateTapped:" destination="VOU-Md-Ear" eventType="touchUpInside" id="UoA-62-buM"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUl-4h-z1h">
-                                <rect key="frame" x="0.0" y="66" width="60" height="18"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="Rwr-gE-XTj"/>
-                                </constraints>
-                                <color key="tintColor" systemColor="labelColor"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="iconBackarrow"/>
-                                <connections>
-                                    <action selector="backTapped:" destination="VOU-Md-Ear" eventType="touchUpInside" id="qgd-h6-75n"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="hIt-Mn-9fy">
-                                <rect key="frame" x="20" y="320" width="374" height="305"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="00a-2e-NyD">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="85"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2f-Vl-oqr">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="JYN-4C-2mj"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (Platform Authenticator)">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="registerPlatformKey:" destination="VOU-Md-Ear" eventType="touchUpInside" id="eHG-3e-tbD"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WsX-rY-l5y">
-                                                <rect key="frame" x="0.0" y="45" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="ofS-VT-Rfl"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (Platform Authenticator)">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="authenticatePlatformKey:" destination="VOU-Md-Ear" eventType="touchUpInside" id="1TC-MC-UdT"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Mh8-pF-JYK">
-                                        <rect key="frame" x="0.0" y="110" width="374" height="85"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tMG-OU-T2A">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="ik8-lO-Ri8"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (Security Key) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="registerExternalKey:" destination="VOU-Md-Ear" eventType="touchUpInside" id="DdB-nd-aVg"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-j8-TK6">
-                                                <rect key="frame" x="0.0" y="45" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="OhE-0J-CXp"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (Security Key) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="authenticateExternalKey:" destination="VOU-Md-Ear" eventType="touchUpInside" id="DKy-C5-cee"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="IiK-gL-yhf">
-                                        <rect key="frame" x="0.0" y="220" width="374" height="85"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i7L-E6-hfX">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="IZv-Z6-00R"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (Security Key with Pin) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="registerExternalKeyWithPin:" destination="VOU-Md-Ear" eventType="touchUpInside" id="1tS-R7-1L0"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="23P-g9-htV">
-                                                <rect key="frame" x="0.0" y="45" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="dxD-YX-SyJ"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (Security Key with Pin) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="authenticateExternalKeyWithPin:" destination="VOU-Md-Ear" eventType="touchUpInside" id="SkZ-Pb-ttC"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="jNh-AQ-aEg"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="hIt-Mn-9fy" firstAttribute="leading" secondItem="IjZ-J6-d4y" secondAttribute="leading" id="0Ad-3R-x24"/>
-                            <constraint firstItem="IjZ-J6-d4y" firstAttribute="top" secondItem="1oU-VK-zNJ" secondAttribute="bottom" constant="40" id="30a-ty-LLq"/>
-                            <constraint firstItem="jNh-AQ-aEg" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hIt-Mn-9fy" secondAttribute="bottom" constant="35" id="53C-HD-PnJ"/>
-                            <constraint firstItem="shU-xw-CIx" firstAttribute="width" secondItem="IjZ-J6-d4y" secondAttribute="width" id="7fl-R5-t6Z"/>
-                            <constraint firstItem="IjZ-J6-d4y" firstAttribute="leading" secondItem="1oU-VK-zNJ" secondAttribute="leading" id="81a-UU-Grp"/>
-                            <constraint firstItem="jNh-AQ-aEg" firstAttribute="trailing" secondItem="1oU-VK-zNJ" secondAttribute="trailing" constant="20" id="8hD-0s-wYU"/>
-                            <constraint firstItem="hIt-Mn-9fy" firstAttribute="top" secondItem="IjZ-J6-d4y" secondAttribute="bottom" constant="33" id="AaL-4w-QNg"/>
-                            <constraint firstItem="hIt-Mn-9fy" firstAttribute="trailing" secondItem="shU-xw-CIx" secondAttribute="trailing" id="EC7-yA-wdo"/>
-                            <constraint firstItem="8C9-9j-ztu" firstAttribute="centerX" secondItem="pXH-Wr-KKf" secondAttribute="centerX" id="Gwt-4q-gZg"/>
-                            <constraint firstItem="vUl-4h-z1h" firstAttribute="leading" secondItem="jNh-AQ-aEg" secondAttribute="leading" id="H81-aG-QYX"/>
-                            <constraint firstItem="shU-xw-CIx" firstAttribute="trailing" secondItem="1oU-VK-zNJ" secondAttribute="trailing" id="SYi-qe-F6z"/>
-                            <constraint firstItem="8C9-9j-ztu" firstAttribute="top" secondItem="jNh-AQ-aEg" secondAttribute="top" constant="10" id="TdE-Qt-iI2"/>
-                            <constraint firstItem="vUl-4h-z1h" firstAttribute="top" secondItem="jNh-AQ-aEg" secondAttribute="top" constant="18" id="XLJ-YP-bBK"/>
-                            <constraint firstItem="IjZ-J6-d4y" firstAttribute="width" secondItem="hIt-Mn-9fy" secondAttribute="width" multiplier="0.45" id="Z5G-df-CcB"/>
-                            <constraint firstItem="1oU-VK-zNJ" firstAttribute="top" secondItem="8C9-9j-ztu" secondAttribute="bottom" constant="60" id="ZE0-G0-zjb"/>
-                            <constraint firstItem="hIt-Mn-9fy" firstAttribute="centerX" secondItem="jNh-AQ-aEg" secondAttribute="centerX" id="gGo-uT-dJz"/>
-                            <constraint firstItem="shU-xw-CIx" firstAttribute="top" secondItem="IjZ-J6-d4y" secondAttribute="top" id="i65-2T-LfG"/>
-                            <constraint firstItem="1oU-VK-zNJ" firstAttribute="leading" secondItem="jNh-AQ-aEg" secondAttribute="leading" constant="20" id="mOS-by-3K6"/>
-                            <constraint firstItem="1oU-VK-zNJ" firstAttribute="centerX" secondItem="pXH-Wr-KKf" secondAttribute="centerX" id="zqW-Pl-80S"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="txtFieldUsername" destination="1oU-VK-zNJ" id="eUV-gK-jXf"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L1t-42-OIG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2273" y="873"/>
-        </scene>
         <!--About View Controller-->
         <scene sceneID="uCp-Ha-blt">
             <objects>
-                <viewController storyboardIdentifier="AboutViewController" id="kNr-Ki-Gtw" customClass="AboutViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutViewController" id="kNr-Ki-Gtw" customClass="AboutViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DXp-Bn-3ux">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1442,7 +1233,7 @@
         <!--User Options View Controller-->
         <scene sceneID="UjA-LY-6s8">
             <objects>
-                <viewController storyboardIdentifier="UserOptionsViewController" id="Bdm-to-XvG" customClass="UserOptionsViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserOptionsViewController" id="Bdm-to-XvG" customClass="UserOptionsViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cKb-Sn-JTc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1471,84 +1262,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Ssh-4J-6cr">
-                                <rect key="frame" x="20" y="125" width="374" height="260"/>
+                                <rect key="frame" x="20" y="125" width="374" height="40"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="vCM-nJ-zgD">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="85"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMP-CF-thw">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="Yzt-L0-u9X"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (Platform Authenticator)">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="registerPlatformKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="7D7-B5-msv"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kNh-lX-Sbb">
-                                                <rect key="frame" x="0.0" y="45" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="v7D-pf-qHt"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (Platform Authenticator)">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="authenticatePlatformKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="9ml-Cd-LEn"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="yul-U2-efY">
-                                        <rect key="frame" x="0.0" y="110" width="374" height="85"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7rn-Fx-E9V">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="uWQ-Fo-P8N"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Register (Security Key) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="registerExtKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="MCL-rb-15x"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wnL-mu-Z1A">
-                                                <rect key="frame" x="0.0" y="45" width="374" height="40"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="fkk-ff-3qL"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Authenticate (Security Key) ">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="authenticateExtKey:" destination="Bdm-to-XvG" eventType="touchUpInside" id="EvH-x7-XQX"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KX7-es-Ph5">
-                                        <rect key="frame" x="0.0" y="220" width="374" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="40"/>
                                         <color key="backgroundColor" red="0.9137254901960784" green="0.25490196078431371" blue="0.22745098039215686" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="YFx-dO-IO3"/>
@@ -1589,7 +1306,7 @@
         <!--Enroll Ment View Controller-->
         <scene sceneID="k45-2V-MmN">
             <objects>
-                <viewController storyboardIdentifier="EnrollMentViewController" id="nB2-Yy-qc6" customClass="EnrollMentViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EnrollMentViewController" id="nB2-Yy-qc6" customClass="EnrollMentViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="M2B-g6-owQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1635,7 +1352,7 @@
         <!--Driver License View Controller-->
         <scene sceneID="cbe-nP-jD6">
             <objects>
-                <viewController storyboardIdentifier="DriverLicenseViewController" id="NLI-OD-zZW" customClass="DriverLicenseViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DriverLicenseViewController" id="NLI-OD-zZW" customClass="DriverLicenseViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Sse-vX-UlG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1707,7 +1424,7 @@
         <!--Passport View Controller-->
         <scene sceneID="uP9-TV-y0A">
             <objects>
-                <viewController storyboardIdentifier="PassportViewController" id="Y9j-4n-5BQ" customClass="PassportViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PassportViewController" id="Y9j-4n-5BQ" customClass="PassportViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oVU-XV-iMq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1816,7 +1533,7 @@
         <!--NationalID View Controller-->
         <scene sceneID="NCZ-9Q-ncd">
             <objects>
-                <viewController storyboardIdentifier="NationalIDViewController" id="okQ-uF-90g" customClass="NationalIDViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NationalIDViewController" id="okQ-uF-90g" customClass="NationalIDViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2FW-tL-b7o">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1888,7 +1605,7 @@
         <!--LiveID View Controller-->
         <scene sceneID="cpD-Yh-B38">
             <objects>
-                <viewController storyboardIdentifier="LiveIDViewController" id="xlp-JP-QXa" customClass="LiveIDViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LiveIDViewController" id="xlp-JP-QXa" customClass="LiveIDViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="shB-YS-EgG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2023,7 +1740,7 @@
         <!--Pin View Controller-->
         <scene sceneID="3ft-ye-d2e">
             <objects>
-                <viewController storyboardIdentifier="PinViewController" id="93L-e2-IkO" customClass="PinViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PinViewController" id="93L-e2-IkO" customClass="PinViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gej-AO-TIf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2110,7 +1827,7 @@
         <!--Scan View Controller-->
         <scene sceneID="4Ip-n8-Iez">
             <objects>
-                <viewController storyboardIdentifier="QRScanViewController" id="Fmc-At-Q2F" customClass="QRScanViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="QRScanViewController" id="Fmc-At-Q2F" customClass="QRScanViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="prw-Au-YZQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2234,7 +1951,7 @@
         <!--Authenticate View Controller-->
         <scene sceneID="S1T-7m-s3A">
             <objects>
-                <viewController storyboardIdentifier="AuthenticateViewController" id="VOf-eq-qve" customClass="AuthenticateViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticateViewController" id="VOf-eq-qve" customClass="AuthenticateViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XKO-w8-y05">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2302,7 +2019,7 @@
         <!--Passport Chip Scan View Controller-->
         <scene sceneID="5t8-N7-gbr">
             <objects>
-                <viewController storyboardIdentifier="EPassportChipScanViewController" id="shc-Mo-S3P" customClass="EPassportChipScanViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EPassportChipScanViewController" id="shc-Mo-S3P" customClass="EPassportChipScanViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="LhF-2q-sgL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2393,7 +2110,7 @@
         <!--Disabled View Controller-->
         <scene sceneID="iC1-49-k1W">
             <objects>
-                <viewController storyboardIdentifier="NFCDisabledViewController" id="7mQ-aJ-HgM" customClass="NFCDisabledViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NFCDisabledViewController" id="7mQ-aJ-HgM" customClass="NFCDisabledViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="SyQ-E9-XXk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2470,7 +2187,7 @@
         <!--Restore Account View Controller-->
         <scene sceneID="teq-OH-sZc">
             <objects>
-                <viewController storyboardIdentifier="RestoreAccountViewController" id="tB5-HT-aaX" customClass="RestoreAccountViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RestoreAccountViewController" id="tB5-HT-aaX" customClass="RestoreAccountViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ycF-BW-JcN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3166,7 +2883,7 @@
         <!--Add User View Controller-->
         <scene sceneID="Mgr-tK-9Bk">
             <objects>
-                <viewController storyboardIdentifier="AddUserViewController" id="eeM-to-5KV" customClass="AddUserViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddUserViewController" id="eeM-to-5KV" customClass="AddUserViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9LQ-dh-pga">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3244,7 +2961,7 @@
         <!--Document Liveness View Controller-->
         <scene sceneID="M3m-s4-H2v">
             <objects>
-                <viewController storyboardIdentifier="DocumentLivenessViewController" id="7mD-y5-OWi" customClass="DocumentLivenessViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DocumentLivenessViewController" id="7mD-y5-OWi" customClass="DocumentLivenessViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nb8-m3-vF7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3290,7 +3007,7 @@
         <!--ScanQR View Controller-->
         <scene sceneID="Qne-Km-olP">
             <objects>
-                <viewController storyboardIdentifier="ScanQRViewController" id="xnh-sj-eB3" customClass="ScanQRViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScanQRViewController" id="xnh-sj-eB3" customClass="ScanQRViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uz8-EW-Yjc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3337,7 +3054,7 @@
         <!--Wallet Consent View Controller-->
         <scene sceneID="U0s-3U-v3q">
             <objects>
-                <viewController storyboardIdentifier="WalletConsentViewController" id="lgJ-qo-4zn" customClass="WalletConsentViewController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WalletConsentViewController" id="lgJ-qo-4zn" customClass="WalletConsentViewController" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="viS-i2-1li">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3696,113 +3413,6 @@
             </objects>
             <point key="canvasLocation" x="6496.875" y="1080.6338028169014"/>
         </scene>
-        <!--Key Management Controller-->
-        <scene sceneID="6xu-Sd-Lrj">
-            <objects>
-                <viewController storyboardIdentifier="FIDOKeyManagementController" id="a5g-l8-hjC" customClass="FIDOKeyManagementController" customModule="BlockIDTestApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="yxj-Yc-gsi">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ySx-Ik-ZlT">
-                                <rect key="frame" x="2" y="63" width="60" height="20"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="O5H-7r-EMg"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                                <state key="normal" image="iconBackarrow"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="txtColor" value="primary4"/>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="txtFont" value="fontRegular"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="backTapped:" destination="a5g-l8-hjC" eventType="touchUpInside" id="h6U-EC-Wr5"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FIDO2 PIN Management" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oju-pL-cAP">
-                                <rect key="frame" x="64" y="61" width="224" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="eZE-B5-vDx">
-                                <rect key="frame" x="20" y="125" width="374" height="180"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="gh9-2g-GfM">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="105"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QKH-CD-sr5">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="54O-jt-hrx"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Set PIN">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="setPIN:" destination="a5g-l8-hjC" eventType="touchUpInside" id="J52-0X-6Fh"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UFy-z2-Nhr">
-                                                <rect key="frame" x="0.0" y="55" width="374" height="50"/>
-                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="W1i-Cy-6zZ"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" title="Change PIN">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="changePIN:" destination="a5g-l8-hjC" eventType="touchUpInside" id="5d2-vb-Ufv"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mYc-4o-aZo">
-                                        <rect key="frame" x="0.0" y="130" width="374" height="50"/>
-                                        <color key="backgroundColor" red="0.91372549020000005" green="0.25490196079999999" blue="0.2274509804" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="9Bk-vn-QWM"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Reset FIDO">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="resetFIDO:" destination="a5g-l8-hjC" eventType="touchUpInside" id="0Dp-mC-jPX"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="pxb-ah-Xk5"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="oju-pL-cAP" firstAttribute="leading" secondItem="ySx-Ik-ZlT" secondAttribute="trailing" constant="2" id="47d-7S-OaU"/>
-                            <constraint firstItem="eZE-B5-vDx" firstAttribute="centerX" secondItem="yxj-Yc-gsi" secondAttribute="centerX" id="4SG-9B-Vnt"/>
-                            <constraint firstItem="eZE-B5-vDx" firstAttribute="leading" secondItem="pxb-ah-Xk5" secondAttribute="leading" constant="20" id="By7-gb-kdT"/>
-                            <constraint firstItem="ySx-Ik-ZlT" firstAttribute="top" secondItem="pxb-ah-Xk5" secondAttribute="top" constant="15" id="b5v-uq-4Ia"/>
-                            <constraint firstItem="eZE-B5-vDx" firstAttribute="top" secondItem="oju-pL-cAP" secondAttribute="bottom" constant="40" id="eaa-1x-HJS"/>
-                            <constraint firstItem="oju-pL-cAP" firstAttribute="centerY" secondItem="ySx-Ik-ZlT" secondAttribute="centerY" id="mzU-MD-dkO"/>
-                            <constraint firstItem="ySx-Ik-ZlT" firstAttribute="leading" secondItem="pxb-ah-Xk5" secondAttribute="leading" constant="2" id="uyz-zv-wHd"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9pu-y4-blF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4584" y="1689"/>
-        </scene>
     </scenes>
     <resources>
         <image name="brandLogo" width="269" height="97"/>
@@ -3823,16 +3433,16 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="separatorColor">
-            <color red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

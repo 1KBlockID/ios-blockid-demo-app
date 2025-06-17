@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3CEE330A264413C2003FDB78"
-               BuildableName = "BlockIDTestApp.app"
-               BlueprintName = "BlockIDTestApp"
+               BuildableName = "1Kosmos Demo.app"
+               BlueprintName = "1Kosmos Demo"
                ReferencedContainer = "container:BlockIDTestApp.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +33,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1FA09387268472A6008AAAA1"
-               BuildableName = "BlockIDTestAppUITests.xctest"
-               BlueprintName = "BlockIDTestAppUITests"
+               BuildableName = "1KosmosDemoUITests.xctest"
+               BlueprintName = "1KosmosDemoUITests"
                ReferencedContainer = "container:BlockIDTestApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -55,8 +55,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3CEE330A264413C2003FDB78"
-            BuildableName = "BlockIDTestApp.app"
-            BlueprintName = "BlockIDTestApp"
+            BuildableName = "1Kosmos Demo.app"
+            BlueprintName = "1Kosmos Demo"
             ReferencedContainer = "container:BlockIDTestApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -78,8 +78,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3CEE330A264413C2003FDB78"
-            BuildableName = "BlockIDTestApp.app"
-            BlueprintName = "BlockIDTestApp"
+            BuildableName = "1Kosmos Demo.app"
+            BlueprintName = "1Kosmos Demo"
             ReferencedContainer = "container:BlockIDTestApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
