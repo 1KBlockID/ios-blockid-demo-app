@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (4.9.1)
   - BigInt (4.0.0)
-  - BlockID (1.20.40):
+  - BlockID (1.20.50):
     - Alamofire (~> 4.9.1)
     - BigInt (~> 4.0)
     - CryptoSwift (~> 1.6.0)
@@ -126,7 +126,7 @@ PODS:
     - SwiftProtobuf
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.20.40`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.20.50`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
   - Toast-Swift (~> 5.0.1)
@@ -155,17 +155,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.40
+    :tag: 1.20.50
 
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.40
+    :tag: 1.20.50
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: bb372f8d4b9916b66384dd2cc2f196db6e8d3d8c
+  BlockID: 2f93bb12c5b716afe6985f6fd8ecd4dfba4b2b58
   CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
@@ -183,6 +183,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 221e7c95e4e3263c807cbbfda9a5613b6a975214
 
-PODFILE CHECKSUM: 5a7689743c750b864f43cb7e08be83c50885ceb8
+PODFILE CHECKSUM: 90b5344d85585368e8d2f841ec3c119db795058f
 
 COCOAPODS: 1.16.2
