@@ -1190,8 +1190,24 @@
                                     <outlet property="delegate" destination="kNr-Ki-Gtw" id="zTM-mz-i50"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7t-2r-8w4">
-                                <rect key="frame" x="157" y="784" width="100" height="48"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ny-Td-ZM0">
+                                <rect key="frame" x="279" y="772" width="100" height="48"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="GVa-rJ-tp5"/>
+                                    <constraint firstAttribute="width" constant="100" id="n29-15-VKR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="authenticatio">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="doAuthenticate:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="Ixr-Qp-a8g"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7t-2r-8w4">
+                                <rect key="frame" x="38" y="791" width="100" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="cIV-OD-MHQ"/>
@@ -1199,17 +1215,18 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Copy">
+                                <state key="normal" title="Register">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doCopy:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="psP-0B-4JD"/>
+                                    <action selector="doRegister:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="eeV-mY-oEv"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="z2t-8P-6Rv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="9ny-Td-ZM0" firstAttribute="top" secondItem="npI-4T-31i" secondAttribute="bottom" constant="21" id="C2i-Pt-8mL"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="trailing" secondItem="z2t-8P-6Rv" secondAttribute="trailing" id="EXd-5o-kVd"/>
                             <constraint firstItem="Jm9-1E-ryI" firstAttribute="top" secondItem="z2t-8P-6Rv" secondAttribute="top" constant="15" id="MpU-3M-2p2"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="leading" secondItem="z2t-8P-6Rv" secondAttribute="leading" id="P6W-ym-IeM"/>
@@ -1219,6 +1236,7 @@
                             <constraint firstItem="Jm9-1E-ryI" firstAttribute="leading" secondItem="DXp-Bn-3ux" secondAttribute="leading" id="bNV-r3-57A"/>
                             <constraint firstItem="bjC-67-QrV" firstAttribute="leading" secondItem="Jm9-1E-ryI" secondAttribute="trailing" constant="22" id="j7S-w4-E3s"/>
                             <constraint firstItem="z2t-8P-6Rv" firstAttribute="bottom" secondItem="c7t-2r-8w4" secondAttribute="bottom" constant="30" id="moR-ir-9Kc"/>
+                            <constraint firstItem="9ny-Td-ZM0" firstAttribute="top" secondItem="npI-4T-31i" secondAttribute="bottom" constant="10" id="sng-O7-9ca"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="top" secondItem="Jm9-1E-ryI" secondAttribute="bottom" constant="10" id="t9T-5L-or1"/>
                         </constraints>
                     </view>
