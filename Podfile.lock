@@ -168,7 +168,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: 460f2bf6f641d9400641d446d1736290a14a20d5
+  BlockID: af5dba3f80a5b8fc7fe9016cb5d8e0b5c32fda2b
   CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918

@@ -14,6 +14,7 @@ import UIKit
 public enum Enrollments: String {
     case About  = "About"
     case AddUser = "Add User"
+    case Passkey  = "Passkey"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
@@ -34,6 +35,7 @@ class EnrollMentViewController: UIViewController {
     
     var enrollmentArray = [Enrollments.About,
                            Enrollments.AddUser,
+                           Enrollments.Passkey,
                            Enrollments.DriverLicense,
                            /*Enrollments.DriverLicense_Liveness,*/
                            Enrollments.Passport1,
@@ -88,6 +90,8 @@ extension EnrollMentViewController: UITableViewDelegate {
         switch enrolmentObj {
         case Enrollments.AddUser.rawValue:
             addUser()
+        case Enrollments.Passkey.rawValue:
+            moveToPasskey()
         case Enrollments.DriverLicense.rawValue:
             enrollDL()
         case Enrollments.DriverLicense_Liveness.rawValue:
@@ -210,6 +214,13 @@ extension EnrollMentViewController {
             return
         }
         showDocumentLivenessVC()
+    }
+    
+    private func moveToPasskey() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let passkeyVC = storyBoard.instantiateViewController(withIdentifier: "PasskeyViewController") as? PasskeyViewController {
+            self.navigationController?.pushViewController(passkeyVC, animated: true)
+        }
     }
     
     private func addUser() {
