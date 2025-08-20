@@ -196,7 +196,7 @@ extension UIViewController {
                     self.showAlertView(title: "", message: messageUW)
                 }
             }
-            self.showEnrollmentView()
+            self.showAboutScreen()
         }
     }
     public func openSettings(title: String, message: String) {
