@@ -8,6 +8,7 @@
 	<array>
 		<string>applinks:1k-dev.1kosmos.net</string>
 		<string>applinks:1k-qa.1kosmos.net</string>
+		<string>webcredentials:1k-dev.1kosmos.net</string>
 	</array>
 	<key>com.apple.developer.nfc.readersession.formats</key>
 	<array>

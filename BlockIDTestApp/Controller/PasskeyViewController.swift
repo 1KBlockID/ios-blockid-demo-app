@@ -88,6 +88,27 @@ extension PasskeyViewController: ASAuthorizationControllerDelegate, ASAuthorizat
     }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("❌ Authorization failed: \(error.localizedDescription)")
+        print("❌ *Authorization failed: \(error.localizedDescription)", error)
+        // Optional: check specific error type
+        if let authError = error as? ASAuthorizationError {
+            switch authError.code {
+            case .canceled:
+                print("User canceled sign in")
+            case .failed:
+                print("Authorization failed")
+            case .invalidResponse:
+                print("Invalid response from authorization")
+            case .notHandled:
+                print("Request not handled")
+            case .unknown:
+                print("Unknown error occurred")
+            case .notInteractive:
+                print("not Interactive")
+            case .matchedExcludedCredential:
+                print("matched Excluded Credential")
+            @unknown default:
+                print("Unhandled error case")
+            }
+        }
     }
 }
