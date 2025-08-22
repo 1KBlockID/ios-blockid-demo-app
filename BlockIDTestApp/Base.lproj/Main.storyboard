@@ -3054,7 +3054,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2x-lB-yym">
-                                <rect key="frame" x="20" y="431" width="374" height="48"/>
+                                <rect key="frame" x="20" y="381" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="2CA-Vv-r30"/>
@@ -3069,7 +3069,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkL-pt-nZR">
-                                <rect key="frame" x="20" y="501" width="374" height="48"/>
+                                <rect key="frame" x="20" y="479" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="CW5-Op-thr"/>
@@ -3088,14 +3088,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Jz3-Uy-Rlc" firstAttribute="centerY" secondItem="IRR-QV-noV" secondAttribute="centerY" id="1Lr-SY-zg5"/>
-                            <constraint firstItem="Z2x-lB-yym" firstAttribute="centerY" secondItem="ECU-j9-ZWK" secondAttribute="centerY" id="5tG-qy-yNM"/>
+                            <constraint firstItem="Z2x-lB-yym" firstAttribute="centerY" secondItem="ECU-j9-ZWK" secondAttribute="centerY" constant="-50" id="5tG-qy-yNM"/>
                             <constraint firstItem="ECU-j9-ZWK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Jz3-Uy-Rlc" secondAttribute="trailing" symbolic="YES" id="7JG-lV-Tat"/>
                             <constraint firstItem="Z2x-lB-yym" firstAttribute="leading" secondItem="ECU-j9-ZWK" secondAttribute="leading" constant="20" id="PA9-1d-QbU"/>
                             <constraint firstItem="ECU-j9-ZWK" firstAttribute="trailing" secondItem="Z2x-lB-yym" secondAttribute="trailing" constant="20" id="T3r-Oz-e5s"/>
                             <constraint firstItem="Jz3-Uy-Rlc" firstAttribute="leading" secondItem="IRR-QV-noV" secondAttribute="trailing" constant="2" id="Tta-Ca-fe8"/>
                             <constraint firstItem="ECU-j9-ZWK" firstAttribute="trailing" secondItem="pkL-pt-nZR" secondAttribute="trailing" constant="20" id="cgf-tR-xX6"/>
                             <constraint firstItem="pkL-pt-nZR" firstAttribute="leading" secondItem="ECU-j9-ZWK" secondAttribute="leading" constant="20" id="guy-en-Yw9"/>
-                            <constraint firstItem="pkL-pt-nZR" firstAttribute="top" secondItem="Z2x-lB-yym" secondAttribute="bottom" constant="22" id="hlK-BI-o1S"/>
+                            <constraint firstItem="pkL-pt-nZR" firstAttribute="top" secondItem="Z2x-lB-yym" secondAttribute="bottom" constant="50" id="hlK-BI-o1S"/>
                             <constraint firstItem="IRR-QV-noV" firstAttribute="top" secondItem="ECU-j9-ZWK" secondAttribute="top" constant="15" id="rMw-pi-qBf"/>
                             <constraint firstItem="IRR-QV-noV" firstAttribute="leading" secondItem="ECU-j9-ZWK" secondAttribute="leading" constant="2" id="uye-A1-zXg"/>
                             <constraint firstItem="Jz3-Uy-Rlc" firstAttribute="top" secondItem="IRR-QV-noV" secondAttribute="top" id="yl9-Wx-15s"/>

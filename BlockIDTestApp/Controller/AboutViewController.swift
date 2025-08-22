@@ -77,7 +77,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                let webAuthNPubKey = "8a7O4b7Q46BPHKrMjfZhl/azy4eOT1rKDI3NmQIYenDcm4uVyu95wqWl4EHRD86aKmc2y00KWrasWTrc/QzqWg=="
                
                // Call the function
-               BlockIDSDK.sharedInstance.getAttestationResult(webauthnURL: webauthnURL,
+              /* BlockIDSDK.sharedInstance.getAttestationResult(webauthnURL: webauthnURL,
                                                               webAuthNPubKey: webAuthNPubKey,
                                                               requestObj: request
                ) { status, message, error, result in
@@ -93,7 +93,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                            print("Error details: \(err)")
                        }
                    }
-               }
+               }*/
            } else if let credential = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialAssertion {
                print("Sign-in succeeded")
                
@@ -137,7 +137,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                    print("Error serializing JSON: \(error)")
                }
                
-               BlockIDSDK.sharedInstance.getAssertionResult(webauthnURL: webauthnURL, webAuthNPubKey: webAuthNPubKey, requestDict: requestDict
+              /* BlockIDSDK.sharedInstance.getAssertionResult(webauthnURL: webauthnURL, webAuthNPubKey: webAuthNPubKey, requestDict: requestDict
                ) { status, message, error, result in
                    if status {
                        if let data = result {
@@ -151,7 +151,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                            print("Error details: \(err)")
                        }
                    }
-               }
+               }*/
            }
        }
        
@@ -186,7 +186,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
         let webauthnURL = "https://1k-dev.1kosmos.net/webauthn"
         let webAuthNPubKey = "8a7O4b7Q46BPHKrMjfZhl/azy4eOT1rKDI3NmQIYenDcm4uVyu95wqWl4EHRD86aKmc2y00KWrasWTrc/QzqWg=="
         
-        BlockIDSDK.sharedInstance.getAttestationOptionsAPI(
+       /* BlockIDSDK.sharedInstance.getAttestationOptionsAPI(
             webauthnURL: webauthnURL,
             webAuthNPubKey: webAuthNPubKey) {
                 (status, message, error, options) in
@@ -208,8 +208,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                         self.registerPasskey(option: options)
                     }
                 }
-                
-            }
+            }*/
     }
     
     @IBAction func doAuthenticate(_ sender: Any) {
@@ -217,7 +216,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
         let webauthnURL = "https://1k-dev.1kosmos.net/webauthn"
         let webAuthNPubKey = "8a7O4b7Q46BPHKrMjfZhl/azy4eOT1rKDI3NmQIYenDcm4uVyu95wqWl4EHRD86aKmc2y00KWrasWTrc/QzqWg=="
         
-        BlockIDSDK.sharedInstance.getAssertionOptionsAPI(
+       /* BlockIDSDK.sharedInstance.getAssertionOptionsAPI(
             webauthnURL: webauthnURL,
             webAuthNPubKey: webAuthNPubKey
         ) { (status, message, error, options) in
@@ -247,7 +246,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
 
                 }
             }
-        }
+        }*/
     }
     
     // MARK: - Private methods -
