@@ -238,7 +238,7 @@ extension PasskeyViewController: ASAuthorizationControllerDelegate, ASAuthorizat
             )
             
             // Example constants - replace with your actual values
-            let dns = "1k-dev.1kosmos.net"
+           /* let dns = "1k-dev.1kosmos.net"
             let tenantId = "68418b2587942f1d3158a798"
             let communityId = "68418b2587942f1d3158a799"
             
@@ -262,7 +262,7 @@ extension PasskeyViewController: ASAuthorizationControllerDelegate, ASAuthorizat
             
             let webauthnURL = "https://1k-dev.1kosmos.net/webauthn"
             let webAuthNPubKey = "8a7O4b7Q46BPHKrMjfZhl/azy4eOT1rKDI3NmQIYenDcm4uVyu95wqWl4EHRD86aKmc2y00KWrasWTrc/QzqWg=="
-            
+            */
             // Call the function
           /*  BlockIDSDK.sharedInstance.getAttestationResult(webauthnURL: webauthnURL,
                                                            webAuthNPubKey: webAuthNPubKey,
@@ -290,7 +290,7 @@ extension PasskeyViewController: ASAuthorizationControllerDelegate, ASAuthorizat
             let userId = String(data: credential.userID, encoding: .utf8) ?? "nil"
             let credentialId = credential.credentialID.base64URLEncodedString()
             
-            print("AuthenticatorData: \(authenticatorData)")
+           /* print("AuthenticatorData: \(authenticatorData)")
             print("ClientDataJSON: \(clientDataJSON)")
             print("Signature: \(signature)")
             print("UserID: \(userId)")
@@ -322,7 +322,7 @@ extension PasskeyViewController: ASAuthorizationControllerDelegate, ASAuthorizat
                 }
             } catch {
                 print("Error serializing JSON: \(error)")
-            }
+            }*/
             
            /* BlockIDSDK.sharedInstance.getAssertionResult(webauthnURL: webauthnURL, webAuthNPubKey: webAuthNPubKey, requestDict: requestDict
             ) { status, message, error, result in
