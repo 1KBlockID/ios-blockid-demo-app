@@ -9,7 +9,6 @@ import UIKit
 import BlockID
 import AuthenticationServices
 
-
 // MARK: - Enums -
 enum InfoType: String, CaseIterable {
     case rootTenant = "Root Tenant: "
