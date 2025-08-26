@@ -16,22 +16,34 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func doRegister(_ sender: Any) {
-        let passketReq = PasskeyRequest(tenant: Tenant.defaultTenant,
-                                        username: "Prasanna",
+        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+                                        username: "prasanna",
                                         displayName: "Prasanna Gupta")
         BlockIDSDK.sharedInstance.registerPasskey(controller: self,
-                                                  passkeyRequest: passketReq) { status, response, error in
-            debugPrint("Prasanna: PasskeyViewController registerPasskey", #function, status, response, error?.message)
+                                                  passkeyRequest: passkeyRequest) { status, response, error in
+            var toastMessage = "Error on Passkey registration! \(error?.message ?? "")"
+            if status {
+                toastMessage = "Passkey registered successfully!"
+            }
+            self.view.makeToast(toastMessage,
+                                duration: 3.0,
+                                position: .bottom)
         }
     }
     
     @IBAction func doAuthenticate(_ sender: Any) {
-        let passketReq = PasskeyRequest(tenant: Tenant.defaultTenant,
-                                        username: "Prasanna",
+        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+                                        username: "prasanna",
                                         displayName: "Prasanna Gupta")
         BlockIDSDK.sharedInstance.authenticatePasskey(controller: self,
-                                                  passkeyRequest: passketReq) { status, response, error in
-            debugPrint("Prasanna: PasskeyViewController authenticatePasskey", #function, status, response, error?.message)
+                                                  passkeyRequest:  passkeyRequest) { status, response, error in
+            var toastMessage = "Error on Passkey authentication! \(error?.message ?? "")"
+            if status {
+                toastMessage = "Passkey authenticated successfully!"
+            }
+            self.view.makeToast(toastMessage,
+                                duration: 3.0,
+                                position: .bottom)
         }
     }
     
