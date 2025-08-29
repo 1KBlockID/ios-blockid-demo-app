@@ -19,7 +19,6 @@ class PasskeyViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textFieldUserName?.delegate = self
         textFieldUserName?.becomeFirstResponder()
     }
     
@@ -66,7 +65,6 @@ class PasskeyViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+        return textField.resignFirstResponder()
     }
 }
