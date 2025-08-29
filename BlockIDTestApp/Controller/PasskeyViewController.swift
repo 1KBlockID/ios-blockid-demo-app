@@ -29,29 +29,29 @@ class PasskeyViewController: UIViewController, UITextFieldDelegate {
                                         displayName: userName)
         BlockIDSDK.sharedInstance.registerPasskey(controller: self,
                                                   passkeyRequest: passkeyRequest) { status, response, error in
-            var toastMessage = "Error on Passkey registration! \(error?.message ?? "")"
+            var alertTitle = "Passkey registration failed"
+            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
             if status {
-                toastMessage = "Passkey registered successfully!"
+                alertTitle = "Success"
+                alertMessage = "Passkey registration successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
             }
-            self.view.makeToast(toastMessage,
-                                duration: 3.0,
-                                position: .bottom)
+            self.showAlertView(title: alertTitle, message: alertMessage)
         }
     }
     
     @IBAction func doAuthenticate(_ sender: Any) {
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
-                                        username: "prasanna",
-                                        displayName: "Prasanna Gupta")
+                                        username: userName,
+                                        displayName: userName)
         BlockIDSDK.sharedInstance.authenticatePasskey(controller: self,
                                                   passkeyRequest:  passkeyRequest) { status, response, error in
-            var toastMessage = "Error on Passkey authentication! \(error?.message ?? "")"
+            var alertTitle = "Passkey verification failed"
+            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
             if status {
-                toastMessage = "Passkey authenticated successfully!"
+                alertTitle = "Success"
+                alertMessage = "Passkey verification successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
             }
-            self.view.makeToast(toastMessage,
-                                duration: 3.0,
-                                position: .bottom)
+            self.showAlertView(title: alertTitle, message: alertMessage)
         }
     }
     
@@ -61,13 +61,12 @@ class PasskeyViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
         userName = sender.text ?? ""
-        debugPrint("Prasanna: ", #function, sender.text?.count ?? 0 > 3)
-        btnRegister.isEnabled = sender.text?.count ?? 0 > 3
-        btnAuthenticate.isEnabled = sender.text?.count ?? 0 > 3
+        btnRegister.isEnabled = sender.text?.count ?? 0 >= 3
+        btnAuthenticate.isEnabled = sender.text?.count ?? 0 >= 3
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        debugPrint("Prasanna: ", #function, #line)
+        textField.resignFirstResponder()
         return true
     }
 }
