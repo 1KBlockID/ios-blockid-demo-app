@@ -22,6 +22,12 @@ class PasskeyViewController: UIViewController, UITextFieldDelegate {
         textFieldUserName?.becomeFirstResponder()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        btnRegister.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        btnAuthenticate.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+    }
+    
     @IBAction func doRegister(_ sender: Any) {
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                         username: userName,
