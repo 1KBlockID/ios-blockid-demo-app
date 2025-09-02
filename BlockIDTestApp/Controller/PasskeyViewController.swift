@@ -36,13 +36,18 @@ class PasskeyViewController: UIViewController {
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
-            if let responseString = response,
-                let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
-               let data = dictResponse["data"] as? [String: Any] {
-                self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
-                                                displayName: (data["username"] as? String) ?? "")
+            if status {
+                if let responseString = response,
+                   let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
+                   let data = dictResponse["data"] as? [String: Any] {
+                    self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
+                                                    displayName: (data["username"] as? String) ?? "")
+                }
+            } else if error?.code == 404 {
+                var alertTitle = "No Account Found"
+                var alertMessage = "We couldn’t find any account with \(self.userName)."
+                self.showAlertView(title: alertTitle, message: alertMessage)
             }
-            
         }
     }
     
@@ -52,13 +57,18 @@ class PasskeyViewController: UIViewController {
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
-            if let responseString = response,
-                let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
-               let data = dictResponse["data"] as? [String: Any] {
-                self.processPasskeyAuthentication(userName: (data["dguid"] as? String) ?? "",
-                                                displayName: (data["username"] as? String) ?? "")
+            if status {
+                if let responseString = response,
+                   let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
+                   let data = dictResponse["data"] as? [String: Any] {
+                    self.processPasskeyAuthentication(userName: (data["dguid"] as? String) ?? "",
+                                                      displayName: (data["username"] as? String) ?? "")
+                }
+            } else if error?.code == 404 {
+                var alertTitle = "No Account Found"
+                var alertMessage = "We couldn’t find any account with \(self.userName)."
+                self.showAlertView(title: alertTitle, message: alertMessage)
             }
-            
         }
     }
     
