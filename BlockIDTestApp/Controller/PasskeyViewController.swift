@@ -31,8 +31,11 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func doRegister(_ sender: Any) {
+        self.textFieldUserName?.resignFirstResponder()
+        self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
+            self.view.hideToastActivity()
             if let responseString = response,
                 let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
                let data = dictResponse["data"] as? [String: Any] {
@@ -44,8 +47,11 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func doAuthenticate(_ sender: Any) {
+        self.textFieldUserName?.resignFirstResponder()
+        self.view.makeToastActivity(.center)
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
+            self.view.hideToastActivity()
             if let responseString = response,
                 let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
                let data = dictResponse["data"] as? [String: Any] {
