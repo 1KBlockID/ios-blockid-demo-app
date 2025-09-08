@@ -28,7 +28,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
     
     // MARK: - ASAuthorizationControllerDelegate
        func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-           if let credential = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
+          /* if let credential = authorization.credential as? ASAuthorizationPlatformPublicKeyCredentialRegistration {
                print("Registration succeeded")
                
                let rawIdBase64URL = credential.credentialID.base64URLEncodedString()
@@ -151,7 +151,7 @@ class AboutViewController: UIViewController, ASAuthorizationControllerDelegate, 
                        }
                    }
                }*/
-           }
+           }*/
        }
        
        func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
@@ -363,7 +363,7 @@ extension AboutViewController: UITableViewDataSource {
         return cell
     }
     
-    func registerPasskey(option: AttestationOptionsData?) {
+   /* func registerPasskey(option: AttestationOptionsData?) {
         guard let option = option,
               let challengeB64 = option.challenge,
               let user = option.user,
@@ -488,7 +488,7 @@ extension AboutViewController: UITableViewDataSource {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
+    }*/
 }
 
 // MARK: - Extension UITableViewDelegate -
