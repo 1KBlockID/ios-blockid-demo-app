@@ -37,15 +37,16 @@ class PasskeyViewController: UIViewController {
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
             if status {
-                if let responseString = response,
-                   let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
-                   let data = dictResponse["data"] as? [String: Any] {
-                    if data["code"] as? UInt == 404 {
-                        let alertTitle = "No Account Found"
-                        let alertMessage = "We couldn’t find any account with \(self.userName)."
-                        self.showAlertView(title: alertTitle, message: alertMessage)
-                        return
-                    }
+                guard let responseString = response,
+                      let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
+                
+                if dictResponse["code"] as? UInt == 404 {
+                    let alertTitle = "No Account Found"
+                    let alertMessage = "We couldn’t find any account with \(self.userName)."
+                    self.showAlertView(title: alertTitle, message: alertMessage)
+                    return
+                }
+                if let data = dictResponse["data"] as? [String: Any] {
                     self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
                                                     displayName: (data["username"] as? String) ?? "")
                 }
@@ -73,16 +74,19 @@ class PasskeyViewController: UIViewController {
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
             if status {
-                if let responseString = response,
-                   let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
-                   let data = dictResponse["data"] as? [String: Any] {
+                guard let responseString = response,
+                      let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
+                
+                if dictResponse["code"] as? UInt == 404 {
+                    let alertTitle = "No Account Found"
+                    let alertMessage = "We couldn’t find any account with \(self.userName)."
+                    self.showAlertView(title: alertTitle, message: alertMessage)
+                    return
+                }
+                if let data = dictResponse["data"] as? [String: Any] {
                     self.processPasskeyAuthentication(userName: (data["dguid"] as? String) ?? "",
                                                       displayName: (data["username"] as? String) ?? "")
                 }
-            } else if error?.code == 404 {
-                let alertTitle = "No Account Found"
-                let alertMessage = "We couldn’t find any account with \(self.userName)."
-                self.showAlertView(title: alertTitle, message: alertMessage)
             } else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
