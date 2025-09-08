@@ -1203,7 +1203,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="doRegister:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="eeV-mY-oEv"/>
+                                    <action selector="doCopy:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="PoV-sH-Aly"/>
                                 </connections>
                             </button>
                         </subviews>
