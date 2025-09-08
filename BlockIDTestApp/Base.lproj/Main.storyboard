@@ -1190,24 +1190,8 @@
                                     <outlet property="delegate" destination="kNr-Ki-Gtw" id="zTM-mz-i50"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ny-Td-ZM0">
-                                <rect key="frame" x="259" y="784" width="120" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="GVa-rJ-tp5"/>
-                                    <constraint firstAttribute="width" constant="120" id="n29-15-VKR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="authentication">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="doAuthenticate:" destination="kNr-Ki-Gtw" eventType="touchUpInside" id="Ixr-Qp-a8g"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c7t-2r-8w4">
-                                <rect key="frame" x="35" y="784" width="100" height="48"/>
+                                <rect key="frame" x="157" y="784" width="100" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="cIV-OD-MHQ"/>
@@ -1215,7 +1199,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Register">
+                                <state key="normal" title="Copy">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -1226,17 +1210,15 @@
                         <viewLayoutGuide key="safeArea" id="z2t-8P-6Rv"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="z2t-8P-6Rv" firstAttribute="bottom" secondItem="9ny-Td-ZM0" secondAttribute="bottom" constant="30" id="0Rl-aO-wti"/>
-                            <constraint firstItem="9ny-Td-ZM0" firstAttribute="top" secondItem="npI-4T-31i" secondAttribute="bottom" constant="22" id="9L2-ZT-Cbh"/>
-                            <constraint firstItem="c7t-2r-8w4" firstAttribute="top" secondItem="9ny-Td-ZM0" secondAttribute="top" id="BBD-v1-VMz"/>
+                            <constraint firstItem="c7t-2r-8w4" firstAttribute="centerX" secondItem="DXp-Bn-3ux" secondAttribute="centerX" id="Afk-pI-jyQ"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="trailing" secondItem="z2t-8P-6Rv" secondAttribute="trailing" id="EXd-5o-kVd"/>
+                            <constraint firstItem="z2t-8P-6Rv" firstAttribute="bottom" secondItem="c7t-2r-8w4" secondAttribute="bottom" constant="30" id="J1e-zN-xcm"/>
                             <constraint firstItem="Jm9-1E-ryI" firstAttribute="top" secondItem="z2t-8P-6Rv" secondAttribute="top" constant="15" id="MpU-3M-2p2"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="leading" secondItem="z2t-8P-6Rv" secondAttribute="leading" id="P6W-ym-IeM"/>
                             <constraint firstItem="bjC-67-QrV" firstAttribute="centerY" secondItem="Jm9-1E-ryI" secondAttribute="centerY" id="Pd6-dn-C4b"/>
                             <constraint firstItem="Jm9-1E-ryI" firstAttribute="leading" secondItem="DXp-Bn-3ux" secondAttribute="leading" id="bNV-r3-57A"/>
                             <constraint firstItem="bjC-67-QrV" firstAttribute="leading" secondItem="Jm9-1E-ryI" secondAttribute="trailing" constant="22" id="j7S-w4-E3s"/>
-                            <constraint firstItem="z2t-8P-6Rv" firstAttribute="trailing" secondItem="9ny-Td-ZM0" secondAttribute="trailing" constant="35" id="r1l-6C-E0S"/>
-                            <constraint firstItem="c7t-2r-8w4" firstAttribute="leading" secondItem="z2t-8P-6Rv" secondAttribute="leading" constant="35" id="rHT-4u-7v6"/>
+                            <constraint firstItem="c7t-2r-8w4" firstAttribute="top" secondItem="npI-4T-31i" secondAttribute="bottom" constant="22" id="los-Xy-DQn"/>
                             <constraint firstItem="npI-4T-31i" firstAttribute="top" secondItem="Jm9-1E-ryI" secondAttribute="bottom" constant="10" id="t9T-5L-or1"/>
                         </constraints>
                     </view>
