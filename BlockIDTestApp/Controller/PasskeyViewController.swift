@@ -40,14 +40,17 @@ class PasskeyViewController: UIViewController {
                 if let responseString = response,
                    let dictResponse = CommonFunctions.jsonStringToDic(from: responseString),
                    let data = dictResponse["data"] as? [String: Any] {
+                    if data["code"] as? UInt == 404 {
+                        let alertTitle = "No Account Found"
+                        let alertMessage = "We couldn’t find any account with \(self.userName)."
+                        self.showAlertView(title: alertTitle, message: alertMessage)
+                        return
+                    }
                     self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
                                                     displayName: (data["username"] as? String) ?? "")
                 }
-            } else if error?.code == 404 {
-                let alertTitle = "No Account Found"
-                let alertMessage = "We couldn’t find any account with \(self.userName)."
-                self.showAlertView(title: alertTitle, message: alertMessage)
-            } else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+            } else if error?.code == NSURLErrorNotConnectedToInternet ||
+                        error?.code == CustomErrors.Network.OFFLINE.code {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
                                    message: localizedMessage)
