@@ -44,9 +44,21 @@ class PasskeyViewController: UIViewController {
                                                     displayName: (data["username"] as? String) ?? "")
                 }
             } else if error?.code == 404 {
-                var alertTitle = "No Account Found"
-                var alertMessage = "We couldn’t find any account with \(self.userName)."
+                let alertTitle = "No Account Found"
+                let alertMessage = "We couldn’t find any account with \(self.userName)."
                 self.showAlertView(title: alertTitle, message: alertMessage)
+            } else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+            } else {
+                self.view.makeToast(error?.message,
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error",
+                                    completion: {_ in
+                    self.goBack(nil)
+                })
             }
         }
     }
@@ -65,14 +77,26 @@ class PasskeyViewController: UIViewController {
                                                       displayName: (data["username"] as? String) ?? "")
                 }
             } else if error?.code == 404 {
-                var alertTitle = "No Account Found"
-                var alertMessage = "We couldn’t find any account with \(self.userName)."
+                let alertTitle = "No Account Found"
+                let alertMessage = "We couldn’t find any account with \(self.userName)."
                 self.showAlertView(title: alertTitle, message: alertMessage)
+            } else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+            } else {
+                self.view.makeToast(error?.message,
+                                    duration: 3.0,
+                                    position: .center,
+                                    title: "Error",
+                                    completion: {_ in
+                    self.goBack(nil)
+                })
             }
         }
     }
     
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction func goBack(_ sender: UIButton?) {
         self.navigationController?.popViewController(animated: true)
     }
     
