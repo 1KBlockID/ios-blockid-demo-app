@@ -9,7 +9,7 @@ target '1Kosmos Demo' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
   pod 'Firebase/Analytics', '~> 8.12.0'
-  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.55.2'
+  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.55'
 
 end
 
