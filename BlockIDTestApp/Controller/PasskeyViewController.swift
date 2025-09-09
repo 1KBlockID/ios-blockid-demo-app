@@ -56,13 +56,8 @@ class PasskeyViewController: UIViewController {
                 self.showAlertView(title: ErrorConfig.noInternet.title,
                                    message: localizedMessage)
             } else {
-                self.view.makeToast(error?.message,
-                                    duration: 3.0,
-                                    position: .center,
-                                    title: "Error",
-                                    completion: {_ in
-                    self.goBack(nil)
-                })
+                self.showAlertView(title: "Error",
+                                   message: error?.message ?? "")
             }
         }
     }
@@ -92,13 +87,8 @@ class PasskeyViewController: UIViewController {
                 self.showAlertView(title: ErrorConfig.noInternet.title,
                                    message: localizedMessage)
             } else {
-                self.view.makeToast(error?.message,
-                                    duration: 3.0,
-                                    position: .center,
-                                    title: "Error",
-                                    completion: {_ in
-                    self.goBack(nil)
-                })
+                self.showAlertView(title: "Error",
+                                   message: error?.message ?? "")
             }
         }
     }
