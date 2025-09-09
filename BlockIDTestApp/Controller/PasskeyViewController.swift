@@ -2,7 +2,8 @@
 //  PasskeyViewController.swift
 //  1Kosmos Demo
 //
-//  Created by Prasanna Gupta on 19/08/25.
+//  Created by 1Kosmos Engineering
+//  Copyright © 2025 1Kosmos. All rights reserved.
 //
 
 import UIKit
@@ -11,8 +12,8 @@ import BlockID
 
 class PasskeyViewController: UIViewController {
     
-    @IBOutlet weak var btnAuthenticate: UIButton!
-    @IBOutlet weak var btnRegister: UIButton!
+    @IBOutlet weak var btnAuthenticate: UIButton?
+    @IBOutlet weak var btnRegister: UIButton?
     @IBOutlet weak var textFieldUserName: UITextField?
     
     private var userName: String = ""
@@ -26,8 +27,8 @@ class PasskeyViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        btnRegister.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
-        btnAuthenticate.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        btnRegister?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        btnAuthenticate?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
     }
     
     @IBAction func doRegister(_ sender: Any) {
@@ -99,8 +100,8 @@ class PasskeyViewController: UIViewController {
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
         userName = sender.text ?? ""
-        btnRegister.isEnabled = sender.text?.count ?? 0 >= 3
-        btnAuthenticate.isEnabled = sender.text?.count ?? 0 >= 3
+        btnRegister?.isEnabled = sender.text?.count ?? 0 >= 3
+        btnAuthenticate?.isEnabled = sender.text?.count ?? 0 >= 3
     }
 }
 
