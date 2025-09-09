@@ -14,6 +14,7 @@ import UIKit
 public enum Enrollments: String {
     case About  = "About"
     case AddUser = "Add User"
+    case Passkeys  = "Passkeys"
     case DriverLicense = "Drivers License 1"
     case DriverLicense_Liveness = "Drivers License (with Liveness Check)"
     case Passport1  = "Passport 1"
@@ -46,6 +47,7 @@ class EnrollMentViewController: UIViewController {
                            Enrollments.LiveID,
                            Enrollments.LiveIDLivenessAndCompare,
                            Enrollments.LoginWithQR,
+                           Enrollments.Passkeys,
                            Enrollments.RecoverMnemonics,
                            Enrollments.resetApp]
     
@@ -112,6 +114,8 @@ extension EnrollMentViewController: UITableViewDelegate {
             showLiveIDLivenessAndCompareView()
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
+        case Enrollments.Passkeys.rawValue:
+            moveToPasskeys()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
@@ -210,6 +214,13 @@ extension EnrollMentViewController {
             return
         }
         showDocumentLivenessVC()
+    }
+    
+    private func moveToPasskeys() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let passkeyVC = storyBoard.instantiateViewController(withIdentifier: "PasskeyViewController") as? PasskeyViewController {
+            self.navigationController?.pushViewController(passkeyVC, animated: true)
+        }
     }
     
     private func addUser() {
