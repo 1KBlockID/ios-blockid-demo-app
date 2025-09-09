@@ -118,6 +118,12 @@ extension PasskeyViewController {
                                             displayName: displayName)
         BlockIDSDK.sharedInstance.authenticatePasskey(controller: self,
                                                       passkeyRequest:  passkeyRequest) { status, response, error in
+            if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+                return
+            }
             var alertTitle = "Passkey verification failed"
             var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
             if status {
@@ -134,6 +140,12 @@ extension PasskeyViewController {
                                             displayName: displayName)
         BlockIDSDK.sharedInstance.registerPasskey(controller: self,
                                                   passkeyRequest: passkeyRequest) { status, response, error in
+            if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+                return
+            }
             var alertTitle = "Passkey registration failed"
             var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
             if status {
