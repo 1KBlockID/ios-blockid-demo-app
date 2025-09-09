@@ -9,14 +9,7 @@ target '1Kosmos Demo' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
   pod 'Firebase/Analytics', '~> 8.12.0'
-#  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.51'
-
-pod 'secp256k1.swift'
-pod 'TrustWalletCore', '~> 2.5.6'
-pod 'Alamofire','~> 4.9.1'
-pod 'CryptoSwift', '~> 1.6.0'
-pod 'BigInt', '~> 4.0'
-pod 'OpenSSL-Universal', '~> 1.1.2300'
+  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.20.55'
 
 end
 
