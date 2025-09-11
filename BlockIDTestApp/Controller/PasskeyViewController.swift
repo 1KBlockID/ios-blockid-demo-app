@@ -12,9 +12,14 @@ import BlockID
 
 class PasskeyViewController: UIViewController {
     
-    @IBOutlet weak var btnAuthenticate: UIButton?
-    @IBOutlet weak var btnRegister: UIButton?
+    @IBOutlet weak var btnAuthenticatePasskey: UIButton?
+    @IBOutlet weak var btnRegisterPasskey: UIButton?
+    @IBOutlet weak var btnAuthPasskeyNGetJWT: UIButton?
+    @IBOutlet weak var btnRegisterPasskeyAndLink: UIButton?
     @IBOutlet weak var textFieldUserName: UITextField?
+    @IBOutlet weak var txtFieldPasskeyName: UITextField?
+    @IBOutlet weak var btnCopyJWT: UIButton?
+    @IBOutlet weak var lblJWT: UILabel?
     
     private var userName: String = ""
     
@@ -22,15 +27,19 @@ class PasskeyViewController: UIViewController {
         super.viewDidLoad()
         
         textFieldUserName?.becomeFirstResponder()
+        btnCopyJWT?.isEnabled = true
+        btnRegisterPasskeyAndLink?.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        btnRegister?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
-        btnAuthenticate?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        btnRegisterPasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        btnAuthenticatePasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
+        userName = "pgupta"
     }
     
+    // MARK: - IBOutlets -
     @IBAction func doRegister(_ sender: Any) {
         self.textFieldUserName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
@@ -40,13 +49,6 @@ class PasskeyViewController: UIViewController {
             if status {
                 guard let responseString = response,
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
-                
-                if dictResponse["code"] as? UInt == 404 {
-                    let alertTitle = "No Account Found"
-                    let alertMessage = "We couldn’t find any account with \(self.userName)."
-                    self.showAlertView(title: alertTitle, message: alertMessage)
-                    return
-                }
                 if let data = dictResponse["data"] as? [String: Any] {
                     self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
                                                     displayName: (data["username"] as? String) ?? "")
@@ -56,6 +58,10 @@ class PasskeyViewController: UIViewController {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
                                    message: localizedMessage)
+            } else if error?.code == 404 {
+                let alertTitle = "No Account Found"
+                let alertMessage = "We couldn’t find any account with \(self.userName)."
+                self.showAlertView(title: alertTitle, message: alertMessage)
             } else {
                 self.showAlertView(title: "Error",
                                    message: error?.message ?? "")
@@ -73,12 +79,6 @@ class PasskeyViewController: UIViewController {
                 guard let responseString = response,
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
                 
-                if dictResponse["code"] as? UInt == 404 {
-                    let alertTitle = "No Account Found"
-                    let alertMessage = "We couldn’t find any account with \(self.userName)."
-                    self.showAlertView(title: alertTitle, message: alertMessage)
-                    return
-                }
                 if let data = dictResponse["data"] as? [String: Any] {
                     self.processPasskeyAuthentication(userName: (data["dguid"] as? String) ?? "",
                                                       displayName: (data["username"] as? String) ?? "")
@@ -87,6 +87,10 @@ class PasskeyViewController: UIViewController {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
                                    message: localizedMessage)
+            } else if error?.code == 404 {
+                let alertTitle = "No Account Found"
+                let alertMessage = "We couldn’t find any account with \(self.userName)."
+                self.showAlertView(title: alertTitle, message: alertMessage)
             } else {
                 self.showAlertView(title: "Error",
                                    message: error?.message ?? "")
@@ -100,8 +104,34 @@ class PasskeyViewController: UIViewController {
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
         userName = sender.text ?? ""
-        btnRegister?.isEnabled = sender.text?.count ?? 0 >= 3
-        btnAuthenticate?.isEnabled = sender.text?.count ?? 0 >= 3
+        let isEnabled = userName.count >= 3
+        btnRegisterPasskey?.isEnabled = isEnabled
+        btnAuthenticatePasskey?.isEnabled = isEnabled
+        btnRegisterPasskeyAndLink?.isEnabled = isEnabled
+        btnAuthPasskeyNGetJWT?.isEnabled = isEnabled
+    }
+    
+    @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
+        // FIXME: displayName
+        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+                                            username: userName,
+                                            displayName: userName)
+        BlockIDSDK.sharedInstance.registerPasskeywithAccountLinking(controller: self,
+                                                                    passkeyRequest: passkeyRequest) {
+            status, response, error in
+            debugPrint("Prasanna: ", #function, status, response, error?.code, error?.message)
+        }
+    }
+    
+    @IBAction func authenticatePasskeyAndGetJWT(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func copyJWT(_ sender: UIButton) {
+        let pasteboard = UIPasteboard.general
+        pasteboard.string = lblJWT?.text ?? ""
+        self.view.makeToast("JWT Copied.", duration: 3.0, position: .center)
+
     }
 }
 

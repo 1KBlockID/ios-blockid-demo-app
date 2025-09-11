@@ -3012,9 +3012,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRR-QV-noV">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRR-QV-noV">
                                 <rect key="frame" x="2" y="63" width="60" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="2sf-31-DzC"/>
+                                    <constraint firstAttribute="height" constant="24" id="GmA-wg-dsc"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
@@ -3027,55 +3030,63 @@
                                     <action selector="goBack:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="ga2-5M-6O6"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Passkeys" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jz3-Uy-Rlc">
-                                <rect key="frame" x="64" y="63" width="88" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passkeys" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jz3-Uy-Rlc">
+                                <rect key="frame" x="64" y="63" width="100" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="24" id="luN-Fa-TZn"/>
+                                    <constraint firstAttribute="width" constant="100" id="nCe-jd-QPw"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Unique Passkey Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kHt-bA-z1g">
-                                <rect key="frame" x="30" y="307" width="354" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Lwc-Ra-gE2" id="DbD-14-yVA"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2we-Ru-bXT">
-                                <rect key="frame" x="30" y="256" width="354" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                                <connections>
-                                    <action selector="textFieldEditingDidChange:" destination="Lwc-Ra-gE2" eventType="editingChanged" id="GAa-tb-mOq"/>
-                                    <outlet property="delegate" destination="Lwc-Ra-gE2" id="n87-e9-QaH"/>
-                                </connections>
-                            </textField>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iZ-w3-Twj" userLabel="Register">
-                                <rect key="frame" x="30" y="376" width="159.5" height="116"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="mVb-3g-Qu2" userLabel="Textfield Stack View">
+                                <rect key="frame" x="30" y="102" width="354" height="120"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2x-lB-yym">
-                                        <rect key="frame" x="0.0" y="0.0" width="159.5" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username*" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2we-Ru-bXT">
+                                        <rect key="frame" x="0.0" y="0.0" width="354" height="51.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="textFieldEditingDidChange:" destination="Lwc-Ra-gE2" eventType="editingChanged" id="GAa-tb-mOq"/>
+                                            <outlet property="delegate" destination="Lwc-Ra-gE2" id="n87-e9-QaH"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Unique Passkey Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kHt-bA-z1g">
+                                        <rect key="frame" x="0.0" y="68.5" width="354" height="51.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Lwc-Ra-gE2" id="DbD-14-yVA"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="gpf-nt-vTp"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RU0-hz-6Te" userLabel="Register Stack View">
+                                <rect key="frame" x="30" y="262" width="166.5" height="110"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2x-lB-yym">
+                                        <rect key="frame" x="0.0" y="0.0" width="166.5" height="45"/>
+                                        <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Register Passkey">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <state key="disabled">
-                                            <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.2627450980392157" green="0.2627450980392157" blue="0.2627450980392157" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="doRegister:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="tBq-nA-gKE"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pkL-pt-nZR">
-                                        <rect key="frame" x="0.0" y="68" width="159.5" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="pkL-pt-nZR">
+                                        <rect key="frame" x="0.0" y="65" width="166.5" height="45"/>
+                                        <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Register Passkey &amp; Link with account">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3083,18 +3094,21 @@
                                         <state key="disabled">
                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="registerPasskeyAndLinkAccount:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="xK7-zp-RWT"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sj8-9X-Xio" userLabel="Authentication">
-                                <rect key="frame" x="224.5" y="376" width="159.5" height="116"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="1uS-XQ-iPe"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kOc-LJ-Sri" userLabel="Authenticate Stack View">
+                                <rect key="frame" x="217.5" y="262" width="166.5" height="110"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDE-wa-ZFi">
-                                        <rect key="frame" x="0.0" y="0.0" width="159.5" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IDE-wa-ZFi">
+                                        <rect key="frame" x="0.0" y="0.0" width="166.5" height="45"/>
+                                        <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Authenticate via Passkey">
@@ -3107,11 +3121,10 @@
                                             <action selector="doAuthenticate:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="MNV-G9-WAU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Fv-Bb-bf4">
-                                        <rect key="frame" x="0.0" y="68" width="159.5" height="48"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="3Fv-Bb-bf4">
+                                        <rect key="frame" x="0.0" y="65" width="166.5" height="45"/>
+                                        <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Authenticate via Passkey &amp; Get JWT">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3119,14 +3132,20 @@
                                         <state key="disabled">
                                             <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="authenticatePasskeyAndGetJWT:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="jrO-lE-FXG"/>
+                                        </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NX1-Yr-Lrp">
-                                <rect key="frame" x="126" y="607" width="162" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="height" constant="110" id="eMJ-X3-7jJ"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NX1-Yr-Lrp">
+                                <rect key="frame" x="126" y="535" width="162" height="48"/>
+                                <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="qPg-m2-jI8"/>
                                     <constraint firstAttribute="width" constant="162" id="uox-wz-O2p"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3137,21 +3156,63 @@
                                 <state key="disabled">
                                     <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="copyJWT:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="stH-pV-33V"/>
+                                </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generated JWT:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJ4-li-pQd">
+                                <rect key="frame" x="30" y="412" width="126" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="oMm-dU-Cir"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsg-2O-zP7">
+                                <rect key="frame" x="30" y="447" width="354" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="DFv-pj-p8T"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ECU-j9-ZWK"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="RU0-hz-6Te" firstAttribute="top" secondItem="mVb-3g-Qu2" secondAttribute="bottom" constant="40" id="1vb-yp-CzU"/>
                             <constraint firstItem="NX1-Yr-Lrp" firstAttribute="centerX" secondItem="ECU-j9-ZWK" secondAttribute="centerX" id="4jx-bd-OI2"/>
-                            <constraint firstItem="NX1-Yr-Lrp" firstAttribute="top" secondItem="6iZ-w3-Twj" secondAttribute="bottom" constant="159" id="Fbo-CF-Hsp"/>
-                            <constraint firstItem="6iZ-w3-Twj" firstAttribute="leading" secondItem="2we-Ru-bXT" secondAttribute="leading" id="H4B-Or-cGv"/>
-                            <constraint firstItem="6iZ-w3-Twj" firstAttribute="top" secondItem="2we-Ru-bXT" secondAttribute="bottom" constant="86" id="W5G-F6-NLh"/>
+                            <constraint firstItem="qJ4-li-pQd" firstAttribute="top" secondItem="RU0-hz-6Te" secondAttribute="bottom" constant="40" id="4yh-qX-PoQ"/>
+                            <constraint firstItem="kOc-LJ-Sri" firstAttribute="top" secondItem="RU0-hz-6Te" secondAttribute="top" id="7Hx-Op-azB"/>
+                            <constraint firstItem="IRR-QV-noV" firstAttribute="top" secondItem="ECU-j9-ZWK" secondAttribute="top" constant="15" id="9U0-Hn-Dyl"/>
+                            <constraint firstItem="qJ4-li-pQd" firstAttribute="leading" secondItem="RU0-hz-6Te" secondAttribute="leading" id="AZA-ZM-tw3"/>
+                            <constraint firstItem="Bsg-2O-zP7" firstAttribute="leading" secondItem="qJ4-li-pQd" secondAttribute="leading" id="Cdk-9b-Sz4"/>
+                            <constraint firstItem="RU0-hz-6Te" firstAttribute="leading" secondItem="mVb-3g-Qu2" secondAttribute="leading" id="H3c-a5-tCw"/>
+                            <constraint firstItem="NX1-Yr-Lrp" firstAttribute="top" secondItem="Bsg-2O-zP7" secondAttribute="bottom" constant="28" id="Hx5-Eu-UdV"/>
+                            <constraint firstItem="kOc-LJ-Sri" firstAttribute="trailing" secondItem="mVb-3g-Qu2" secondAttribute="trailing" id="K0Q-Fo-ZaL"/>
+                            <constraint firstItem="Bsg-2O-zP7" firstAttribute="trailing" secondItem="kOc-LJ-Sri" secondAttribute="trailing" id="P8v-fE-rE2"/>
+                            <constraint firstItem="Jz3-Uy-Rlc" firstAttribute="top" secondItem="IRR-QV-noV" secondAttribute="top" id="UmR-N9-s5D"/>
+                            <constraint firstItem="mVb-3g-Qu2" firstAttribute="leading" secondItem="ECU-j9-ZWK" secondAttribute="leading" constant="30" id="cjP-G8-H6X"/>
+                            <constraint firstItem="IRR-QV-noV" firstAttribute="leading" secondItem="ECU-j9-ZWK" secondAttribute="leading" constant="2" id="cxM-48-YQW"/>
+                            <constraint firstItem="RU0-hz-6Te" firstAttribute="width" secondItem="mVb-3g-Qu2" secondAttribute="width" multiplier="0.47" id="dHD-nN-LgL"/>
+                            <constraint firstItem="Bsg-2O-zP7" firstAttribute="top" secondItem="qJ4-li-pQd" secondAttribute="bottom" constant="15" id="ehg-uR-eJM"/>
+                            <constraint firstItem="Jz3-Uy-Rlc" firstAttribute="leading" secondItem="IRR-QV-noV" secondAttribute="trailing" constant="2" id="hw1-Nk-ZGI"/>
+                            <constraint firstItem="mVb-3g-Qu2" firstAttribute="top" secondItem="IRR-QV-noV" secondAttribute="bottom" constant="15" id="iGA-dG-7Wg"/>
+                            <constraint firstItem="kOc-LJ-Sri" firstAttribute="width" secondItem="mVb-3g-Qu2" secondAttribute="width" multiplier="0.47" id="uCX-go-n3U"/>
+                            <constraint firstItem="ECU-j9-ZWK" firstAttribute="trailing" secondItem="mVb-3g-Qu2" secondAttribute="trailing" constant="30" id="yxi-Bv-YkT"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnAuthenticate" destination="IDE-wa-ZFi" id="KSB-qz-FgR"/>
-                        <outlet property="btnRegister" destination="Z2x-lB-yym" id="DLl-Vl-rdC"/>
+                        <outlet property="btnAuthPasskeyNGetJWT" destination="3Fv-Bb-bf4" id="imJ-zb-AS9"/>
+                        <outlet property="btnAuthenticatePasskey" destination="IDE-wa-ZFi" id="KSB-qz-FgR"/>
+                        <outlet property="btnCopyJWT" destination="NX1-Yr-Lrp" id="meu-Fx-aAo"/>
+                        <outlet property="btnRegisterPasskey" destination="Z2x-lB-yym" id="DLl-Vl-rdC"/>
+                        <outlet property="btnRegisterPasskeyAndLink" destination="pkL-pt-nZR" id="h54-It-5Ro"/>
+                        <outlet property="lblJWT" destination="Bsg-2O-zP7" id="QhE-kZ-FD2"/>
                         <outlet property="textFieldUserName" destination="2we-Ru-bXT" id="cCv-nt-YQs"/>
+                        <outlet property="txtFieldPasskeyName" destination="kHt-bA-z1g" id="9pM-uc-yVg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zYm-nI-QA0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

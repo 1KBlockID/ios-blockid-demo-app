@@ -196,7 +196,7 @@ extension UIViewController {
                     self.showAlertView(title: "", message: messageUW)
                 }
             }
-            self.showEnrollmentView()
+            self.moveToPasskeysViewController()
         }
     }
     public func openSettings(title: String, message: String) {
@@ -255,6 +255,13 @@ extension UIViewController {
     public func alertForCameraAccess() {
         self.openSettings(title: "Camera Inaccessible",
                           message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
+    }
+    
+    func moveToPasskeysViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let passkeyVC = storyBoard.instantiateViewController(withIdentifier: "PasskeyViewController") as? PasskeyViewController {
+            self.navigationController?.pushViewController(passkeyVC, animated: true)
+        }
     }
     
     // MARK: - Topmost View Controller

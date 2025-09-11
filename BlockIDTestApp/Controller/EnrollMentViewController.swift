@@ -115,7 +115,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.Passkeys.rawValue:
-            moveToPasskeys()
+            moveToPasskeysViewController()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
@@ -214,13 +214,6 @@ extension EnrollMentViewController {
             return
         }
         showDocumentLivenessVC()
-    }
-    
-    private func moveToPasskeys() {
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let passkeyVC = storyBoard.instantiateViewController(withIdentifier: "PasskeyViewController") as? PasskeyViewController {
-            self.navigationController?.pushViewController(passkeyVC, animated: true)
-        }
     }
     
     private func addUser() {
