@@ -196,7 +196,7 @@ extension UIViewController {
                     self.showAlertView(title: "", message: messageUW)
                 }
             }
-            self.moveToPasskeysViewController()
+            self.showEnrollmentView()
         }
     }
     public func openSettings(title: String, message: String) {

@@ -112,10 +112,9 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
-        // FIXME: displayName
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                             username: userName,
-                                            displayName: userName)
+                                            deviceName: "Prasanna' iPhoneXR_iOS18")
         BlockIDSDK.sharedInstance.registerPasskeywithAccountLinking(controller: self,
                                                                     passkeyRequest: passkeyRequest) {
             status, response, error in
