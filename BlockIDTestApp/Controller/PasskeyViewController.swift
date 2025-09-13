@@ -37,6 +37,9 @@ class PasskeyViewController: UIViewController {
         btnRegisterPasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
         btnAuthenticatePasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
         userName = "pgupta"
+
+        btnRegisterPasskeyAndLink?.titleLabel?.textAlignment = .center
+        btnAuthPasskeyNGetJWT?.titleLabel?.textAlignment = .center
     }
     
     // MARK: - IBOutlets -
