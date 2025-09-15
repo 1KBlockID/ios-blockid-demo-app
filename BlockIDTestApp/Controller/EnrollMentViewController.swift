@@ -115,7 +115,7 @@ extension EnrollMentViewController: UITableViewDelegate {
         case Enrollments.LoginWithQR.rawValue:
             scanQRCode()
         case Enrollments.Passkeys.rawValue:
-            moveToPasskeysViewController()
+            showPasskeysViewController()
         case Enrollments.RecoverMnemonics.rawValue:
             recoverMnemonic()
         case Enrollments.resetApp.rawValue:
