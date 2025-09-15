@@ -115,16 +115,19 @@ class PasskeyViewController: UIViewController {
         btnRegisterPasskey?.isEnabled = isEnabled
         btnAuthenticatePasskey?.isEnabled = isEnabled
         btnRegisterPasskeyAndLink?.isEnabled = isEnabled
-        btnAuthPasskeyNGetJWT?.isEnabled = isEnabled
+//        btnAuthPasskeyNGetJWT?.isEnabled = isEnabled
     }
     
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
+        self.textFieldUserName?.resignFirstResponder()
+        self.view.makeToastActivity(.center)
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                             username: userName,
                                             deviceName: self.txtFieldPasskeyName?.text ?? "")
         BlockIDSDK.sharedInstance.registerPasskeyWithAccountLinking(controller: self,
                                                                     passkeyRequest: passkeyRequest) {
             status, response, error in
+            self.view.hideToastActivity()
             if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
