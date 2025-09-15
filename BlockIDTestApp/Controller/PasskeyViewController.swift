@@ -33,9 +33,6 @@ class PasskeyViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        btnRegisterPasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
-        btnAuthenticatePasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
-
         btnRegisterPasskeyAndLink?.titleLabel?.textAlignment = .center
         btnAuthPasskeyNGetJWT?.titleLabel?.textAlignment = .center
     }
