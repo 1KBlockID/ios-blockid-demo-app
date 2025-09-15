@@ -26,7 +26,6 @@ class PasskeyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         textFieldUserName?.becomeFirstResponder()
     }
     
@@ -49,10 +48,13 @@ class PasskeyViewController: UIViewController {
     // MARK: - IBOutlets -
     @IBAction func doRegister(_ sender: Any) {
         self.textFieldUserName?.resignFirstResponder()
+        self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
+        self.view.isUserInteractionEnabled = false
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
             if status {
                 guard let responseString = response,
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
@@ -78,10 +80,13 @@ class PasskeyViewController: UIViewController {
     
     @IBAction func doAuthenticate(_ sender: Any) {
         self.textFieldUserName?.resignFirstResponder()
+        self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
+        self.view.isUserInteractionEnabled = false
         BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
             if status {
                 guard let responseString = response,
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
@@ -120,14 +125,17 @@ class PasskeyViewController: UIViewController {
     
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
         self.textFieldUserName?.resignFirstResponder()
+        self.txtFieldPasskeyName?.resignFirstResponder()
+        self.view.isUserInteractionEnabled = false
         self.view.makeToastActivity(.center)
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                             username: userName,
-                                            deviceName: self.txtFieldPasskeyName?.text ?? "")
+                                            deviceName: self.txtFieldPasskeyName?.text)
         BlockIDSDK.sharedInstance.registerPasskeyWithAccountLinking(controller: self,
                                                                     passkeyRequest: passkeyRequest) {
             status, response, error in
             self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
             if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
                 let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
                 self.showAlertView(title: ErrorConfig.noInternet.title,
@@ -140,8 +148,8 @@ class PasskeyViewController: UIViewController {
                 alertTitle = "Success"
                 alertMessage = "Passkey registration successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
             } else if error?.code == 404 {
-                let alertTitle = "No Account Found"
-                let alertMessage = "We couldn’t find any account with \(self.userName)."
+                alertTitle = "No Account Found"
+                alertMessage = "We couldn’t find any account with \(self.userName)."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
