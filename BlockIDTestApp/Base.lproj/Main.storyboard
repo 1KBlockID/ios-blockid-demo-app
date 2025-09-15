@@ -3141,7 +3141,7 @@
                                     <constraint firstAttribute="height" constant="110" id="eMJ-X3-7jJ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NX1-Yr-Lrp">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NX1-Yr-Lrp">
                                 <rect key="frame" x="126" y="535" width="162" height="48"/>
                                 <color key="backgroundColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="0.8980392157" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -3160,7 +3160,7 @@
                                     <action selector="copyJWT:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="stH-pV-33V"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generated JWT:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJ4-li-pQd">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Generated JWT:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qJ4-li-pQd">
                                 <rect key="frame" x="30" y="412" width="126" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="oMm-dU-Cir"/>
@@ -3169,7 +3169,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsg-2O-zP7">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsg-2O-zP7">
                                 <rect key="frame" x="30" y="447" width="354" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="DFv-pj-p8T"/>
@@ -3211,6 +3211,7 @@
                         <outlet property="btnRegisterPasskey" destination="Z2x-lB-yym" id="DLl-Vl-rdC"/>
                         <outlet property="btnRegisterPasskeyAndLink" destination="pkL-pt-nZR" id="h54-It-5Ro"/>
                         <outlet property="lblJWT" destination="Bsg-2O-zP7" id="QhE-kZ-FD2"/>
+                        <outlet property="lblJWTPlaceholder" destination="qJ4-li-pQd" id="v8s-KR-qUL"/>
                         <outlet property="textFieldUserName" destination="2we-Ru-bXT" id="cCv-nt-YQs"/>
                         <outlet property="txtFieldPasskeyName" destination="kHt-bA-z1g" id="9pM-uc-yVg"/>
                     </connections>

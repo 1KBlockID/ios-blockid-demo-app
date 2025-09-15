@@ -20,6 +20,7 @@ class PasskeyViewController: UIViewController {
     @IBOutlet weak var txtFieldPasskeyName: UITextField?
     @IBOutlet weak var btnCopyJWT: UIButton?
     @IBOutlet weak var lblJWT: UILabel?
+    @IBOutlet weak var lblJWTPlaceholder: UILabel?
     
     private var userName: String = ""
     
@@ -27,8 +28,6 @@ class PasskeyViewController: UIViewController {
         super.viewDidLoad()
         
         textFieldUserName?.becomeFirstResponder()
-        btnCopyJWT?.isEnabled = true
-        btnRegisterPasskeyAndLink?.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,10 +35,16 @@ class PasskeyViewController: UIViewController {
         
         btnRegisterPasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
         btnAuthenticatePasskey?.isEnabled = !(self.textFieldUserName?.text ?? "").isEmpty
-        userName = "pgupta"
 
         btnRegisterPasskeyAndLink?.titleLabel?.textAlignment = .center
         btnAuthPasskeyNGetJWT?.titleLabel?.textAlignment = .center
+    }
+    
+    // MARK: - Private -
+    private func hideJWTDetails(isHidden: Bool) {
+        self.lblJWT?.isHidden = isHidden
+        self.lblJWTPlaceholder?.isHidden = isHidden
+        self.btnCopyJWT?.isHidden = isHidden
     }
     
     // MARK: - IBOutlets -
@@ -117,16 +122,35 @@ class PasskeyViewController: UIViewController {
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                             username: userName,
-                                            deviceName: "Prasanna' iPhoneXR_iOS18")
+                                            deviceName: self.txtFieldPasskeyName?.text ?? "Prasanna's iPhoneXR_iOS18")
         BlockIDSDK.sharedInstance.registerPasskeywithAccountLinking(controller: self,
                                                                     passkeyRequest: passkeyRequest) {
             status, response, error in
-            debugPrint("Prasanna: ", #function, status, response, error?.code, error?.message)
+            if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+                return
+            }
+            var alertTitle = "Passkey registration failed"
+            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
+            if status {
+                alertTitle = "Success"
+                alertMessage = "Passkey registration successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+            } else if error?.code == 404 {
+                let alertTitle = "No Account Found"
+                let alertMessage = "We couldn’t find any account with \(self.userName)."
+                self.showAlertView(title: alertTitle, message: alertMessage)
+            } else {
+                self.showAlertView(title: "Error",
+                                   message: error?.message ?? "")
+            }
+            self.showAlertView(title: alertTitle, message: alertMessage)
         }
     }
     
     @IBAction func authenticatePasskeyAndGetJWT(_ sender: UIButton) {
-        
+//        hideJWTDetails(isHidden: true)
     }
     
     @IBAction func copyJWT(_ sender: UIButton) {
