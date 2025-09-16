@@ -110,19 +110,6 @@ class PasskeyViewController: UIViewController {
         }
     }
     
-    @IBAction func goBack(_ sender: UIButton?) {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
-        userName = sender.text ?? ""
-        let isEnabled = userName.count >= 3
-        btnRegisterPasskey?.isEnabled = isEnabled
-        btnAuthenticatePasskey?.isEnabled = isEnabled
-        btnRegisterPasskeyAndLink?.isEnabled = isEnabled
-//        btnAuthPasskeyNGetJWT?.isEnabled = isEnabled
-    }
-    
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
         self.textFieldUserName?.resignFirstResponder()
         self.txtFieldPasskeyName?.resignFirstResponder()
@@ -157,7 +144,17 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func authenticatePasskeyAndGetJWT(_ sender: UIButton) {
-        //        hideJWTDetails(isHidden: true)
+        self.view.isUserInteractionEnabled = false
+        self.view.makeToastActivity(.center)
+        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+                                            username: userName)
+        BlockIDSDK.sharedInstance.issueJWTOnPasskeyAuthentication(controller: self,
+                                                                  passkeyRequest: passkeyRequest) { status, response, error in
+            debugPrint("Prasanna: error?.message", #function, error?.message)
+            self.view.hideToastActivity()
+            self.view.isUserInteractionEnabled = true
+            self.hideJWTDetails(isHidden: false)
+        }
     }
     
     @IBAction func copyJWT(_ sender: UIButton) {
@@ -165,6 +162,19 @@ class PasskeyViewController: UIViewController {
         pasteboard.string = lblJWT?.text ?? ""
         self.view.makeToast("JWT Copied.", duration: 3.0, position: .center)
         
+    }
+    
+    @IBAction func goBack(_ sender: UIButton?) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
+        userName = sender.text ?? ""
+        let isEnabled = userName.count >= 3
+        btnRegisterPasskey?.isEnabled = isEnabled
+        btnAuthenticatePasskey?.isEnabled = isEnabled
+        btnRegisterPasskeyAndLink?.isEnabled = isEnabled
+        btnAuthPasskeyNGetJWT?.isEnabled = isEnabled
     }
 }
 
