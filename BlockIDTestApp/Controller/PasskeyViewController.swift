@@ -49,6 +49,7 @@ class PasskeyViewController: UIViewController {
     
     // MARK: - IBOutlets -
     @IBAction func doRegister(_ sender: Any) {
+        self.hideJWTDetails(token: nil)
         self.textFieldUserName?.resignFirstResponder()
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
@@ -81,6 +82,7 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func doAuthenticate(_ sender: Any) {
+        self.hideJWTDetails(token: nil)
         self.textFieldUserName?.resignFirstResponder()
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
@@ -113,6 +115,7 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func registerPasskeyAndLinkAccount(_ sender: UIButton) {
+        self.hideJWTDetails(token: nil)
         self.textFieldUserName?.resignFirstResponder()
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.isUserInteractionEnabled = false
@@ -132,13 +135,13 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey registration failed"
-            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
+            var alertMessage = "We couldn’t register passkey with \(response?.sub ?? ""). Please try again."
             if status {
                 alertTitle = "Success"
-                alertMessage = "Passkey registration successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+                alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(self.userName)."
+                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
@@ -146,6 +149,7 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func authenticatePasskeyAndGetJWT(_ sender: UIButton) {
+        self.hideJWTDetails(token: nil)
         self.textFieldUserName?.resignFirstResponder()
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.isUserInteractionEnabled = false
@@ -163,14 +167,14 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey verification failed"
-            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
+            var alertMessage = "We couldn’t verify passkey with \(response?.sub ?? ""). Please try again."
             if status {
                 alertTitle = "Success"
-                alertMessage = "Passkey verification successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+                alertMessage = "Passkey verification successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
                 self.hideJWTDetails(token: response?.jwt)
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(self.userName)."
+                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
@@ -218,10 +222,10 @@ extension PasskeyViewController {
                 return
             }
             var alertTitle = "Passkey verification failed"
-            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
+            var alertMessage = "We couldn’t verify passkey with \(response?.sub ?? ""). Please try again."
             if status {
                 alertTitle = "Success"
-                alertMessage = "Passkey verification successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+                alertMessage = "Passkey verification successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
             }
             self.showAlertView(title: alertTitle, message: alertMessage)
         }
@@ -240,10 +244,10 @@ extension PasskeyViewController {
                 return
             }
             var alertTitle = "Passkey registration failed"
-            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
+            var alertMessage = "We couldn’t register passkey with \(response?.sub ?? ""). Please try again."
             if status {
                 alertTitle = "Success"
-                alertMessage = "Passkey registration successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+                alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
             }
             self.showAlertView(title: alertTitle, message: alertMessage)
         }
