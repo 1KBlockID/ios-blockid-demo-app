@@ -36,13 +36,17 @@ class PasskeyViewController: UIViewController {
         btnAuthPasskeyNGetJWT?.titleLabel?.textAlignment = .center
         btnRegisterPasskey?.titleLabel?.textAlignment = .center
         btnAuthenticatePasskey?.titleLabel?.textAlignment = .center
+        
+        self.textFieldUserName?.text = "prasann"
     }
     
     // MARK: - Private -
-    private func hideJWTDetails(isHidden: Bool) {
-        self.lblJWT?.isHidden = isHidden
-        self.lblJWTPlaceholder?.isHidden = isHidden
-        self.btnCopyJWT?.isHidden = isHidden
+    private func hideJWTDetails(token: String?) {
+        self.lblJWT?.isHidden = token?.isEmpty ?? true
+        self.lblJWTPlaceholder?.isHidden = token?.isEmpty ?? true
+        self.btnCopyJWT?.isHidden = token?.isEmpty ?? true
+        
+        self.lblJWT?.text = token
     }
     
     // MARK: - IBOutlets -
@@ -144,16 +148,34 @@ class PasskeyViewController: UIViewController {
     }
     
     @IBAction func authenticatePasskeyAndGetJWT(_ sender: UIButton) {
+        self.textFieldUserName?.resignFirstResponder()
+        self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.isUserInteractionEnabled = false
         self.view.makeToastActivity(.center)
         let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
                                             username: userName)
         BlockIDSDK.sharedInstance.issueJWTOnPasskeyAuthentication(controller: self,
                                                                   passkeyRequest: passkeyRequest) { status, response, error in
-            debugPrint("Prasanna: error?.message", #function, error?.message)
             self.view.hideToastActivity()
             self.view.isUserInteractionEnabled = true
-            self.hideJWTDetails(isHidden: false)
+            if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {
+                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                self.showAlertView(title: ErrorConfig.noInternet.title,
+                                   message: localizedMessage)
+                return
+            }
+            var alertTitle = "Passkey verification failed"
+            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
+            if status {
+                alertTitle = "Success"
+                alertMessage = "Passkey verification successful for \(self.userName) \n Authenticator ID : \(response?.authenticatorId ?? "")"
+                self.hideJWTDetails(token: response?.jwt)
+            } else if error?.code == 404 {
+                alertTitle = "No Account Found"
+                alertMessage = "We couldn’t find any account with \(self.userName)."
+            }
+            
+            self.showAlertView(title: alertTitle, message: alertMessage)
         }
     }
     
