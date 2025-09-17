@@ -36,8 +36,6 @@ class PasskeyViewController: UIViewController {
         btnAuthPasskeyNGetJWT?.titleLabel?.textAlignment = .center
         btnRegisterPasskey?.titleLabel?.textAlignment = .center
         btnAuthenticatePasskey?.titleLabel?.textAlignment = .center
-        
-        self.textFieldUserName?.text = "prasann"
     }
     
     // MARK: - Private -
