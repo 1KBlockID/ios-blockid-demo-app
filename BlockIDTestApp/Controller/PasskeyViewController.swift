@@ -135,13 +135,13 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey registration failed"
-            var alertMessage = "We couldn’t register passkey with \(response?.sub ?? ""). Please try again."
+            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
             if status {
                 alertTitle = "Success"
                 alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
+                alertMessage = "We couldn’t find any account with \(self.userName)."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
@@ -167,14 +167,14 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey verification failed"
-            var alertMessage = "We couldn’t verify passkey with \(response?.sub ?? ""). Please try again."
+            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
             if status {
                 alertTitle = "Success"
                 alertMessage = "Passkey verification successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
                 self.hideJWTDetails(token: response?.jwt)
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
+                alertMessage = "We couldn’t find any account with \(self.userName)."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
