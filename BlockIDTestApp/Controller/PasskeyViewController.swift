@@ -135,7 +135,7 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey registration failed"
-            var alertMessage = "We couldn’t register passkey with \(response?.sub ?? ""). Please try again."
+            var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
             if status {
                 alertTitle = "Success"
                 alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
@@ -167,7 +167,7 @@ class PasskeyViewController: UIViewController {
                 return
             }
             var alertTitle = "Passkey verification failed"
-            var alertMessage = "We couldn’t verify passkey with \(response?.sub ?? ""). Please try again."
+            var alertMessage = "We couldn’t verify passkey with \(self.userName). Please try again."
             if status {
                 alertTitle = "Success"
                 alertMessage = "Passkey verification successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
