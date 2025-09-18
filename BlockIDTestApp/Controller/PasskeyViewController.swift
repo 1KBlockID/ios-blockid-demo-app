@@ -141,7 +141,7 @@ class PasskeyViewController: UIViewController {
                 alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
+                alertMessage = "We couldn’t find any account with \(self.userName)."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
@@ -174,7 +174,7 @@ class PasskeyViewController: UIViewController {
                 self.hideJWTDetails(token: response?.jwt)
             } else if error?.code == 404 {
                 alertTitle = "No Account Found"
-                alertMessage = "We couldn’t find any account with \(response?.sub ?? "")."
+                alertMessage = "We couldn’t find any account with \(self.userName)."
             }
             
             self.showAlertView(title: alertTitle, message: alertMessage)
