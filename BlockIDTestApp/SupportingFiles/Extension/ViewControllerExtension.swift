@@ -257,6 +257,13 @@ extension UIViewController {
                           message: "Please note that you will not be able to scan any of your documents with App and verify your identity unless you permit access to the camera")
     }
     
+    func showPasskeysViewController() {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let passkeyVC = storyBoard.instantiateViewController(withIdentifier: "PasskeyViewController") as? PasskeyViewController {
+            self.navigationController?.pushViewController(passkeyVC, animated: true)
+        }
+    }
+    
     // MARK: - Topmost View Controller
     func topMostViewController() -> UIViewController? {
         // if root view is Navigation
