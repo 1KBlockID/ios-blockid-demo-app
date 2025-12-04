@@ -43,6 +43,9 @@
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
 		4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */; };
 		4CC8838C2DBA0FC30051518A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */; };
+		4CD1A6512EE1B4910027E1AF /* BlockID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD1A6502EE1B43E0027E1AF /* BlockID.framework */; };
+		4CD1A6522EE1B4910027E1AF /* BlockID.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD1A6502EE1B43E0027E1AF /* BlockID.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4CD1A6582EE1C60E0027E1AF /* DocumentScannerWithStoreIDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithStoreIDViewController.swift */; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
@@ -77,6 +80,13 @@
 			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
 			remoteInfo = BlockIDTestApp;
 		};
+		4CD1A64F2EE1B43E0027E1AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4CD1A6492EE1B43E0027E1AF /* BlockID.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD73A64A25DE5F8D000864C3;
+			remoteInfo = BlockID;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -86,6 +96,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				4CD1A6522EE1B4910027E1AF /* BlockID.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,6 +146,8 @@
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
 		4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyViewController.swift; sourceTree = "<group>"; };
 		4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4CD1A6492EE1B43E0027E1AF /* BlockID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlockID.xcodeproj; path = "../ios-kernel-sdk/BlockID.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithStoreIDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerWithStoreIDViewController.swift; sourceTree = "<group>"; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
+				4CD1A6512EE1B4910027E1AF /* BlockID.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				661A0EE6C06DBA9949A7F6F4 /* Pods_1Kosmos_Demo.framework in Frameworks */,
 			);
@@ -231,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				98F07D642E53CF6A003A7468 /* 1Kosmos DemoRelease.entitlements */,
+				4CD1A6492EE1B43E0027E1AF /* BlockID.xcodeproj */,
 				3CEE330D264413C2003FDB78 /* BlockIDTestApp */,
 				1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */,
 				3CEE330C264413C2003FDB78 /* Products */,
@@ -304,6 +319,7 @@
 			children = (
 				3CEE3348264414E7003FDB78 /* LiveIDViewController.swift */,
 				3CEE3344264414E7003FDB78 /* EnrollMentViewController.swift */,
+				4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithStoreIDViewController.swift */,
 				4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */,
 				B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */,
 				B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */,
@@ -374,6 +390,14 @@
 				E673A37D28F7EC6C008995A9 /* DateExtension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4CD1A64C2EE1B43E0027E1AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4CD1A6502EE1B43E0027E1AF /* BlockID.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
@@ -466,6 +490,12 @@
 			mainGroup = 3CEE3302264413C2003FDB78;
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 4CD1A64C2EE1B43E0027E1AF /* Products */;
+					ProjectRef = 4CD1A6492EE1B43E0027E1AF /* BlockID.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* 1Kosmos Demo */,
@@ -473,6 +503,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		4CD1A6502EE1B43E0027E1AF /* BlockID.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BlockID.framework;
+			remoteRef = 4CD1A64F2EE1B43E0027E1AF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA09386268472A6008AAAA1 /* Resources */ = {
@@ -640,6 +680,7 @@
 				3CEE3354264414E7003FDB78 /* EnrollMentViewController.swift in Sources */,
 				3CEE338A26443199003FDB78 /* PinCodeTextFieldDelegate.swift in Sources */,
 				3CEE338B26443199003FDB78 /* PinCodeTextField.swift in Sources */,
+				4CD1A6582EE1C60E0027E1AF /* DocumentScannerWithStoreIDViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -853,7 +894,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.70;
+				MARKETING_VERSION = 1.20.80;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -912,7 +953,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.70;
+				MARKETING_VERSION = 1.20.80;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
