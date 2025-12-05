@@ -15,9 +15,9 @@ class NationalIDViewController: UIViewController {
 
     private let kIDCardFailedMessage = "National ID failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
-
     private var liveIdFace: String!
     private var proofedBy: String!
+    var storeId: String?
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -53,7 +53,7 @@ class NationalIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.IDCARD, self)
+                    self.showDocumentScannerFor(.IDCARD, self.storeId, self)
                 }
             }
         }

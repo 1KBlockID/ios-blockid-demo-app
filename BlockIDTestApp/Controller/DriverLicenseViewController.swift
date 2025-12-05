@@ -16,9 +16,9 @@ class DriverLicenseViewController: UIViewController {
 
     private let kDLFailedMessage = "Drivers License failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
-
     private var liveIdFace: String!
     private var proofedBy: String!
+    var storeId: String?
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -56,7 +56,7 @@ class DriverLicenseViewController: UIViewController {
                     self.rotateView(self.imgLoader)
                     
                     // Show document scanner View controller
-                    self.showDocumentScannerFor(.DL, self)
+                    self.showDocumentScannerFor(.DL, self.storeId, self)
                 }
             }
         }

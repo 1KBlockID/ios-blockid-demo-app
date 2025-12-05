@@ -76,16 +76,17 @@ extension UIViewController {
         }
     }
     
-    func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String? = nil, _ delegate: DocumentScanDelegate) {
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String?, _ delegate: DocumentScanDelegate) {
         let document = DocumentScannerViewController(docType: docType,
                                                      storeId: storeId,
                                                      delegate: delegate)
         self.navigationController?.pushViewController(document, animated: false)
     }
     
-    func showDLView() {
+    func showDLView(storeId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
+            dlVC.storeId = storeId
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }
@@ -104,16 +105,18 @@ extension UIViewController {
         }
     }
     
-    func showPassportView() {
+    func showPassportView(storeId: String? = nil) {
        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
+            ppVC.storeId = storeId
             self.navigationController?.pushViewController(ppVC, animated: true)
         }
     }
     
-    func showNationalIDView() {
+    func showNationalIDView(storeId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
+            nidVC.storeId = storeId
             self.navigationController?.pushViewController(nidVC, animated: true)
         }
     }
