@@ -17,6 +17,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
 
     var documentTitle: Enrollments?
     private let kMAXUIDLENGTH = 100
+    private var storeId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +77,10 @@ extension DocumentScannerWithStoreIdVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         lblPlaceholder?.isHidden = !textView.text.isEmpty
        
+        var trimmedStoreId = textView.text.trim()
         // Enable button once valid uid is entered
-        self.btnVerifyDocWithSId?.isEnabled = !textView.text.trim().isEmpty
+        self.btnVerifyDocWithSId?.isEnabled = !trimmedStoreId.isEmpty
+        
+        self.storeId = trimmedStoreId.isEmpty ? nil : trimmedStoreId
     }
 }
