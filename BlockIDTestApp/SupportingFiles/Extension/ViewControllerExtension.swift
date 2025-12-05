@@ -68,9 +68,17 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
 
-    // MARK: - Document Scanner -
-    func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: DocumentScanDelegate) { // Move to document scanner
+    func verifyDocumentWithStoreId(_ docTitle: Enrollments) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let docVerifyVC = storyBoard.instantiateViewController(withIdentifier: "DocumentScannerWithStoreIdVC") as? DocumentScannerWithStoreIdVC {
+            docVerifyVC.documentTitle = docTitle
+            self.navigationController?.pushViewController(docVerifyVC, animated: true)
+        }
+    }
+    
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String? = nil, _ delegate: DocumentScanDelegate) {
         let document = DocumentScannerViewController(docType: docType,
+                                                     storeId: storeId,
                                                      delegate: delegate)
         self.navigationController?.pushViewController(document, animated: false)
     }
