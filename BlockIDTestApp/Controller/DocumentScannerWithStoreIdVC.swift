@@ -57,13 +57,13 @@ class DocumentScannerWithStoreIdVC: UIViewController {
         
         switch documentTitle {
         case .DriverLicense:
-            showDLView()
+            self.showDLView(storeId: self.storeId)
             break
         case .Passport1, .Passport2:
-            showPassportView()
+            showPassportView(storeId: self.storeId)
             break
         case .NationalID:
-            showNationalIDView()
+            showNationalIDView(storeId: self.storeId)
             break
         default:
             break

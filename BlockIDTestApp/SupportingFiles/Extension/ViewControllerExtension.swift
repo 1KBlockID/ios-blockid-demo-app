@@ -77,6 +77,7 @@ extension UIViewController {
     }
     
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String?, _ delegate: DocumentScanDelegate) {
+        debugPrint("Prasanna: storeId", #function, storeId)
         let document = DocumentScannerViewController(docType: docType,
                                                      storeId: storeId,
                                                      delegate: delegate)
@@ -100,8 +101,8 @@ extension UIViewController {
     
     func showSSNVerificationView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let dlVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
-            self.navigationController?.pushViewController(dlVC, animated: true)
+        if let ssnVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
+            self.navigationController?.pushViewController(ssnVC, animated: true)
         }
     }
     
