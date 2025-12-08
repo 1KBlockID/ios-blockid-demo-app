@@ -23,6 +23,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
         super.viewDidLoad()
         
         self.lblHeader?.text = documentTitle?.rawValue
+        self.setButtonsTitle()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,6 +70,25 @@ class DocumentScannerWithStoreIdVC: UIViewController {
             break
         }
     }
+    
+    func setButtonsTitle() {
+        var documentName = ""
+        switch documentTitle {
+        case .DriverLicense:
+            documentName = "DL"
+            break
+        case .Passport1, .Passport2:
+            documentName = "Passport"
+            break
+        case .NationalID:
+            documentName = "National ID"
+            break
+        default:
+            break
+        }
+        self.btnVerifyDoc?.setTitle("Start \(documentName) Verification", for: .normal)
+        self.btnVerifyDocWithSId?.setTitle("Start \(documentName) Verification with UID", for: .normal)
+    }
 }
 
 // MARK: - UITextViewDelegate -
@@ -77,7 +97,7 @@ extension DocumentScannerWithStoreIdVC: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         lblPlaceholder?.isHidden = !textView.text.isEmpty
        
-        var trimmedStoreId = textView.text.trim()
+        let trimmedStoreId = textView.text.trim()
         // Enable button once valid uid is entered
         self.btnVerifyDocWithSId?.isEnabled = !trimmedStoreId.isEmpty
         
