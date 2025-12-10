@@ -3664,7 +3664,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jka-Sm-eWI">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Jka-Sm-eWI">
                                 <rect key="frame" x="20" y="145" width="374" height="50"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <accessibility key="accessibilityConfiguration" identifier="needHelpVC_textview_summary"/>
@@ -3686,6 +3686,11 @@
                                         <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="qHh-GJ-Hcu"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="delegate" destination="CuS-qw-n0q" id="Qc7-qT-pIb"/>
                                 </connections>
@@ -3759,6 +3764,7 @@
                             <constraint firstItem="Dfu-RS-xuz" firstAttribute="trailing" secondItem="Ars-FH-zqW" secondAttribute="trailing" constant="20" id="VdC-cw-I4q"/>
                             <constraint firstItem="lsZ-Db-n7A" firstAttribute="leading" secondItem="Jka-Sm-eWI" secondAttribute="leading" constant="10" id="WJE-Un-57U"/>
                             <constraint firstItem="iSj-Xt-5QO" firstAttribute="centerY" secondItem="aaQ-5C-hY3" secondAttribute="centerY" id="b1z-3L-Txe"/>
+                            <constraint firstItem="Dfu-RS-xuz" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Ars-FH-zqW" secondAttribute="bottom" constant="20" id="edg-B3-jGt"/>
                             <constraint firstItem="aaQ-5C-hY3" firstAttribute="top" secondItem="Dfu-RS-xuz" secondAttribute="top" constant="15" id="klN-tK-Xoi"/>
                             <constraint firstItem="iSj-Xt-5QO" firstAttribute="leading" secondItem="aaQ-5C-hY3" secondAttribute="trailing" constant="2" id="oZP-55-cll"/>
                             <constraint firstItem="lsZ-Db-n7A" firstAttribute="top" secondItem="Jka-Sm-eWI" secondAttribute="top" constant="10" id="zrK-Xp-9Ov"/>

@@ -24,6 +24,8 @@ class DocumentScannerWithStoreIdVC: UIViewController {
         
         self.lblHeader?.text = documentTitle?.rawValue
         self.setButtonsTitle()
+        
+        addDoneButtonOnKeyboard()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,6 +33,27 @@ class DocumentScannerWithStoreIdVC: UIViewController {
         
         btnVerifyDoc?.titleLabel?.textAlignment = .center
         btnVerifyDocWithSId?.titleLabel?.textAlignment = .center
+    }
+    
+    
+    func addDoneButtonOnKeyboard() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(doneButtonTapped))
+        
+        toolbar.items = [flexSpace, doneButton]
+        
+        self.txtViewUID?.inputAccessoryView = toolbar
+    }
+    
+    @objc func doneButtonTapped() {
+        self.txtViewUID?.resignFirstResponder()
     }
     
     @IBAction func btnBackClicked(_ sender: UIButton) {
@@ -55,7 +78,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
     }
     
     @IBAction func btnVerifyDocumentWithStoreIdClicked(_ sender: UIButton) {
-        
+       
         switch documentTitle {
         case .DriverLicense:
             self.showDLView(storeId: self.storeId)
@@ -69,6 +92,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
         default:
             break
         }
+        
     }
     
     func setButtonsTitle() {
@@ -95,11 +119,12 @@ class DocumentScannerWithStoreIdVC: UIViewController {
 extension DocumentScannerWithStoreIdVC: UITextViewDelegate {
    
     func textViewDidChange(_ textView: UITextView) {
+        // Handle placeholder
         lblPlaceholder?.isHidden = !textView.text.isEmpty
        
         let trimmedStoreId = textView.text.trim()
         // Enable button once valid uid is entered
-        self.btnVerifyDocWithSId?.isEnabled = !trimmedStoreId.isEmpty
+        self.btnVerifyDocWithSId?.isEnabled = !trimmedStoreId.isEmpty && trimmedStoreId.count <= kMAXUIDLENGTH
         
         self.storeId = trimmedStoreId.isEmpty ? nil : trimmedStoreId
     }
