@@ -56,14 +56,21 @@ class PassportViewController: UIViewController {
         
     }
     
-    private func goBack() {
+    private func goBack(isFailed: Bool? = false) {
         if let viewControllers = navigationController?.viewControllers {
-            for viewController in viewControllers {
-                if viewController.isKind(of: EnrollMentViewController.self) {
-                    self.navigationController?.popToViewController(viewController, animated: true)
+            if isFailed ?? false {
+                for controller in viewControllers where controller is DocumentScannerWithUIdVC {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.navigationController?.popToViewController(controller, animated: true)
+                    }
+                    return
+                }
+            } else {
+                for controller in viewControllers where controller is EnrollMentViewController {
+                    self.navigationController?.popToViewController(controller, animated: true)
+                    return
                 }
             }
-            return
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -218,7 +225,7 @@ class PassportViewController: UIViewController {
                                 position: .center,
                                 title: "Error",
                                 completion: {_ in
-                self.goBack()
+                self.goBack(isFailed: true)
             })
             return
             
@@ -228,7 +235,7 @@ class PassportViewController: UIViewController {
                                 position: .center,
                                 title: "Error",
                                 completion: {_ in
-                self.goBack()
+                self.goBack(isFailed: true)
             })
             return
         }
@@ -252,7 +259,7 @@ extension PassportViewController: DocumentScanDelegate {
             }
             
             if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-                self.goBack()
+                self.goBack(isFailed: true)
                 return
             }
             
@@ -332,7 +339,7 @@ extension PassportViewController: DocumentScanDelegate {
     private func showAlertAndMoveBack(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            self.goBack()
+            self.goBack(isFailed: true)
         }))
         present(alert, animated: true)
     }
