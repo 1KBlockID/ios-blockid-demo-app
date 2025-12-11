@@ -84,10 +84,9 @@ extension UIViewController {
     ///     Pass a non-nil value to associate the scan with a specific store. 
     ///     Pass `nil` if the scan is not associated with any store.
     ///   - delegate: The delegate to handle document scan events.
-    func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String?, _ delegate: DocumentScanDelegate) {
-        debugPrint("Prasanna: storeId", #function, storeId)
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ uid: String?, _ delegate: DocumentScanDelegate) {
         let document = DocumentScannerViewController(docType: docType,
-                                                     storeId: storeId,
+                                                     uid: uid,
                                                      delegate: delegate)
         self.navigationController?.pushViewController(document, animated: false)
     }

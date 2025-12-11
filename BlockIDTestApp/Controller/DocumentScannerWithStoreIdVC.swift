@@ -17,7 +17,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
 
     var documentTitle: Enrollments?
     private let maxUIDLength = 100
-    private var storeId: String?
+    private var uid: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,13 +81,13 @@ class DocumentScannerWithStoreIdVC: UIViewController {
        
         switch documentTitle {
         case .DriverLicense:
-            self.showDLView(storeId: self.storeId)
+            self.showDLView(storeId: self.uid)
             break
         case .Passport1, .Passport2:
-            showPassportView(storeId: self.storeId)
+            showPassportView(storeId: self.uid)
             break
         case .NationalID:
-            showNationalIDView(storeId: self.storeId)
+            showNationalIDView(storeId: self.uid)
             break
         default:
             break
@@ -122,10 +122,10 @@ extension DocumentScannerWithStoreIdVC: UITextViewDelegate {
         // Handle placeholder
         lblPlaceholder?.isHidden = !textView.text.isEmpty
        
-        let trimmedStoreId = textView.text.trim()
+        let trimmedUid = textView.text.trim()
         // Enable button once valid uid is entered
-        self.btnVerifyDocWithSId?.isEnabled = !trimmedStoreId.isEmpty && trimmedStoreId.count <= kMAXUIDLENGTH
+        self.btnVerifyDocWithSId?.isEnabled = !trimmedUid.isEmpty && trimmedUid.count <= maxUIDLength
         
-        self.storeId = trimmedStoreId.isEmpty ? nil : trimmedStoreId
+        self.uid = trimmedUid.isEmpty ? nil : trimmedUid
     }
 }
