@@ -70,7 +70,7 @@ extension UIViewController {
 
     func verifyDocumentWithStoreId(_ docTitle: Enrollments) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let docVerifyVC = storyBoard.instantiateViewController(withIdentifier: "DocumentScannerWithStoreIdVC") as? DocumentScannerWithStoreIdVC {
+        if let docVerifyVC = storyBoard.instantiateViewController(withIdentifier: "DocumentScannerWithUIdVC") as? DocumentScannerWithUIdVC {
             docVerifyVC.documentTitle = docTitle
             self.navigationController?.pushViewController(docVerifyVC, animated: true)
         }

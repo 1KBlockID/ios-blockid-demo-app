@@ -3632,10 +3632,10 @@
             </objects>
             <point key="canvasLocation" x="6496.875" y="1080.6338028169014"/>
         </scene>
-        <!--Document Scanner With Store IdVC-->
+        <!--Document Scanner WithU IdVC-->
         <scene sceneID="cn2-hR-T4Y">
             <objects>
-                <viewController storyboardIdentifier="DocumentScannerWithStoreIdVC" id="CuS-qw-n0q" customClass="DocumentScannerWithStoreIdVC" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DocumentScannerWithUIdVC" id="CuS-qw-n0q" customClass="DocumentScannerWithUIdVC" customModule="_Kosmos_Demo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="P3x-fZ-Hbh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

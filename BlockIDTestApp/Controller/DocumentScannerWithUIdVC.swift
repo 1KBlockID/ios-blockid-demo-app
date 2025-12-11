@@ -1,5 +1,5 @@
 //
-//  DocumentScannerWithStoreIdVC.swift
+//  DocumentScannerWithUIdVC.swift
 //  1Kosmos Demo
 //
 //  Created by Prasanna Gupta on 04/12/25.
@@ -8,7 +8,7 @@
 import UIKit
 import BlockID
 
-class DocumentScannerWithStoreIdVC: UIViewController {
+class DocumentScannerWithUIdVC: UIViewController {
     @IBOutlet private weak var btnVerifyDoc: UIButton?
     @IBOutlet private weak var btnVerifyDocWithSId: UIButton?
     @IBOutlet private weak var lblHeader: UILabel?
@@ -116,7 +116,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
 }
 
 // MARK: - UITextViewDelegate -
-extension DocumentScannerWithStoreIdVC: UITextViewDelegate {
+extension DocumentScannerWithUIdVC: UITextViewDelegate {
    
     func textViewDidChange(_ textView: UITextView) {
         // Handle placeholder
