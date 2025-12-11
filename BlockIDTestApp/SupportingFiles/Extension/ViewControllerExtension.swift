@@ -76,6 +76,14 @@ extension UIViewController {
         }
     }
     
+    /// Presents the DocumentScannerViewController for the specified document type.
+    ///
+    /// - Parameters:
+    ///   - docType: The type of document to scan.
+    ///   - storeId: The identifier for the store associated with the document scan. 
+    ///     Pass a non-nil value to associate the scan with a specific store. 
+    ///     Pass `nil` if the scan is not associated with any store.
+    ///   - delegate: The delegate to handle document scan events.
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ storeId: String?, _ delegate: DocumentScanDelegate) {
         debugPrint("Prasanna: storeId", #function, storeId)
         let document = DocumentScannerViewController(docType: docType,
