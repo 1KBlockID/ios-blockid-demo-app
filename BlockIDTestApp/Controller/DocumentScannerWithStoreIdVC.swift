@@ -16,7 +16,7 @@ class DocumentScannerWithStoreIdVC: UIViewController {
     @IBOutlet private weak var txtViewUID: UITextView?
 
     var documentTitle: Enrollments?
-    private let kMAXUIDLENGTH = 100
+    private let maxUIDLength = 100
     private var storeId: String?
     
     override func viewDidLoad() {
