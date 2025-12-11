@@ -132,16 +132,22 @@ extension DocumentScannerWithUIdVC: UITextViewDelegate {
     
     func textView(_ textView: UITextView,
                       shouldChangeTextIn range: NSRange,
-                      replacementText text: String) -> Bool {
-
-            // Current text
-            let currentText = textView.text ?? ""
-
-            // Proposed new text
-            guard let stringRange = Range(range, in: currentText) else { return false }
-            let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
-
-            // Limit to 100 chars
-            return updatedText.count <= maxUIDLength
+                  replacementText text: String) -> Bool {
+        
+        // Current text
+        let currentText = textView.text ?? ""
+        
+        // Detect deletion
+        let isDeleting = (text.isEmpty && range.length > 0)
+        if isDeleting {
+            return true   // Always allow delete/backspace
         }
+        // Proposed new text
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+        
+        // Limit to 100 chars
+        let trimmedUid = textView.text.trim()
+        return trimmedUid.count < maxUIDLength
+    }
 }
