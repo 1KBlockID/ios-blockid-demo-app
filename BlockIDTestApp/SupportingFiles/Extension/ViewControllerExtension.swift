@@ -80,8 +80,8 @@ extension UIViewController {
     ///
     /// - Parameters:
     ///   - docType: The type of document to scan.
-    ///   - uid: The identifier for the store associated with the document scan. 
-    ///     Pass a non-nil value to associate the scan with a specific store. 
+    ///   - uid: The identifier for the uid associated with the document scan.
+    ///     Pass a non-nil value to associate the scan with a specific store.
     ///     Pass `nil` if the scan is not associated with any store.
     ///   - delegate: The delegate to handle document scan events.
     func showDocumentScannerFor(_ docType: DocumentScannerType, _ uid: String?, _ delegate: DocumentScanDelegate) {
