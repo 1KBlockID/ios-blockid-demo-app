@@ -15,9 +15,9 @@ class NationalIDViewController: UIViewController {
 
     private let kIDCardFailedMessage = "National ID failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
-
     private var liveIdFace: String!
     private var proofedBy: String!
+    var uid: String?
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -31,14 +31,21 @@ class NationalIDViewController: UIViewController {
         startNationalIDScanning()
     }
     
-    private func goBack() {
+    private func goBack(isFailed: Bool? = false) {
         if let viewControllers = navigationController?.viewControllers {
-            for viewController in viewControllers {
-                if viewController.isKind(of: EnrollMentViewController.self) {
-                    self.navigationController?.popToViewController(viewController, animated: true)
+            if isFailed ?? false {
+                for controller in viewControllers where controller is DocumentScannerWithUIdVC {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.navigationController?.popToViewController(controller, animated: true)
+                    }
+                    return
+                }
+            } else {
+                for controller in viewControllers where controller is EnrollMentViewController {
+                    self.navigationController?.popToViewController(controller, animated: true)
+                    return
                 }
             }
-            return
         }
         self.navigationController?.popViewController(animated: true)
     }
@@ -83,7 +90,7 @@ class NationalIDViewController: UIViewController {
                                         position: .center,
                                         title: "Error!",
                                         completion: {_ in
-                        self.goBack()
+                        self.goBack(isFailed: true)
                     })
                     return
                 }
@@ -111,7 +118,7 @@ class NationalIDViewController: UIViewController {
                                         position: .center,
                                         title: "Error!",
                                         completion: {_ in
-                        self.goBack()
+                        self.goBack(isFailed: true)
                     })
                     return
                 }
@@ -145,7 +152,7 @@ extension NationalIDViewController: DocumentScanDelegate {
             }
             
             if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-                self.goBack()
+                self.goBack(isFailed: true)
                 return
             }
             
@@ -224,7 +231,7 @@ extension NationalIDViewController: DocumentScanDelegate {
     private func showAlertAndMoveBack(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            self.goBack()
+            self.goBack(isFailed: true)
         }))
         self.present(alert, animated: true)
     }
