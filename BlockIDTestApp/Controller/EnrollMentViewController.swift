@@ -145,7 +145,7 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
-        showDLView()
+        verifyDocumentWithUId(.DriverLicense)
     }
     
     /**
@@ -295,8 +295,8 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
-        
-        showPassportView()
+        let passportType: Enrollments = index == 1 ? .Passport1 : .Passport2
+        verifyDocumentWithUId(passportType)
     }
 }
 
@@ -316,7 +316,7 @@ extension EnrollMentViewController {
             return
         }
      
-        showNationalIDView()
+        verifyDocumentWithUId(.NationalID)
     }
 }
 
