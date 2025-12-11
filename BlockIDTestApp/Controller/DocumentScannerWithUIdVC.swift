@@ -16,12 +16,12 @@ class DocumentScannerWithUIdVC: UIViewController {
     @IBOutlet private weak var txtViewUID: UITextView?
 
     var documentTitle: Enrollments?
-    private let maxUIDLength = 100
+    private let maxUIDLength = 10
     private var uid: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.lblHeader?.text = documentTitle?.rawValue
         self.setButtonsTitle()
         
@@ -30,6 +30,7 @@ class DocumentScannerWithUIdVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        txtViewUID?.textContainerInset = UIEdgeInsets(top: 15, left: 0, bottom: 15, right: 0)
         
         btnVerifyDoc?.titleLabel?.textAlignment = .center
         btnVerifyDocWithSId?.titleLabel?.textAlignment = .center
@@ -124,8 +125,23 @@ extension DocumentScannerWithUIdVC: UITextViewDelegate {
        
         let trimmedUid = textView.text.trim()
         // Enable button once valid uid is entered
-        self.btnVerifyDocWithSId?.isEnabled = !trimmedUid.isEmpty && trimmedUid.count <= maxUIDLength
+        self.btnVerifyDocWithSId?.isEnabled = !trimmedUid.isEmpty
         
         self.uid = trimmedUid.isEmpty ? nil : trimmedUid
     }
+    
+    func textView(_ textView: UITextView,
+                      shouldChangeTextIn range: NSRange,
+                      replacementText text: String) -> Bool {
+
+            // Current text
+            let currentText = textView.text ?? ""
+
+            // Proposed new text
+            guard let stringRange = Range(range, in: currentText) else { return false }
+            let updatedText = currentText.replacingCharacters(in: stringRange, with: text)
+
+            // Limit to 100 chars
+            return updatedText.count <= maxUIDLength
+        }
 }
