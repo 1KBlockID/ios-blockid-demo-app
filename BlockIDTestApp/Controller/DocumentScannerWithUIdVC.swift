@@ -78,17 +78,17 @@ class DocumentScannerWithUIdVC: UIViewController {
         }
     }
     
-    @IBAction func btnVerifyDocumentWithStoreIdClicked(_ sender: UIButton) {
+    @IBAction func btnVerifyDocumentWithUIdClicked(_ sender: UIButton) {
         
         switch documentTitle {
         case .DriverLicense:
-            self.showDLView(storeId: self.uid)
+            self.showDLView(UId: self.uid)
             break
         case .Passport1, .Passport2:
-            showPassportView(storeId: self.uid)
+            showPassportView(UId: self.uid)
             break
         case .NationalID:
-            showNationalIDView(storeId: self.uid)
+            showNationalIDView(UId: self.uid)
             break
         default:
             break

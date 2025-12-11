@@ -24,7 +24,7 @@ class PassportViewController: UIViewController {
     private var liveIdFace: String!
     private var proofedBy: String!
     private var sessionId: String!
-    var storeId: String?
+    var uid: String?
 
     @IBOutlet weak var _viewEPassportScan: UIView!
     @IBOutlet private weak var loaderView: UIView!
@@ -49,7 +49,7 @@ class PassportViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.PPT, self.storeId, self)
+                    self.showDocumentScannerFor(.PPT, self.uid, self)
                 }
             }
         }

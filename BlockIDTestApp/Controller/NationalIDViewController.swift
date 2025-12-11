@@ -17,7 +17,7 @@ class NationalIDViewController: UIViewController {
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!
-    var storeId: String?
+    var uid: String?
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -60,7 +60,7 @@ class NationalIDViewController: UIViewController {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.IDCARD, self.storeId, self)
+                    self.showDocumentScannerFor(.IDCARD, self.uid, self)
                 }
             }
         }

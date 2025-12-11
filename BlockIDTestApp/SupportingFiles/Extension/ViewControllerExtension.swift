@@ -68,7 +68,7 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
 
-    func verifyDocumentWithStoreId(_ docTitle: Enrollments) {
+    func verifyDocumentWithUId(_ docTitle: Enrollments) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let docVerifyVC = storyBoard.instantiateViewController(withIdentifier: "DocumentScannerWithUIdVC") as? DocumentScannerWithUIdVC {
             docVerifyVC.documentTitle = docTitle
@@ -80,7 +80,7 @@ extension UIViewController {
     ///
     /// - Parameters:
     ///   - docType: The type of document to scan.
-    ///   - storeId: The identifier for the store associated with the document scan. 
+    ///   - uid: The identifier for the store associated with the document scan. 
     ///     Pass a non-nil value to associate the scan with a specific store. 
     ///     Pass `nil` if the scan is not associated with any store.
     ///   - delegate: The delegate to handle document scan events.
@@ -91,10 +91,10 @@ extension UIViewController {
         self.navigationController?.pushViewController(document, animated: false)
     }
     
-    func showDLView(storeId: String? = nil) {
+    func showDLView(UId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
-            dlVC.storeId = storeId
+            dlVC.uid = UId
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }
@@ -113,18 +113,18 @@ extension UIViewController {
         }
     }
     
-    func showPassportView(storeId: String? = nil) {
+    func showPassportView(UId: String? = nil) {
        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
-            ppVC.storeId = storeId
+            ppVC.uid = UId
             self.navigationController?.pushViewController(ppVC, animated: true)
         }
     }
     
-    func showNationalIDView(storeId: String? = nil) {
+    func showNationalIDView(UId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
-            nidVC.storeId = storeId
+            nidVC.uid = UId
             self.navigationController?.pushViewController(nidVC, animated: true)
         }
     }

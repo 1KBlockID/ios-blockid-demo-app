@@ -145,7 +145,7 @@ extension EnrollMentViewController {
             self.present(alert, animated: true)
             return
         }
-        verifyDocumentWithStoreId(.DriverLicense)
+        verifyDocumentWithUId(.DriverLicense)
     }
     
     /**
@@ -296,7 +296,7 @@ extension EnrollMentViewController {
             return
         }
         let passportType: Enrollments = index == 1 ? .Passport1 : .Passport2
-        verifyDocumentWithStoreId(passportType)
+        verifyDocumentWithUId(passportType)
     }
 }
 
@@ -316,7 +316,7 @@ extension EnrollMentViewController {
             return
         }
      
-        verifyDocumentWithStoreId(.NationalID)
+        verifyDocumentWithUId(.NationalID)
     }
 }
 

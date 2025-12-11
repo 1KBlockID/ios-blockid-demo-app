@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xuA-Ga-UAK">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -3743,7 +3742,7 @@
                                         </state>
                                         <connections>
                                             <action selector="authenticatePasskeyAndGetJWT:" destination="Lwc-Ra-gE2" eventType="touchUpInside" id="SGd-tH-EWo"/>
-                                            <action selector="btnVerifyDocumentWithStoreIdClicked:" destination="CuS-qw-n0q" eventType="touchUpInside" id="MTY-Vf-Ih6"/>
+                                            <action selector="btnVerifyDocumentWithUIdClicked:" destination="CuS-qw-n0q" eventType="touchUpInside" id="MTY-Vf-Ih6"/>
                                         </connections>
                                     </button>
                                 </subviews>
