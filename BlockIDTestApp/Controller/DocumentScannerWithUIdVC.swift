@@ -14,14 +14,14 @@ class DocumentScannerWithUIdVC: UIViewController {
     @IBOutlet private weak var lblHeader: UILabel?
     @IBOutlet private weak var lblPlaceholder: UILabel?
     @IBOutlet private weak var txtViewUID: UITextView?
-
+    
     var documentTitle: Enrollments?
     private let maxUIDLength = 100
     private var uid: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.lblHeader?.text = documentTitle?.rawValue
         self.setButtonsTitle()
         
@@ -62,7 +62,7 @@ class DocumentScannerWithUIdVC: UIViewController {
     }
     
     @IBAction func btnVerifyDocumentClicked(_ sender: UIButton) {
-       
+        
         switch documentTitle {
         case .DriverLicense:
             showDLView()
@@ -79,7 +79,7 @@ class DocumentScannerWithUIdVC: UIViewController {
     }
     
     @IBAction func btnVerifyDocumentWithStoreIdClicked(_ sender: UIButton) {
-       
+        
         switch documentTitle {
         case .DriverLicense:
             self.showDLView(storeId: self.uid)
@@ -118,11 +118,11 @@ class DocumentScannerWithUIdVC: UIViewController {
 
 // MARK: - UITextViewDelegate -
 extension DocumentScannerWithUIdVC: UITextViewDelegate {
-   
+    
     func textViewDidChange(_ textView: UITextView) {
         // Handle placeholder
         lblPlaceholder?.isHidden = !textView.text.isEmpty
-       
+        
         let trimmedUid = textView.text.trim()
         // Enable button once valid uid is entered
         self.btnVerifyDocWithSId?.isEnabled = !trimmedUid.isEmpty
@@ -131,7 +131,7 @@ extension DocumentScannerWithUIdVC: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView,
-                      shouldChangeTextIn range: NSRange,
+                  shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
         
         // Current text
