@@ -39,20 +39,7 @@ class PassportViewController: UIViewController {
     }
     
     private func startPassportScanning() {
-        //1. Check for Camera Permission
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if !response {
-                //2. Show Alert
-                DispatchQueue.main.async {
-                    self.alertForCameraAccess()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.PPT, self)
-                }
-            }
-        }
-        
+        self.showDocumentScannerFor(.PPT, self)
     }
     
     private func goBack() {
