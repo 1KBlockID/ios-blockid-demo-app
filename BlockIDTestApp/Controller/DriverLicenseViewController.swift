@@ -49,24 +49,11 @@ class DriverLicenseViewController: UIViewController {
     }
 
     private func startDLScanning() {
-        //1. Check for Camera Permission
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if !response {
-                //2. Show Alert
-                DispatchQueue.main.async {
-                    self.alertForCameraAccess()
-                }
-            } else {
-                // Camera access given
-                DispatchQueue.main.async {
-                    // Start loader spin
-                    self.rotateView(self.imgLoader)
-                    
-                    // Show document scanner View controller
-                    self.showDocumentScannerFor(.DL, self.uid, self)
-                }
-            }
-        }
+        // Start loader spin
+        self.rotateView(self.imgLoader)
+        
+        // Show document scanner View controller
+        self.showDocumentScannerFor(.DL, self)
     }
 
     private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {

@@ -51,20 +51,7 @@ class NationalIDViewController: UIViewController {
     }
     
     private func startNationalIDScanning() {
-        //1. Check for Camera Permission
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if !response {
-                //2. Show Alert
-                DispatchQueue.main.async {
-                    self.alertForCameraAccess()
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.showDocumentScannerFor(.IDCARD, self.uid, self)
-                }
-            }
-        }
-        
+        self.showDocumentScannerFor(.IDCARD, self)
     }
 
     private func setNationaID(withNIDData nid: [String : Any], _ sessionId: String?) {
