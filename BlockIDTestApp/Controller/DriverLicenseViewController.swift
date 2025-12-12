@@ -53,7 +53,7 @@ class DriverLicenseViewController: UIViewController {
         self.rotateView(self.imgLoader)
         
         // Show document scanner View controller
-        self.showDocumentScannerFor(.DL, self)
+        self.showDocumentScannerFor(.DL, self.uid, self)
     }
 
     private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
