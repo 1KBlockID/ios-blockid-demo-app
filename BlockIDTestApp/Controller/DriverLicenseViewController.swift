@@ -16,9 +16,9 @@ class DriverLicenseViewController: UIViewController {
 
     private let kDLFailedMessage = "Drivers License failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
-
     private var liveIdFace: String!
     private var proofedBy: String!
+    var uid: String?
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -29,37 +29,31 @@ class DriverLicenseViewController: UIViewController {
         self.startDLScanning()
     }
     
-    private func goBack() {
+    private func goBack(isFailed: Bool? = false) {
         if let viewControllers = navigationController?.viewControllers {
-            for viewController in viewControllers {
-                if viewController.isKind(of: EnrollMentViewController.self) {
-                    self.navigationController?.popToViewController(viewController, animated: true)
+            if isFailed ?? false {
+                for controller in viewControllers where controller is DocumentScannerWithUIdVC {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.navigationController?.popToViewController(controller, animated: true)
+                    }
+                    return
+                }
+            } else {
+                for controller in viewControllers where controller is EnrollMentViewController {
+                    self.navigationController?.popToViewController(controller, animated: true)
+                    return
                 }
             }
-            return
         }
         self.navigationController?.popViewController(animated: true)
     }
 
     private func startDLScanning() {
-        //1. Check for Camera Permission
-        AVCaptureDevice.requestAccess(for: AVMediaType.video) { response in
-            if !response {
-                //2. Show Alert
-                DispatchQueue.main.async {
-                    self.alertForCameraAccess()
-                }
-            } else {
-                // Camera access given
-                DispatchQueue.main.async {
-                    // Start loader spin
-                    self.rotateView(self.imgLoader)
-                    
-                    // Show document scanner View controller
-                    self.showDocumentScannerFor(.DL, self)
-                }
-            }
-        }
+        // Start loader spin
+        self.rotateView(self.imgLoader)
+        
+        // Show document scanner View controller
+        self.showDocumentScannerFor(.DL, self)
     }
 
     private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
@@ -170,7 +164,7 @@ class DriverLicenseViewController: UIViewController {
                     // FAILED
                     if error?.code == CustomErrors.kLiveIDMandatory.code {
                         DocumentStore.sharedInstance.setData(documentData: dic)
-                        self.goBack()
+                        self.goBack(isFailed: true)
                         self.showLiveIDView()
                         return
                     }
@@ -210,7 +204,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             }
             
             if error?.code == CustomErrors.DocumentScanner.CANCELED.code { // Cancelled
-                self.goBack()
+                self.goBack(isFailed: true)
                 return
             }
             
@@ -288,7 +282,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
     private func showAlertAndMoveBack(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-            self.goBack()
+            self.goBack(isFailed: true)
         }))
         self.present(alert, animated: true)
     }

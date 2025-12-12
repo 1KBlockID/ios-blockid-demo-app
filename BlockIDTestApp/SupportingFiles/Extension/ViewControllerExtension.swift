@@ -68,16 +68,33 @@ extension UIViewController {
         self.navigationController?.pushViewController(enrollMentvC, animated: true)
     }
 
-    // MARK: - Document Scanner -
-    func showDocumentScannerFor(_ docType: DocumentScannerType, _ delegate: DocumentScanDelegate) { // Move to document scanner
+    func verifyDocumentWithUId(_ docTitle: Enrollments) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let docVerifyVC = storyBoard.instantiateViewController(withIdentifier: "DocumentScannerWithUIdVC") as? DocumentScannerWithUIdVC {
+            docVerifyVC.documentTitle = docTitle
+            self.navigationController?.pushViewController(docVerifyVC, animated: true)
+        }
+    }
+    
+    /// Presents the DocumentScannerViewController for the specified document type.
+    ///
+    /// - Parameters:
+    ///   - docType: The type of document to scan.
+    ///   - uid: The identifier for the uid associated with the document scan.
+    ///     Pass a non-nil value to associate the scan with a specific store.
+    ///     Pass `nil` if the scan is not associated with any store.
+    ///   - delegate: The delegate to handle document scan events.
+    func showDocumentScannerFor(_ docType: DocumentScannerType, _ uid: String?, _ delegate: DocumentScanDelegate) {
         let document = DocumentScannerViewController(docType: docType,
+                                                     uid: uid,
                                                      delegate: delegate)
         self.navigationController?.pushViewController(document, animated: false)
     }
     
-    func showDLView() {
+    func showDLView(UId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
+            dlVC.uid = UId
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }
@@ -91,21 +108,23 @@ extension UIViewController {
     
     func showSSNVerificationView() {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        if let dlVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
-            self.navigationController?.pushViewController(dlVC, animated: true)
+        if let ssnVC = storyBoard.instantiateViewController(withIdentifier: "SSNViewController") as? SSNViewController {
+            self.navigationController?.pushViewController(ssnVC, animated: true)
         }
     }
     
-    func showPassportView() {
+    func showPassportView(UId: String? = nil) {
        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
+            ppVC.uid = UId
             self.navigationController?.pushViewController(ppVC, animated: true)
         }
     }
     
-    func showNationalIDView() {
+    func showNationalIDView(UId: String? = nil) {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let nidVC = storyBoard.instantiateViewController(withIdentifier: "NationalIDViewController") as? NationalIDViewController {
+            nidVC.uid = UId
             self.navigationController?.pushViewController(nidVC, animated: true)
         }
     }
