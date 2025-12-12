@@ -40,7 +40,7 @@ class PassportViewController: UIViewController {
     }
     
     private func startPassportScanning() {
-        self.showDocumentScannerFor(.PPT, self)
+        self.showDocumentScannerFor(.PPT, self.uid, self)
     }
     
     private func goBack(isFailed: Bool? = false) {

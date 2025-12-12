@@ -51,7 +51,7 @@ class NationalIDViewController: UIViewController {
     }
     
     private func startNationalIDScanning() {
-        self.showDocumentScannerFor(.IDCARD, self)
+        self.showDocumentScannerFor(.IDCARD, self.uid, self)
     }
 
     private func setNationaID(withNIDData nid: [String : Any], _ sessionId: String?) {
