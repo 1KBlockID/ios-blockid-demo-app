@@ -350,9 +350,6 @@ extension AddUserViewController {
         
         BlockIDSDK.sharedInstance
             .addPreLinkedUser(userId: userIdUW,
-                              scep_hash: user?.scep_hash ?? "",
-                              scep_privatekey: user?.scep_privatekey ?? "",
-                              scep_expiry: user?.scep_expiry ?? "",
                               origin: originUW,
                               account: user?.account) { (status, error) in
             if status {
