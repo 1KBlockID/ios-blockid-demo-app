@@ -86,16 +86,12 @@ extension QRScanViewController: QRScanResponseDelegate {
         // 1. Scopes converted to lowercase
         qrModel?.scopes = qrModel?.scopes?.lowercased()
         
-        // 2. If scopes has "windows", replace it by "scep_creds"
-        qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
         presentConsentViewWithData(qrdata: qrModel!)
     }
     
     private func processScope(qrModel: AuthenticationPayloadV1?) {
         // 1. Scopes converted to lowercase
         qrModel?.scopes = qrModel?.scopes?.lowercased()
-        // 2. If scopes has "windows", replace it by "scep_creds"
-        qrModel?.scopes = qrModel?.scopes?.replacingOccurrences(of: "windows", with: "scep_creds")
         if let qrModel = qrModel {
             presentConsentViewWithData(qrdata: qrModel)
         }
