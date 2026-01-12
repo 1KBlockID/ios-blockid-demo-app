@@ -26,7 +26,7 @@ class AuthenticateViewController: UIViewController {
     var location: (Double, Double) = (0.0, 0.0)
     var userId: String?
     private var scopeAttributesDic: [String: Any]?
-    private var scopesSequence = ["name","userid","ppt","dl","creds","scep_creds","nationalid","did"]
+    private var scopesSequence = ["name","userid","ppt","dl","creds","nationalid","did"]
     var displayScopeArr = [UserConsentInfoTVCDataSetup]()
     var ConsentScreenCellIdentifier = "ConsentScreenCell"
     
@@ -38,7 +38,6 @@ class AuthenticateViewController: UIViewController {
                                         "ppt":"Passport #:",
                                         "dl":"Drivers License # :",
                                         "creds":"Creds :",
-                                        "scep_creds":"SCEP :",
                                         "nationalid":"National ID # :"
                                         ]
     
