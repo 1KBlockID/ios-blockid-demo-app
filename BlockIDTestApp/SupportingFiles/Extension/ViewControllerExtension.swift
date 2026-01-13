@@ -15,7 +15,7 @@ extension UIViewController {
     public func getDriverLicenseData(docIndex: Int, category: RegisterDocCategory) -> (docId: String?, islivenessNeeded: Bool?) {
         let strDocuments = BIDDocumentProvider.shared.getUserDocument(id: nil,
                                                                       type: RegisterDocType.DL.rawValue,
-                                                                  category: category.rawValue) ?? ""
+                                                                      category: category.rawValue) ?? ""
         guard let arrDocuments = CommonFunctions.convertJSONStringToJSONObject(strDocuments) as? [[String : Any]] else {
             return (nil, nil)
         }
@@ -23,7 +23,10 @@ extension UIViewController {
         let index = (docIndex-1)
         if arrDocuments.count > index{
             let dictDoc = arrDocuments[index]
-            return (dictDoc["id"] as? String, dictDoc["isLivenessRequired"] as? Bool)
+            return (
+                dictDoc["id"] as? String,
+                dictDoc["isLivenessRequired"] as? Bool ?? false
+            )
         }
         return (nil, nil)
     }
