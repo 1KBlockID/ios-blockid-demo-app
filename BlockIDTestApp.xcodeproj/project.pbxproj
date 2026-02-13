@@ -547,9 +547,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -853,7 +857,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.55;
+				MARKETING_VERSION = 1.20.56;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -912,7 +916,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.55;
+				MARKETING_VERSION = 1.20.56;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
