@@ -10,6 +10,7 @@ import BlockID
 import WebKit
 import AVKit
 import CoreLocation
+import Alamofire
 
 class AddUserViewController: UIViewController {
 
