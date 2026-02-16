@@ -118,7 +118,7 @@ PODS:
   - OpenSSL-Universal (1.1.2301)
   - PromisesObjC (2.4.0)
   - secp256k1.swift (0.1.4)
-  - SwiftProtobuf (1.33.3)
+  - SwiftProtobuf (1.34.1)
   - Toast-Swift (5.0.1)
   - TrustWalletCore (2.5.10):
     - TrustWalletCore/Core (= 2.5.10)
@@ -168,7 +168,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: 6050d1314467adfdf1790244e0c2d96cdb9a4194
+  BlockID: 59130a27b7905e5953de0a080acce7fc5392ff9d
   CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
@@ -183,10 +183,10 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ca89c20240633a77c776082ba76b7d90f992bf77
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
-  SwiftProtobuf: e1b437c8e31a4c5577b643249a0bb62ed4f02153
+  SwiftProtobuf: c901f00a3e125dc33cac9b16824da85682ee47da
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 221e7c95e4e3263c807cbbfda9a5613b6a975214
 
-PODFILE CHECKSUM: deede739e38106004c1545631b9f41d0a64b1a6e
+PODFILE CHECKSUM: 6b86e1e867b8ac52b50c7ab4e971e8bae8fe8709
 
 COCOAPODS: 1.16.2
