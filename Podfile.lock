@@ -1,13 +1,13 @@
 PODS:
-  - Alamofire (4.9.1)
-  - BigInt (4.0.0)
-  - BlockID (1.20.90):
-    - Alamofire (~> 4.9.1)
-    - BigInt (~> 4.0)
-    - CryptoSwift (~> 1.6.0)
+  - Alamofire (5.11.1)
+  - BigInt (5.2.0)
+  - BlockID (1.30.00):
+    - Alamofire (~> 5.9)
+    - BigInt (~> 5.2.0)
+    - CryptoSwift (~> 1.8.4)
     - OpenSSL-Universal (~> 1.1.2300)
-    - TrustWalletCore (~> 2.5.6)
-  - CryptoSwift (1.6.0)
+    - TrustWalletCore (~> 4.2.21)
+  - CryptoSwift (1.8.4)
   - Firebase/Analytics (8.12.1):
     - Firebase/Core
   - Firebase/Core (8.12.1):
@@ -116,17 +116,17 @@ PODS:
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.2301)
   - PromisesObjC (2.4.0)
-  - SwiftProtobuf (1.31.0)
+  - SwiftProtobuf (1.34.1)
   - Toast-Swift (5.0.1)
-  - TrustWalletCore (2.5.10):
-    - TrustWalletCore/Core (= 2.5.10)
-  - TrustWalletCore/Core (2.5.10):
+  - TrustWalletCore (4.2.21):
+    - TrustWalletCore/Core (= 4.2.21)
+  - TrustWalletCore/Core (4.2.21):
     - TrustWalletCore/Types
-  - TrustWalletCore/Types (2.5.10):
+  - TrustWalletCore/Types (4.2.21):
     - SwiftProtobuf
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.20.90`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.30.00.alamofire`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
   - Toast-Swift (~> 5.0.1)
@@ -155,18 +155,18 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.90
+    :tag: 1.30.00.alamofire
 
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.20.90
+    :tag: 1.30.00.alamofire
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  BigInt: 2aad1a9942dc932ec8b84290d2c564a3d76f97ab
-  BlockID: 928e5b45ba90c7ad5eef6a3f42611ce43e519fe4
-  CryptoSwift: 562f8eceb40e80796fffc668b0cad9313284cfa6
+  Alamofire: eec6cd8f73b242b59e34153a606a909eb9864b14
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
+  BlockID: 26686650d8ff7d179d52a58144821947c7e47d80
+  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
   FirebaseCore: 8138de860a90ca7eec5e324da5788fb0ebf1d93c
@@ -179,10 +179,10 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ca89c20240633a77c776082ba76b7d90f992bf77
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  SwiftProtobuf: caa61117d9a5eeb60a52375f6685991a1fd4bd7b
+  SwiftProtobuf: c901f00a3e125dc33cac9b16824da85682ee47da
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
-  TrustWalletCore: 221e7c95e4e3263c807cbbfda9a5613b6a975214
+  TrustWalletCore: 063881004982b1f57f8bce63a2dfd1056314c0d1
 
-PODFILE CHECKSUM: c1ee9c63a4b8905b28b98dc30c04c682a5209620
+PODFILE CHECKSUM: 1f5baafb411b825ccce563841de470c3e1262c2c
 
 COCOAPODS: 1.16.2
