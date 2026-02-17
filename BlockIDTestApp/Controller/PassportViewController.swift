@@ -68,7 +68,7 @@ class PassportViewController: UIViewController {
         dict["type"] = RegisterDocType.PPT.rawValue
         dict["id"] = ppt["id"]
         
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             self.registerWithLiveID(dic: dict, sessionId)
         } else {
             self.registerWithOutLiveID(dic: dict, sessionId)

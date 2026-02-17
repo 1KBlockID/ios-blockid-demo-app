@@ -41,7 +41,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             }
         case .DeviceAuth:
             self.textLabel?.text = enrollment.rawValue
-            self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() ? .checkmark : .none
+            self.accessoryType = BlockIDSDK.sharedInstance.isDeviceAuthRegistered() ? .checkmark : .none
         case .DriverLicense:
             //let docId = controllerObj?.getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document)
             self.textLabel?.text = enrollment.rawValue
@@ -98,7 +98,7 @@ class EnrollmentTableViewCell: UITableViewCell {
             self.accessoryType = (docId != nil) ? .checkmark : .none
         case .LiveID:
             self.textLabel?.text = enrollment.rawValue
-            self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegisterd() ? .checkmark : .none
+            self.accessoryType = BlockIDSDK.sharedInstance.isLiveIDRegistered() ? .checkmark : .none
         case .Pin:
             self.textLabel?.text = enrollment.rawValue
             self.accessoryType = BlockIDSDK.sharedInstance.isPinRegistered() ? .checkmark : .none

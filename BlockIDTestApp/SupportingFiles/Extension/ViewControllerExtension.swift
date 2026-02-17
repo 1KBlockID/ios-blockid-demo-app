@@ -173,7 +173,7 @@ extension UIViewController {
     }
     
     func showLiveIDLivenessAndCompareView() {
-        if BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
                 liveIDVC.isForFaceCompareAndVerification = true

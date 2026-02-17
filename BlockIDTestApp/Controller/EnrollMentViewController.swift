@@ -341,7 +341,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func enrollDeviceAuth() {
-        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegistered() {
            
             BIDAuthProvider.shared.enrollDeviceAuth { (success, error, message) in
                 if success {
@@ -396,7 +396,7 @@ extension EnrollMentViewController {
 
 extension EnrollMentViewController {
     private func showLiveID() {
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             showLiveIDView()
         }
     }

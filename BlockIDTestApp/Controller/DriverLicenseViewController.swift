@@ -113,7 +113,7 @@ class DriverLicenseViewController: UIViewController {
         dic?["type"] = RegisterDocType.DL.rawValue
         dic?["id"] = dl?["id"]
         
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             self.registerWithLiveID(dic: dic, sessionId)
         } else {
             self.registerWithOutLiveID(dic: dic, sessionId)
