@@ -233,7 +233,6 @@ class PassportViewController: UIViewController {
 extension PassportViewController: DocumentScanDelegate {
     
     func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
-        debugPrint("Prasanna: document-", document)
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
                 self.showAppLogin()
