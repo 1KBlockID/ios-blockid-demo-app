@@ -185,7 +185,15 @@ extension NationalIDViewController: DocumentScanDelegate {
             var msg = ""
             switch responseStatus.uppercased() {
             case "FAILED":
-                msg = kIDCardFailedMessage
+                // Update with dynamic message of errorInfo
+                if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
+                   let reasonCode = dictErrorInfo["reasonCode"] as? String,
+                   let error = IDVError(rawValue: reasonCode) {
+                    
+                    msg = error.localizedDescription
+                } else {
+                    msg = kIDCardFailedMessage
+                }
             case "EXPIRED":
                 title = "Session Expired"
                 msg = kSessionExpiredOrTimeout
