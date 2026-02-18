@@ -60,7 +60,7 @@ class NationalIDViewController: UIViewController {
         dic["type"] = RegisterDocType.NATIONAL_ID.rawValue
         dic["id"] = nid["id"] as! String
         
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             self.registerWithLiveID(dic: dic, sessionId)
         } else {
             self.registerWithOutLiveID(dic: dic, sessionId)

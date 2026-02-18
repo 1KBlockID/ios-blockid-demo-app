@@ -162,14 +162,14 @@ class AuthenticateViewController: UIViewController {
     
     private func askForLiveID(data: AuthenticationPayloadV1) {
         
-        if !BlockIDSDK.sharedInstance.isLiveIDRegisterd() {
+        if !BlockIDSDK.sharedInstance.isLiveIDRegistered() {
             self.view.makeToast("Please enroll LiveID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
                 self.goBack()
             })
             return
         }
         
-        // Authenticate liveID on liveIDcontroller screen...
+        // Authenticate liveID on liveID controller screen...
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let liveIDVC = storyBoard.instantiateViewController(withIdentifier: "LiveIDViewController") as? LiveIDViewController {
             liveIDVC.isForVerification = true
@@ -207,7 +207,7 @@ class AuthenticateViewController: UIViewController {
     
     private func askForDeviceAuth(data: AuthenticationPayloadV1) {
         
-        if !BlockIDSDK.sharedInstance.isDeviceAuthRegisterd() {
+        if !BlockIDSDK.sharedInstance.isDeviceAuthRegistered() {
             self.view.makeToast("Please enroll Touch ID / Face ID in order to authenticate.", duration: 3.0, position: .center, title: "Error", completion: {_ in
                 self.goBack()
             })
