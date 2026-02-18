@@ -190,7 +190,6 @@ class DriverLicenseViewController: UIViewController {
 extension DriverLicenseViewController: DocumentScanDelegate {
    
     func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
-        
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
                 self.showAppLogin()
@@ -237,7 +236,15 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             var msg = ""
             switch responseStatus.uppercased() {
             case "FAILED":
-                msg = kDLFailedMessage
+                // Update with dynamic message of errorInfo
+                if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
+                   let reasonCode = dictErrorInfo["reasonCode"] as? String,
+                   let error = IDVError(rawValue: reasonCode) {
+                    
+                    msg = error.localizedDescription
+                } else {
+                    msg = kDLFailedMessage
+                }
             case "EXPIRED":
                 title = "Session Expired"
                 msg = kSessionExpiredOrTimeout
