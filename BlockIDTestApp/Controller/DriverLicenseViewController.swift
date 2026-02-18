@@ -224,7 +224,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+        guard let responseStatus = dictDocObject["sessionResult"] as? String,
               !responseStatus.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
@@ -257,7 +257,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard var dictDLObject = dictDocObject["dl_object"] as? [String: Any] else {
+        guard var dictDLObject = dictDocObject["document"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
@@ -269,7 +269,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             return
         }
         
-        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+        if let liveIdObj = dictDocObject["liveId"] as? [String: Any] {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }

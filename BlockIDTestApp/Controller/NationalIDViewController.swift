@@ -172,7 +172,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                                       message: kIDCardFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["responseStatus"] as? String,
+        guard let responseStatus = dictDocObject["sessionResult"] as? String,
               !responseStatus.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
@@ -206,7 +206,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                                       message: kIDCardFailedMessage)
             return
         }
-        guard var dictIdcardObject = dictDocObject["idcard_object"] as? [String: Any] else {
+        guard var dictIdcardObject = dictDocObject["document"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
@@ -218,7 +218,7 @@ extension NationalIDViewController: DocumentScanDelegate {
             return
         }
         
-        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+        if let liveIdObj = dictDocObject["liveId"] as? [String: Any] {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }
