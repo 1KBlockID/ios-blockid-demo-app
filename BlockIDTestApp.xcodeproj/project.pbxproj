@@ -41,8 +41,6 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
-		4C7604AC2F45EE620071857E /* BlockID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7604A52F45E7E30071857E /* BlockID.framework */; };
-		4C7604AD2F45EE620071857E /* BlockID.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4C7604A52F45E7E30071857E /* BlockID.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C7604B12F4624EC0071857E /* DocumentErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7604B02F4624EC0071857E /* DocumentErrorManager.swift */; };
 		4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */; };
 		4CC8838C2DBA0FC30051518A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */; };
@@ -82,20 +80,6 @@
 			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
 			remoteInfo = BlockIDTestApp;
 		};
-		4C7604A42F45E7E30071857E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C76049E2F45E7E30071857E /* BlockID.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = AD73A64A25DE5F8D000864C3;
-			remoteInfo = BlockID;
-		};
-		4C7604A92F45E8540071857E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4C76049E2F45E7E30071857E /* BlockID.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = AD73A64925DE5F8D000864C3;
-			remoteInfo = BlockID;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -105,7 +89,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4C7604AD2F45EE620071857E /* BlockID.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,7 +137,6 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
-		4C76049E2F45E7E30071857E /* BlockID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlockID.xcodeproj; path = "../ios-kernel-sdk/BlockID.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		4C7604B02F4624EC0071857E /* DocumentErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentErrorManager.swift; sourceTree = "<group>"; };
 		4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyViewController.swift; sourceTree = "<group>"; };
 		4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -200,7 +182,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
-				4C7604AC2F45EE620071857E /* BlockID.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				CB81C34CD68FA4AD44448D60 /* Pods_1Kosmos_Demo.framework in Frameworks */,
 			);
@@ -255,7 +236,6 @@
 		3CEE3302264413C2003FDB78 = {
 			isa = PBXGroup;
 			children = (
-				4C76049E2F45E7E30071857E /* BlockID.xcodeproj */,
 				98F07D642E53CF6A003A7468 /* 1Kosmos DemoRelease.entitlements */,
 				3CEE330D264413C2003FDB78 /* BlockIDTestApp */,
 				1FA09389268472A6008AAAA1 /* BlockIDTestAppUITests */,
@@ -405,14 +385,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		4C7604A12F45E7E30071857E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4C7604A52F45E7E30071857E /* BlockID.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,7 +440,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4C7604AA2F45E8540071857E /* PBXTargetDependency */,
 			);
 			name = "1Kosmos Demo";
 			productName = BlockIDTestApp;
@@ -504,12 +475,6 @@
 			mainGroup = 3CEE3302264413C2003FDB78;
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 4C7604A12F45E7E30071857E /* Products */;
-					ProjectRef = 4C76049E2F45E7E30071857E /* BlockID.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* 1Kosmos Demo */,
@@ -517,16 +482,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		4C7604A52F45E7E30071857E /* BlockID.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = BlockID.framework;
-			remoteRef = 4C7604A42F45E7E30071857E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA09386268472A6008AAAA1 /* Resources */ = {
@@ -621,13 +576,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -711,11 +662,6 @@
 			isa = PBXTargetDependency;
 			target = 3CEE330A264413C2003FDB78 /* 1Kosmos Demo */;
 			targetProxy = 1FA0938D268472A6008AAAA1 /* PBXContainerItemProxy */;
-		};
-		4C7604AA2F45E8540071857E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BlockID;
-			targetProxy = 4C7604A92F45E8540071857E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

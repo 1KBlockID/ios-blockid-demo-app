@@ -223,18 +223,18 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["sessionResult"] as? String,
-              !responseStatus.isEmpty else {
+        guard let sessionResult = dictDocObject["sessionResult"] as? String,
+              !sessionResult.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
         }
         
         let failedStatuses: Set<String> = ["FAILED", "EXPIRED", "ABANDONED"]
-        if failedStatuses.contains(responseStatus.uppercased()) {
+        if failedStatuses.contains(sessionResult.uppercased()) {
             var title = "Error"
             var msg = ""
-            switch responseStatus.uppercased() {
+            switch sessionResult.uppercased() {
             case "FAILED":
                 // Update with dynamic message of errorInfo
                 if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
