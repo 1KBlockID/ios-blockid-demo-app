@@ -189,7 +189,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                 if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
                    let reasonCode = dictErrorInfo["reasonCode"] as? String,
                    let error = IDVError(rawValue: reasonCode) {
-                    
+
                     msg = error.localizedDescription
                 } else {
                     msg = kIDCardFailedMessage
@@ -206,6 +206,52 @@ extension NationalIDViewController: DocumentScanDelegate {
             self.showAlertAndMoveBack(title: title,
                                       message: msg)
             return
+        } else if responseStatus.uppercased() == "SUCCESS",
+                  let document = (dictDocObject["document"] as? [String: Any]),
+                    let documentType = document["documentType"] as? String {
+            // If status is success but enrolled documentType is different then do not save the doc and show error..
+            // ...with option to save that document
+            if documentType == "PASSPORT" {
+                let docID = getDocumentID(docIndex: 1 ,type: .PPT ,category: .Identity_Document) ?? ""
+                if (docID != "") { // Already Enrolled, show alert and move back
+                    self.showAlertAndMoveBack(title: "Error",
+                                              message: "Passport is already enrolled.")
+                } else { // Proceess enrollment
+                    let alert = UIAlertController(title: "Passport Identified",
+                                                  message: "We identified that you have scanned a Passport. Do you want to register the Passport in this application?",
+                                                  preferredStyle: .alert)
+                    
+                    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { alert in
+                        self.goBack(isFailed: true)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                        // TODO: Verify this condition
+                        // Try enrolling passport
+                    }))
+                    self.present(alert, animated: true)
+                }
+                return
+            } else if documentType == "DL" {
+                let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
+                if (docID != "") { // Already Enrolled, show alert and move back
+                    self.showAlertAndMoveBack(title: "Error",
+                                              message: "Drivers License is already enrolled.")
+                } else { // Proceess enrollment
+                    let alert = UIAlertController(title: "Drivers License Identified",
+                                                  message: "We identified that you have scanned a Drivers License. Do you want to register the Drivers License in this application?",
+                                                  preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "No", style: .default, handler: { alert in
+                        self.goBack(isFailed: true)
+                    }))
+                    alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
+                        // TODO: Verify this condition
+                        // Try enrolling Drivers License
+                        
+                    }))
+                    self.present(alert, animated: true)
+                }
+                return
+            }
         }
         
         guard let token = dictDocObject["token"] as? String,
