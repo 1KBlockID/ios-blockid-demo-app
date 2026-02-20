@@ -305,8 +305,8 @@ extension NationalIDViewController: DocumentScanDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
             dlVC.uid = self.uid
-//            ppVC.dictDL = document
-//            ppVC.sessionId = sessionId
+            ppVC.dictDL = document
+            ppVC.sessionId = sessionId
             self.navigationController?.pushViewController(dlVC, animated: true)
         }
     }

@@ -19,6 +19,8 @@ class DriverLicenseViewController: UIViewController {
     private var liveIdFace: String!
     private var proofedBy: String!
     var uid: String?
+    var sessionId: String?
+    var dictDL: [String : Any]?
     var shouldEnrolNIDAsDL: Bool = false
 
     @IBOutlet private weak var loaderView: UIView!
