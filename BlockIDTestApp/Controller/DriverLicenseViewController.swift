@@ -19,6 +19,7 @@ class DriverLicenseViewController: UIViewController {
     private var liveIdFace: String!
     private var proofedBy: String!
     var uid: String?
+    var shouldEnrolNIDAsDL: Bool = false
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
@@ -56,7 +57,7 @@ class DriverLicenseViewController: UIViewController {
         self.showDocumentScannerFor(.DL, self.uid, self)
     }
 
-    private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
+    func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)

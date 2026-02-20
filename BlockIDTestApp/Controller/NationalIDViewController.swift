@@ -233,7 +233,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         dictIdcardObject["proof"] = proof_jwt
         dictIdcardObject["certificate_token"] = token
        
-        if shouldEnrollOtherDocumentOnNationalIdScan(sessionResult, dictDocObject, dictIdcardObject) {
+        if shouldEnrollOtherDocumentOnNationalIdScan(sessionResult, dictDocObject, dictIdcardObject, sessionID ?? "") {
             return
         }
         self.setNationaID(withNIDData: dictIdcardObject, sessionID)
@@ -241,7 +241,8 @@ extension NationalIDViewController: DocumentScanDelegate {
     
     private func shouldEnrollOtherDocumentOnNationalIdScan(_ sessionResult: String,
                                                            _ dictDocObject: [String: Any],
-                                                           _ currentDocumentObj: [String: Any])  -> Bool {
+                                                           _ currentDocumentObj: [String: Any],
+                                                           _ sessionId: String)  -> Bool {
         if sessionResult.uppercased() == "SUCCESS",
                   let document = (dictDocObject["document"] as? [String: Any]),
                     let documentType = document["documentType"] as? String {
@@ -261,8 +262,8 @@ extension NationalIDViewController: DocumentScanDelegate {
                         self.goBack(isFailed: true)
                     }))
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                        // TODO: Verify this condition
                         // Try enrolling passport
+                        self.processPassportEnrolment(currentDocumentObj, sessionId: sessionId)
                     }))
                     self.present(alert, animated: true)
                 }
@@ -279,9 +280,8 @@ extension NationalIDViewController: DocumentScanDelegate {
                         self.goBack(isFailed: true)
                     }))
                     alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: {_ in
-                        // TODO: Verify this condition
                         // Try enrolling Drivers License
-                        
+                        self.processDLEnrolment(currentDocumentObj, sessionId: sessionId)
                     }))
                     self.present(alert, animated: true)
                 }
@@ -290,7 +290,27 @@ extension NationalIDViewController: DocumentScanDelegate {
         }
         return false
     }
-
+    
+    private func processPassportEnrolment(_ document: [String: Any], sessionId: String) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+         if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
+             ppVC.uid = self.uid
+             ppVC.dictPPT = document
+             ppVC.sessionId = sessionId
+             self.navigationController?.pushViewController(ppVC, animated: true)
+         }
+    }
+    
+    private func processDLEnrolment(_ document: [String: Any], sessionId: String) {
+        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+        if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
+            dlVC.uid = self.uid
+//            ppVC.dictDL = document
+//            ppVC.sessionId = sessionId
+            self.navigationController?.pushViewController(dlVC, animated: true)
+        }
+    }
+    
     private func showAlertAndMoveBack(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in

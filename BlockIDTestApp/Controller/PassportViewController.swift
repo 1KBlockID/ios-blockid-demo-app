@@ -15,7 +15,7 @@ import CoreNFC
 class PassportViewController: UIViewController {
 
     private let expiryDays = 90
-    private var dictPPT: [String : Any]?
+    var dictPPT: [String : Any]?
     private var isWithNFC = false
     private let kPPTFailedMessage = "We couldn’t complete the verification of the document. Please try again."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
@@ -23,8 +23,9 @@ class PassportViewController: UIViewController {
     private var rfidScannerHelper: RFIDScannerHelper?
     private var liveIdFace: String!
     private var proofedBy: String!
-    private var sessionId: String!
+    var sessionId: String!
     var uid: String?
+    var shouldEnrolNIDAsPPT: Bool = false
 
     @IBOutlet weak var _viewEPassportScan: UIView!
     @IBOutlet private weak var loaderView: UIView!
@@ -35,8 +36,16 @@ class PassportViewController: UIViewController {
         // Start loader spin
         self.rotateView(imgLoader)
         
-        // Start PPT loading
-        startPassportScanning()
+        if shouldEnrolNIDAsPPT {
+            guard let dictPPT = dictPPT else {
+                self.goBack(isFailed: false)
+                return
+            }
+            self.startRFIDScanWorkflow(withPPData: dictPPT, self.sessionId)
+        } else {
+            // Start PPT loading
+            startPassportScanning()
+        }
     }
     
     private func startPassportScanning() {
@@ -156,7 +165,7 @@ class PassportViewController: UIViewController {
         }
     }
     
-    private func startRFIDScanWorkflow(withPPData ppt: [String : Any], _ sessionId: String?) {
+    func startRFIDScanWorkflow(withPPData ppt: [String : Any], _ sessionId: String?) {
         self.dictPPT = ppt
         if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
             //NOT NFC COMPATIBLE
@@ -321,7 +330,7 @@ extension PassportViewController: DocumentScanDelegate {
             return
         }
         
-        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+        if let liveIdObj = dictDocObject["liveid"] as? [String: Any] {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }
