@@ -250,7 +250,7 @@ extension NationalIDViewController: DocumentScanDelegate {
             // ...with option to save that document
             if documentType == "PASSPORT" {
                 let docID = getDocumentID(docIndex: 1 ,type: .PPT ,category: .Identity_Document) ?? ""
-                if (docID != "") { // Already Enrolled, show alert and move back
+                if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
                                               message: "Passport is already enrolled.")
                 } else { // Proceess enrollment
@@ -269,7 +269,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                 }
             } else if documentType == "DL" {
                 let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
-                if (docID != "") { // Already Enrolled, show alert and move back
+                if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
                                               message: "Drivers License is already enrolled.")
                 } else { // Proceess enrollment
@@ -295,6 +295,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
          if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
              ppVC.uid = self.uid
+             ppVC.shouldEnrolNIDAsPPT = true
              ppVC.dictPPT = document
              ppVC.sessionId = sessionId
              self.navigationController?.pushViewController(ppVC, animated: true)
@@ -305,6 +306,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
             dlVC.uid = self.uid
+            dlVC.shouldEnrolNIDAsDL = true
             dlVC.dictDL = document
             dlVC.sessionId = sessionId
             self.navigationController?.pushViewController(dlVC, animated: true)
