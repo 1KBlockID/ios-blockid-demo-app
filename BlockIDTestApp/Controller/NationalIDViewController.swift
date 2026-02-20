@@ -13,7 +13,7 @@ import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
-    private let kIDCardFailedMessage = "National ID failed to scan."
+    private let kIDCardFailedMessage = "We couldn’t complete the verification of the document. Please try again."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!
@@ -172,18 +172,17 @@ extension NationalIDViewController: DocumentScanDelegate {
                                       message: kIDCardFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["sessionResult"] as? String,
-              !responseStatus.isEmpty else {
+        guard let sessionResult = dictDocObject["sessionResult"] as? String,
+              !sessionResult.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kIDCardFailedMessage)
             return
         }
-        
         let failedStatuses: Set<String> = ["FAILED", "EXPIRED", "ABANDONED"]
-        if failedStatuses.contains(responseStatus.uppercased()) {
+        if failedStatuses.contains(sessionResult.uppercased()) {
             var title = "Error"
             var msg = ""
-            switch responseStatus.uppercased() {
+            switch sessionResult.uppercased() {
             case "FAILED":
                 // Update with dynamic message of errorInfo
                 if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
@@ -233,7 +232,17 @@ extension NationalIDViewController: DocumentScanDelegate {
 
         dictIdcardObject["proof"] = proof_jwt
         dictIdcardObject["certificate_token"] = token
-        if responseStatus.uppercased() == "SUCCESS",
+       
+        if shouldEnrollOtherDocumentOnNationalIdScan(sessionResult, dictDocObject, dictIdcardObject) {
+            return
+        }
+        self.setNationaID(withNIDData: dictIdcardObject, sessionID)
+    }
+    
+    private func shouldEnrollOtherDocumentOnNationalIdScan(_ sessionResult: String,
+                                                           _ dictDocObject: [String: Any],
+                                                           _ currentDocumentObj: [String: Any])  -> Bool {
+        if sessionResult.uppercased() == "SUCCESS",
                   let document = (dictDocObject["document"] as? [String: Any]),
                     let documentType = document["documentType"] as? String {
             // If status is success but enrolled documentType is different then do not save the doc and show error..
@@ -277,10 +286,9 @@ extension NationalIDViewController: DocumentScanDelegate {
                     self.present(alert, animated: true)
                 }
             }
-            return
+            return true
         }
-        
-        self.setNationaID(withNIDData: dictIdcardObject, sessionID)
+        return false
     }
 
     private func showAlertAndMoveBack(title: String, message: String) {

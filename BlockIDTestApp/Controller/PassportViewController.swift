@@ -17,7 +17,7 @@ class PassportViewController: UIViewController {
     private let expiryDays = 90
     private var dictPPT: [String : Any]?
     private var isWithNFC = false
-    private let kPPTFailedMessage = "Passport failed to scan."
+    private let kPPTFailedMessage = "We couldn’t complete the verification of the document. Please try again."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
 
     private var rfidScannerHelper: RFIDScannerHelper?
