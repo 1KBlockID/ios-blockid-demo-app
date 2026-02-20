@@ -28,7 +28,10 @@ class DriverLicenseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if shouldEnrolNIDAsDL {
+            self.showVerifyAlert(withDLData: dictDL, sessionId)
+            return
+        }
         self.startDLScanning()
     }
     

@@ -248,7 +248,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                     let documentType = document["documentType"] as? String {
             // If status is success but enrolled documentType is different then do not save the doc and show error..
             // ...with option to save that document
-            if documentType == "PASSPORT" {
+            if documentType.uppercased() == "PASSPORT" {
                 let docID = getDocumentID(docIndex: 1 ,type: .PPT ,category: .Identity_Document) ?? ""
                 if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
@@ -267,7 +267,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                     }))
                     self.present(alert, animated: true)
                 }
-            } else if documentType == "DL" {
+            } else if documentType.uppercased() == "DL" {
                 let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
                 if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
