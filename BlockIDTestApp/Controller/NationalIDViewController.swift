@@ -242,7 +242,7 @@ extension NationalIDViewController: DocumentScanDelegate {
     private func shouldEnrollOtherDocumentOnNationalIdScan(_ sessionResult: String,
                                                            _ dictDocObject: [String: Any],
                                                            _ currentDocumentObj: [String: Any],
-                                                           _ sessionId: String)  -> Bool {
+                                                           _ sessionId: String) -> Bool {
         if sessionResult.uppercased() == "SUCCESS",
                   let document = (dictDocObject["document"] as? [String: Any]),
                     let documentType = document["documentType"] as? String {
@@ -253,7 +253,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                 if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
                                               message: "Passport is already enrolled.")
-                } else { // Proceess enrollment
+                } else { // Process enrollment
                     let alert = UIAlertController(title: "Passport Identified",
                                                   message: "We identified that you have scanned a Passport. Do you want to register the Passport in this application?",
                                                   preferredStyle: .alert)
@@ -273,7 +273,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                 if docID != "" { // Already Enrolled, show alert and move back
                     self.showAlertAndMoveBack(title: "Error",
                                               message: "Drivers License is already enrolled.")
-                } else { // Proceess enrollment
+                } else { // Process enrollment
                     let alert = UIAlertController(title: "Drivers License Identified",
                                                   message: "We identified that you have scanned a Drivers License. Do you want to register the Drivers License in this application?",
                                                   preferredStyle: .alert)

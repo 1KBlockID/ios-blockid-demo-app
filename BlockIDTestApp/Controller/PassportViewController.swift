@@ -37,11 +37,11 @@ class PassportViewController: UIViewController {
         self.rotateView(imgLoader)
         
         if shouldEnrollNIDAsPPT {
-            guard let dictPPT = dictPPT else {
+            guard let pptData = dictPPT else {
                 self.goBack(isFailed: false)
                 return
             }
-            self.startRFIDScanWorkflow(withPPData: dictPPT, self.sessionId)
+            self.startRFIDScanWorkflow(withPPData: pptData, self.sessionId)
         } else {
             // Start PPT loading
             startPassportScanning()
