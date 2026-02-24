@@ -41,12 +41,12 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
-		4C7604B12F4624EC0071857E /* DocumentErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7604B02F4624EC0071857E /* DocumentErrorManager.swift */; };
 		4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */; };
 		4CC8838C2DBA0FC30051518A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */; };
 		4CD1A6582EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift */; };
 		4CD2D1E72EE30CFB001C6CE9 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD2D1E62EE30CFB001C6CE9 /* UIView+Ext.swift */; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
+		4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
@@ -137,12 +137,12 @@
 		3CEE338F26443347003FDB78 /* PinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinViewController.swift; sourceTree = "<group>"; };
 		3CEE33A326454600003FDB78 /* QRScanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRScanViewController.swift; sourceTree = "<group>"; };
 		3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateViewController.swift; sourceTree = "<group>"; };
-		4C7604B02F4624EC0071857E /* DocumentErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentErrorManager.swift; sourceTree = "<group>"; };
 		4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyViewController.swift; sourceTree = "<group>"; };
 		4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerWithUIdVC.swift; sourceTree = "<group>"; };
 		4CD2D1E62EE30CFB001C6CE9 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
+		4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDVErrorCode.swift; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
 		87AB63E457999782AC902421 /* Pods_1Kosmos_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1Kosmos_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,8 +276,8 @@
 		3CEE3339264414E7003FDB78 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */,
 				4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */,
-				4C7604B02F4624EC0071857E /* DocumentErrorManager.swift */,
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
 				3CEE333F264414E7003FDB78 /* CommonFunctions.swift */,
@@ -576,9 +576,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -622,7 +626,6 @@
 				E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */,
 				3CEE3355264414E7003FDB78 /* PassportViewController.swift in Sources */,
 				3CEE3357264414E7003FDB78 /* SplashViewController.swift in Sources */,
-				4C7604B12F4624EC0071857E /* DocumentErrorManager.swift in Sources */,
 				3CEE3350264414E7003FDB78 /* UserDefualt+Ext.swift in Sources */,
 				E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */,
 				3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */,
@@ -644,6 +647,7 @@
 				4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */,
 				B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */,
 				E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */,
+				4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				E66640A1282A9E9000E78498 /* AddUserViewController.swift in Sources */,
 				E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */,
