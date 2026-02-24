@@ -13,7 +13,7 @@ import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
-    private let kIDCardFailedMessage = "We couldn’t complete the verification of the document. Please try again."
+    private let kIDCardFailedMessage = "We couldn't complete the verification of the document. Please try again."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!

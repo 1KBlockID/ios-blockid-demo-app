@@ -14,7 +14,7 @@ import UIKit
   
 class DriverLicenseViewController: UIViewController {
 
-    private let kDLFailedMessage = "We couldn’t complete the verification of the document. Please try again."
+    private let kDLFailedMessage = "We couldn't complete the verification of the document. Please try again."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!
