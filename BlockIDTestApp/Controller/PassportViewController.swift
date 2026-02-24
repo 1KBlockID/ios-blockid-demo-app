@@ -25,7 +25,7 @@ class PassportViewController: UIViewController {
     private var proofedBy: String!
     var sessionId: String!
     var uid: String?
-    var shouldEnrolNIDAsPPT: Bool = false
+    var shouldEnrollNIDAsPPT: Bool = false
 
     @IBOutlet weak var _viewEPassportScan: UIView!
     @IBOutlet private weak var loaderView: UIView!
@@ -36,7 +36,7 @@ class PassportViewController: UIViewController {
         // Start loader spin
         self.rotateView(imgLoader)
         
-        if shouldEnrolNIDAsPPT {
+        if shouldEnrollNIDAsPPT {
             guard let dictPPT = dictPPT else {
                 self.goBack(isFailed: false)
                 return

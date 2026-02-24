@@ -21,14 +21,14 @@ class DriverLicenseViewController: UIViewController {
     var uid: String?
     var sessionId: String?
     var dictDL: [String : Any]?
-    var shouldEnrolNIDAsDL: Bool = false
+    var shouldEnrollNIDAsDL: Bool = false
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if shouldEnrolNIDAsDL {
+        if shouldEnrollNIDAsDL {
             self.showVerifyAlert(withDLData: dictDL, sessionId)
             return
         }

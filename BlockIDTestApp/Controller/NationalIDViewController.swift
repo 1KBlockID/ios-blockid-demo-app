@@ -296,7 +296,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
          if let ppVC = storyBoard.instantiateViewController(withIdentifier: "PassportViewController") as? PassportViewController {
              ppVC.uid = self.uid
-             ppVC.shouldEnrolNIDAsPPT = true
+             ppVC.shouldEnrollNIDAsPPT = true
              ppVC.dictPPT = document
              ppVC.sessionId = sessionId
              self.navigationController?.pushViewController(ppVC, animated: true)
@@ -307,7 +307,7 @@ extension NationalIDViewController: DocumentScanDelegate {
         let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
         if let dlVC = storyBoard.instantiateViewController(withIdentifier: "DriverLicenseViewController") as? DriverLicenseViewController {
             dlVC.uid = self.uid
-            dlVC.shouldEnrolNIDAsDL = true
+            dlVC.shouldEnrollNIDAsDL = true
             dlVC.dictDL = document
             dlVC.sessionId = sessionId
             self.navigationController?.pushViewController(dlVC, animated: true)
