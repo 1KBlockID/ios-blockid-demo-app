@@ -267,6 +267,7 @@ extension NationalIDViewController: DocumentScanDelegate {
                     }))
                     self.present(alert, animated: true)
                 }
+                return true
             } else if documentType.uppercased() == "DL" {
                 let docID = getDocumentID(docIndex: 1 ,type: .DL ,category: .Identity_Document) ?? ""
                 if docID != "" { // Already Enrolled, show alert and move back
@@ -285,8 +286,8 @@ extension NationalIDViewController: DocumentScanDelegate {
                     }))
                     self.present(alert, animated: true)
                 }
+                return true
             }
-            return true
         }
         return false
     }
