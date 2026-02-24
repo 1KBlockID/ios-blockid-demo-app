@@ -14,7 +14,7 @@ import UIKit
   
 class DriverLicenseViewController: UIViewController {
 
-    private let kDLFailedMessage = "We couldn't complete the verification of the document. Please try again."
+    private let kDLFailedMessage = "Drivers License failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!
@@ -249,7 +249,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                     
                     msg = error.localizedDescription
                 } else {
-                    msg = kDLFailedMessage
+                    msg = "We couldn't complete the verification of the document. Please try again."
                 }
             case "EXPIRED":
                 title = "Session Expired"

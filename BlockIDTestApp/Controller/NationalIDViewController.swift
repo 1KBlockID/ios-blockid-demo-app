@@ -13,7 +13,7 @@ import Toast_Swift
   
 class NationalIDViewController: UIViewController {
 
-    private let kIDCardFailedMessage = "We couldn't complete the verification of the document. Please try again."
+    private let kIDCardFailedMessage = "National ID failed to scan."
     private let kSessionExpiredOrTimeout = "This verification session is no longer available. You need to begin the journey again."
     private var liveIdFace: String!
     private var proofedBy: String!
@@ -191,7 +191,7 @@ extension NationalIDViewController: DocumentScanDelegate {
 
                     msg = error.localizedDescription
                 } else {
-                    msg = kIDCardFailedMessage
+                    msg = "We couldn't complete the verification of the document. Please try again."
                 }
             case "EXPIRED":
                 title = "Session Expired"
