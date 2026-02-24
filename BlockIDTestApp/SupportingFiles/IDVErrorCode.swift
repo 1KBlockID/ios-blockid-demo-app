@@ -36,7 +36,7 @@ enum IDVErrorCode: String, LocalizedError {
                 .documentLivenessFailed,
                 .documentValidityFailed,
                 .fraudCheckFailed:
-            return "We couldn’t complete the verification of the document. Please try again."
+            return "We couldn't complete the verification of the document. Please try again."
             
         case .unsupportedDocument,
                 .documentNotAllowed:
@@ -47,7 +47,7 @@ enum IDVErrorCode: String, LocalizedError {
             
         case .dataCheckFailed,
                 .moduleFailed:
-            return "We couldn’t complete the verification. Please try again."
+            return "We couldn't complete the verification. Please try again."
             
         case .documentExpired:
             return "The document you are trying to enroll is already expired."
