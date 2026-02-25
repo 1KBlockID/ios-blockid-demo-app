@@ -330,7 +330,7 @@ extension PassportViewController: DocumentScanDelegate {
             return
         }
         
-        if let liveIdObj = dictDocObject["liveid"] as? [String: Any] {
+        if let liveIdObj = dictDocObject["liveId"] as? [String: Any] {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }
