@@ -46,8 +46,10 @@
 		4CD1A6582EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift */; };
 		4CD2D1E72EE30CFB001C6CE9 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD2D1E62EE30CFB001C6CE9 /* UIView+Ext.swift */; };
 		4CEB53872BE91026005134F1 /* ResetSDKMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */; };
+		4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
+		A1CB03292B845F3C5C26410B /* Pods_1Kosmos_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B018512A8FA80181792F7286 /* Pods_1Kosmos_Demo.framework */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
@@ -68,7 +70,6 @@
 		E6F4CD14282E8C5E00646C68 /* LivenessCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */; };
 		E6FFD6652786E376004CBB62 /* SSNViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD6642786E376004CBB62 /* SSNViewController.swift */; };
 		E6FFD667278702C5004CBB62 /* StringValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FFD666278702C5004CBB62 /* StringValidation.swift */; };
-		E9E3701DAE90E617F02D9C6F /* Pods_1Kosmos_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D1300D1D20099E84E64E9C /* Pods_1Kosmos_Demo.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,13 +140,15 @@
 		4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentScannerWithUIdVC.swift; sourceTree = "<group>"; };
 		4CD2D1E62EE30CFB001C6CE9 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetSDKMessages.swift; sourceTree = "<group>"; };
+		4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDVErrorCode.swift; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
-		67813DBAAE7EB9CE614CF1EE /* Pods-1Kosmos Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.release.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.release.xcconfig"; sourceTree = "<group>"; };
+		82AE5FB06D9FDD9A44CEB612 /* Pods-1Kosmos Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.debug.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		98F07D642E53CF6A003A7468 /* 1Kosmos DemoRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "1Kosmos DemoRelease.entitlements"; sourceTree = "<group>"; };
+		B018512A8FA80181792F7286 /* Pods_1Kosmos_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1Kosmos_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B564C1C400DAF71957CE09FD /* Pods-1Kosmos Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.release.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.release.xcconfig"; sourceTree = "<group>"; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
 		B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoverMnemonicsViewController.swift; sourceTree = "<group>"; };
-		D1C0D9EF4A3E08312C0D3279 /* Pods-1Kosmos Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-1Kosmos Demo.debug.xcconfig"; path = "Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNVerifyResponseViewController.swift; sourceTree = "<group>"; };
 		E666409E282A863600E78498 /* MagicLinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkModel.swift; sourceTree = "<group>"; };
 		E66640A0282A9E9000E78498 /* AddUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserViewController.swift; sourceTree = "<group>"; };
@@ -164,7 +167,6 @@
 		E6F4CD13282E8C5E00646C68 /* LivenessCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LivenessCheck.swift; sourceTree = "<group>"; };
 		E6FFD6642786E376004CBB62 /* SSNViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SSNViewController.swift; sourceTree = "<group>"; };
 		E6FFD666278702C5004CBB62 /* StringValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringValidation.swift; sourceTree = "<group>"; };
-		F6D1300D1D20099E84E64E9C /* Pods_1Kosmos_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1Kosmos_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +183,7 @@
 			files = (
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
-				E9E3701DAE90E617F02D9C6F /* Pods_1Kosmos_Demo.framework in Frameworks */,
+				A1CB03292B845F3C5C26410B /* Pods_1Kosmos_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,7 +195,7 @@
 			children = (
 				1F29F9A12804AAA700BF2456 /* SafariServices.framework */,
 				1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */,
-				F6D1300D1D20099E84E64E9C /* Pods_1Kosmos_Demo.framework */,
+				B018512A8FA80181792F7286 /* Pods_1Kosmos_Demo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -274,6 +276,7 @@
 		3CEE3339264414E7003FDB78 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */,
 				4CEB53862BE91026005134F1 /* ResetSDKMessages.swift */,
 				3CEE333A264414E7003FDB78 /* Extension */,
 				3CEE333D264414E7003FDB78 /* Utils */,
@@ -385,8 +388,8 @@
 		DDD6B82D3B6A87C961C81415 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D1C0D9EF4A3E08312C0D3279 /* Pods-1Kosmos Demo.debug.xcconfig */,
-				67813DBAAE7EB9CE614CF1EE /* Pods-1Kosmos Demo.release.xcconfig */,
+				82AE5FB06D9FDD9A44CEB612 /* Pods-1Kosmos Demo.debug.xcconfig */,
+				B564C1C400DAF71957CE09FD /* Pods-1Kosmos Demo.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -425,14 +428,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3CEE331F264413C2003FDB78 /* Build configuration list for PBXNativeTarget "1Kosmos Demo" */;
 			buildPhases = (
-				14A38F3B3D6A67183B461130 /* [CP] Check Pods Manifest.lock */,
+				ED123DA760C25FB2385B285B /* [CP] Check Pods Manifest.lock */,
 				3CEE3307264413C2003FDB78 /* Sources */,
 				3CEE3308264413C2003FDB78 /* Frameworks */,
 				1F3DA18926CD513000DDE095 /* DoB Versioning */,
 				3CEE3309264413C2003FDB78 /* Resources */,
 				4C9FDEF72970420D003433CC /* Embed Frameworks */,
 				B66C5EC82892973F00E8005C /* Firebase Crashalytics */,
-				AE35759909CC7F4CD9CA9884 /* [CP] Embed Pods Frameworks */,
+				4249421AC4016A7A30B7E0A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -505,28 +508,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		14A38F3B3D6A67183B461130 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-1Kosmos Demo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		1F3DA18926CD513000DDE095 /* DoB Versioning */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -545,7 +526,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Script to use build date for versioning.\ndate_of_build=$(date +%s)\necho \"date_of_build: $date_of_build\"\n\nDSYM_INFO_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\necho \"/usr/libexec/PlistBuddy -c \\\"Set :CFBundleVersion $date_of_build\\\" \\“${TARGET_BUILD_DIR}/${INFOPLIST_PATH}\\\"\"\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $date_of_build\" \"$INFOPLIST_FILE\"\n\necho \"DOB: $date_of_build\"\n";
 		};
-		AE35759909CC7F4CD9CA9884 /* [CP] Embed Pods Frameworks */ = {
+		4249421AC4016A7A30B7E0A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -553,13 +534,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -585,6 +562,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		ED123DA760C25FB2385B285B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-1Kosmos Demo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -644,6 +643,7 @@
 				4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */,
 				B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */,
 				E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */,
+				4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				E66640A1282A9E9000E78498 /* AddUserViewController.swift in Sources */,
 				E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */,
@@ -844,7 +844,7 @@
 		};
 		3CEE3320264413C2003FDB78 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D1C0D9EF4A3E08312C0D3279 /* Pods-1Kosmos Demo.debug.xcconfig */;
+			baseConfigurationReference = 82AE5FB06D9FDD9A44CEB612 /* Pods-1Kosmos Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -904,7 +904,7 @@
 		};
 		3CEE3321264413C2003FDB78 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67813DBAAE7EB9CE614CF1EE /* Pods-1Kosmos Demo.release.xcconfig */;
+			baseConfigurationReference = B564C1C400DAF71957CE09FD /* Pods-1Kosmos Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

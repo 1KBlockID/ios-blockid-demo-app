@@ -19,13 +19,19 @@ class DriverLicenseViewController: UIViewController {
     private var liveIdFace: String!
     private var proofedBy: String!
     var uid: String?
+    var sessionId: String?
+    var dictDL: [String : Any]?
+    var shouldEnrollNIDAsDL: Bool = false
 
     @IBOutlet private weak var loaderView: UIView!
     @IBOutlet private weak var imgLoader: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if shouldEnrollNIDAsDL {
+            self.showVerifyAlert(withDLData: dictDL, sessionId)
+            return
+        }
         self.startDLScanning()
     }
     
@@ -56,7 +62,7 @@ class DriverLicenseViewController: UIViewController {
         self.showDocumentScannerFor(.DL, self.uid, self)
     }
 
-    private func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
+    func showVerifyAlert(withDLData dl: [String : Any]?, _ sessionId: String?) {
         let alert = UIAlertController(title: "Verification",
                                       message: "Do you want to verify your Drivers License?",
                                       preferredStyle: .alert)
@@ -190,7 +196,6 @@ class DriverLicenseViewController: UIViewController {
 extension DriverLicenseViewController: DocumentScanDelegate {
    
     func onDocumentScanResponse(status: Bool, document: String?, sessionID: String?, error: ErrorResponse?) {
-        
         if !status {
             if error?.code == CustomErrors.kUnauthorizedAccess.code {
                 self.showAppLogin()
@@ -224,20 +229,28 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard let responseStatus = dictDocObject["responseStatus"] as? String,
-              !responseStatus.isEmpty else {
+        guard let sessionResult = dictDocObject["sessionResult"] as? String,
+              !sessionResult.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
         }
         
         let failedStatuses: Set<String> = ["FAILED", "EXPIRED", "ABANDONED"]
-        if failedStatuses.contains(responseStatus.uppercased()) {
+        if failedStatuses.contains(sessionResult.uppercased()) {
             var title = "Error"
             var msg = ""
-            switch responseStatus.uppercased() {
+            switch sessionResult.uppercased() {
             case "FAILED":
-                msg = kDLFailedMessage
+                // Update with dynamic message of errorInfo
+                if let dictErrorInfo = (dictDocObject["errorInfo"] as? [String: Any]),
+                   let reasonCode = dictErrorInfo["reasonCode"] as? String,
+                   let error = IDVErrorCode(rawValue: reasonCode) {
+                    
+                    msg = error.localizedDescription
+                } else {
+                    msg = "We couldn't complete the verification of the document. Please try again."
+                }
             case "EXPIRED":
                 title = "Session Expired"
                 msg = kSessionExpiredOrTimeout
@@ -257,7 +270,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
                                       message: kDLFailedMessage)
             return
         }
-        guard var dictDLObject = dictDocObject["dl_object"] as? [String: Any] else {
+        guard var dictDLObject = dictDocObject["document"] as? [String: Any] else {
             self.showAlertAndMoveBack(title: "Error",
                                       message: kDLFailedMessage)
             return
@@ -269,7 +282,7 @@ extension DriverLicenseViewController: DocumentScanDelegate {
             return
         }
         
-        if let liveIdObj = dictDocObject["liveid_object"] as? [String: Any] {
+        if let liveIdObj = dictDocObject["liveId"] as? [String: Any] {
             self.liveIdFace = liveIdObj["face"] as? String
             self.proofedBy = liveIdObj["proofedBy"] as? String
         }
