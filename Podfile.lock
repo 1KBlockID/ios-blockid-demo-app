@@ -1,8 +1,8 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.11.1)
   - BigInt (5.2.0)
   - BlockID (1.30.10):
-    - Alamofire (~> 4.9.1)
+    - Alamofire (~> 5.9)
     - BigInt (~> 5.2.0)
     - CryptoSwift (~> 1.8.4)
     - OpenSSL-Universal (~> 1.1.2300)
@@ -163,9 +163,9 @@ CHECKOUT OPTIONS:
     :tag: 1.30.10
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  Alamofire: eec6cd8f73b242b59e34153a606a909eb9864b14
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
-  BlockID: 07a036813ecebe0c567a0e9e5ac9b93de56c8ca4
+  BlockID: da6bc6efc024689f349dc21f9712526292d2c7b1
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
