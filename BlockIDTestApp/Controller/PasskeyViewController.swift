@@ -62,7 +62,7 @@ class PasskeyViewController: UIViewController {
                 guard let responseString = response,
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
                 if let data = dictResponse["data"] as? [String: Any] {
-                    self.processPasskeyRegistration(userName: (data["dguid"] as? String) ?? "",
+                    self.processPasskeyRegistration(userName: (data["username"] as? String) ?? "",
                                                     displayName: (data["username"] as? String) ?? "")
                 }
             } else if error?.code == NSURLErrorNotConnectedToInternet ||
@@ -96,7 +96,7 @@ class PasskeyViewController: UIViewController {
                       let dictResponse = CommonFunctions.jsonStringToDic(from: responseString) else { return }
                 
                 if let data = dictResponse["data"] as? [String: Any] {
-                    self.processPasskeyAuthentication(userName: (data["dguid"] as? String) ?? "",
+                    self.processPasskeyAuthentication(userName: (data["username"] as? String) ?? "",
                                                       displayName: (data["username"] as? String) ?? "")
                 }
             } else if error?.code == NSURLErrorNotConnectedToInternet || error?.code == CustomErrors.Network.OFFLINE.code {

@@ -126,7 +126,7 @@ PODS:
     - SwiftProtobuf
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.30.10`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `4924`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
   - Toast-Swift (~> 5.0.1)
@@ -155,12 +155,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.30.10
+    :tag: '4924'
 
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.30.10
+    :tag: '4924'
 
 SPEC CHECKSUMS:
   Alamofire: eec6cd8f73b242b59e34153a606a909eb9864b14
@@ -183,6 +183,6 @@ SPEC CHECKSUMS:
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 063881004982b1f57f8bce63a2dfd1056314c0d1
 
-PODFILE CHECKSUM: 1969218cff7832e9a075d8f1b53ea50a274f4fc2
+PODFILE CHECKSUM: 9146a696e5bb89b9129bf58df6e96d3570127d42
 
 COCOAPODS: 1.16.2
