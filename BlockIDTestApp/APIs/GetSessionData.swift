@@ -18,7 +18,7 @@ public class GetSessionData {
     public func getSessionData(url: String, completion: @escaping ((_ response: String?, _ message: String, _ isSuccess: Bool) -> Void)) {
         
         let headers: HTTPHeaders = ["Content-Type": "application/json"]
-        Alamofire.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+        AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
             .responseJSON { [self] response in
                 switch response.result {
                 case .success:
@@ -28,9 +28,7 @@ public class GetSessionData {
                     }
                     let strResponse = String(decoding: data, as: UTF8.self)
                     completion(strResponse, "Data fetched successfully.", true)
-                case .failure(let error):
-                    completion(nil, "error", false)
-                @unknown default:
+                case .failure:
                     completion(nil, "error", false)
                 }
         }

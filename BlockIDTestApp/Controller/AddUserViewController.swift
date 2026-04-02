@@ -10,6 +10,7 @@ import BlockID
 import WebKit
 import AVKit
 import CoreLocation
+import Alamofire
 
 class AddUserViewController: UIViewController {
 
@@ -206,7 +207,7 @@ class AddUserViewController: UIViewController {
         
         let baseUrl = (magicLink?.baseUrl ?? "") + (magicLink?.path ?? "")
         let url = baseUrl + "/publickeys"
-        let headers = ["Content-Type": "application/json"]
+        let headers: HTTPHeaders = ["Content-Type": "application/json"]
         BIDNetworkManager.sharedInstance.makeRequest(requestMethod: .get,
                                                      serviceUrl: url,
                                                      requestBody: nil,

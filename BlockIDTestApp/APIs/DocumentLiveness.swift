@@ -32,48 +32,36 @@ public class DocumentLiveness {
             return
         }
         
-        Alamofire.upload(multipartFormData: { multipartFormData in
+        AF.upload(multipartFormData: { multipartFormData in
             //Parameter for Upload files
             multipartFormData.append(imgData, withName: "file",fileName: "file.jpg" , mimeType: "image/jpg")
             
-        }, usingThreshold:UInt64.init(),
-                         to: DocumentLiveness.kBaseURL,
-                         method: .post,
-                         headers: headers, //pass header dictionary here
-                         encodingCompletion: { (result) in
-            
-            switch result {
-            case .success(let upload, _, _):
-                upload.responseJSON { response in
-                    print("the response is : \(response)")
-                    if let error = response.result.error as? URLError, (error.code == URLError.dataNotAllowed || error.code == URLError.notConnectedToInternet) {
-                        let noInternet = "Please check your internet connection."
-                        onCompletion(false, nil, nil, noInternet)
-                        return
-                    }
-                    
-                    guard let data = response.data else {
-                        return
-                    }
-                    let decoder = JSONDecoder()
-                    
-                    if let obj = try? decoder.decode(LivenessCheckError.self, from: data),
-                       obj.status != nil, obj.message != nil {
-                        onCompletion(true, nil, obj, nil)
-                        return
-                    }
-
-                    if let obj = try? decoder.decode(LivenessCheck.self, from: data) {
-                        onCompletion(true, obj, nil, nil)
-                    }
+        }, to: DocumentLiveness.kBaseURL,
+           method: .post,
+           headers: headers)
+            .responseJSON { response in
+                print("the response is : \(response)")
+                if let error = response.error, let urlError = error.underlyingError as? URLError, (urlError.code == URLError.dataNotAllowed || urlError.code == URLError.notConnectedToInternet) {
+                    let noInternet = "Please check your internet connection."
+                    onCompletion(false, nil, nil, noInternet)
+                    return
                 }
-            case .failure(let encodingError):
-                print("the error is  : \(encodingError.localizedDescription)")
-                onCompletion(false ,nil, nil, encodingError.localizedDescription)
-            @unknown default:
-                break
+                
+                guard let data = response.data else {
+                    return
+                }
+                let decoder = JSONDecoder()
+                
+                if let obj = try? decoder.decode(LivenessCheckError.self, from: data),
+                   obj.status != nil, obj.message != nil {
+                    onCompletion(true, nil, obj, nil)
+                    return
+                }
+
+                if let obj = try? decoder.decode(LivenessCheck.self, from: data) {
+                    onCompletion(true, obj, nil, nil)
+                }
             }
-        })
     }
     
 }
