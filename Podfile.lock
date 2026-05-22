@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (5.9.0)
   - BigInt (5.2.0)
-  - BlockID (1.30.20):
+  - BlockID (1.30.30):
     - Alamofire (= 5.9.0)
     - BigInt (~> 5.2.0)
     - CryptoSwift (~> 1.8.4)
@@ -116,7 +116,7 @@ PODS:
   - nanopb/encode (2.30908.0)
   - OpenSSL-Universal (1.1.2301)
   - PromisesObjC (2.4.0)
-  - SwiftProtobuf (1.34.1)
+  - SwiftProtobuf (1.38.0)
   - Toast-Swift (5.0.1)
   - TrustWalletCore (4.2.21):
     - TrustWalletCore/Core (= 4.2.21)
@@ -126,7 +126,7 @@ PODS:
     - SwiftProtobuf
 
 DEPENDENCIES:
-  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.30.20`)
+  - BlockID (from `https://github.com/1KBlockID/ios-blockidsdk.git`, tag `1.30.30`)
   - Firebase/Analytics (~> 8.12.0)
   - Firebase/Crashlytics (~> 8.12.0)
   - Toast-Swift (~> 5.0.1)
@@ -155,17 +155,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.30.20
+    :tag: 1.30.30
 
 CHECKOUT OPTIONS:
   BlockID:
     :git: https://github.com/1KBlockID/ios-blockidsdk.git
-    :tag: 1.30.20
+    :tag: 1.30.30
 
 SPEC CHECKSUMS:
   Alamofire: 02b772c9910e8eba1a079227c32fbd9e46c90a24
   BigInt: f668a80089607f521586bbe29513d708491ef2f7
-  BlockID: 8da65b6a1f06723f9a20e40a709061f76ed97f73
+  BlockID: 20669f5d428b29c3e2c21227835821c5f03d0afa
   CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   Firebase: 580d09e8edafc3073ebf09c03fd42e4d80d35fe9
   FirebaseAnalytics: bd10d7706ba8d6e01ea2816f8fe9e9b881cb0918
@@ -179,10 +179,10 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   OpenSSL-Universal: ca89c20240633a77c776082ba76b7d90f992bf77
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
-  SwiftProtobuf: c901f00a3e125dc33cac9b16824da85682ee47da
+  SwiftProtobuf: d724b5145bfc609d9a49c1e3e3a3dabb07273ffb
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
   TrustWalletCore: 063881004982b1f57f8bce63a2dfd1056314c0d1
 
-PODFILE CHECKSUM: 78e045b036f50fa60be64d459ef9bb1133306ac6
+PODFILE CHECKSUM: b9b5391f902a0c7fb7eaa4711de725110db7e505
 
 COCOAPODS: 1.16.2
