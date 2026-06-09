@@ -150,18 +150,12 @@ class PassportViewController: UIViewController {
     
     //Check for NFC Capability of the device
     private func isDeviceNFCCompatible() -> Bool? {
-        if #available(iOS 11.0, *) {
-           if NFCNDEFReaderSession.readingAvailable {
+        if NFCNDEFReaderSession.readingAvailable {
             // NFC available to use
             return true
-           }
-           else {
-             // NFC not allowed to use
-            return nil
-           }
         } else {
-          //iOS don't support NFC
-            return false
+            // NFC not allowed to use
+            return nil
         }
     }
     
