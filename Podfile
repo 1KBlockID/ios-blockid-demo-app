@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
- platform :ios, '15.0'
+ platform :ios, '16.0'
 
 target '1Kosmos Demo' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -9,7 +9,7 @@ target '1Kosmos Demo' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'Firebase/Crashlytics', '~> 8.12.0'
   pod 'Firebase/Analytics', '~> 8.12.0'
-  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.30.30'
+  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.30.40'
 end
 
 post_install do |installer|
@@ -25,8 +25,8 @@ post_install do |installer|
    # enable simulator support
     config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
     
-    # set iOS Deployment Target to 15.0
-    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
+    # set iOS Deployment Target to 16.0
+    config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
     
     # Settings for support of Xcode 15
     xcconfig_path = config.base_configuration_reference.real_path
