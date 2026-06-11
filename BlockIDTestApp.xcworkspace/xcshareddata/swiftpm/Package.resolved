@@ -1,0 +1,60 @@
+{
+  "originHash" : "0057147a0d66c0d3b2d8c6a786d4bf6587f6da4f02c5fc5cd1e802d9e998995d",
+  "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "e938f8c66708e7352fc7e3512647fa54255b267a",
+        "version" : "5.11.2"
+      }
+    },
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/attaswift/BigInt.git",
+      "state" : {
+        "revision" : "e07e00fa1fd435143a2dcf8b7eec9a7710b2fdfe",
+        "version" : "5.7.0"
+      }
+    },
+    {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift.git",
+      "state" : {
+        "revision" : "f2a627b84c1ff96f21ac2fcb623ab36142dd5512",
+        "version" : "1.10.0"
+      }
+    },
+    {
+      "identity" : "ios-blockidsdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/1KBlockID/ios-blockidsdk",
+      "state" : {
+        "revision" : "ccfaacd70f624992f1f0507bca3ebb5cb5e63419",
+        "version" : "1.30.61"
+      }
+    },
+    {
+      "identity" : "openssl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/OpenSSL.git",
+      "state" : {
+        "revision" : "623c84da314e85363236507ca38a4bde65df21c3",
+        "version" : "3.3.3001"
+      }
+    },
+    {
+      "identity" : "wallet-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/trustwallet/wallet-core.git",
+      "state" : {
+        "revision" : "4edc4a142b7869201ee5b24ea92f939c617387c6",
+        "version" : "4.6.13"
+      }
+    }
+  ],
+  "version" : 3
+}

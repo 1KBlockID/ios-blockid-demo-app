@@ -6,10 +6,9 @@ target '1Kosmos Demo' do
   use_frameworks!
 
   # Pods for 1Kosmos Demo
-  pod 'Toast-Swift', '~> 5.0.1'
-  pod 'Firebase/Crashlytics', '~> 8.12.0'
-  pod 'Firebase/Analytics', '~> 8.12.0'
-  pod 'BlockID', :git => 'https://github.com/1KBlockID/ios-blockidsdk.git', :tag => '1.30.40'
+  pod 'Toast-Swift', '~> 5.1.1'
+  pod 'Firebase/Crashlytics', '~> 12.14.0'
+  pod 'Firebase/Analytics', '~> 12.14.0'
 end
 
 post_install do |installer|
