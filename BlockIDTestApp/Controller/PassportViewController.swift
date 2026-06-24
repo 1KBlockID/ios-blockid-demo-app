@@ -149,32 +149,13 @@ class PassportViewController: UIViewController {
     }
     
     //Check for NFC Capability of the device
-    private func isDeviceNFCCompatible() -> Bool? {
-        if #available(iOS 11.0, *) {
-           if NFCNDEFReaderSession.readingAvailable {
-            // NFC available to use
-            return true
-           }
-           else {
-             // NFC not allowed to use
-            return nil
-           }
-        } else {
-          //iOS don't support NFC
-            return false
-        }
+    private func isDeviceNFCCompatible() -> Bool {
+        return NFCNDEFReaderSession.readingAvailable
     }
     
     func startRFIDScanWorkflow(withPPData ppt: [String : Any], _ sessionId: String?) {
         self.dictPPT = ppt
-        if let isNFCCompatible = isDeviceNFCCompatible(), isNFCCompatible {
-            //NOT NFC COMPATIBLE
-            if !isNFCCompatible {
-                //Cannot scan NFC, proceed with bio-data of PP
-                self.setPassport(withPPData: ppt, isWithNFC: false, sessionId)
-                return
-            }
-           
+        if isDeviceNFCCompatible() {
             self.showRFIDViewController(delegate: self)
             return
         }
