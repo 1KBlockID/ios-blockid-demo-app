@@ -287,10 +287,10 @@ jobs:
           curl -sS -X POST \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
-            --data '{"groupAliases":["1k-mobile-ios","1k-qa"]}' \
+            --data '{"groupAliases":["1Kosmos-mobile-iOS","1k-qa"]}' \
             "$SERVICE/v1/$RELEASE_NAME:distribute" > /dev/null
 
-          echo "Distributed $RELEASE_NAME to groups: 1k-mobile-ios, 1k-qa"
+          echo "Distributed $RELEASE_NAME to groups: 1Kosmos-mobile-iOS, 1k-qa"
 
       - name: Determine version tag
         id: version
