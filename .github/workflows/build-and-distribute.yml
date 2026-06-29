@@ -193,8 +193,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          printf '%s' "$FIREBASE_SA_JSON" > "$RUNNER_TEMP/firebase-sa.json"
+          echo "$FIREBASE_SA_JSON" > "$RUNNER_TEMP/firebase-sa.json"
           chmod 600 "$RUNNER_TEMP/firebase-sa.json"
+
+          # Validate JSON has required fields
+          if ! jq -e '.private_key and .client_email' "$RUNNER_TEMP/firebase-sa.json" > /dev/null 2>&1; then
+            echo "Error: Service account JSON is missing required fields (private_key, client_email)"
+            echo "JSON keys found:"
+            jq -r 'keys[]' "$RUNNER_TEMP/firebase-sa.json" 2>/dev/null || echo "Invalid JSON"
+            exit 1
+          fi
 
           IPA_PATH=$(find "$RUNNER_TEMP/ipa" -name "*.ipa" | head -1)
           if [ -z "$IPA_PATH" ] || [ ! -f "$IPA_PATH" ]; then
