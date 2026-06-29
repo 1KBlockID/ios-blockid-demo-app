@@ -38,9 +38,10 @@ This document describes the CI/CD pipeline for building and distributing the 1Ko
 5. Archive (unsigned)
 6. Sign archive with entitlements
 7. Export IPA
-8. Upload to Firebase App Distribution (direct REST API)
-9. Create version tag on repo
-10. Upload IPA artifact
+8. Rename artifacts (`1KosmosDemo_{VERSION}_{BUILD_VERSION}`)
+9. Upload to Firebase App Distribution (direct REST API)
+10. Create version tag on repo
+11. Upload IPA + xcarchive artifacts
 
 ### Concurrency
 Uses `group: ${{ github.workflow }}-${{ github.ref }}` with `cancel-in-progress: true`.
@@ -88,7 +89,10 @@ After successful distribution, the workflow creates and pushes a git tag:
 ## Caching & Artifacts
 
 - CocoaPods cached by `Podfile.lock` hash.
-- IPA uploaded as artifact (`1KosmosDemo-ipa`) with 14-day retention.
+- After export, artifacts are renamed to `1KosmosDemo_{VERSION}_{BUILD_VERSION}` format (e.g. `1KosmosDemo_1.30.40_1782738648`).
+- IPA uploaded as artifact with `.ipa` extension in name, 14-day retention.
+- xcarchive uploaded as artifact with `.xcarchive` extension in name, 14-day retention.
+- Using dot (`.`) in artifact names ensures correct file extension after download+unzip on macOS.
 
 ## Required GitHub Secrets
 
