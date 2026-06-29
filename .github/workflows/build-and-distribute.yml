@@ -225,7 +225,7 @@ jobs:
           Author: ${{ github.actor }}"
 
           # Generate a service-account OAuth2 access token (cloud-platform scope).
-          npm install google-auth-library
+          npm install google-auth-library@9.14.2
           ACCESS_TOKEN=$(node -e "
             const {GoogleAuth} = require('google-auth-library');
             const auth = new GoogleAuth({
@@ -239,7 +239,7 @@ jobs:
           SERVICE="https://firebaseappdistribution.googleapis.com"
 
           # 1) Upload the binary (raw upload protocol). Returns a long-running operation.
-          OPERATION=$(curl -sS -X POST \
+          OPERATION=$(curl -sSf -X POST \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "X-Goog-Upload-Protocol: raw" \
             -H "X-Goog-Upload-File-Name: $(basename "$IPA_PATH")" \
@@ -257,7 +257,7 @@ jobs:
           # 2) Poll the operation until the release is processed.
           RELEASE_NAME=""
           for i in $(seq 1 30); do
-            RESP=$(curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" "$SERVICE/v1/$OPERATION")
+            RESP=$(curl -sSf -H "Authorization: Bearer $ACCESS_TOKEN" "$SERVICE/v1/$OPERATION")
             DONE=$(echo "$RESP" | jq -r '.done // false')
             if [ "$DONE" = "true" ]; then
               RELEASE_NAME=$(echo "$RESP" | jq -r '.response.release.name // empty')
@@ -277,14 +277,14 @@ jobs:
           echo "Release: $RELEASE_NAME"
 
           # 3) Attach release notes.
-          curl -sS -X PATCH \
+          curl -sSf -X PATCH \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$(jq -n --arg notes "$RELEASE_NOTES" '{releaseNotes: {text: $notes}}')" \
             "$SERVICE/v1/$RELEASE_NAME?updateMask=release_notes.text" > /dev/null
 
           # 4) Distribute to tester groups.
-          curl -sS -X POST \
+          curl -sSf -X POST \
             -H "Authorization: Bearer $ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
             --data '{"groupAliases":["1Kosmos-mobile-iOS","1k-qa"]}' \
