@@ -1,0 +1,388 @@
+# =============================================================================
+# GitHub Actions workflow for building 1Kosmos Demo iOS app
+# and distributing IPA via Firebase App Distribution.
+#
+# Triggers:
+#   - Push to master or release branches
+#   - Manual via workflow_dispatch
+#
+# The build process:
+#   1. Checkout & setup environment
+#   2. Install CocoaPods & resolve SPM dependencies
+#   3. Install signing certificate & provisioning profile
+#   4. Stamp build number
+#   5. Archive (unsigned)
+#   6. Sign archive with entitlements
+#   7. Export IPA
+#   8. Upload to Firebase App Distribution
+#   9. Create version tag on repo
+# =============================================================================
+
+name: Build & Distribute Demo App
+
+on:
+  push:
+    branches: [master, release]
+  workflow_dispatch:
+    inputs:
+      repo_update:
+        description: "Run pod install with --repo-update"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  WORKSPACE: BlockIDTestApp.xcworkspace
+  SCHEME: "1Kosmos Demo"
+  CONFIGURATION: Release
+  DESTINATION: generic/platform=iOS
+  XCODE_VERSION: "26.0.1"
+  COCOAPODS_VERSION: "1.15.2"
+  APP_NAME: "1Kosmos Demo"
+
+jobs:
+  build:
+    name: Build & Distribute
+    runs-on: macos-15
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          XCODE_PATH="/Applications/Xcode_${{ env.XCODE_VERSION }}.app"
+          if [ ! -d "$XCODE_PATH" ]; then
+            echo "Error: Xcode ${{ env.XCODE_VERSION }} not found at $XCODE_PATH"
+            echo "Available Xcode versions:"
+            ls /Applications/ | grep Xcode
+            exit 1
+          fi
+          sudo xcode-select -s "$XCODE_PATH"
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: false
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v4
+        with:
+          path: Pods
+          key: pods-${{ hashFiles('Podfile.lock') }}
+          restore-keys: pods-
+
+      - name: Install CocoaPods
+        run: |
+          gem install cocoapods -v ${{ env.COCOAPODS_VERSION }}
+          gem install xcpretty
+          pod install ${{ github.event.inputs.repo_update == 'true' && '--repo-update' || '' }}
+
+      - name: Resolve SPM dependencies
+        run: |
+          set -o pipefail
+          xcodebuild -resolvePackageDependencies \
+            -workspace "$WORKSPACE" \
+            -scheme "$SCHEME"
+          echo "SPM dependencies resolved successfully"
+
+      - name: Install Apple certificate & provisioning profile
+        env:
+          P12_BASE64: ${{ secrets.P12_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          PROVISION_PROFILE_BASE64: ${{ secrets.DEMO_APP_PROVISION_PROFILE_BASE64 }}
+          KEYCHAIN_PASSWORD: ${{ github.run_id }}
+        run: |
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security set-keychain-settings -lut 21600 "$KEYCHAIN_PATH"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+
+          CERT_PATH=$RUNNER_TEMP/certificate.p12
+          printf '%s' "$P12_BASE64" | base64 -D -o "$CERT_PATH"
+          security import "$CERT_PATH" -P "$P12_PASSWORD" \
+            -T /usr/bin/codesign \
+            -T /usr/bin/security \
+            -t cert -f pkcs12 -k "$KEYCHAIN_PATH"
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
+          security list-keychains -d user -s "$KEYCHAIN_PATH"
+
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+
+          printf '%s' "$PROVISION_PROFILE_BASE64" | base64 -D -o "$RUNNER_TEMP/app.mobileprovision"
+          security cms -D -i "$RUNNER_TEMP/app.mobileprovision" -o "$RUNNER_TEMP/app_profile.plist"
+          APP_UUID=$(/usr/libexec/PlistBuddy -c "Print UUID" "$RUNNER_TEMP/app_profile.plist")
+          cp "$RUNNER_TEMP/app.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/"$APP_UUID".mobileprovision
+          echo "Installed app profile: $APP_UUID"
+
+      - name: Stamp unique build number
+        run: |
+          BUILD_NUMBER=$(date +%s)
+          echo "Stamping CFBundleVersion = $BUILD_NUMBER"
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "BlockIDTestApp/Info.plist"
+          echo "Updated BlockIDTestApp/Info.plist"
+
+      - name: Archive
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -workspace "$WORKSPACE" \
+            -scheme "$SCHEME" \
+            -configuration "$CONFIGURATION" \
+            -destination "$DESTINATION" \
+            -archivePath "$RUNNER_TEMP/$APP_NAME.xcarchive" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee "$RUNNER_TEMP/archive_log.txt" | xcpretty
+
+      - name: Show archive log on failure
+        if: failure()
+        run: tail -200 "$RUNNER_TEMP/archive_log.txt"
+
+      - name: Sign archive with entitlements
+        run: |
+          ARCHIVE="$RUNNER_TEMP/$APP_NAME.xcarchive"
+          # Find the .app inside the archive
+          APP_PATH=$(find "$ARCHIVE/Products/Applications" -maxdepth 1 -name "*.app" -print -quit)
+          if [ -z "$APP_PATH" ] || [ ! -d "$APP_PATH" ]; then
+            echo "Error: No .app found in archive"
+            exit 1
+          fi
+          echo "App path: $APP_PATH"
+
+          # Get signing identity
+          IDENTITY=$(security find-identity -v -p codesigning "$RUNNER_TEMP/app-signing.keychain-db" | grep "Apple Distribution" | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          if [ -z "$IDENTITY" ]; then
+            echo "Error: No Apple Distribution signing identity found in keychain"
+            exit 1
+          fi
+          echo "Signing identity: $IDENTITY"
+
+          # Sign frameworks and dylibs first (inside-out signing order)
+          if [ -d "$APP_PATH/Frameworks" ]; then
+            find "$APP_PATH/Frameworks" \( -name "*.framework" -o -name "*.dylib" \) -exec \
+              codesign --force --sign "$IDENTITY" --timestamp=none {} \;
+          fi
+
+          # Sign main app with its entitlements
+          codesign --force --sign "$IDENTITY" --timestamp=none \
+            --entitlements "1Kosmos DemoRelease.entitlements" \
+            "$APP_PATH"
+
+          echo "Archive signed with entitlements"
+
+      - name: Export IPA
+        run: |
+          set -o pipefail
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/$APP_NAME.xcarchive" \
+            -exportOptionsPlist Scripts/ci/export_options.plist \
+            -exportPath "$RUNNER_TEMP/ipa" \
+            | xcpretty
+          ls -la "$RUNNER_TEMP/ipa/"
+
+      - name: Rename artifacts
+        id: artifacts
+        run: |
+          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ')
+          BUILD_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "BlockIDTestApp/Info.plist")
+          ARTIFACT_NAME="1KosmosDemo_${APP_VERSION}_${BUILD_VERSION}"
+          echo "Artifact name: $ARTIFACT_NAME"
+          echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
+
+          # Rename IPA
+          IPA_PATH=$(find "$RUNNER_TEMP/ipa" -name "*.ipa" | head -1)
+          mv "$IPA_PATH" "$RUNNER_TEMP/ipa/${ARTIFACT_NAME}.ipa"
+          echo "Renamed IPA to: ${ARTIFACT_NAME}.ipa"
+
+          # Rename xcarchive
+          mv "$RUNNER_TEMP/$APP_NAME.xcarchive" "$RUNNER_TEMP/${ARTIFACT_NAME}.xcarchive"
+          echo "Renamed xcarchive to: ${ARTIFACT_NAME}.xcarchive"
+
+          ls -la "$RUNNER_TEMP/ipa/"
+
+      - name: Upload to Firebase App Distribution
+        env:
+          FIREBASE_SA_JSON: ${{ secrets.FIREBASE_DEMO_SERVICE_ACCOUNT_JSON }}
+          FIREBASE_APP_ID: ${{ secrets.FB_APP_ID_DEMO_IOS }}
+        run: |
+          set -euo pipefail
+
+          echo "$FIREBASE_SA_JSON" > "$RUNNER_TEMP/firebase-sa.json"
+          chmod 600 "$RUNNER_TEMP/firebase-sa.json"
+
+          # Validate JSON has required fields
+          if ! jq -e '.private_key and .client_email' "$RUNNER_TEMP/firebase-sa.json" > /dev/null 2>&1; then
+            echo "Error: Service account JSON is missing required fields (private_key, client_email)"
+            echo "JSON keys found:"
+            jq -r 'keys[]' "$RUNNER_TEMP/firebase-sa.json" 2>/dev/null || echo "Invalid JSON"
+            exit 1
+          fi
+
+          IPA_PATH=$(find "$RUNNER_TEMP/ipa" -name "*.ipa" | head -1)
+          if [ -z "$IPA_PATH" ] || [ ! -f "$IPA_PATH" ]; then
+            echo "Error: No IPA file found in $RUNNER_TEMP/ipa"
+            exit 1
+          fi
+          echo "Found IPA: $IPA_PATH"
+
+          # App ID format: 1:PROJECT_NUMBER:ios:HASH — extract the project number.
+          PROJECT_NUMBER=$(echo "$FIREBASE_APP_ID" | cut -d: -f2)
+          if [ -z "$PROJECT_NUMBER" ]; then
+            echo "Error: Could not parse project number from app id"
+            exit 1
+          fi
+
+          RELEASE_NOTES="Build #${{ github.run_number }}
+          Scheme: ${{ env.SCHEME }}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Author: ${{ github.actor }}"
+
+          # Generate a service-account OAuth2 access token (cloud-platform scope).
+          npm install google-auth-library
+          ACCESS_TOKEN=$(node -e "
+            const {GoogleAuth} = require('google-auth-library');
+            const auth = new GoogleAuth({
+              keyFile: process.env.RUNNER_TEMP + '/firebase-sa.json',
+              scopes: ['https://www.googleapis.com/auth/cloud-platform']
+            });
+            auth.getClient().then(c => c.getAccessToken()).then(t => process.stdout.write(t.token));
+          ")
+          echo "Access token generated (length: ${#ACCESS_TOKEN})"
+
+          SERVICE="https://firebaseappdistribution.googleapis.com"
+
+          # 1) Upload the binary (raw upload protocol). Returns a long-running operation.
+          OPERATION=$(curl -sSf -X POST \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "X-Goog-Upload-Protocol: raw" \
+            -H "X-Goog-Upload-File-Name: $(basename "$IPA_PATH")" \
+            -H "Content-Type: application/octet-stream" \
+            --data-binary @"$IPA_PATH" \
+            "$SERVICE/upload/v1/projects/$PROJECT_NUMBER/apps/$FIREBASE_APP_ID/releases:upload" \
+            | jq -r '.name')
+
+          if [ -z "$OPERATION" ] || [ "$OPERATION" = "null" ]; then
+            echo "Error: Upload did not return an operation name"
+            exit 1
+          fi
+          echo "Upload operation: $OPERATION"
+
+          # 2) Poll the operation until the release is processed.
+          RELEASE_NAME=""
+          for i in $(seq 1 30); do
+            RESP=$(curl -sSf -H "Authorization: Bearer $ACCESS_TOKEN" "$SERVICE/v1/$OPERATION")
+            DONE=$(echo "$RESP" | jq -r '.done // false')
+            if [ "$DONE" = "true" ]; then
+              RELEASE_NAME=$(echo "$RESP" | jq -r '.response.release.name // empty')
+              RESULT=$(echo "$RESP" | jq -r '.response.result // empty')
+              echo "Release processed: $RESULT"
+              break
+            fi
+            echo "Waiting for release processing... ($i)"
+            sleep 5
+          done
+
+          if [ -z "$RELEASE_NAME" ]; then
+            echo "Error: Release was not processed in time"
+            echo "$RESP"
+            exit 1
+          fi
+          echo "Release: $RELEASE_NAME"
+
+          # 3) Attach release notes.
+          curl -sSf -X PATCH \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$(jq -n --arg notes "$RELEASE_NOTES" '{releaseNotes: {text: $notes}}')" \
+            "$SERVICE/v1/$RELEASE_NAME?updateMask=release_notes.text" > /dev/null
+
+          # 4) Distribute to tester groups.
+          curl -sSf -X POST \
+            -H "Authorization: Bearer $ACCESS_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data '{"groupAliases":["1Kosmos-mobile-iOS","1k-qa"]}' \
+            "$SERVICE/v1/$RELEASE_NAME:distribute" > /dev/null
+
+          echo "Distributed $RELEASE_NAME to groups: 1Kosmos-mobile-iOS, 1k-qa"
+
+      - name: Determine version tag
+        id: version
+        run: |
+          # Extract app version from Xcode project
+          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ')
+          echo "App version: $APP_VERSION"
+
+          # Determine branch prefix: m for master, r for release
+          BRANCH="${{ github.ref_name }}"
+          if [[ "$BRANCH" == master* ]]; then
+            BRANCH_PREFIX="m"
+          elif [[ "$BRANCH" == release* ]]; then
+            BRANCH_PREFIX="r"
+          else
+            # For feature branches, use first letter
+            BRANCH_PREFIX=$(echo "$BRANCH" | cut -c1)
+          fi
+          echo "Branch prefix: $BRANCH_PREFIX"
+
+          # Check existing tags to determine RC number
+          git fetch --tags
+          TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX}.rc"
+          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" | sort -V)
+          echo "Existing tags matching pattern:"
+          echo "$EXISTING_TAGS"
+
+          # Determine next RC number
+          if [ -z "$EXISTING_TAGS" ]; then
+            RC_NUMBER="01"
+          else
+            LAST_RC=$(echo "$EXISTING_TAGS" | tail -1 | grep -o 'rc[0-9]*' | grep -o '[0-9]*')
+            RC_NUMBER=$(printf "%02d" $((10#$LAST_RC + 1)))
+          fi
+
+          TAG_NAME="demo_app_${APP_VERSION}-${BRANCH_PREFIX}.rc${RC_NUMBER}"
+          echo "tag=$TAG_NAME" >> "$GITHUB_OUTPUT"
+          echo "app_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "Generated tag: $TAG_NAME"
+
+      - name: Create and push tag
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git tag -a "$TAG" -m "1Kosmos Demo $TAG
+
+          App Version: ${{ steps.version.outputs.app_version }}
+          Branch: ${{ github.ref_name }}
+          Build: #${{ github.run_number }}
+          Commit: ${{ github.sha }}"
+
+          git push origin "$TAG"
+
+          echo "Tag '$TAG' created and pushed"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifacts.outputs.artifact_name }}.ipa
+          path: ${{ runner.temp }}/ipa/*.ipa
+          retention-days: 14
+
+      - name: Upload xcarchive artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.artifacts.outputs.artifact_name }}.xcarchive
+          path: ${{ runner.temp }}/${{ steps.artifacts.outputs.artifact_name }}.xcarchive
+          retention-days: 14
+
+      - name: Cleanup keychain
+        if: always()
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db || true
