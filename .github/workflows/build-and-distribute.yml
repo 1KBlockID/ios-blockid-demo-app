@@ -372,14 +372,14 @@ jobs:
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.artifacts.outputs.artifact_name }}-ipa
+          name: ${{ steps.artifacts.outputs.artifact_name }}.ipa
           path: ${{ runner.temp }}/ipa/*.ipa
           retention-days: 14
 
       - name: Upload xcarchive artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ steps.artifacts.outputs.artifact_name }}-xcarchive
+          name: ${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           path: ${{ runner.temp }}/${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           retention-days: 14
 
