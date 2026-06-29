@@ -225,7 +225,7 @@ jobs:
           Author: ${{ github.actor }}"
 
           # Generate a service-account OAuth2 access token (cloud-platform scope).
-          npm install google-auth-library@9.14.2
+          npm install google-auth-library
           ACCESS_TOKEN=$(node -e "
             const {GoogleAuth} = require('google-auth-library');
             const auth = new GoogleAuth({
