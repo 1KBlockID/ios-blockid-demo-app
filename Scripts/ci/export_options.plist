@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>ad-hoc</string>
+    <string>release-testing</string>
     <key>teamID</key>
     <string>WUS4823E84</string>
     <key>signingStyle</key>
@@ -19,7 +19,7 @@
     <key>provisioningProfiles</key>
     <dict>
         <key>com.onekosmos.blockid.poc</key>
-        <string>demo_app_distribution</string>
+        <string>blockid_poc</string>
     </dict>
     <key>generateEntitlementsDerivedFromProfileForSigning</key>
     <true/>
