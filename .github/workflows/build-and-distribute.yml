@@ -22,7 +22,7 @@ name: Build & Distribute Demo App
 
 on:
   push:
-    branches: [master, release, MOB-7244-firebase-fix-included-ios-automate-the-mobile-release-process]
+    branches: [master, release]
   workflow_dispatch:
     inputs:
       repo_update:
