@@ -15,14 +15,27 @@ post_install do |installer|
  installer.pods_project.targets.each do |target|
   target.build_configurations.each do |config|
 
-   # set build active architecture to to YES
-    config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
-  
+   # MOB-7284: Do NOT force ONLY_ACTIVE_ARCH = YES on pods. The app target
+   # builds all valid archs in Release (ONLY_ACTIVE_ARCH = NO), so forcing
+   # pods to active-arch-only produced an arch mismatch on the simulator
+   # ("no such module 'Toast_Swift'"). Let each config use its default
+   # (Debug = YES, Release = NO) so pod archs match the consuming app.
+
    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
 
-   # enable simulator support
-    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
+   # MOB-7284: arm64 simulator slice now ships in BlockID SDK (>= 1.30.60),
+   # so the arm64 simulator exclusion workaround is no longer required.
+   # Ensure arm64 simulator builds are supported on Apple Silicon.
+    config.build_settings.delete("EXCLUDED_ARCHS[sdk=iphonesimulator*]")
+
+   # MOB-7284: Disable Explicitly Built Modules. Xcode 16+ enables this by
+   # default, but the Clang module dependency scanner fails to resolve the
+   # Firebase umbrella module (Firebase/CoreOnly -> FirebaseCore) during
+   # simulator builds ("could not build module 'Firebase'"). Disabling
+   # explicit modules restores reliable builds.
+    config.build_settings['CLANG_ENABLE_EXPLICIT_MODULES'] = 'NO'
+    config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
     
     # set iOS Deployment Target to 16.0
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
