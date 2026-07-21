@@ -51,7 +51,7 @@ Uses `group: ${{ github.workflow }}-${{ github.ref }}` with `cancel-in-progress:
 | Tool | Env var / Location | Current value |
 |---|---|---|
 | Xcode | `XCODE_VERSION` | `26.0.1` |
-| CocoaPods | `COCOAPODS_VERSION` | `1.15.2` |
+| CocoaPods | `COCOAPODS_VERSION` | `1.16.2` |
 | Ruby | hardcoded in `setup-ruby` | `3.2` |
 
 ## Build & Signing Details
