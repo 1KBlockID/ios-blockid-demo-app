@@ -5,6 +5,9 @@
       location = "group:BlockIDTestApp.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:../ios-kernel-sdk/BlockID.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

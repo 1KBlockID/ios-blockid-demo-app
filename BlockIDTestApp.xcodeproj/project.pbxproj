@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0357BBF45991FF0EA08F69FA /* OpenSSL in Frameworks */ = {isa = PBXBuildFile; productRef = 5151BD0BB41ED306A499ABD6 /* OpenSSL */; };
 		1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F29F9A12804AAA700BF2456 /* SafariServices.framework */; };
 		1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F8CB71A26C11D820060A823 /* CryptoTokenKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1FA0938B268472A6008AAAA1 /* BlockIDTestAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA0938A268472A6008AAAA1 /* BlockIDTestAppUITests.swift */; };
+		255D83E6DD9D70C288E4E5D1 /* WalletCoreSwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 650B0A770A3E426AC5077EB4 /* WalletCoreSwiftProtobuf */; };
 		3C2C96C626551EC100323172 /* DocumentMapUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C2C96C526551EC100323172 /* DocumentMapUtil.swift */; };
 		3C78FA08264AA1D8001576DF /* DocumentHolder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C78FA07264AA1D8001576DF /* DocumentHolder.swift */; };
 		3CD35A1026458C28009D38B0 /* ConsentScreenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CD35A0F26458C28009D38B0 /* ConsentScreenCell.swift */; };
@@ -41,6 +43,7 @@
 		3CEE339026443347003FDB78 /* PinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE338F26443347003FDB78 /* PinViewController.swift */; };
 		3CEE33A426454600003FDB78 /* QRScanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A326454600003FDB78 /* QRScanViewController.swift */; };
 		3CEE33A62645531E003FDB78 /* AuthenticateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CEE33A52645531E003FDB78 /* AuthenticateViewController.swift */; };
+		3F028EDB010EB54D2EECF2F0 /* BlockID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862F7C8A7235A179BDDFA7F6 /* BlockID.framework */; };
 		4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CA131B82E54785F00E6B78B /* PasskeyViewController.swift */; };
 		4CC8838C2DBA0FC30051518A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CC8838B2DBA0FC30051518A /* GoogleService-Info.plist */; };
 		4CD1A6582EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD1A6572EE1C60E0027E1AF /* DocumentScannerWithUIdVC.swift */; };
@@ -49,7 +52,8 @@
 		4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */; };
 		5D436824293F1AFF005BA946 /* UserOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */; };
 		5DBDE3F528B6646800D8D9FF /* ScanQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */; };
-		98AE5E6E2FE3E2F400B534B3 /* BlockID in Frameworks */ = {isa = PBXBuildFile; productRef = 98AE5E6D2FE3E2F400B534B3 /* BlockID */; };
+		947F0C91F8F281A748981148 /* BlockID.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 862F7C8A7235A179BDDFA7F6 /* BlockID.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0E639E50716E661E1EE1C2D /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0FDB3E359D5C5624F6A5083E /* WalletCore */; };
 		B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */; };
 		B6CCC63D26C2A66B0098D510 /* RecoverMnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6CCC63C26C2A66B0098D510 /* RecoverMnemonicsViewController.swift */; };
 		E6096024279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6096023279A9F2A00A9A991 /* SSNVerifyResponseViewController.swift */; };
@@ -81,6 +85,13 @@
 			remoteGlobalIDString = 3CEE330A264413C2003FDB78;
 			remoteInfo = BlockIDTestApp;
 		};
+		7F734166BE0D4877CB69A2E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67B3AD1B7C0D8469A02AAE66 /* BlockID.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = AD73A64A25DE5F8D000864C3;
+			remoteInfo = Subproject;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -90,6 +101,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				947F0C91F8F281A748981148 /* BlockID.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +156,7 @@
 		4CFD74982F4D97D500ED6875 /* IDVErrorCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDVErrorCode.swift; sourceTree = "<group>"; };
 		5D436823293F1AFF005BA946 /* UserOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOptionsViewController.swift; sourceTree = "<group>"; };
 		5DBDE3F428B6646700D8D9FF /* ScanQRViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanQRViewController.swift; sourceTree = "<group>"; };
+		67B3AD1B7C0D8469A02AAE66 /* BlockID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BlockID.xcodeproj; path = "../ios-kernel-sdk/BlockID.xcodeproj"; sourceTree = "<group>"; };
 		98F07D642E53CF6A003A7468 /* 1Kosmos DemoRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "1Kosmos DemoRelease.entitlements"; sourceTree = "<group>"; };
 		A551F147E8D4A642C7FE29AA /* Pods_1Kosmos_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_1Kosmos_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6CCC63A26C282C50098D510 /* RestoreAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewController.swift; sourceTree = "<group>"; };
@@ -185,7 +198,10 @@
 				1F8CB71B26C11D820060A823 /* CryptoTokenKit.framework in Frameworks */,
 				1F29F9A22804AAA700BF2456 /* SafariServices.framework in Frameworks */,
 				F17E5E87695567AF79EE9F99 /* Pods_1Kosmos_Demo.framework in Frameworks */,
-				98AE5E6E2FE3E2F400B534B3 /* BlockID in Frameworks */,
+				3F028EDB010EB54D2EECF2F0 /* BlockID.framework in Frameworks */,
+				0357BBF45991FF0EA08F69FA /* OpenSSL in Frameworks */,
+				B0E639E50716E661E1EE1C2D /* WalletCore in Frameworks */,
+				255D83E6DD9D70C288E4E5D1 /* WalletCoreSwiftProtobuf in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +260,7 @@
 				3CEE330C264413C2003FDB78 /* Products */,
 				DDD6B82D3B6A87C961C81415 /* Pods */,
 				1534371962C417F7F920BB63 /* Frameworks */,
+				67B3AD1B7C0D8469A02AAE66 /* BlockID.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -252,6 +269,7 @@
 			children = (
 				3CEE330B264413C2003FDB78 /* 1Kosmos Demo.app */,
 				1FA09388268472A6008AAAA1 /* 1KosmosDemoUITests.xctest */,
+				862F7C8A7235A179BDDFA7F6 /* BlockID.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,6 +462,11 @@
 			dependencies = (
 			);
 			name = "1Kosmos Demo";
+			packageProductDependencies = (
+				5151BD0BB41ED306A499ABD6 /* OpenSSL */,
+				0FDB3E359D5C5624F6A5083E /* WalletCore */,
+				650B0A770A3E426AC5077EB4 /* WalletCoreSwiftProtobuf */,
+			);
 			productName = BlockIDTestApp;
 			productReference = 3CEE330B264413C2003FDB78 /* 1Kosmos Demo.app */;
 			productType = "com.apple.product-type.application";
@@ -476,10 +499,17 @@
 			);
 			mainGroup = 3CEE3302264413C2003FDB78;
 			packageReferences = (
-				98AE5E6C2FE3E2F400B534B3 /* XCRemoteSwiftPackageReference "ios-blockidsdk" */,
+				D92BC0FE40693E98FCC61B44 /* XCRemoteSwiftPackageReference "OpenSSL" */,
+				2DE17F04C2137152D672368A /* XCRemoteSwiftPackageReference "wallet-core" */,
 			);
 			productRefGroup = 3CEE330C264413C2003FDB78 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3CEE330C264413C2003FDB78 /* Products */;
+					ProjectRef = 67B3AD1B7C0D8469A02AAE66 /* BlockID.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3CEE330A264413C2003FDB78 /* 1Kosmos Demo */,
@@ -487,6 +517,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		862F7C8A7235A179BDDFA7F6 /* BlockID.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = BlockID.framework;
+			remoteRef = 7F734166BE0D4877CB69A2E4 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA09386268472A6008AAAA1 /* Resources */ = {
@@ -984,21 +1024,39 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		98AE5E6C2FE3E2F400B534B3 /* XCRemoteSwiftPackageReference "ios-blockidsdk" */ = {
+		2DE17F04C2137152D672368A /* XCRemoteSwiftPackageReference "wallet-core" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/1KBlockID/ios-blockidsdk";
+			repositoryURL = "https://github.com/trustwallet/wallet-core.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.30.40;
+				version = 4.6.13;
+			};
+		};
+		D92BC0FE40693E98FCC61B44 /* XCRemoteSwiftPackageReference "OpenSSL" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzyzanowskim/OpenSSL.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.3.3001;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		98AE5E6D2FE3E2F400B534B3 /* BlockID */ = {
+		0FDB3E359D5C5624F6A5083E /* WalletCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 98AE5E6C2FE3E2F400B534B3 /* XCRemoteSwiftPackageReference "ios-blockidsdk" */;
-			productName = BlockID;
+			package = 2DE17F04C2137152D672368A /* XCRemoteSwiftPackageReference "wallet-core" */;
+			productName = WalletCore;
+		};
+		5151BD0BB41ED306A499ABD6 /* OpenSSL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D92BC0FE40693E98FCC61B44 /* XCRemoteSwiftPackageReference "OpenSSL" */;
+			productName = OpenSSL;
+		};
+		650B0A770A3E426AC5077EB4 /* WalletCoreSwiftProtobuf */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2DE17F04C2137152D672368A /* XCRemoteSwiftPackageReference "wallet-core" */;
+			productName = WalletCoreSwiftProtobuf;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

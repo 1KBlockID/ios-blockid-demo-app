@@ -1,5 +1,5 @@
 {
-  "originHash" : "0057147a0d66c0d3b2d8c6a786d4bf6587f6da4f02c5fc5cd1e802d9e998995d",
+  "originHash" : "a5af4f2cbf78e86d1428ce1e7ddf00467422b8acfbf0449dbb342e61d2a82192",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -26,15 +26,6 @@
       "state" : {
         "revision" : "f2a627b84c1ff96f21ac2fcb623ab36142dd5512",
         "version" : "1.10.0"
-      }
-    },
-    {
-      "identity" : "ios-blockidsdk",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/1KBlockID/ios-blockidsdk",
-      "state" : {
-        "revision" : "79c755b1c20e2ad7c8a37f623b4895982ef7706f",
-        "version" : "1.30.40"
       }
     },
     {

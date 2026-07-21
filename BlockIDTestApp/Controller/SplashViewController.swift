@@ -93,6 +93,7 @@ class SplashViewController: UIViewController {
                 self?.registerView.isHidden = false
                 self?.btnRestoreAccount.isHidden = true
             } else {
+                print("[SplashViewController] beginRegistration failed - code: \(error?.code ?? -1), message: \(error?.message ?? "nil"), error: \(String(describing: error))")
                 switch error?.code {
                 case  CustomErrors.Network.OFFLINE.code:
                     msg = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
