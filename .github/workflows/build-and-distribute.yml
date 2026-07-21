@@ -8,7 +8,7 @@
 #
 # The build process:
 #   1. Checkout & setup environment
-#   2. Install CocoaPods & resolve SPM dependencies
+#   2. Resolve SPM dependencies
 #   3. Install signing certificate & provisioning profile
 #   4. Stamp build number
 #   5. Archive (unsigned)
@@ -24,12 +24,6 @@ on:
   push:
     branches: [master, release]
   workflow_dispatch:
-    inputs:
-      repo_update:
-        description: "Run pod install with --repo-update"
-        required: false
-        type: boolean
-        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -41,7 +35,6 @@ env:
   CONFIGURATION: Release
   DESTINATION: generic/platform=iOS
   XCODE_VERSION: "26.0.1"
-  COCOAPODS_VERSION: "1.15.2"
   APP_NAME: "1Kosmos Demo"
 
 jobs:
@@ -69,19 +62,6 @@ jobs:
         with:
           ruby-version: "3.2"
           bundler-cache: false
-
-      - name: Cache CocoaPods
-        uses: actions/cache@v4
-        with:
-          path: Pods
-          key: pods-${{ hashFiles('Podfile.lock') }}
-          restore-keys: pods-
-
-      - name: Install CocoaPods
-        run: |
-          gem install cocoapods -v ${{ env.COCOAPODS_VERSION }}
-          gem install xcpretty
-          pod install ${{ github.event.inputs.repo_update == 'true' && '--repo-update' || '' }}
 
       - name: Resolve SPM dependencies
         run: |

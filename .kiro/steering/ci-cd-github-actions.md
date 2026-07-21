@@ -28,11 +28,11 @@ This document describes the CI/CD pipeline for building and distributing the 1Ko
 
 ### Triggers
 - Push to `master` or `release` builds the app.
-- `workflow_dispatch` allows manual trigger with optional `repo_update` boolean for `pod install --repo-update`.
+- `workflow_dispatch` allows manual trigger.
 
 ### Steps
 1. Checkout & setup environment
-2. Install CocoaPods & resolve SPM dependencies
+2. Resolve SPM dependencies
 3. Install signing certificate & provisioning profile
 4. Stamp build number (epoch seconds)
 5. Archive (unsigned)
@@ -51,7 +51,6 @@ Uses `group: ${{ github.workflow }}-${{ github.ref }}` with `cancel-in-progress:
 | Tool | Env var / Location | Current value |
 |---|---|---|
 | Xcode | `XCODE_VERSION` | `26.0.1` |
-| CocoaPods | `COCOAPODS_VERSION` | `1.15.2` |
 | Ruby | hardcoded in `setup-ruby` | `3.2` |
 
 ## Build & Signing Details
@@ -88,7 +87,6 @@ After successful distribution, the workflow creates and pushes a git tag:
 
 ## Caching & Artifacts
 
-- CocoaPods cached by `Podfile.lock` hash.
 - After export, artifacts are renamed to `1KosmosDemo_{VERSION}_{BUILD_VERSION}` format (e.g. `1KosmosDemo_1.30.40_1782738648`).
 - IPA uploaded as artifact with `.ipa` extension in name, 14-day retention.
 - xcarchive uploaded as artifact with `.xcarchive` extension in name, 14-day retention.
@@ -118,13 +116,11 @@ base64 -i profile.mobileprovision | pbcopy
 
 ## SPM Dependencies
 
-Unlike ios-kernel (CocoaPods only), the demo app resolves SPM dependencies in a dedicated step:
+The demo app resolves all dependencies (BlockID SDK, Firebase, Toast) via Swift Package Manager in a dedicated step:
 ```yaml
 - name: Resolve SPM dependencies
   run: xcodebuild -resolvePackageDependencies -workspace "$WORKSPACE" -scheme "$SCHEME"
 ```
-
-This is needed because the demo app consumes BlockID SDK via Swift Package Manager.
 
 ## Rules for Modifying CI Files
 

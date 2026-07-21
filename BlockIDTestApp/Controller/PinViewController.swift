@@ -8,7 +8,7 @@
 
 import Foundation
 import BlockID
-import Toast_Swift
+import Toast
 
 public enum PinActivity {
     case isEnrolling

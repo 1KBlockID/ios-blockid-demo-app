@@ -7,7 +7,7 @@
 
 import UIKit
 import BlockID
-import Toast_Swift
+import Toast
 
 class SSNViewController: UIViewController {
     

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import BlockID
-import Toast_Swift
+import Toast
 
 class UserOptionsViewController: UIViewController {
     

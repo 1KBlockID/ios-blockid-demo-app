@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 import BlockID
-import Toast_Swift
+import Toast
 import CoreNFC
 
 class PassportViewController: UIViewController {

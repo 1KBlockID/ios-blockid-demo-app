@@ -9,7 +9,7 @@
 import Foundation
 import AVFoundation
 import BlockID
-import Toast_Swift
+import Toast
 
 public enum QROptions {
     case withScopeData

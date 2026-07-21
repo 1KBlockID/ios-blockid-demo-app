@@ -8,7 +8,7 @@
 
 import UIKit
 import BlockID
-import Toast_Swift
+import Toast
 
 class SplashViewController: UIViewController {
 
