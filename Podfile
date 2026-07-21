@@ -15,12 +15,6 @@ post_install do |installer|
  installer.pods_project.targets.each do |target|
   target.build_configurations.each do |config|
 
-   # MOB-7284: Do NOT force ONLY_ACTIVE_ARCH = YES on pods. The app target
-   # builds all valid archs in Release (ONLY_ACTIVE_ARCH = NO), so forcing
-   # pods to active-arch-only produced an arch mismatch on the simulator
-   # ("no such module 'Toast_Swift'"). Let each config use its default
-   # (Debug = YES, Release = NO) so pod archs match the consuming app.
-
    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
 
