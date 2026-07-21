@@ -24,19 +24,6 @@ post_install do |installer|
    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
 
-   # MOB-7284: arm64 simulator slice now ships in BlockID SDK (>= 1.30.60),
-   # so the arm64 simulator exclusion workaround is no longer required.
-   # Ensure arm64 simulator builds are supported on Apple Silicon.
-    config.build_settings.delete("EXCLUDED_ARCHS[sdk=iphonesimulator*]")
-
-   # MOB-7284: Disable Explicitly Built Modules. Xcode 16+ enables this by
-   # default, but the Clang module dependency scanner fails to resolve the
-   # Firebase umbrella module (Firebase/CoreOnly -> FirebaseCore) during
-   # simulator builds ("could not build module 'Firebase'"). Disabling
-   # explicit modules restores reliable builds.
-    config.build_settings['CLANG_ENABLE_EXPLICIT_MODULES'] = 'NO'
-    config.build_settings['SWIFT_ENABLE_EXPLICIT_MODULES'] = 'NO'
-    
     # set iOS Deployment Target to 16.0
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
     
