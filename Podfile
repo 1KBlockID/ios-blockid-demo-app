@@ -15,15 +15,9 @@ post_install do |installer|
  installer.pods_project.targets.each do |target|
   target.build_configurations.each do |config|
 
-   # set build active architecture to to YES
-    config.build_settings['ONLY_ACTIVE_ARCH'] = 'YES'
-  
    # set build library for distribution to true
     config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
 
-   # enable simulator support
-    config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"
-    
     # set iOS Deployment Target to 16.0
     config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
     
