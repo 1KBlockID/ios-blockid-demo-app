@@ -41,7 +41,7 @@ env:
   CONFIGURATION: Release
   DESTINATION: generic/platform=iOS
   XCODE_VERSION: "26.0.1"
-  COCOAPODS_VERSION: "1.15.2"
+  COCOAPODS_VERSION: "1.16.2"
   APP_NAME: "1Kosmos Demo"
 
 jobs:
