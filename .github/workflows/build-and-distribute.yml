@@ -216,8 +216,9 @@ jobs:
 
           # Compute RC number by inspecting existing tags
           git fetch --tags 2>/dev/null || true
-          TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX,,}.rc"
-          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort -V)
+          BRANCH_PREFIX_LOWER=$(echo "$BRANCH_PREFIX" | tr '[:upper:]' '[:lower:]')
+          TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX_LOWER}.rc"
+          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort -V 2>/dev/null || git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort)
           if [ -z "$EXISTING_TAGS" ]; then
             RC_NUMBER="01"
           else
