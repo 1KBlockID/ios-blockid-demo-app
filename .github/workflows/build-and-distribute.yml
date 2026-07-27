@@ -370,6 +370,7 @@ jobs:
           echo "Tag '$TAG' created and pushed"
 
       - name: Upload IPA artifact
+        id: upload_ipa
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifacts.outputs.artifact_name }}.ipa
@@ -377,11 +378,73 @@ jobs:
           retention-days: 14
 
       - name: Upload xcarchive artifact
+        id: upload_xcarchive
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           path: ${{ runner.temp }}/${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           retention-days: 14
+
+      - name: Generate build summary
+        if: success()
+        run: |
+          ARTIFACT_NAME="${{ steps.artifacts.outputs.artifact_name }}"
+          TAG_NAME="${{ steps.version.outputs.tag }}"
+          APP_VERSION="${{ steps.version.outputs.app_version }}"
+          BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "BlockIDTestApp/Info.plist")
+          BRANCH="${{ github.ref_name }}"
+          COMMIT="${{ github.sha }}"
+          AUTHOR="${{ github.actor }}"
+          RUN_ID="${{ github.run_id }}"
+          REPO="${{ github.repository }}"
+
+          TAG_URL="https://github.com/${REPO}/releases/tag/${TAG_NAME}"
+
+          # Build direct artifact download URLs using artifact IDs
+          IPA_ARTIFACT_ID="${{ steps.upload_ipa.outputs.artifact-id }}"
+          XCARCHIVE_ARTIFACT_ID="${{ steps.upload_xcarchive.outputs.artifact-id }}"
+          IPA_DOWNLOAD_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/artifacts/${IPA_ARTIFACT_ID}"
+          XCARCHIVE_DOWNLOAD_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/artifacts/${XCARCHIVE_ARTIFACT_ID}"
+          IPA_ARTIFACT_NAME="${ARTIFACT_NAME}.ipa"
+          XCARCHIVE_ARTIFACT_NAME="${ARTIFACT_NAME}.xcarchive"
+
+          # Get changes since last tag
+          PREVIOUS_TAG=$(git tag --sort=-creatordate | grep "^demo_app_" | head -1 2>/dev/null || echo "")
+          if [ -n "$PREVIOUS_TAG" ]; then
+            CHANGES=$(git log "${PREVIOUS_TAG}..HEAD" --pretty=format:"- %s (%h)" 2>/dev/null | head -20)
+          else
+            CHANGES=$(git log --oneline -10 --pretty=format:"- %s (%h)" 2>/dev/null)
+          fi
+
+          {
+            echo "## 📦 1Kosmos Demo Build Published Successfully"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            echo "| **App Name** | \`1Kosmos Demo\` |"
+            echo "| **App Version** | \`${APP_VERSION}\` |"
+            echo "| **Build Number** | \`${BUILD_NUMBER}\` |"
+            echo "| **Scheme** | \`1Kosmos Demo\` |"
+            echo "| **Tag** | [\`${TAG_NAME}\`](${TAG_URL}) |"
+            echo "| **Branch** | ${BRANCH} |"
+            echo "| **Commit** | ${COMMIT} |"
+            echo "| **Author** | ${AUTHOR} |"
+            echo ""
+            echo "## 📦 Artifacts"
+            echo ""
+            echo "> **Build Number (CFBundleVersion):** \`${BUILD_NUMBER}\`"
+            echo ""
+            echo "| Artifact | Download |"
+            echo "|----------|----------|"
+            echo "| **IPA** | [\`${IPA_ARTIFACT_NAME}\`](${IPA_DOWNLOAD_URL}) |"
+            echo "| **xcarchive** | [\`${XCARCHIVE_ARTIFACT_NAME}\`](${XCARCHIVE_DOWNLOAD_URL}) |"
+            echo ""
+            echo "## 📝 Changes since last release"
+            echo ""
+            echo "${CHANGES}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "Build summary generated"
 
       - name: Cleanup keychain
         if: always()
