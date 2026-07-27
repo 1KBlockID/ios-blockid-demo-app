@@ -121,9 +121,11 @@ jobs:
           echo "Installed app profile: $APP_UUID"
 
       - name: Stamp unique build number
+        id: build_number
         run: |
           BUILD_NUMBER=$(date +%s)
           echo "Stamping CFBundleVersion = $BUILD_NUMBER"
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "BlockIDTestApp/Info.plist"
           echo "Updated BlockIDTestApp/Info.plist"
 
@@ -189,9 +191,42 @@ jobs:
       - name: Rename artifacts
         id: artifacts
         run: |
+          set -eo pipefail
+
+          # Get version from Xcode project (MARKETING_VERSION build setting)
           APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ')
-          BUILD_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "BlockIDTestApp/Info.plist")
-          ARTIFACT_NAME="1KosmosDemo_${APP_VERSION}_${BUILD_VERSION}"
+
+          if [ -z "$APP_VERSION" ]; then
+            echo "::error::Failed to extract APP_VERSION from project.pbxproj"
+            exit 1
+          fi
+
+          # Use the build number from the stamp step
+          BUILD_VERSION="${{ steps.build_number.outputs.build_number }}"
+
+          # Determine branch prefix: M for master, R for release, uppercase first letter for others
+          BRANCH="${{ github.ref_name }}"
+          if [[ "$BRANCH" == master* ]]; then
+            BRANCH_PREFIX="M"
+          elif [[ "$BRANCH" == release* ]]; then
+            BRANCH_PREFIX="R"
+          else
+            BRANCH_PREFIX=$(echo "$BRANCH" | cut -c1 | tr '[:lower:]' '[:upper:]')
+          fi
+
+          # Compute RC number by inspecting existing tags
+          git fetch --tags 2>/dev/null || true
+          TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX,,}.rc"
+          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort -V)
+          if [ -z "$EXISTING_TAGS" ]; then
+            RC_NUMBER="01"
+          else
+            LAST_RC=$(echo "$EXISTING_TAGS" | tail -1 | grep -o 'rc[0-9]*' | grep -o '[0-9]*')
+            RC_NUMBER=$(printf "%02d" $((10#$LAST_RC + 1)))
+          fi
+          echo "RC number: $RC_NUMBER"
+
+          ARTIFACT_NAME="1KosmosDemo_demo_app_${APP_VERSION}_${BRANCH_PREFIX}.rc${RC_NUMBER}_${BUILD_VERSION}"
           echo "Artifact name: $ARTIFACT_NAME"
           echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
 
@@ -391,7 +426,7 @@ jobs:
           ARTIFACT_NAME="${{ steps.artifacts.outputs.artifact_name }}"
           TAG_NAME="${{ steps.version.outputs.tag }}"
           APP_VERSION="${{ steps.version.outputs.app_version }}"
-          BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "BlockIDTestApp/Info.plist")
+          BUILD_NUMBER="${{ steps.build_number.outputs.build_number }}"
           BRANCH="${{ github.ref_name }}"
           COMMIT="${{ github.sha }}"
           AUTHOR="${{ github.actor }}"
