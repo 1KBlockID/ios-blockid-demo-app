@@ -121,9 +121,11 @@ jobs:
           echo "Installed app profile: $APP_UUID"
 
       - name: Stamp unique build number
+        id: build_number
         run: |
           BUILD_NUMBER=$(date +%s)
           echo "Stamping CFBundleVersion = $BUILD_NUMBER"
+          echo "build_number=$BUILD_NUMBER" >> "$GITHUB_OUTPUT"
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "BlockIDTestApp/Info.plist"
           echo "Updated BlockIDTestApp/Info.plist"
 
@@ -189,14 +191,52 @@ jobs:
       - name: Rename artifacts
         id: artifacts
         run: |
-          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ')
-          BUILD_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "BlockIDTestApp/Info.plist")
-          ARTIFACT_NAME="1KosmosDemo_${APP_VERSION}_${BUILD_VERSION}"
+          set -eo pipefail
+
+          # Get version from Xcode project (MARKETING_VERSION build setting)
+          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ' || true)
+
+          if [ -z "$APP_VERSION" ]; then
+            echo "::error::Failed to extract APP_VERSION from project.pbxproj"
+            exit 1
+          fi
+
+          # Use the build number from the stamp step
+          BUILD_VERSION="${{ steps.build_number.outputs.build_number }}"
+
+          # Determine branch prefix: M for master, R for release, uppercase first letter for others
+          BRANCH="${{ github.ref_name }}"
+          if [[ "$BRANCH" == master* ]]; then
+            BRANCH_PREFIX="M"
+          elif [[ "$BRANCH" == release* ]]; then
+            BRANCH_PREFIX="R"
+          else
+            BRANCH_PREFIX=$(echo "$BRANCH" | cut -c1 | tr '[:lower:]' '[:upper:]')
+          fi
+
+          # Compute RC number by inspecting existing tags
+          git fetch --tags 2>/dev/null || true
+          BRANCH_PREFIX_LOWER=$(echo "$BRANCH_PREFIX" | tr '[:upper:]' '[:lower:]')
+          TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX_LOWER}.rc"
+          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort -V 2>/dev/null || git tag -l "${TAG_PATTERN}*" 2>/dev/null | sort)
+          if [ -z "$EXISTING_TAGS" ]; then
+            RC_NUMBER="01"
+          else
+            LAST_RC=$(echo "$EXISTING_TAGS" | tail -1 | grep -o 'rc[0-9]*' | grep -o '[0-9]*')
+            RC_NUMBER=$(printf "%02d" $((10#$LAST_RC + 1)))
+          fi
+          echo "RC number: $RC_NUMBER"
+
+          ARTIFACT_NAME="1KosmosDemo_demo_app_${APP_VERSION}_${BRANCH_PREFIX}.rc${RC_NUMBER}_${BUILD_VERSION}"
           echo "Artifact name: $ARTIFACT_NAME"
           echo "artifact_name=$ARTIFACT_NAME" >> "$GITHUB_OUTPUT"
 
           # Rename IPA
-          IPA_PATH=$(find "$RUNNER_TEMP/ipa" -name "*.ipa" | head -1)
+          IPA_PATH=$(find "$RUNNER_TEMP/ipa" -name "*.ipa" | head -1 || true)
+          if [ -z "$IPA_PATH" ]; then
+            echo "::error::No IPA file found in $RUNNER_TEMP/ipa"
+            exit 1
+          fi
           mv "$IPA_PATH" "$RUNNER_TEMP/ipa/${ARTIFACT_NAME}.ipa"
           echo "Renamed IPA to: ${ARTIFACT_NAME}.ipa"
 
@@ -316,8 +356,13 @@ jobs:
         id: version
         run: |
           # Extract app version from Xcode project
-          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ')
+          APP_VERSION=$(grep 'MARKETING_VERSION' BlockIDTestApp.xcodeproj/project.pbxproj | head -1 | sed 's/.*= *\(.*\);/\1/' | tr -d ' ' || true)
           echo "App version: $APP_VERSION"
+
+          if [ -z "$APP_VERSION" ]; then
+            echo "::error::Failed to extract APP_VERSION from project.pbxproj"
+            exit 1
+          fi
 
           # Determine branch prefix: m for master, r for release
           BRANCH="${{ github.ref_name }}"
@@ -332,9 +377,9 @@ jobs:
           echo "Branch prefix: $BRANCH_PREFIX"
 
           # Check existing tags to determine RC number
-          git fetch --tags
+          git fetch --tags --force 2>/dev/null || true
           TAG_PATTERN="demo_app_${APP_VERSION}-${BRANCH_PREFIX}.rc"
-          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" | sort -V)
+          EXISTING_TAGS=$(git tag -l "${TAG_PATTERN}*" | sort -V 2>/dev/null || git tag -l "${TAG_PATTERN}*" | sort)
           echo "Existing tags matching pattern:"
           echo "$EXISTING_TAGS"
 
@@ -370,6 +415,7 @@ jobs:
           echo "Tag '$TAG' created and pushed"
 
       - name: Upload IPA artifact
+        id: upload_ipa
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifacts.outputs.artifact_name }}.ipa
@@ -377,11 +423,82 @@ jobs:
           retention-days: 14
 
       - name: Upload xcarchive artifact
+        id: upload_xcarchive
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           path: ${{ runner.temp }}/${{ steps.artifacts.outputs.artifact_name }}.xcarchive
           retention-days: 14
+
+      - name: Generate build summary
+        if: success()
+        run: |
+          ARTIFACT_NAME="${{ steps.artifacts.outputs.artifact_name }}"
+          TAG_NAME="${{ steps.version.outputs.tag }}"
+          APP_VERSION="${{ steps.version.outputs.app_version }}"
+          BUILD_NUMBER="${{ steps.build_number.outputs.build_number }}"
+          BRANCH="${{ github.ref_name }}"
+          COMMIT="${{ github.sha }}"
+          AUTHOR="${{ github.actor }}"
+          RUN_ID="${{ github.run_id }}"
+          REPO="${{ github.repository }}"
+
+          TAG_URL="https://github.com/${REPO}/releases/tag/${TAG_NAME}"
+
+          # Build direct artifact download URLs using artifact IDs
+          IPA_ARTIFACT_ID="${{ steps.upload_ipa.outputs.artifact-id }}"
+          XCARCHIVE_ARTIFACT_ID="${{ steps.upload_xcarchive.outputs.artifact-id }}"
+          IPA_DOWNLOAD_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/artifacts/${IPA_ARTIFACT_ID}"
+          XCARCHIVE_DOWNLOAD_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}/artifacts/${XCARCHIVE_ARTIFACT_ID}"
+          IPA_ARTIFACT_NAME="${ARTIFACT_NAME}.ipa"
+          XCARCHIVE_ARTIFACT_NAME="${ARTIFACT_NAME}.xcarchive"
+
+          # Get changes since last tag
+          # Unshallow the checkout and fetch all tags so git log ranges
+          # work correctly (actions/checkout defaults to fetch-depth=1)
+          git fetch --unshallow 2>/dev/null || true
+          git fetch --tags --force 2>/dev/null || true
+
+          PREVIOUS_TAG=$(git tag --sort=-creatordate | grep "^demo_app_" | grep -v "^${TAG_NAME}$" | head -1 2>/dev/null || echo "")
+          if [ -n "$PREVIOUS_TAG" ] && git rev-parse "${PREVIOUS_TAG}" >/dev/null 2>&1; then
+            CHANGES=$(git log "${PREVIOUS_TAG}..HEAD" --pretty=format:"- %s (%h)" 2>/dev/null | head -20)
+            if [ -z "$CHANGES" ]; then
+              CHANGES="No changes found between \`${PREVIOUS_TAG}\` and HEAD."
+            fi
+          else
+            # Fallback: show last 10 commits when no previous tag is reachable
+            CHANGES=$(git log --oneline -10 --pretty=format:"- %s (%h)" 2>/dev/null || echo "Unable to determine changes (shallow checkout).")
+          fi
+
+          {
+            echo "## 📦 1Kosmos Demo Build Published Successfully"
+            echo ""
+            echo "| Field | Value |"
+            echo "|-------|-------|"
+            echo "| **App Name** | \`1Kosmos Demo\` |"
+            echo "| **App Version** | \`${APP_VERSION}\` |"
+            echo "| **Build Number** | \`${BUILD_NUMBER}\` |"
+            echo "| **Scheme** | \`1Kosmos Demo\` |"
+            echo "| **Tag** | [\`${TAG_NAME}\`](${TAG_URL}) |"
+            echo "| **Branch** | ${BRANCH} |"
+            echo "| **Commit** | ${COMMIT} |"
+            echo "| **Author** | ${AUTHOR} |"
+            echo ""
+            echo "## 📦 Artifacts"
+            echo ""
+            echo "> **Build Number (CFBundleVersion):** \`${BUILD_NUMBER}\`"
+            echo ""
+            echo "| Artifact | Download |"
+            echo "|----------|----------|"
+            echo "| **IPA** | [\`${IPA_ARTIFACT_NAME}\`](${IPA_DOWNLOAD_URL}) |"
+            echo "| **xcarchive** | [\`${XCARCHIVE_ARTIFACT_NAME}\`](${XCARCHIVE_DOWNLOAD_URL}) |"
+            echo ""
+            echo "## 📝 Changes since last release"
+            echo ""
+            echo "${CHANGES}"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "Build summary generated"
 
       - name: Cleanup keychain
         if: always()
