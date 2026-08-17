@@ -136,6 +136,7 @@ class PasskeyViewController: UIViewController {
             }
             var alertTitle = "Passkey registration failed"
             var alertMessage = "We couldn’t register passkey with \(self.userName). Please try again."
+            alertMessage = "\(error?.code ?? -1): \(error?.message ?? "Unknown error")"
             if status {
                 alertTitle = "Success"
                 alertMessage = "Passkey registration successful for \(response?.sub ?? "") \n Authenticator ID : \(response?.authenticatorId ?? "")"
