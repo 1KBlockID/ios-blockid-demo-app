@@ -13,7 +13,7 @@ import CoreLocation
 import Alamofire
 
 class AddUserViewController: UIViewController {
-
+    
     // MARK: - IBOutlets -
     @IBOutlet private weak var webView: WKWebView!
     @IBOutlet weak var viewQRScan: BIDScannerView!
@@ -21,6 +21,7 @@ class AddUserViewController: UIViewController {
     
     // MARK: - Private Properties -
     private var userOnboardingServerPublicKey: String?
+    private var userOnboardingCurveName: String?
     private var qrScannerHelper: QRScannerHelper?
     private var magicLinkData: MagicLinkModel?
     private var magicLink: MagicLink?
@@ -57,7 +58,7 @@ class AddUserViewController: UIViewController {
                                                kQRScanResponseDelegate: self)
         qrScannerHelper?.startQRScanning()
     }
-
+    
     // Validate ACR code API..
     private func  validateAccessCode() {
         self.view.makeToastActivity(.center)
@@ -85,11 +86,11 @@ class AddUserViewController: UIViewController {
                 }
                 
                 if let response = response {
-                        self.handleACRFlow(authType: authType,
-                                           origin: origin,
-                                           userId: response.accesscodepayload.userid,
-                                           accessCodePayload: response.accesscodepayload)
-                    }
+                    self.handleACRFlow(authType: authType,
+                                       origin: origin,
+                                       userId: response.accesscodepayload.userid,
+                                       accessCodePayload: response.accesscodepayload)
+                }
             } else {
                 // failure
                 self.view.makeToast(error?.message ?? "User onboarding failed", duration: 3.0, position: .center, title: "Error", completion: {_ in
@@ -103,7 +104,7 @@ class AddUserViewController: UIViewController {
     private func goBack() {
         self.navigationController?.popViewController(animated: true)
     }
-
+    
     func performMagicLinkOperation(completion: @escaping CompletionBlockCoreLocation) {
         completionForLocationObj = completion
     }
@@ -132,31 +133,31 @@ class AddUserViewController: UIViewController {
         if data.hasPrefix("https://") && data.contains("/acr") {
             if let incomingURL = URL(string: data) {
                 // validate magic link data
-                    guard let components = NSURLComponents(url: incomingURL,
-                                                           resolvingAgainstBaseURL: true),
-                          let scheme = components.scheme,
-                          let host = components.host else {
-                        return
-                    }
-                    // Check for specific URL components that you need.
-                    guard let params = components.queryItems else {
-                        return
-                    }
-                    if let code = params.first(where: { $0.name == "code" })?.value {
-                        self.magicLink = MagicLink(url: incomingURL.absoluteString,
-                                                  baseUrl: scheme + "://" + host,
-                                                  code: code,
-                                                  path: incomingURL.path)
-                        
-                    } else {
-                        
-                        self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.", duration: 3.0,
-                                            position: .center,
-                                            title: "Error",
-                                            completion: {_ in
-                            self.goBack()
-                        })
-                    }
+                guard let components = NSURLComponents(url: incomingURL,
+                                                       resolvingAgainstBaseURL: true),
+                      let scheme = components.scheme,
+                      let host = components.host else {
+                    return
+                }
+                // Check for specific URL components that you need.
+                guard let params = components.queryItems else {
+                    return
+                }
+                if let code = params.first(where: { $0.name == "code" })?.value {
+                    self.magicLink = MagicLink(url: incomingURL.absoluteString,
+                                               baseUrl: scheme + "://" + host,
+                                               code: code,
+                                               path: incomingURL.path)
+                    
+                } else {
+                    
+                    self.view.makeToast("Your device linking was unsuccessful. Please restart the registration.", duration: 3.0,
+                                        position: .center,
+                                        title: "Error",
+                                        completion: {_ in
+                        self.goBack()
+                    })
+                }
             }
             
             //decode the base64 payload data
@@ -173,7 +174,7 @@ class AddUserViewController: UIViewController {
             
             if let decodedString = String(data: decodedData,
                                           encoding: .utf8) {
-                    magicLinkData = CommonFunctions.jsonStringToObject(json: decodedString) as MagicLinkModel?
+                magicLinkData = CommonFunctions.jsonStringToObject(json: decodedString) as MagicLinkModel?
             }
             
             validateAccessCode()
@@ -204,34 +205,48 @@ class AddUserViewController: UIViewController {
     
     // Fetch userOnboarding public key ...
     private func getUserOnboardingPublicKey() {
-        
         let baseUrl = (magicLink?.baseUrl ?? "") + (magicLink?.path ?? "")
-        let url = baseUrl + "/publickeys"
-        let headers: HTTPHeaders = ["Content-Type": "application/json"]
-        BIDNetworkManager.sharedInstance.makeRequest(requestMethod: .get,
-                                                     serviceUrl: url,
-                                                     requestBody: nil,
-                                                     requestHeaders: headers) { (response: NetworkResponseCallback<ServerPublicKeyResponse>) in
-            // success
-            if response.statusCode == 200 && response.error == nil {
-                self.userOnboardingServerPublicKey = response.result?.publicKey
-                self.checkLocationServices()
-                return
-            }
-            // failure
-            let error = ErrorResponse(code: response.statusCode ?? 001, msg: response.error?.localizedDescription ?? "")
-            if error.code == NSURLErrorNotConnectedToInternet || error.code == CustomErrors.Network.OFFLINE.code {
-                let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
-                self.showAlertView(title: ErrorConfig.noInternet.title,
-                                   message: localizedMessage)
-            } else {
-                self.view.makeToast(error.message,
+        debugPrint("Prasanna: getUserOnboardingPublicKey: \(baseUrl)")
+        BlockIDSDK.sharedInstance.getEnvironmentCurveName(dns: baseUrl) { status, environment, error in
+            if !status {
+                self.view.makeToast(error?.message,
                                     duration: 3.0,
                                     position: .center,
                                     title: "Error",
                                     completion: {_ in
                     self.goBack()
                 })
+                return
+            }
+            self.userOnboardingCurveName = environment?.EC_CURVE_NAME
+            
+            let url = baseUrl + "/publickeys"
+            let headers: HTTPHeaders = ["Content-Type": "application/json"]
+            BIDNetworkManager.sharedInstance.makeRequest(requestMethod: .get,
+                                                         serviceUrl: url,
+                                                         requestBody: nil,
+                                                         requestHeaders: headers) { (response: NetworkResponseCallback<ServerPublicKeyResponse>) in
+                // success
+                if response.statusCode == 200 && response.error == nil {
+                    self.userOnboardingServerPublicKey = response.result?.publicKey
+                    self.checkLocationServices()
+                    return
+                }
+                // failure
+                let error = ErrorResponse(code: response.statusCode ?? 001, msg: response.error?.localizedDescription ?? "")
+                if error.code == NSURLErrorNotConnectedToInternet || error.code == CustomErrors.Network.OFFLINE.code {
+                    let localizedMessage = "OFFLINE".localizedMessage(CustomErrors.Network.OFFLINE.code)
+                    self.showAlertView(title: ErrorConfig.noInternet.title,
+                                       message: localizedMessage)
+                } else {
+                    self.view.makeToast(error.message,
+                                        duration: 3.0,
+                                        position: .center,
+                                        title: "Error",
+                                        completion: {_ in
+                        self.goBack()
+                    })
+                }
             }
         }
     }
@@ -277,13 +292,14 @@ extension AddUserViewController {
     private func makePayload(_ publicKey: String, code: String, completion: @escaping (String?) -> Void) {
 
         BlockIDSDK.sharedInstance.getEventData(publicKey: publicKey, lon: location.1, lat: location.0) { eventDataRequest in
-            if let eventDataRequest = BlockIDSDK.sharedInstance.encryptString(str: eventDataRequest, rcptKey: publicKey) {
+            if let eventDataRequest = BlockIDSDK.sharedInstance.encryptString(str: eventDataRequest, rcptKey: publicKey, curveName: self.userOnboardingCurveName ?? "") {
                 let urlData = MagicLinkPayload(did: BlockIDSDK.sharedInstance.getDID(),
                                                eventData: eventDataRequest,
                                                sender: AccountAuthConstants.kAuthSender,
                                                code: code,
                                                os: "ios",
-                                               ial: "")
+                                               ial: "",
+                                               curveName: self.userOnboardingCurveName)
                 
                let payload = RequestUrlPayload(data: urlData,
                                                publicKey: publicKey).base64Payload()
@@ -313,7 +329,7 @@ extension AddUserViewController {
         }
         
         let responseStr = BlockIDSDK.sharedInstance.decryptString(str: decodedString,
-                                                                  senderKey: publicKey)
+                                                                  senderKey: publicKey, curveName: self.userOnboardingCurveName ?? "")
         guard let responseStr = responseStr,
                 let response = CommonFunctions.jsonStringToObject(json: responseStr) as AuthLinkUrlData? else {
             return
@@ -321,7 +337,7 @@ extension AddUserViewController {
         
         if let responseData = response.data {
             let linkResponseStr = BlockIDSDK.sharedInstance.decryptString(str: responseData,
-                                                                          senderKey: (response.getPublicKey()))
+                                                                          senderKey: (response.getPublicKey()), curveName: self.userOnboardingCurveName ?? "")
             guard let linkResponseStr = linkResponseStr,
                   let linkResponse = CommonFunctions.jsonStringToObject(json: linkResponseStr) as BIDOnboardedUserAccount? else {
                 return
