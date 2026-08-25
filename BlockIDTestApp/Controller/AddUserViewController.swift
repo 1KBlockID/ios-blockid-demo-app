@@ -206,8 +206,12 @@ class AddUserViewController: UIViewController {
     // Fetch userOnboarding public key ...
     private func getUserOnboardingPublicKey() {
         let baseUrl = (magicLink?.baseUrl ?? "") + (magicLink?.path ?? "")
-        debugPrint("Prasanna: getUserOnboardingPublicKey: \(baseUrl)")
-        BlockIDSDK.sharedInstance.getEnvironmentCurveName(dns: baseUrl) { status, environment, error in
+        guard var domain = URL(string: baseUrl)?.host else {
+            return
+        }
+        domain = "https://" + domain
+        debugPrint("Prasanna: getUserOnboardingPublicKey: \(domain)")
+        BlockIDSDK.sharedInstance.getEnvironmentCurveName(dns: domain) { status, environment, error in
             if !status {
                 self.view.makeToast(error?.message,
                                     duration: 3.0,
