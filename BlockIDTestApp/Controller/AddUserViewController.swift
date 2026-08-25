@@ -218,7 +218,7 @@ class AddUserViewController: UIViewController {
                 })
                 return
             }
-            self.userOnboardingCurveName = environment?.EC_CURVE_NAME
+            self.userOnboardingCurveName = environment?.EC_CURVE_NAME ?? ""
             
             let url = baseUrl + "/publickeys"
             let headers: HTTPHeaders = ["Content-Type": "application/json"]
