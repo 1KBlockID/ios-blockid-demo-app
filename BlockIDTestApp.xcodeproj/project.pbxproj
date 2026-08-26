@@ -588,7 +588,6 @@
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-1Kosmos Demo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -994,7 +993,7 @@
 			repositoryURL = "https://github.com/1KBlockID/ios-blockidsdk";
 			requirement = {
 				kind = exactVersion;
-				version = "1.30.60-dev.1";
+				version = "1.30.60-mob-7362-primePKey";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

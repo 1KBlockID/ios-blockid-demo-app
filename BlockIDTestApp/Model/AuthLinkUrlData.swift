@@ -17,15 +17,6 @@ public class AuthLinkUrlData: Codable {
     public func getPublicKey() -> String {
         return publickey != nil ? publickey : publicKey
     }
-    
-    public func authUserData() -> AuthenticateUserData? {
-        guard let data = data, let decryptedStr = BlockIDSDK.sharedInstance.decryptString(str: data, senderKey: getPublicKey()) else {
-            return nil
-        }
-        let authUserData = CommonFunctions.jsonStringToObject(json: decryptedStr) as AuthenticateUserData?
-        return authUserData
-    }
- 
 }
 
 public class AuthenticateUserData: Codable {
