@@ -581,9 +581,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-1Kosmos Demo/Pods-1Kosmos Demo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -988,8 +992,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/1KBlockID/ios-blockidsdk";
 			requirement = {
-				kind = revision;
-				revision = fefff2e5e02844a5d3c2372d65cf0680e4327ab6;
+				kind = exactVersion;
+				version = "1.30.60-mob-7362-primePKey";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
