@@ -318,6 +318,18 @@ extension PassportViewController: DocumentScanDelegate {
         self.sessionId = sessionID
         dictPPTObject["proof"] = proof_jwt
         dictPPTObject["certificate_token"] = token
+        // Validate documentType matches the expected scan type for DL and PPT
+        guard let responseDocumentType = dictPPTObject["documentType"] as? String,
+              !responseDocumentType.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scan failed. Please scan a valid document.")
+            return
+        }
+        if responseDocumentType.uppercased() != "PASSPORT" {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scan failed. Please scan a valid document.")
+            return
+        }
         self.startRFIDScanWorkflow(withPPData: dictPPTObject, sessionID)
     }
     
