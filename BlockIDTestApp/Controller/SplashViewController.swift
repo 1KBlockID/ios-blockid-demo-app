@@ -130,7 +130,7 @@ class SplashViewController: UIViewController {
                 return
             }
             
-            GetSessionAuthModelAPI.sharedInstance.getSessionAuthRequest(url: sessionURL) { [weak self] isSuccess, response, message in
+            GetSessionData.sharedInstance.getSessionData(url: sessionURL) { [weak self] response, message, isSuccess in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
                     self.view.hideToastActivity()

@@ -59,7 +59,6 @@
 		E66640A3282B76CA00E78498 /* MagicLinkPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */; };
 		E66640A5282B78F500E78498 /* AuthLinkUrlData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */; };
 		E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6734C3C2816B5E900658171 /* GetSessionData.swift */; };
-		AABB00112608250000AABB02 /* GetSessionAuthModelAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABB00112608250000AABB01 /* GetSessionAuthModelAPI.swift */; };
 		E673A37A28F6DAAA008995A9 /* VerifiedPerson.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37928F6DAAA008995A9 /* VerifiedPerson.swift */; };
 		E673A37C28F6F3C1008995A9 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37B28F6F3C1008995A9 /* UIImageExtension.swift */; };
 		E673A37E28F7EC6C008995A9 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E673A37D28F7EC6C008995A9 /* DateExtension.swift */; };
@@ -157,7 +156,6 @@
 		E66640A2282B76CA00E78498 /* MagicLinkPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicLinkPayload.swift; sourceTree = "<group>"; };
 		E66640A4282B78F500E78498 /* AuthLinkUrlData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthLinkUrlData.swift; sourceTree = "<group>"; };
 		E6734C3C2816B5E900658171 /* GetSessionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSessionData.swift; sourceTree = "<group>"; };
-		AABB00112608250000AABB01 /* GetSessionAuthModelAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSessionAuthModelAPI.swift; sourceTree = "<group>"; };
 		E673A37928F6DAAA008995A9 /* VerifiedPerson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifiedPerson.swift; sourceTree = "<group>"; };
 		E673A37B28F6F3C1008995A9 /* UIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		E673A37D28F7EC6C008995A9 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
@@ -402,7 +400,6 @@
 			isa = PBXGroup;
 			children = (
 				E6734C3C2816B5E900658171 /* GetSessionData.swift */,
-				AABB00112608250000AABB01 /* GetSessionAuthModelAPI.swift */,
 				E6F4CD0F282E75E300646C68 /* DocumentLiveness.swift */,
 			);
 			path = APIs;
@@ -651,7 +648,6 @@
 				4CA131B92E54785F00E6B78B /* PasskeyViewController.swift in Sources */,
 				B6CCC63B26C282C50098D510 /* RestoreAccountViewController.swift in Sources */,
 				E6734C3D2816B5E900658171 /* GetSessionData.swift in Sources */,
-				AABB00112608250000AABB02 /* GetSessionAuthModelAPI.swift in Sources */,
 				4CFD74992F4D97D500ED6875 /* IDVErrorCode.swift in Sources */,
 				3CEE335A264414E7003FDB78 /* NationalIDViewController.swift in Sources */,
 				E66640A1282A9E9000E78498 /* AddUserViewController.swift in Sources */,
