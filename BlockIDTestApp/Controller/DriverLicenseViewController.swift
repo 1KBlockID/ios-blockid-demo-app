@@ -288,6 +288,19 @@ extension DriverLicenseViewController: DocumentScanDelegate {
         }
         dictDLObject["proof"] = proof_jwt
         dictDLObject["certificate_token"] = token
+        // Validate documentType matches the expected scan type for DL and PPT
+        guard let responseDocumentType = dictDLObject["documentType"] as? String,
+              !responseDocumentType.isEmpty else {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scan failed. Please scan a valid document.")
+            return
+        }
+        if responseDocumentType.uppercased() != "DL" {
+            self.showAlertAndMoveBack(title: "Error",
+                                      message: "Scan failed. Please scan a valid document.")
+            return
+        }
+       
         DocumentStore.sharedInstance.setSessionId(sessionID)
         self.showVerifyAlert(withDLData: dictDLObject, sessionID)
     }
