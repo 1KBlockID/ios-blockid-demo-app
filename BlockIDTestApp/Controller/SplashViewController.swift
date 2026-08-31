@@ -167,6 +167,15 @@ class SplashViewController: UIViewController {
             self.loginView.isHidden = true
         }
     }
-   
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRestoreAccount",
+           let restoreVC = segue.destination as? RestoreAccountViewController {
+            restoreVC.isDefaultTenantRegistration = self.isDefaultTenantRegistration
+            if !self.isDefaultTenantRegistration {
+                restoreVC.bidTenant = self.bidTenant
+            }
+        }
+    }
 }
 

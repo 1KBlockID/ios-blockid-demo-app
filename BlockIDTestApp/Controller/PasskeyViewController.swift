@@ -27,7 +27,7 @@ class PasskeyViewController: UIViewController {
     /// Returns the currently registered tenant from the SDK.
     /// Falls back to the default tenant if none is registered yet.
     private var activeTenant: BIDTenant {
-        return BlockIDSDK.sharedInstance.getTenant() ?? Tenant.defaultTenant
+        return BlockIDSDK.sharedInstance.getAppTenant() ?? Tenant.defaultTenant
     }
     
     override func viewDidLoad() {

@@ -8,8 +8,8 @@
 import UIKit
 import BlockID
 class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
-    private var isDefaultTenantRegistration = true
-    private var bidTenant: BIDTenant!
+    var isDefaultTenantRegistration = true
+    var bidTenant: BIDTenant!
     var pasteBoardText = ""
     override func viewDidLoad() {
         super.viewDidLoad()
