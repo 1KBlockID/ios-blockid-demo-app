@@ -61,7 +61,7 @@ extension UIViewController {
         //Need to resave magic-link once app is reset
         UserDefaults.removeAllValues()
         BlockIDSDK.sharedInstance.resetSDK(licenseKey: Tenant.licenseKey,
-                                           rootTenant: Tenant.defaultTenant,
+                                           rootTenant: BlockIDSDK.sharedInstance.getAppTenant() ?? Tenant.defaultTenant,
                                            reason: reason)
     }
     
