@@ -280,7 +280,17 @@ class SplashViewController: UIViewController {
             self.loginView.isHidden = true
         }
     }
-   
+    
+    @IBAction func onRestoreClicked(_ sender: Any) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let restoreVC = storyBoard.instantiateViewController(withIdentifier: "RestoreAccountViewController") as? RestoreAccountViewController {
+            restoreVC.isDefaultTenantRegistration = self.isDefaultTenantRegistration
+            if !self.isDefaultTenantRegistration {
+                restoreVC.bidTenant = self.bidTenant
+            }
+            self.navigationController?.pushViewController(restoreVC, animated: true)
+        }
+    }
 }
 
 // MARK: - ScanQRViewDelegate
