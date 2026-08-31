@@ -193,7 +193,7 @@
                                     <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <segue destination="tB5-HT-aaX" kind="push" identifier="showRestoreAccount" id="p8x-NA-7Ss"/>
+                                    <action selector="onRestoreClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="p8x-NA-7Ss"/>
                                 </connections>
                             </button>
                         </subviews>
