@@ -318,7 +318,7 @@ extension PassportViewController: DocumentScanDelegate {
         self.sessionId = sessionID
         dictPPTObject["proof"] = proof_jwt
         dictPPTObject["certificate_token"] = token
-        // Validate documentType matches the expected scan type for DL and PPT
+        // Validate documentType matches the expected scan type for Passport
         guard let responseDocumentType = dictPPTObject["documentType"] as? String,
               !responseDocumentType.isEmpty else {
             self.showAlertAndMoveBack(title: "Error",
