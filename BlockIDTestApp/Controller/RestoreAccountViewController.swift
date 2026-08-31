@@ -9,7 +9,7 @@ import UIKit
 import BlockID
 class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
     var isDefaultTenantRegistration = true
-    var bidTenant: BIDTenant!
+    var bidTenant: BIDTenant?
     var pasteBoardText = ""
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,10 +53,12 @@ class RestoreAccountViewController: UIViewController ,UITextFieldDelegate{
             BlockIDSDK.sharedInstance.initiateTempWallet() { [weak self] (status, error) in
                 if status {
                     //step-2 : If TEMP WALLET Generated, Begin TENANT REGISTRATION
-                    if (self!.isDefaultTenantRegistration) {
-                        self?.bidTenant = Tenant.defaultTenant
+                    guard let self = self else { return }
+                    if self.isDefaultTenantRegistration {
+                        self.bidTenant = Tenant.defaultTenant
                     }
-                    self?.beginRegistration(bidTenant: self!.bidTenant)
+                    let tenant = self.bidTenant ?? Tenant.defaultTenant
+                    self.beginRegistration(bidTenant: tenant)
                 }
                 else {
                     //Show Toast for user to TRY AGAIN!!!
