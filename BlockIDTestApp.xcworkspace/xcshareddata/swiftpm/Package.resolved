@@ -33,7 +33,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/1KBlockID/ios-blockidsdk",
       "state" : {
-        "revision" : "a3494a75b2083d613579990a4e743d035d7f6f00",
+        "revision" : "b74723a7504512bdc5789101cda091cee12236dc",
         "version" : "1.30.60"
       }
     },
