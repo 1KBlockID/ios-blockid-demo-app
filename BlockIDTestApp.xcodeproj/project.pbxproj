@@ -875,7 +875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.30.60;
+				MARKETING_VERSION = 1.30.70;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -926,7 +926,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.30.60;
+				MARKETING_VERSION = 1.30.70;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -993,7 +993,7 @@
 			repositoryURL = "https://github.com/1KBlockID/ios-blockidsdk";
 			requirement = {
 				kind = exactVersion;
-				version = 1.30.60;
+				version = "1.30.70-dev1";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
