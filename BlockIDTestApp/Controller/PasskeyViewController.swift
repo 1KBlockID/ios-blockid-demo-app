@@ -24,6 +24,12 @@ class PasskeyViewController: UIViewController {
     
     private var userName: String = ""
     
+    /// Returns the currently registered tenant from the SDK.
+    /// Falls back to the default tenant if none is registered yet.
+    private var activeTenant: BIDTenant {
+        return BlockIDSDK.sharedInstance.getAppTenant() ?? Tenant.defaultTenant
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textFieldUserName?.becomeFirstResponder()
@@ -54,7 +60,7 @@ class PasskeyViewController: UIViewController {
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
         self.view.isUserInteractionEnabled = false
-        BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
+        BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: activeTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
             self.view.isUserInteractionEnabled = true
@@ -87,7 +93,7 @@ class PasskeyViewController: UIViewController {
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.makeToastActivity(.center)
         self.view.isUserInteractionEnabled = false
-        BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: Tenant.defaultTenant,
+        BlockIDSDK.sharedInstance.fetchUserByUserName(tenant: activeTenant,
                                                       userName: userName) { status, response, error in
             self.view.hideToastActivity()
             self.view.isUserInteractionEnabled = true
@@ -120,7 +126,7 @@ class PasskeyViewController: UIViewController {
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.isUserInteractionEnabled = false
         self.view.makeToastActivity(.center)
-        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+        let passkeyRequest = PasskeyRequest(tenant: activeTenant,
                                             username: userName,
                                             deviceName: self.txtFieldPasskeyName?.text)
         BlockIDSDK.sharedInstance.registerPasskeyWithAccountLinking(controller: self,
@@ -154,7 +160,7 @@ class PasskeyViewController: UIViewController {
         self.txtFieldPasskeyName?.resignFirstResponder()
         self.view.isUserInteractionEnabled = false
         self.view.makeToastActivity(.center)
-        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+        let passkeyRequest = PasskeyRequest(tenant: activeTenant,
                                             username: userName)
         BlockIDSDK.sharedInstance.issueJWTOnPasskeyAuthentication(controller: self,
                                                                   passkeyRequest: passkeyRequest) { status, response, error in
@@ -210,7 +216,7 @@ extension PasskeyViewController: UITextFieldDelegate {
 
 extension PasskeyViewController {
     fileprivate func processPasskeyAuthentication(userName: String, displayName: String) {
-        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+        let passkeyRequest = PasskeyRequest(tenant: activeTenant,
                                             username: userName,
                                             displayName: displayName)
         BlockIDSDK.sharedInstance.authenticatePasskey(controller: self,
@@ -232,7 +238,7 @@ extension PasskeyViewController {
     }
     
     fileprivate func processPasskeyRegistration(userName: String, displayName: String) {
-        let passkeyRequest = PasskeyRequest(tenant: Tenant.defaultTenant,
+        let passkeyRequest = PasskeyRequest(tenant: activeTenant,
                                             username: userName,
                                             displayName: displayName)
         BlockIDSDK.sharedInstance.registerPasskey(controller: self,

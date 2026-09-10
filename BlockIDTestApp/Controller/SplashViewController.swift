@@ -27,6 +27,7 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkAppVersion()
+        setupLogoTapGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +44,118 @@ class SplashViewController: UIViewController {
         BlockIDSDK.sharedInstance.setLicenseKey(key: Tenant.licenseKey)
         setRegisterButtonTitle()
     }
+    
+    // MARK: - Logo Tap 5 Times Feature
+    
+    private func setupLogoTapGesture() {
+        // Find the brandLogo imageView by tag or traverse subviews
+        // The brandLogo is the first UIImageView in the view hierarchy
+        guard let brandLogo = findBrandLogoImageView() else { return }
+        brandLogo.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(onLogoTap5Times))
+        tapGesture.numberOfTapsRequired = 5
+        brandLogo.addGestureRecognizer(tapGesture)
+    }
+    
+    private func findBrandLogoImageView() -> UIImageView? {
+        // The brandLogo is the first UIImageView subview of the main view
+        for subview in self.view.subviews {
+            if let imageView = subview as? UIImageView {
+                return imageView
+            }
+        }
+        return nil
+    }
+    
+    @objc private func onLogoTap5Times() {
+        showQRScanner()
+    }
+    
+    private func showQRScanner() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let scanVC = storyboard.instantiateViewController(withIdentifier: "ScanQRViewController") as? ScanQRViewController {
+            scanVC.delegate = self
+            scanVC.modalPresentationStyle = .fullScreen
+            self.present(scanVC, animated: true)
+        }
+    }
+    
+    private func processScannedQRData(_ data: String) {
+        // UWL 2.0 — Session URL (e.g. https://uat-root.1kosmos.net/sessions/session/<id>)
+        if data.hasPrefix("https://") && data.contains("/sessions/session/") {
+            processSessionURL(data)
+            return
+        }
+        
+        // Base64-encoded JSON tenant data
+        guard let decodedData = Data(base64Encoded: data),
+              let _ = String(data: decodedData, encoding: .utf8) else {
+            self.view.makeToast("Invalid QR code format", duration: 3.0, position: .bottom)
+            return
+        }
+        
+        do {
+            if let jsonObject = try JSONSerialization.jsonObject(with: decodedData, options: []) as? [String: Any],
+               let tag = jsonObject["tag"] as? String,
+               let community = jsonObject["community"] as? String,
+               let api = jsonObject["api"] as? String,
+               !tag.isEmpty, !community.isEmpty, !api.isEmpty {
+                
+                bidTenant = BIDTenant.makeTenant(tag: tag, community: community, dns: api)
+                isDefaultTenantRegistration = false
+                self.view.makeToast("Tenant configured: \(tag)", duration: 3.0, position: .bottom)
+            } else {
+                self.view.makeToast("Invalid QR code data", duration: 3.0, position: .bottom)
+            }
+        } catch {
+            self.view.makeToast("Invalid QR code format", duration: 3.0, position: .bottom)
+        }
+    }
+    
+    private func processSessionURL(_ sessionURL: String) {
+        self.view.makeToastActivity(.center)
+        
+        let arrSplitStrings = sessionURL.components(separatedBy: "/session/")
+        let baseURL = arrSplitStrings.first ?? ""
+        
+        BlockIDSDK.sharedInstance.isTrustedSessionSources(sessionUrl: baseURL) { [weak self] isTrusted in
+            guard let self = self else { return }
+            
+            if !isTrusted {
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    self.view.makeToast("Suspicious QR Code", duration: 3.0, position: .bottom)
+                }
+                return
+            }
+            
+            GetSessionData.sharedInstance.getSessionData(url: sessionURL) { [weak self] response, message, isSuccess in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    self.view.hideToastActivity()
+                    
+                    if isSuccess, let responseStr = response,
+                       let responseData = responseStr.data(using: .utf8),
+                       let jsonObject = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: Any],
+                       let origin = jsonObject["origin"] as? [String: Any],
+                       let tag = origin["tag"] as? String,
+                       let url = origin["url"] as? String,
+                       let communityName = origin["communityName"] as? String,
+                       !tag.isEmpty, !url.isEmpty, !communityName.isEmpty {
+                        
+                        self.bidTenant = BIDTenant.makeTenant(tag: tag, community: communityName, dns: url)
+                        self.isDefaultTenantRegistration = false
+                        self.view.makeToast("Tenant configured: \(tag)", duration: 3.0, position: .bottom)
+                    } else {
+                        self.view.makeToast("Failed to get tenant info: \(message)", duration: 3.0, position: .bottom)
+                    }
+                }
+            }
+        }
+    }
+    
+    // MARK: - Existing Methods
     
     private func checkAppVersion()
     {
@@ -167,6 +280,22 @@ class SplashViewController: UIViewController {
             self.loginView.isHidden = true
         }
     }
-   
+    
+    @IBAction func onRestoreClicked(_ sender: Any) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let restoreVC = storyBoard.instantiateViewController(withIdentifier: "RestoreAccountViewController") as? RestoreAccountViewController {
+            restoreVC.isDefaultTenantRegistration = self.isDefaultTenantRegistration
+            if !self.isDefaultTenantRegistration {
+                restoreVC.bidTenant = self.bidTenant
+            }
+            self.navigationController?.pushViewController(restoreVC, animated: true)
+        }
+    }
 }
 
+// MARK: - ScanQRViewDelegate
+extension SplashViewController: ScanQRViewDelegate {
+    func scannedData(data: String) {
+        processScannedQRData(data)
+    }
+}
