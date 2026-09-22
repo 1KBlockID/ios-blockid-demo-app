@@ -16,18 +16,20 @@ import BlockID
     var ial: String!
     var eventData: String!
     var phoneNumber: String?
+    var curveName: String?
     
-    init(did: String, eventData: String, sender: String, code: String, os: String!, ial: String!) {
+     init(did: String, eventData: String, sender: String, code: String, os: String!, ial: String!, curveName: String?) {
         self.did = did
         self.sender = sender
         self.code = code
         self.os = os
         self.ial = ial
         self.eventData = eventData
+        self.curveName = curveName
     }
     
     func encryptedData(_ publicKey: String) -> String? {
-        return BlockIDSDK.sharedInstance.encryptString(str: CommonFunctions.objectToJSONString(self), rcptKey: publicKey)
+        return BlockIDSDK.sharedInstance.encryptString(str: CommonFunctions.objectToJSONString(self), rcptKey: publicKey, curveName: self.curveName ?? "")
     }
 }
 
