@@ -993,7 +993,7 @@
 			repositoryURL = "https://github.com/1KBlockID/ios-blockidsdk";
 			requirement = {
 				kind = exactVersion;
-				version = "1.30.70-dev1";
+				version = 1.30.70;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
